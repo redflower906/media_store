@@ -16,9 +16,9 @@ class Service(models.Model):
 
 
 class ServiceSubType(models.Model):
-	subservicetype_text = models.CharField(max_length=100)
+	servicesubtype_text = models.CharField(max_length=100)
 	service = models.ForeignKey(Service,verbose_name="Service")
-	qty = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+#	qty = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
 
 
 class Job(models.Model):

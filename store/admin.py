@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from store.models import Service, ServiceSubType, Job
+from store.models import ServiceSubType, Job, Service
 
 
 admin.site.register(Service)
