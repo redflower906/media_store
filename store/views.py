@@ -4,6 +4,9 @@ from django.shortcuts import render
 def index(request):
     return render (request, "store/base.html")
 
+def login(request):
+    return render (request, "store/login.html")
+
 def get_services(request):
 	result_set = []
 	
