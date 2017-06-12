@@ -31,5 +31,12 @@ urlpatterns = [
 #	url(r'^store/', view.index, name='home'),
 #	url(r'^login/', views.login, name='login'),
 	url(r'^$', views.index, name='store'),
+
+
+
+
+
+#services
+#	url(r'^service/$', 'media')	
 ]
 

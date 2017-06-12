@@ -9,6 +9,14 @@ from django.forms import ModelForm
 import decimal
 import datetime
 
+CATEGORY_CHOICES = (
+	('labor', 'labor'),
+	('equipment', 'equipment'),
+	('materials', 'materials'),
+	('service', 'service'),
+	('sample', 'sample'),
+)
+
 # Create your models here.
 
 class Service(models.Model):
@@ -18,7 +26,30 @@ class Service(models.Model):
 class ServiceSubType(models.Model):
 	servicesubtype_text = models.CharField(max_length=100)
 	service = models.ForeignKey(Service,verbose_name="Service")
-#	qty = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	cost = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	unit = models.CharField(max_length=30,blank=True,null=True)
+	jm_category = models.CharField(max_length=50, blank=True, null=True, choices=CATEGORY_CHOICES)
+	category = models.CharField(max_length=50, blank=True,null=True, 
+		choices=(
+		('Agar', 'Agar'),
+		('Antibiotics', 'Antibiotics'),
+		('Dextrose Food', 'Dextrose Food'),
+		('Liquid Media', 'Liquid Media'),
+		('Miscellaneous', 'Micellaneous'),
+		('Power Food', 'Power Food'),
+		('Solutions & Buffers', 'Solutions & Buffers'),
+		('Standard Food', 'Standard Food'),
+		('Sylgard', 'Sylgard'),
+		('Wurzburg Food', 'Wurzburg Food')),
+		default='Miscellaneous'
+	)
+	
+	qty = models.DecimalField(max_digits=10,decimal_places=2,blank=True,null=True)
+	date_created = models.DateField(auto_now_add=True)
+	notes = models.TextField(blank=True)
+
+	def category_choices(self):
+		return CATEGORY_CHOICES
 
 
 class Job(models.Model):
@@ -29,6 +60,10 @@ class Job(models.Model):
 	date_created = models.DateField(auto_now_add=True)
 	date_modified = models.DateTimeField(auto_now=True)
 #	job_class = models.CharField(max_length=30,blank=False)
+
+
+
+
 
 
 """
