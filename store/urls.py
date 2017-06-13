@@ -1,8 +1,0 @@
-from django.conf.urls import url
-from . import views
-
-app_name = 'store'
-urlpatterns = [
-	url(r'^$', views.index, name='store'),
-	url(r'^$', views.login, name='login'),
-]
