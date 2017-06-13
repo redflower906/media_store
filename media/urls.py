@@ -27,6 +27,7 @@ from store import views #can add more here with ,
 #]
 app_name = 'store'
 urlpatterns = [
+
 	url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.index, name='home'),
 	url(r'^login/', views.login, name='login'),
@@ -35,8 +36,6 @@ urlpatterns = [
 ## from nameform
 
     url(r'^name/', views.get_name, name='name'),
-
+]
 #services
 #	url(r'^service/$', 'media')	
-]
-
