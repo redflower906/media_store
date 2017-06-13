@@ -64,8 +64,6 @@ class Job(models.Model):
 
 
 
-
-
 """
 class WorkOrder(models.Model):
     bill_to = models.ManyToManyField('Department',through='WorkorderDepartmentRelationship', related_name='workorders', blank=False, null=True)
