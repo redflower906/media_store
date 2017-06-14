@@ -41,7 +41,7 @@ urlpatterns = [
 
 
     url(r'^name/', views.get_name, name='name'),
-
+]
 
 
 
@@ -59,5 +59,4 @@ urlpatterns = [
 #	url(r'^order_delete', 'store_views.delete_order', name = 'delete_order')"""
 
 #services
-#	url(r'^service/$', 'media')	
-
+#	url(r'^service/$', 'media')
