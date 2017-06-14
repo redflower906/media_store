@@ -38,5 +38,3 @@ def get_name(request):
 
     return render(request, 'store/name.html', {'form': form})
     result_set = []
-
-
