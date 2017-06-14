@@ -27,9 +27,13 @@ class Department(models.Model):
     def __unicode__(self):
         return self.number + " " + self.name
 
+#	category = models.CharField(max_length=30,blank=True,null=True,choices = CATEGORY_CHOICES)
+#note sure category choices should be the same but not sure if RM requires it to be the same?
+
+# do we just copy this from Resource Matrix since we are trying to stay similar?
+
     class Meta:
         ordering = ('number',)
-
 
 """class UserProfile(models.Model):
 #   user = models.ForeignKey(User, related_name='user_profile')
@@ -100,6 +104,7 @@ class Inventory(models.Model):
     part_num = models.CharField(max_length=20, blank=True, null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
 #    current_amt = deposit - withdrawal
+
 
 
 

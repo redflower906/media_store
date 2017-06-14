@@ -23,4 +23,4 @@ class Migration(migrations.Migration):
             name='vendor',
             field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='store.Vendor'),
         ),
-    ]
+]
