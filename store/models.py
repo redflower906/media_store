@@ -82,7 +82,7 @@ class Department(models.Model):
 
 class Vendor(models.Model):
     email_address = models.CharField(max_length=225, blank=True, null=True)
-    company = models.CharField(max_length=50)
+    company = models.CharField(max_length=50, blank=True, null=True)
     contact = models.CharField(max_length=100, blank=True, null=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
 
@@ -102,15 +102,15 @@ class Inventory(models.Model):
     deposit = models.IntegerField(default=0, blank=True,null=True)
     withdrawal = models.IntegerField(default=0, blank=True, null=True)
     part_num = models.CharField(max_length=20, blank=True, null=True)
-    minimum_amt = models.IntegerField(max_length=1000, blank=True, null=True)
-    current_amt = deposit - withdrawal
+    minimum_amt = models.IntegerField(blank=True, null=True)
+    #current_amt = (deposit -- withdrawal)
 
 
 
 class Order(models.Model):
     inventory = models.ForeignKey(Inventory, blank=False, null=False)
 #   submitter = models.ForeignKey(User, related_name='submitter')
-    department = models.ForeignKey(Department, blank=False, null=False)
+    department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_modified = models.DateField(blank=True, null=True)
