@@ -136,8 +136,8 @@ class Inventory(models.Model):
 	cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 	date_created = models.DateField(auto_now_add=True)
 #NEW	date_modified = models.DateTimeField(auto_now=True)
-	notes = models.CharField(max_length=500, blank=True)
-	vendor = models.ForeignKey(Vendor, blank=False, null=False)
+	notes = models.CharField(max_length=500, blank=True, null=True)
+	vendor = models.ForeignKey(Vendor, blank=False, null=True)
 #	deposit = models.
 
 
