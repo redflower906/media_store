@@ -28,7 +28,6 @@ from store import views #as store_views  #can add more here with ,
 app_name = 'store'
 urlpatterns = [
 
-<<<<<<< HEAD
 
 	url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.index, name='home'),
@@ -37,21 +36,6 @@ urlpatterns = [
 #	url(r'^logout', 'store_views.logout'),
 #	url(r'^invalid', 'store_views.invalid_login'),
 #	url(r'^hijack/', include('hijack.urls')), #to hijack other users
-
-=======
-#home page and login
-
-#    url(r'^$', store_views.home, name = 'home'),
-
-    url(r'^admin/', include(admin.site.urls)),
-#    url(r'^store/', view.index, name='home'),
-#    url(r'^login', 'store_views.login', name='login'),
-#    url(r'^logout', 'store_views.logout'),
-#    url(r'^invalid', 'store_views.invalid_login'),
-#    url(r'^hijack/', include('hijack.urls')), #to hijack other users
-
-    url(r'^$', views.index, name='store'),
->>>>>>> b3a2ef15e5d9b81f7d9e71a9c1f992d3c14547a5
 
 ## from nameform
 
@@ -74,10 +58,6 @@ urlpatterns = [
 #	url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
 #	url(r'^order_delete', 'store_views.delete_order', name = 'delete_order')"""
 
->>>>>>> 1d6e1431a161daa324253ba7a3e96e7f1db5bce4
-]
-<<<<<<< HEAD
 #services
 #	url(r'^service/$', 'media')	
-=======
->>>>>>> b3a2ef15e5d9b81f7d9e71a9c1f992d3c14547a5
+
