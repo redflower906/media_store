@@ -2,11 +2,15 @@ from django.shortcuts import render
 ## from nameform 
 from .forms import NameForm
 from django.http import HttpResponseRedirect
-
+from .models import Inventory
+#from django.http import HttpResponse
 
 
 def index(request):
-    return render (request, "store/base.html")
+    myItem = Inventory.objects.get(id=1)
+    print (myItem.__dict__)
+    context = {'cost' : myItem.cost}
+    return render (request, "store/base.html", context)
 
 def login(request):
     return render (request, "store/login.html")
@@ -33,4 +37,6 @@ def get_name(request):
         form = NameForm()
 
     return render(request, 'store/name.html', {'form': form})
+    result_set = []
+
 
