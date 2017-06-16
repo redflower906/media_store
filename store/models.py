@@ -3,6 +3,7 @@ All data models for Media Store
 """
 
 from django.db import models
+#from django.contrib.admin.models import LogEntry
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -85,7 +86,7 @@ class Vendor(models.Model):
     company = models.CharField(max_length=50, blank=True, null=True)
     contact = models.CharField(max_length=100, blank=True, null=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
-
+    active = models.BooleanField(default=True)
 
 
 
@@ -104,6 +105,7 @@ class Inventory(models.Model):
     part_num = models.CharField(max_length=20, blank=True, null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
 #    current_amt = deposit - withdrawal
+    active = models.BooleanField(default=True)
 
 
 
