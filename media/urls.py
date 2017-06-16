@@ -30,8 +30,9 @@ urlpatterns = [
 
 
 	url(r'^admin/', include(admin.site.urls)),
-    url(r'^store/', views.index, name='home'),
+    url(r'^$', views.index, name='home'),
 	url(r'^login/', views.login, name='login'),
+    url(r'^inventory/', views.inventory, name='inventory'),
 
 #	url(r'^logout', 'store_views.logout'),
 #	url(r'^invalid', 'store_views.invalid_login'),
