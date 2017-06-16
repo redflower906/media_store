@@ -96,14 +96,14 @@ class Inventory(models.Model):
     inventory_text = models.CharField(max_length=75)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     date_created = models.DateField(auto_now_add=True)
-    #date_modified = models.DateTimeField(auto_now=True)
+    date_modified = models.DateTimeField(auto_now=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
-    #deposit = models.IntegerField(default=0, blank=True,null=True)
-    #withdrawal = models.IntegerField(default=0, blank=True, null=True)
-    #part_num = models.CharField(max_length=20, blank=True, null=True)
-    #minimum_amt = models.IntegerField(blank=True, null=True)
-    #current_amt = (deposit -- withdrawal)
+    deposit = models.IntegerField(default=0, blank=True,null=True)
+    withdrawal = models.IntegerField(default=0, blank=True, null=True)
+    part_num = models.CharField(max_length=20, blank=True, null=True)
+    minimum_amt = models.IntegerField(blank=True, null=True)
+    #current_amt = (deposit - withdrawal)
 
 
 
