@@ -5,21 +5,27 @@ from django.http import HttpResponseRedirect
 from .models import Inventory
 #from django.http import HttpResponse
 
+def currentURL(request, context):
+    current = request.path
+    current = current.strip("/")
+    context.setdefault('current', current)
 
 def index(request):
-    myItem = Inventory.objects.get(id=1)
-    print (myItem.__dict__)
-    context = {'cost' : myItem.cost}
-    return render (request, "store/base.html", context)
+    context = {}
+    currentURL(request, context)
+    #request.path gets the current URL
+    return render (request, 'store/base.html', context)
+
 
 def inventory(request):
     myItem = Inventory.objects.get(id=1)
-    print(myItem.__dict__)
+    #print(myItem.__dict__)
     context = { 'cost' : myItem.cost}
-    return render (request, "store/inventory.html", context)
+    currentURL(request, context)
+    return render (request, 'store/inventory.html', context)
 
 def login(request):
-    return render (request, "store/login.html")
+    return render (request, 'store/login.html')
 
 def get_services(request):
 	result_set = []
