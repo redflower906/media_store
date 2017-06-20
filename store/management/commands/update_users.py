@@ -31,7 +31,7 @@ from django.utils.termcolors import colorize
 from django.db.models import Q
 
 from update_LDAP import get_all_users
-from TimeMatrix.models import UserProfile, Department, WorkOrder
+from store.models import UserProfile, Department, Order
 from VisitorProjectTracker.models import VisitingScientist
 
 VERBOSITY = 0

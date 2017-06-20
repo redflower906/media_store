@@ -27,11 +27,9 @@ class Department(models.Model):
 
     def __unicode__(self):
         return self.number + " " + self.name
-
 #	category = models.CharField(max_length=30,blank=True,null=True,choices = CATEGORY_CHOICES)
 #note sure category choices should be the same but not sure if RM requires it to be the same?
 
-# do we just copy this from Resource Matrix since we are trying to stay similar?
 
     class Meta:
         ordering = ('number',)
