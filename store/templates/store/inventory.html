@@ -1,8 +1,62 @@
 {% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
 {% block content %}
 
     <div class = "container" style = "padding-top:40px">
       <div> {{cost}}
       </div>
-      </div>
+    </div>
+
+<div class="row">
+    <div class="col-xsm-4">
+        <h2>Inventory</h2>
+    </div>
+    <div class="col-xsm-offset-4 text-right action-buttons">
+        <a href="/service/new" class="btn btn-default">Add inventory item</a></h2>
+    </div>
+</div>
+
+{% if Items.count == 0 %}
+<p>There are no services for your department at this time. Use the button to the right to create some.</p>
+
+{% else %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                <a href="{{ sorting.name }}">
+                    Item
+                    {% if sort_arrows.name == "up" %}
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                    {% elif sort_arrows.name == "down" %}
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for Inventory in Items %}
+        <tr>
+            <td><a href="/service/{{service.id}}">{{Inventory.inventory_text}}</a></td>
+            <td>
+                {% if service.active %}
+                <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                {% else %}
+                <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit_single_service' service.id %}" class="btn btn-primary">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+
 {% endblock %}

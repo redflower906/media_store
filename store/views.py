@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.template import context
 ## from nameform 
 from .forms import NameForm
 from django.http import HttpResponseRedirect
@@ -29,6 +30,27 @@ def login(request):
 
 def get_services(request):
 	result_set = []
+
+#will we only use this for "order" views?
+#@login_required(login_url='login')
+
+def Items(request):
+    """
+    # figure out who is logged in.
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user.id)
+    department_id = user_profile.department.id
+    department_ids = [dept.id for dept in user_profile.alt_departments.all()]
+    department_ids.append(department_id)
+"""
+    Items = Inventory.objects.get(id=1)
+    context = {'Items' : Items}
+    # render them in a list.
+    return render(request, 'store/Inventory.html')
+    #, { 'Item': inventory_text,
+        #'sorting': sort_urls,
+        #'sort_arrows': sort_arrows
+    #}, context=RequestContext(request))
 
 ## from nameform
 

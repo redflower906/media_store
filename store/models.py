@@ -107,6 +107,9 @@ class Inventory(models.Model):
 #    current_amt = deposit - withdrawal
     active = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.inventory_text
+
 
 
 
