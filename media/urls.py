@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^store/', views.index, name='home'),
 	url(r'^login/', views.login, name='login'),
     url(r'^inventory/', views.inventory, name='inventory'),
+    url(r'^about/', views.about, name='about'),
 
 #	url(r'^logout', 'store_views.logout'),
 #	url(r'^invalid', 'store_views.invalid_login'),
