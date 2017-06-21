@@ -17,14 +17,14 @@ def index(request):
     #request.path gets the current URL
     return render (request, 'store/base.html', context)
 
-
+"""
 def inventory(request):
     myItem = Inventory.objects.get(id=1)
     #print(myItem.__dict__)
     context = { 'cost' : myItem.cost}
     currentURL(request, context)
     return render (request, 'store/inventory.html', context)
-
+"""
 def login(request):
     return render (request, 'store/login.html')
 
@@ -34,7 +34,7 @@ def get_services(request):
 #will we only use this for "order" views?
 #@login_required(login_url='login')
 
-def Items(request):
+def inventory(request):
     """
     # figure out who is logged in.
     user = request.user
@@ -43,14 +43,13 @@ def Items(request):
     department_ids = [dept.id for dept in user_profile.alt_departments.all()]
     department_ids.append(department_id)
 """
-    Items = Inventory.objects.get(id=1)
-    context = {'Items' : Items}
+    InventoryItems = Inventory.objects.all()
     # render them in a list.
-    return render(request, 'store/Inventory.html')
-    #, { 'Item': inventory_text,
-        #'sorting': sort_urls,
-        #'sort_arrows': sort_arrows
-    #}, context=RequestContext(request))
+    return render(request, 
+        'store/inventory.html', 
+        {
+        'InventoryItems' : InventoryItems
+        })
 
 ## from nameform
 
