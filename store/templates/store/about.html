@@ -1,0 +1,30 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+
+    <div class = "container" style = "padding-top:40px">
+    <p class="lead">
+    </p>
+      <div> {{cost}}
+      </div>
+    </div>
+
+<div class="row">
+    <div class="col-xsm-4">
+        <h2>About</h2>
+    </div>
+</div>
+
+{% if Items.count == 0 %}
+<p>There are no services for your department at this time. Use the button to the right to create some.</p>
+
+{% else %}
+<table class="table table-striped">
+
+
+</table>
+{% endif %}
+
+{% endblock %}

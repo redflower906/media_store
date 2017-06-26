@@ -34,6 +34,13 @@ def get_services(request):
 #will we only use this for "order" views?
 #@login_required(login_url='login')
 
+
+def about(request):
+    context = {}
+    currentURL(request, context)
+    return render(request, 'store/about.html')
+
+
 def inventory(request):
     """
     # figure out who is logged in.
