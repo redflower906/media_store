@@ -43,13 +43,15 @@ def inventory(request):
     department_ids = [dept.id for dept in user_profile.alt_departments.all()]
     department_ids.append(department_id)
 """
+    context = {}
+    currentURL(request, context)
     InventoryItems = Inventory.objects.all()
     # render them in a list.
     return render(request, 
         'store/inventory.html', 
         {
         'InventoryItems' : InventoryItems
-        })
+        }, context)
 
 ## from nameform
 
