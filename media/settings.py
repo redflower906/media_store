@@ -28,6 +28,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+COMPRESS_OFFLINE=True
+COMPRESS_ENABLED=True
+
 
 
 # Application definition
