@@ -13,14 +13,12 @@ body{
   padding-bottom:10px;
 }
 
-select{background-color:transparent;
-border:none;
-outline:none;
+select{
+    background-color:transparent;
+    border:none;
+    outline:none;
 }
 
-img.new_logo {
-  height:69px;
-}
 
 h1 a{
   color:#333;

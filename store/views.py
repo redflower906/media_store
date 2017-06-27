@@ -17,6 +17,11 @@ def index(request):
     #request.path gets the current URL
     return render (request, 'store/base.html', context)
 
+def home(request):
+    context = {}
+    currentURL(request, context)
+    return render(request, 'store/home.html', context)
+
 """
 def inventory(request):
     myItem = Inventory.objects.get(id=1)

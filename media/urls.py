@@ -1,5 +1,4 @@
 """media URL Configuration
-
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
 Examples:
@@ -11,41 +10,38 @@ Class-based views
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
-"""
+    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))"""
+
 from django.conf.urls import include, url
 from django.contrib import admin
-#admin.autodiscover()
 from django.conf import settings
-#from django.views.generic import TemplateViews
-
 from store import views #as store_views  #can add more here with , 
 
-#urlpatterns = [
-#   url(r'^store/', include('store.urls')),
-#   url(r'^admin/', include(admin.site.urls)),
-#]
 app_name = 'store'
+
 urlpatterns = [
 
+#main views
+#    url(r'^$', views.home, name='home'),
 
-	url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='home'),
-    url(r'^store/', views.index, name='home'),
-	url(r'^login/', views.login, name='login'),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^$', views.home, name='home'),
+    url(r'^store/', views.home, name='home'),
+    url(r'^login/', views.login, name='login'),
+#   url(r'^logout', 'store_views.logout'),
+#   url(r'^invalid', 'store_views.invalid_login'),
+#   url(r'^hijack/', include('hijack.urls')), #to hijack other users
+
+
+#user views
     url(r'^inventory/', views.inventory, name='inventory'),
     url(r'^about/', views.about, name='about'),
 
-#	url(r'^logout', 'store_views.logout'),
-#	url(r'^invalid', 'store_views.invalid_login'),
-#	url(r'^hijack/', include('hijack.urls')), #to hijack other users
+
 
 ## from nameform
-
-
     url(r'^name/', views.get_name, name='name'),
 ]
-
 
 
 #Inventory
