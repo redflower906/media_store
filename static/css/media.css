@@ -22,8 +22,9 @@ img.new_logo {
   height:69px;
 }
 
-h1 a{
+h1 {
   color:#333;
   text-decoration:none;
+  font-size: 200%;
 }
 

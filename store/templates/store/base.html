@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load static %}
-{% include "store/navbar.html" %}
 
 <html lang="en">
   <head>
@@ -21,8 +20,12 @@
     <![endif]-->
   </head>
   <body>
-    <h1></h1>
     <div class='container'>
+    <div class="row">
+    <div class="col-xs-6 col-md-4"><h1><a href="/">Media Store</a></h1></div>
+    <div class="col-xs-3 col-md-4"></div>
+    <div class="col-xs-3 col-md-4 text-right"><img src="/static/images/new_logo.png"></div>
+  </div>
     {% block navbar %}
     {% endblock %}
 
