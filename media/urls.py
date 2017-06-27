@@ -22,10 +22,10 @@ app_name = 'store'
 urlpatterns = [
 
 #main views
-#    url(r'^$', views.home, name='home'),
+
+    url(r'^$', views.home, name='home'),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.home, name='home'),
     url(r'^store/', views.home, name='home'),
     url(r'^login/', views.login, name='login'),
 #   url(r'^logout', 'store_views.logout'),
