@@ -1,3 +1,33 @@
-my goal: set up inventory page!
+Real Time Progress
 
+Goal 6/9 : 2 weeks to fill out inventory page with items
+    Accomplished ahead of schedule
 
+Goal 6/23 : 2 weeks to 
+
+---------------------------------------
+
+Long Term Goals (Set 6/9/17)
+
+6-9 months to have Media Store up and running for basic functions
+    Basic functions include
+        -Ability to bill to Resource Matrix
+        -Ability for orders from customers
+        -Ability to close orders from App with email confirmation
+
+9-18 months to add on tablet functionality and improve staff side
+    Basic functions include
+        -Ability to sign out items at sign out locations
+        -Removing paper from these areas to integrate billing with sign out
+        -Simple customer app to allow Jcard scan or something simple
+        -Integrate calendar or other tools that would make things easier to plan for staff
+
+18-24 months to add reporting (I assume this will be done way before this or in tandem with other requirements but unsure since we still need to learn what goes into this. Data is there so it should be relatively simple set of saved searches)
+    Basic functions include
+        -Ability to get custom reports
+
+18-24 months to upgrade Fly Store
+    Basic functions include
+        -Taking over Fly Store modifications (as long as we are able to update the code since it is old)
+        -Hopefully learning about the server and being able to troubleshoot server errors and be able to go in and fix them
+            -If we are able to do this then Fly and Media Store will most likely come under our management at that time

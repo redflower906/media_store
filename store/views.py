@@ -40,10 +40,10 @@ def get_services(request):
 #@login_required(login_url='login')
 
 
-def about(request):
+def services(request):
     context = {}
     currentURL(request, context)
-    return render(request, 'store/about.html')
+    return render(request, 'store/services.html')
 
 
 def inventory(request):
