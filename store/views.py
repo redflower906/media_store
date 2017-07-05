@@ -36,7 +36,7 @@ def get_items(request):
 #@login_required(login_url='login')
 
 
-def about(request):
+def services(request):
     context = {}
     #current_URL(request, context)
     return render(request, 'store/about.html')
