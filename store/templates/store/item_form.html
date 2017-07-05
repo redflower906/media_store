@@ -1,0 +1,129 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-12">
+        {% if item.instance.id %}
+        <h2>Update service: {{item.instance.id}}</h2>
+        {% else %}
+        <h2>Create a new service</h2>
+        {% endif %}
+    </div>
+</div>
+<hr/>
+<form method="post" action="" class="form-horizontal">
+    <!--{% csrf_token %}-->
+    {% load formset_tags %}
+
+    {% for hidden in item_form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+
+    {% if item_form.non_field_errors %}
+    <div class="row">
+        <div class="col-xs-12 alert alert-danger">
+            {{ item_form.non_field_errors }}
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="form-group {% if item_form.name.errors %}has-error{% endif %}">
+            <div class="col-xs-2 text-right">
+                <label class="control-label" for="{{item_form.name.id_for_label}}">Item Name:</label>
+            </div>
+            <div class="col-xs-3">{{item_form.name}}</div>
+            <div class="col-xs-4">
+                <span class="help-block">{{item_form.name.errors}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="checkbox {% if item_form.active.errors %}has-error{% endif %}">
+            <div class="col-xs-2 text-right">
+                <label class="control-label" for="{{item_form.active.id_for_label}}">Active:</label>
+            </div>
+            <div class="col-xs-3">{{item_form.active}}</div>
+            <div class="col-xs-4">
+                <span class="help-block">{{item_form.active.errors}}</span>
+            </div>
+        </div>
+    </div>
+
+    <hr/>
+
+    {{ formset.management_form }}
+    <div class="row">
+        <div class="col-xs-12">
+            <table id="item_line_table" class="table">
+                <thead>
+                    <tr>
+                        <th>Media</th>
+                        <th>Cost</th>
+                        <th>Container</th>
+                        <th>Notes</th>
+                        <th>Vendor</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for form in formset %}
+                    <tr>
+                        {% for hidden in form.hidden_fields %}
+                            {{hidden}}
+                        {% endfor %}
+
+                        {% for field in form.visible_fields %}
+                        <td>{{field}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% if form.errors %}
+                    <tr>
+                        {% for field in form.visible_fields %}
+                        <td>{{field.errors}}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <input id="add_item_line" class="btn btn-default" type="button" value="Add another line" />
+        </div>
+    </div>
+    <hr/>
+    <div class="row">
+        <div class="col-xs-12">
+            <input class="btn btn-primary" type="submit" value="Submit" name="workorder_submit"/>
+            {% if item.instance.id %}
+            <a href="#" class="btn btn-default">Cancel</a>
+            {% else %}
+            <a href="#" class="btn btn-default">Cancel</a>
+            {% endif %}
+        </div>
+    </div>
+</form>
+{% verbatim %}
+<script id="item-line-form" type="text/x-handlebars-template">
+    <tr>
+        <input id="id_Inventory_set-{{id}}-id" name="Inventory_set-{{id}}-id" type="hidden">
+        <td><input id="id_Inventory_set-{{id}}-inventory_text" maxlength="100" name="Inventory_set-{{id}}-inventory_text" type="text"></td>
+        <td>
+{% endverbatim %}
+{% verbatim %}
+        </td>
+        <td><input class="line-container" id="id_Inventory_set-{{id}}-container" maxlength="30" name="Inventory_set-{{id}}-container" type="text"></td>
+        <td><input class="line_cost" id="id_Inventory_set-{{id}}-cost" maxlength="5" name="Inventory_set-{{id}}-cost" type="text"></td>
+        <td><input class="line-notes" id="id_Inventory_set-{{id}}-notes" maxlength="500" name="Inventory_set-{{id}}-notes" type="text"></td>
+        <td><input id="id_Inventory_set-{{id}}-DELETE" name="Inventory_set-{{id}}-DELETE" type="checkbox"></td>
+    </tr>
+</script>
+{% endverbatim %}
+{% endblock %}

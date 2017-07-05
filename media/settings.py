@@ -42,8 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
-#    'jquery',
+    'django.contrib.staticfiles',
+    #'django.contrib.staticfilesjquery'
+    'jquery',
+    'djangoformsetjs',
 #    'hijack',
 #    'south',
 ]
@@ -135,9 +137,9 @@ HIJACK_NOTIFY_ADMIN = True
 #Setting up LDAP Authentication:
 
 AUTHENTICATION_BACKENDS = (
-    'TimeMatrix.backend.LDAPBackend',
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    #'TimeMatrix.backend.LDAPBackend',
+    #'django_auth_ldap.backend.LDAPBackend',
+    #'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
 

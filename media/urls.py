@@ -36,7 +36,7 @@ urlpatterns = [
 #user views
     url(r'^inventory/', views.inventory, name='inventory'),
     url(r'^about/', views.about, name='about'),
-    url(r'^add_item/', views.add_item, name='add_item'),
+    url(r'^item_form/', views.create_item, name='item_form'),
 
 
 
