@@ -12,10 +12,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 #import ldap
-#import django_auth_ldap.config
+import django_auth_ldap.config
 #import LDAPSearch, GroupOfNamesType
 from .databasesettings import DATABASES
-#from djano_auth_ldap.config import LDAPSearch, GroupOfNamesType
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 #    'django_extensions',
-    #'django.contrib.staticfilesjquery'
     'jquery',
     'djangoformsetjs',
 #    'hijack',
@@ -140,18 +139,18 @@ HIJACK_NOTIFY_ADMIN = True
 
 #Setting up LDAP Authentication:
 
-"""AUTHENTICATION_BACKENDS = (
-    #'TimeMatrix.backend.LDAPBackend',
-    #'django_auth_ldap.backend.LDAPBackend',
-    #'django.contrib.auth.backends.ModelBackend',
+AUTHENTICATION_BACKENDS = (
+    'TimeMatrix.backend.LDAPBackend',
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
-
+'''
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
-)"""
+)
 
 """class CustomGroupOfNamesType(GroupOfNamesType):
     """"""
@@ -245,4 +244,4 @@ try:
     from local_settings import *
 except ImportError:
     pass"""
-
+'''

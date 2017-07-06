@@ -1,8 +1,8 @@
-"""import logging
+'''import logging
 import sys
 sys.path.append('..')
-#import django_auth_ldap.backend
-#from django.contrib.auth.models import Group, User
+import django_auth_ldap.backend
+from django.contrib.auth.models import Group, User
 
 logger = logging.getLogger('default')
 
@@ -11,7 +11,7 @@ logger = logging.getLogger('default')
 #to use this function, connect it to this signal
 #django_auth_ldap.backend.populate_user.connect(update_groups_and_user_flags)
 def update_groups_and_user_flags(sender, user=None, ldap_user=None, **kwargs):
-    """"""
+    """
     Look at LDAP description
     if "Facilities - Security" in description can read/edit visitor table [1]
     if "Scientific Computing" or "Help Desk" then is superuser
@@ -20,7 +20,7 @@ def update_groups_and_user_flags(sender, user=None, ldap_user=None, **kwargs):
     are not set up properly in LDAP.  They have a random password assigned in
     LDAP and it is never synched with their Janelia password.  We are using 
     permanent Django users instead for them for now.
-    """"""
+    """
     logger.info("in update_groups_and_user_flags: user: %s, ldap_user: %s" % (user, (ldap_user._username if ldap_user else 'None')) )
     # Remember that every attribute maps to a list of values
     descriptions = ldap_user.attrs.get("description", [])
@@ -36,5 +36,5 @@ def update_groups_and_user_flags(sender, user=None, ldap_user=None, **kwargs):
     logger.info("added normal user")
 
 # Some LDAP overhead - connect to the populate user signal to handle custom
-# permissions based on LDAP description.
-django_auth_ldap.backend.populate_user.connect(update_groups_and_user_flags)"""
+# permissions based on LDAP description
+django_auth_ldap.backend.populate_user.connect(update_groups_and_user_flags)'''

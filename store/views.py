@@ -39,7 +39,7 @@ def get_items(request):
 def services(request):
     context = {}
     #current_URL(request, context)
-    return render(request, 'store/about.html')
+    return render(request, 'store/services.html')
 
 def add_item(request):
     context = {}
