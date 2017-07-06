@@ -29,3 +29,18 @@ select{
 }
 
 
+h1 {
+  color:#333;
+  text-decoration:none;
+  font-size: 200%;
+}
+
+/* a {
+  color: blue;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+*/

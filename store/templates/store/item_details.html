@@ -1,0 +1,79 @@
+{% extends "shared_resource_base.html" %}
+{% block navbar %}
+{% include "TimeMatrix/navbar.html"%}
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-xs-6">
+        <h2 data-srvid="{{service.id}}">Service: {{service.name}}</h2>
+    </div>
+    <div class="col-xs-6 text-right action-buttons">
+        {% csrf_token %}
+        <a href="/service/{{service.id}}/edit" id="service-edit" class="btn btn-default">Edit</a>
+        {% if service.workorder_set.count == 0 %}
+        <a href="" class="deleteService btn btn-danger">Delete</a>
+        {% endif %}
+    </div>
+</div>
+<hr/>
+
+<div class="row">
+    <div class="col-xs-6">
+        <p><b>Department:</b> {{service.department.name}}</p>
+    </div>
+    <div class="col-xs-6 text-right">
+        <p>{% if service.active %}
+           <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span> Active
+           {% else %}
+           <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span> Not Active
+           {% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Line Type</th>
+                    <th>Category</th>
+                    <th>Qty</th>
+                    <th>Unit</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for subtype in service.servicesubtype_set.all %}
+                <tr>
+                    <td>{{subtype.name}}</td>
+                    <td>{{subtype.category}}</td>
+                    <td>{{subtype.qty}}</td>
+                    <td>{{subtype.unit}}</td>
+                    <td>{{subtype.cost}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="serviceDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="confirmDeleteLabel">Delete this service? </h4>
+      </div>
+      <div class="modal-body">
+        You are about to delete this service. Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="deleteServiceConf" class="btn btn-primary">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-#    'jquery',
+    #'django.contrib.staticfilesjquery'
+    'jquery',
 #    'hijack',
 #    'south',
 ]
@@ -139,9 +140,9 @@ HIJACK_NOTIFY_ADMIN = True
 #Setting up LDAP Authentication:
 
 AUTHENTICATION_BACKENDS = (
-    'TimeMatrix.backend.LDAPBackend',
-    'django_auth_ldap.backend.LDAPBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    #'TimeMatrix.backend.LDAPBackend',
+    #'django_auth_ldap.backend.LDAPBackend',
+    #'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
 
@@ -243,3 +244,4 @@ try:
     from local_settings import *
 except ImportError:
     pass
+
