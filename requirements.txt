@@ -3,6 +3,8 @@ chardet==3.0.3
 Django==1.11.2
 django-auth-ldap==1.2.13
 idna==2.5
+MySQL
+pyldap==2.4.37 (for python3 and up)
 pytz==2017.2
 requests==2.17.3
 urllib3==1.21.1

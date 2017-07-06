@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import ldap
+import django_auth_ldap.config 
+import LDAPSearch, GroupOfNamesType
 from .databasesettings import DATABASES
 #from djano_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
@@ -42,7 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles'
+    'django.contrib.staticfiles',
+    'django_extensions',
 #    'jquery',
 #    'hijack',
 #    'south',
@@ -143,17 +147,17 @@ AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
-#AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
-#    ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
-#)
+AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
+    ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
+)
 
-"""class CustomGroupOfNamesType(GroupOfNamesType):
-    """"""
+class CustomGroupOfNamesType(GroupOfNamesType):
+    """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
 
     The purpose of this whole class is to remove the begining string (base_dn)
     from the group name since it is way too long.
-    """"""
+    """
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
@@ -238,4 +242,4 @@ LOGGING = {
 try:
     from local_settings import *
 except ImportError:
-    pass"""
+    pass
