@@ -39,6 +39,54 @@ h1 {
   font-size: 200%;
 }
 
+.team h3, .team h4, .team2 h4, .team2 h5 {
+  text-align: center;
+}
+
+
+p {
+  font-size: 125%;
+}
+
+li {
+  font-size: 125%;
+}
+
+table.foodcal tr, table.foodcal th, table.foodcal td {
+  text-align: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.flex-row > [class*='col-']{
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row .thumbnail,
+.flex-row .caption {
+  flex-direction: column;
+  display: flex;
+  flex: 1 0 auto;
+  height: auto;
+  position: relative;
+}
+
+.flex-text {
+  flex-grow: 1;
+}
+
+.flex-row img {
+  min-width: 0;
+  width: 100%;
+}
+
+
+
+
 /* a {
   color: blue;
   text-decoration: none;
