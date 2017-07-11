@@ -61,7 +61,7 @@ def inventory(request):
     InventoryItems = Inventory.objects.all()
     #sort
     Items = InventoryItems.order_by('inventory_text')
-    sort_urls = {'name': '?o=name', 'department': '?o=department'}
+    sort_urls = {'name': '?o=name', 'container': '?o=container', 'volume': '?o=volume'}
     sort_arrows = {}
     # render them in a list.
     return render(request, 
@@ -73,9 +73,9 @@ def inventory(request):
 #@login_required(login_url='login')
 def create_item(request):
     ItemModelFormset = item_model_formset_factory(extra=2)
-    item = Inventory.objects.values_list('id', flat=True)
+    IDs = Inventory.objects.values_list('id', flat=True)
     formset = ItemModelFormset()
-    print(item[0])
+    print(IDs[0])
     '''
     If usr select item pk exists, then go to item(id) page
     else to to item_form
@@ -96,15 +96,16 @@ def create_item(request):
     # just show the form
     return render(request, 
     'store/item_form.html', {
-        'formset': formset
-        }, context)
+    'formset': formset
+    }, context)
+
 def single_item(request, id):
     if request.method == "POST":
-        return _update_item(request, id)
+        return update_item(request, id)
     elif request.method == "DELETE":
-        return _delete_item(request, id)
+        return delete_item(request, id)
     else:
-        return _get_item(request, id)
+        return get_item(request, id)
 '''
 #is this necessary? shouldn't I just use edit single item?
 def _update_item(request, id):
@@ -116,7 +117,28 @@ def _update_item(request, id):
         }, context)
 '''
 
-def _delete_item(request, id):
+def update_item(request, id):
+    ItemModelFormset = item_inline_formset_factory(extra=0)
+    SingleItem = get_object_or_404(Inventory, pk=id)
+    formset = ItemModelFormset()
+    if request.method == "POST":
+        formset = ItemInlineFormset(request.POST)
+        # create service
+        if formset.is_valid():
+            formset.save()
+            messages.success(request, 'item {0} was successfully updated.'.format(item.name))
+            return HttpResponseRedirect('/inventory/{0}'.format(item.id))
+        # just show the form
+            return render(request, 
+            'store/item_form.html', {
+            'formset': formset
+            }, context)
+
+def get_service(request, id):
+    SingleItem = get_object_or_404(Inventory, pk=id)
+    return render(request, 'store/item_details.html', {'SingleItem': SingleItem})
+
+def delete_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
 
     #can't delete an item that's associated with an order

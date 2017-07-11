@@ -92,19 +92,23 @@ class Inventory(models.Model):
     class Meta:
         verbose_name_plural = 'Inventory'
 
-    inventory_text = models.CharField(max_length=75)
+    inventory_text = models.CharField(max_length=100)
+    product = models.CharField(max_length=50, blank=True, null=True)
+    media_type = models.CharField(max_length=50, blank=True, null=True)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    container = models.CharField(max_length=100, blank=True, null=True)
+    volume = models.CharField(max_length=15, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
+    date_modified = models.DateTimeField(auto_now=True)
     deposit = models.IntegerField(default=0, blank=True,null=True)
-    withdrawal = models.IntegerField(default=0, blank=True, null=True)
-    part_num = models.CharField(max_length=20, blank=True, null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
+    part_num = models.CharField(max_length=20, blank=True, null=True)
+    withdrawal = models.IntegerField(default=0, blank=True, null=True)
 #    current_amt = deposit - withdrawal
     active = models.BooleanField(default=True)
-    container = models.CharField(max_length=20, blank=True, null=True)
+    
 
     def __str__(self):
         return self.inventory_text
@@ -113,7 +117,7 @@ class Inventory(models.Model):
 
 
 class Order(models.Model):
-    inventory = models.ForeignKey(Inventory, blank=False, null=False)
+    inventory = models.ForeignKey(Inventory, blank=True, null=True)
 #   submitter = models.ForeignKey(User, related_name='submitter')
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)

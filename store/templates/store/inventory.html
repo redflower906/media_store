@@ -41,9 +41,9 @@
         </tr>
     </thead>
     <tbody>
-        {% for InventoryItem in InventoryItems %}
+        {% for InventoryItems in InventoryItems %}
         <tr>
-            <td><a href="#">{{InventoryItem.inventory_text}}</a></td>
+            <td><a href="#">{{InventoryItems.inventory_text}}</a></td>
             <td>
                 {% if InventoryItem.active %}
                 <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>

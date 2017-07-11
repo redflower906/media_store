@@ -23,12 +23,13 @@ class NumInput(TextInput):
 
 def item_model_formset_factory(extra):
     return modelformset_factory(Inventory,
-        fields = ('inventory_text','cost','container', 'notes', 'vendor'),
+        fields = ('media_type','cost','container', 'volume', 'notes'),
         widgets = {
             'cost': forms.TextInput(attrs={'class': 'line_cost'}),
             'container': forms.TextInput(attrs={'class': 'line-container'}),
+            'volume': forms.TextInput(attrs={'class': 'line-volume'}),
             'notes': forms.TextInput(attrs={'class': 'line-notes'}),
-            'vendor': forms.TextInput(attrs={'class': 'line-container'})
+            #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         },
         extra=extra, can_delete=True,
     )

@@ -61,11 +61,11 @@
             <table id="item_line_table" class="table">
                 <thead>
                     <tr>
-                        <th>Media</th>
+                        <th>Media Type</th>
                         <th>Cost</th>
                         <th>Container</th>
+                        <th>Volume</th>
                         <th>Notes</th>
-                        <th>Vendor</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
@@ -119,8 +119,9 @@
 {% endverbatim %}
 {% verbatim %}
         </td>
-        <td><input class="line-container" id="id_Inventory_set-{{id}}-container" maxlength="30" name="Inventory_set-{{id}}-container" type="text"></td>
         <td><input class="line_cost" id="id_Inventory_set-{{id}}-cost" maxlength="5" name="Inventory_set-{{id}}-cost" type="text"></td>
+        <td><input class="line-container" id="id_Inventory_set-{{id}}-container" maxlength="30" name="Inventory_set-{{id}}-container" type="text"></td>
+        <td><input class="line-volume" id="id_Inventory_set-{{id}}-volume" maxlength="30" name="Inventory_set-{{id}}-volume" type="text"></td>
         <td><input class="line-notes" id="id_Inventory_set-{{id}}-notes" maxlength="500" name="Inventory_set-{{id}}-notes" type="text"></td>
         <td><input id="id_Inventory_set-{{id}}-DELETE" name="Inventory_set-{{id}}-DELETE" type="checkbox"></td>
     </tr>
