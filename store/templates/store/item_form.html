@@ -5,8 +5,8 @@
 {% block content %}
 <div class="row">
     <div class="col-xs-12">
-        {% if item.instance.id %}
-        <h2>Update service: {{item.instance.id}}</h2>
+        {% if formset.id %}
+        <h2>Update service: {{formset.id}}</h2>
         {% else %}
         <h2>Create a new service</h2>
         {% endif %}

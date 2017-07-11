@@ -39,7 +39,7 @@ def get_items(request):
 def services(request):
     context = {}
     #current_URL(request, context)
-    return render(request, 'store/about.html')
+    return render(request, 'store/services.html')
 
 def add_item(request):
     context = {}
@@ -74,6 +74,7 @@ def inventory(request):
 def create_item(request):
     ItemModelFormset = item_model_formset_factory(extra=2)
     IDs = Inventory.objects.values_list('id', flat=True)
+    SingleItem = get_object_or_404(Inventory, pk=607)
     formset = ItemModelFormset()
     print(IDs[0])
     '''
