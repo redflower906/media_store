@@ -34,22 +34,16 @@ urlpatterns = [
 
 
 #user views
-    url(r'^inventory/', views.inventory, name='inventory'),
-    url(r'^item_form/', views.create_item, name='item_form'),
+    url(r'^inventory/$', views.inventory, name='inventory'),
+#    $ allows you to build on the URL while using different views
+    url(r'^inventory/new', views.create_item, name='new_item'),
+    url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
+    url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
     url(r'^services/', views.services, name='services'),
-
-
 
 ## from nameform
     url(r'^name/', views.get_name, name='name'),
 ]
-
-
-#Inventory
-#    url(r'^inventory/$', 'store_views.inventory', name = 'Inventory'),
-#    url(r'^inventory/new', 'store_views.create_inventory', name = 'create_inventory'),
-#    url(r'^inventory/(?P<id>[0-9]*)$', 'store_views.single_item', name = 'single_item'),
-#    url(r'^inventory/(?P<id>[0-9]*)$', 'store_views.edit_single_item', name = 'edit_single_item'),
 
 #add link to dump to Resource Matrix here
 

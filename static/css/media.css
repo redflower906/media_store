@@ -13,8 +13,12 @@ body{
   padding-bottom:10px;
 }
 
-.icon-success {
+.active-icon {
   color: #008000;
+}
+
+.disabled-icon {
+  color: #FF0000;
 }
 
 h1 {

@@ -3,13 +3,14 @@
 {% include "store/navbar.html"%}
 {% endblock %}
 {% block content %}
+
 <div class="row">
     <div class="col-xs-6">
-        <h2 data-srvid="{{service.id}}">Service: {{service.name}}</h2>
+        <h2 data-srvid="{{SingleItem.id}}">Product: {{SingleItem.product}}</h2>
     </div>
     <div class="col-xs-6 text-right action-buttons">
         {% csrf_token %}
-        <a href="/service/{{service.id}}/edit" id="service-edit" class="btn btn-default">Edit</a>
+        <a href="{% url 'edit_single_item' SingleItem.id %}" class="btn btn-default">Edit</a>
         {% if service.workorder_set.count == 0 %}
         <a href="" class="deleteService btn btn-danger">Delete</a>
         {% endif %}
@@ -17,12 +18,10 @@
 </div>
 <hr/>
 
+
 <div class="row">
-    <div class="col-xs-6">
-        <p><b>Department:</b> {{service.department.name}}</p>
-    </div>
-    <div class="col-xs-6 text-right">
-        <p>{% if service.active %}
+    <div class="col-xs-12 text-right">
+        <p>{% if InventoryItems.active %}
            <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span> Active
            {% else %}
            <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span> Not Active
@@ -31,16 +30,18 @@
     </div>
 </div>
 
+
 <div class="row">
     <div class="col-xs-12">
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Line Type</th>
-                    <th>Category</th>
-                    <th>Qty</th>
-                    <th>Unit</th>
+                    <th>Media Type</th>
                     <th>Cost</th>
+                    <th>Container</th>
+                    <th>Volume</th>
+                    <th>Notes</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -75,5 +76,4 @@
     </div>
   </div>
 </div>
-
 {% endblock %}

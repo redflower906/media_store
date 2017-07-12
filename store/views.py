@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.template import context
 ## from nameform 
-from .forms import NameForm, item_model_formset_factory, NumInput
+from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form
 from django.http import HttpResponseRedirect
 from .models import Inventory
 import MySQLdb, sys
@@ -61,52 +61,51 @@ def inventory(request):
     InventoryItems = Inventory.objects.all()
     #sort
     Items = InventoryItems.order_by('inventory_text')
-    sort_urls = {'name': '?o=name', 'container': '?o=container', 'volume': '?o=volume'}
+    sort_urls = {'product': '?o=product', 'container': '?o=container', 'volume': '?o=volume'}
     sort_arrows = {}
     # render them in a list.
     return render(request, 
         'store/inventory.html', 
         {
-        'InventoryItems' : InventoryItems
+        'InventoryItems' : InventoryItems,
+        'sorting': sort_urls,
+        'sort_arrows': sort_arrows
         }, context)
 
 #@login_required(login_url='login')
 def create_item(request):
+    InventoryItems = Inventory.objects.all()
     ItemModelFormset = item_model_formset_factory(extra=2)
     IDs = Inventory.objects.values_list('id', flat=True)
-    SingleItem = get_object_or_404(Inventory, pk=607)
+    inventory = Inventory()
+    Item_form = Item_Model_Form(instance=inventory)
     formset = ItemModelFormset()
     print(IDs[0])
-    '''
-    If usr select item pk exists, then go to item(id) page
-    else to to item_form
-    '''
+
+    #If usr select item pk exists, then go to item(id) page
+    #else to to item_form
+
     #what does if request.method == "post" do???
     #from what I read, POST is used for form submissions that affect the database. So do we even
     #need the if? Nevermind, the if is to process the submitted form, otherwise it just returns
     #the blank form.
     if request.method == "POST":
         formset = ItemModelFormset(request.POST)
+        Item_form = Item_Model_Form(request.POST, instance=inventory)
         # create item
         if formset.is_valid():
             formset.save()
             messages.success(request, 
-            'item {0} was successfully created.'.format(item.name))
-            return HttpResponseRedirect('/item/{0}'.format(item.id))
+            'Product {0} was successfully created.'.format(InventoryItems.product))
+            return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
 
     # just show the form
     return render(request, 
     'store/item_form.html', {
-    'formset': formset
+    'formset': formset,
+    'Item_form': Item_form,
     }, context)
 
-def single_item(request, id):
-    if request.method == "POST":
-        return update_item(request, id)
-    elif request.method == "DELETE":
-        return delete_item(request, id)
-    else:
-        return get_item(request, id)
 '''
 #is this necessary? shouldn't I just use edit single item?
 def _update_item(request, id):
@@ -119,11 +118,11 @@ def _update_item(request, id):
 '''
 
 def update_item(request, id):
-    ItemModelFormset = item_inline_formset_factory(extra=0)
+    ItemModelFormset = item_model_formset_factory(extra=0)
     SingleItem = get_object_or_404(Inventory, pk=id)
     formset = ItemModelFormset()
     if request.method == "POST":
-        formset = ItemInlineFormset(request.POST)
+        formset = ItemModelFormset(request.POST)
         # create service
         if formset.is_valid():
             formset.save()
@@ -135,8 +134,9 @@ def update_item(request, id):
             'formset': formset
             }, context)
 
-def get_service(request, id):
+def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
+    print(SingleItem.id)
     return render(request, 'store/item_details.html', {'SingleItem': SingleItem})
 
 def delete_item(request, id):
@@ -149,6 +149,13 @@ def delete_item(request, id):
     item.delete()
     return HttpResponse(simplejson.dumps({'deleted': id}), content_type="application/json")
 
+def single_item(request, id):
+    if request.method == "POST":
+        return update_item(request, id)
+    elif request.method == "DELETE":
+        return delete_item(request, id)
+    else:
+        return get_item(request, id)
         
     # from nameform
 def get_name(request):

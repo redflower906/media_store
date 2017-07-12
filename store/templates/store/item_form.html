@@ -5,8 +5,8 @@
 {% block content %}
 <div class="row">
     <div class="col-xs-12">
-        {% if formset.id %}
-        <h2>Update service: {{formset.id}}</h2>
+        {% if InventoryItems.id %}
+        <h2>Update service: {{ InventoryItems.product }}</h2>
         {% else %}
         <h2>Create a new service</h2>
         {% endif %}
@@ -29,6 +29,7 @@
     </div>
     {% endif %}
 
+<!--errors!>
     <div class="row">
         <div class="form-group {% if item_form.name.errors %}has-error{% endif %}">
             <div class="col-xs-2 text-right">
@@ -52,6 +53,7 @@
             </div>
         </div>
     </div>
+<!-->
 
     <hr/>
 

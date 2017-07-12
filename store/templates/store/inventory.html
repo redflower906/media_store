@@ -5,17 +5,12 @@
 {% block content %}
 <hr/>
 
-    <div class = "container" style = "padding-top:10px">
-      <div> {{cost}}
-      </div>
-    </div>
-
 <div class="row">
     <div class="col-xs-12, col-md-12">
         <h2>Inventory</h2>
     </div>
     <div class="col-xsm-offset-4 text-right action-buttons">
-        <a href="/item_form" class="btn btn-default">Add inventory item</a></h2>
+        <a href="/inventory/new" class="btn btn-default">Add inventory item</a></h2>
     </div>
 </div>
 
@@ -27,11 +22,11 @@
     <thead>
         <tr>
             <th>
-                <a href="{{ sorting.name }}">
+                <a href="{{ sorting.product }}">
                     Product
-                    {% if sort_arrows.name == "up" %}
+                    {% if sort_arrows.product == "up" %}
                     <span class="glyphicon glyphicon-arrow-up"></span>
-                    {% elif sort_arrows.name == "down" %}
+                    {% elif sort_arrows.product == "down" %}
                     <span class="glyphicon glyphicon-arrow-down"></span>
                     {% endif %}
                 </a>
@@ -43,16 +38,16 @@
     <tbody>
         {% for InventoryItems in InventoryItems %}
         <tr>
-            <td><a href="#">{{InventoryItems.inventory_text}}</a></td>
+            <td><a href="{% url 'single_item' InventoryItems.id %}">{{InventoryItems.inventory_text}}</a></td>
             <td>
                 {% if InventoryItems.active %}
-                <span class="glyphicon glyphicon-ok icon-success active-icon" aria-hidden="true"></span>
+                <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
                 {% else %}
                 <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
                 {% endif %}
             </td>
             <td>
-                <a href="#" class="btn btn-primary">Edit</a>
+                <a href="{% url 'edit_single_item' InventoryItems.id %}" class="btn btn-primary">Edit</a>
             </td>
         </tr>
         {% endfor %}
