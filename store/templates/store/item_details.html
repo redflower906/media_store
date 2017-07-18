@@ -6,7 +6,7 @@
 
 <div class="row">
     <div class="col-xs-6">
-        <h2 data-srvid="{{SingleItem.id}}">Product: {{SingleItem.product}}</h2>
+        <h2 data-srvid="{{SingleItem.id}}">Product: {{SingleItem.inventory_text}}</h2>
     </div>
     <div class="col-xs-6 text-right action-buttons">
         {% csrf_token %}
@@ -21,7 +21,7 @@
 
 <div class="row">
     <div class="col-xs-12 text-right">
-        <p>{% if InventoryItems.active %}
+        <p>{% if SingleItem.active %}
            <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span> Active
            {% else %}
            <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span> Not Active
@@ -36,38 +36,37 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>Product Name</th>
                     <th>Media Type</th>
                     <th>Cost</th>
                     <th>Container</th>
                     <th>Volume</th>
                     <th>Notes</th>
-                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                {% for subtype in service.servicesubtype_set.all %}
                 <tr>
-                    <td>{{subtype.name}}</td>
-                    <td>{{subtype.category}}</td>
-                    <td>{{subtype.qty}}</td>
-                    <td>{{subtype.unit}}</td>
-                    <td>{{subtype.cost}}</td>
+                    <td>{{SingleItem.product}}</td>
+                    <td>{{SingleItem.media_type}}</td>
+                    <td>{{SingleItem.cost}}</td>
+                    <td>{{SingleItem.container}}</td>
+                    <td>{{SingleItem.volume}}</td>
+                    <td>{{SingleItem.notes}}</td>
                 </tr>
-                {% endfor %}
             </tbody>
         </table>
     </div>
 </div>
 
-<div class="modal fade" id="serviceDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+{% comment %} <div class="modal fade" id="serviceDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="confirmDeleteLabel">Delete this service? </h4>
+        <h4 class="modal-title" id="confirmDeleteLabel">Delete this product? </h4>
       </div>
       <div class="modal-body">
-        You are about to delete this service. Are you sure?
+        You are about to delete this product. Are you sure?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -75,5 +74,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
+This will work once there are customer orders...presumably.
+{% endcomment %}
 {% endblock %}

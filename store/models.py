@@ -14,6 +14,20 @@ import datetime
 
 # Create your models here.
 
+# MEDIA_CHOICES = (
+#     #('','---------'),
+#     ('Agar','Agar'),
+#     ('Antibiotics','Antibiotics'),
+#     ('Cornmeal Food','Cornmeal Food'),
+#     ('Dextrose Food','Dextrose Food'),
+#     ('Liquid Media','Liquid Media'),
+#     ('Miscellaneous','Miscellaneous'),
+#     ('Power Food','Power Food'),
+#     ('Solutions & Buffers','Solutions & Buffers'),
+#     ('Sylgard','Sylgard'),
+#     ('Wurzburg Food','Wurzburg Food')
+
+# )
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
@@ -89,12 +103,26 @@ class Vendor(models.Model):
 
 
 class Inventory(models.Model):
+    MEDIA_CHOICES = (
+        #('','---------'),
+        ('Agar','Agar'),
+        ('Antibiotics','Antibiotics'),
+        ('Cornmeal Food','Cornmeal Food'),
+        ('Dextrose Food','Dextrose Food'),
+        ('Liquid Media','Liquid Media'),
+        ('Miscellaneous','Miscellaneous'),
+        ('Power Food','Power Food'),
+        ('Solutions & Buffers','Solutions & Buffers'),
+        ('Sylgard','Sylgard'),
+        ('Wurzburg Food','Wurzburg Food')
+
+    )
     class Meta:
         verbose_name_plural = 'Inventory'
 
     inventory_text = models.CharField(max_length=100)
     product = models.CharField(max_length=50, blank=True, null=True)
-    media_type = models.CharField(max_length=50, blank=True, null=True)
+    media_type = models.CharField(max_length=50, blank=True, null=True, choices=MEDIA_CHOICES)
     cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     container = models.CharField(max_length=100, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
@@ -108,12 +136,10 @@ class Inventory(models.Model):
     withdrawal = models.IntegerField(default=0, blank=True, null=True)
 #    current_amt = deposit - withdrawal
     active = models.BooleanField(default=True)
-    
+
 
     def __str__(self):
         return self.inventory_text
-
-
 
 
 class Order(models.Model):
@@ -125,3 +151,11 @@ class Order(models.Model):
     date_modified = models.DateField(blank=True, null=True)
     date_submitted = models.DateField(blank=True, null=True)
     date_complete = models.DateField(blank=True, null=True)
+
+
+# class Item_Model_Form(ModelForm):
+#     class Meta:
+#         model = Inventory
+#         fields = ['product','media_type','cost','container', 'volume', 'notes','active']
+#         #product = forms.CharField(required=True, max_length=200)
+

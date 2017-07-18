@@ -1,7 +1,8 @@
 from django.shortcuts import render, get_object_or_404
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.template import context
 ## from nameform 
-from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form
+from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form 
 from django.http import HttpResponseRedirect
 from .models import Inventory
 import MySQLdb, sys
@@ -60,8 +61,10 @@ def inventory(request):
     #current_URL(request, context)
     InventoryItems = Inventory.objects.all()
     #sort
+    # MC = Inventory(media_choices)
+    # print(MC)
     Items = InventoryItems.order_by('inventory_text')
-    sort_urls = {'product': '?o=product', 'container': '?o=container', 'volume': '?o=volume'}
+    sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
     sort_arrows = {}
     # render them in a list.
     return render(request, 
@@ -72,40 +75,56 @@ def inventory(request):
         'sort_arrows': sort_arrows
         }, context)
 
+# #@login_required(login_url='login')
+# def create_item(request):
+#     InventoryItems = Inventory.objects.all()
+#     ItemModelFormset = item_model_formset_factory(extra=2)
+#     IDs = Inventory.objects.values_list('id', flat=True)
+#     inventory = Inventory()
+#     formset = ItemModelFormset()
+#     print(IDs[0])
+
+#     #If usr select item pk exists, then go to item(id) page
+#     #else to to item_form
+
+#     #what does if request.method == "post" do???
+#     #from what I read, POST is used for form submissions that affect the database. So do we even
+#     #need the if? Nevermind, the if is to process the submitted form, otherwise it just returns
+#     #the blank form.
+#     if request.method == "POST":
+#         formset = ItemModelFormset(request.POST)
+#         # create item
+#         if formset.is_valid():
+#             formset.save()
+#             messages.success(request, 
+#             'Product {0} was successfully created.'.format(InventoryItems.product))
+#             return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
+        
+#     # just show the form
+#     return render(request, 
+#     'store/item_form.html', {
+#     'formset': formset,
+#     }, context)
+
 #@login_required(login_url='login')
 def create_item(request):
-    InventoryItems = Inventory.objects.all()
-    ItemModelFormset = item_model_formset_factory(extra=2)
-    IDs = Inventory.objects.values_list('id', flat=True)
-    inventory = Inventory()
-    Item_form = Item_Model_Form(instance=inventory)
-    formset = ItemModelFormset()
-    print(IDs[0])
-
-    #If usr select item pk exists, then go to item(id) page
-    #else to to item_form
-
-    #what does if request.method == "post" do???
-    #from what I read, POST is used for form submissions that affect the database. So do we even
-    #need the if? Nevermind, the if is to process the submitted form, otherwise it just returns
-    #the blank form.
+    ItemModelFormset = item_model_formset_factory(extra=1)
+    formset = ItemModelFormset(queryset=Inventory.objects.none())
     if request.method == "POST":
         formset = ItemModelFormset(request.POST)
-        Item_form = Item_Model_Form(request.POST, instance=inventory)
         # create item
         if formset.is_valid():
             formset.save()
             messages.success(request, 
             'Product {0} was successfully created.'.format(InventoryItems.product))
             return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
-
+        
     # just show the form
     return render(request, 
     'store/item_form.html', {
     'formset': formset,
-    'Item_form': Item_form,
     }, context)
-
+    
 '''
 #is this necessary? shouldn't I just use edit single item?
 def _update_item(request, id):
@@ -120,24 +139,32 @@ def _update_item(request, id):
 def update_item(request, id):
     ItemModelFormset = item_model_formset_factory(extra=0)
     SingleItem = get_object_or_404(Inventory, pk=id)
-    formset = ItemModelFormset()
+    Item_form = Item_Model_Form(instance=SingleItem)
+    #formset = ItemModelFormset(instance=SingleItem)
+
     if request.method == "POST":
-        formset = ItemModelFormset(request.POST)
-        # create service
+        #formset = ItemModelFormset(request.POST, instance=SingleItem)
+        Item_form = Item_Model_Form(request.POST, instance=SingleItem)
+        # create item
         if formset.is_valid():
             formset.save()
-            messages.success(request, 'item {0} was successfully updated.'.format(item.name))
-            return HttpResponseRedirect('/inventory/{0}'.format(item.id))
-        # just show the form
-            return render(request, 
-            'store/item_form.html', {
-            'formset': formset
-            }, context)
+            messages.success(request, 
+            'Product {0} was successfully created.'.format(InventoryItems.product))
+            return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
+
+    # just show the form
+    return render(request, 
+    'store/item_form.html', {
+    'Item_form': Item_form,
+    'SingleItem': SingleItem,
+    }, context)
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
-    print(SingleItem.id)
-    return render(request, 'store/item_details.html', {'SingleItem': SingleItem})
+    return render(request, 
+    'store/item_details.html', {
+    'SingleItem': SingleItem,
+    })
 
 def delete_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -176,3 +203,8 @@ def get_name(request):
 
     return render(request, 'store/name.html', {'form': form})
     result_set = []
+
+# class FormCreate(CreateView):
+#     model = Inventory
+#     template_name = 'store/form.html'
+#     fields = ['product','media_type','cost','container','volume','notes']

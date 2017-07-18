@@ -4,8 +4,6 @@ import logging
 
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms import widgets
-from django.forms import ModelForm
 from django.forms.widgets import TextInput, HiddenInput
 from .models import Inventory, Vendor
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
@@ -14,7 +12,7 @@ from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,B
 from django.db import connections
 from django.db.utils import ProgrammingError, OperationalError
 from django.db.models import Q
-from django.forms import ModelChoiceField
+from django.forms import ModelChoiceField, ChoiceField, widgets, ModelForm
 from django.utils import timezone
 
 
@@ -23,23 +21,29 @@ class NumInput(TextInput):
 
 def item_model_formset_factory(extra):
     return modelformset_factory(Inventory,
-        fields = ('media_type','cost','container', 'volume', 'notes'),
+        fields = ('product','media_type','cost','container','volume','notes'),
         widgets = {
             'cost': forms.TextInput(attrs={'class': 'line_cost'}),
             'container': forms.TextInput(attrs={'class': 'line-container'}),
             'volume': forms.TextInput(attrs={'class': 'line-volume'}),
-            'notes': forms.TextInput(attrs={'class': 'line-notes'}),
+            'notes': forms.Textarea(attrs={'cols': 20, 'rows': 10, 'class': 'line-notes'}),
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         },
         extra=extra, can_delete=True,
     )
 
-class Item_Model_Form(ModelForm):
-    product = forms.CharField(required=True, max_length=200)
-
+class Item_Model_Form(forms.ModelForm):
     class Meta:
-	    model = Inventory
-	    fields = ('product', 'active')
+        model = Inventory
+        fields = ('product','media_type','cost','container','volume','notes')
+        widgets = {
+            'cost': forms.TextInput(attrs={'class': 'line_cost'}),
+            'container': forms.TextInput(attrs={'class': 'line-container'}),
+            'volume': forms.TextInput(attrs={'class': 'line-volume'}),
+            'notes': forms.Textarea(attrs={'cols': 20, 'rows': 10, 'class': 'line-notes'}),
+            #'vendor': forms.TextInput(attrs={'class': 'line-container'})
+        }
+
 '''
     def __init__(self, *args, **kwargs):
         super(ServiceModelForm, self).__init__(*args, **kwargs)
