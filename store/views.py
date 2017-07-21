@@ -4,7 +4,7 @@ from django.template import context
 ## from nameform 
 from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form 
 from django.http import HttpResponseRedirect
-from .models import Inventory
+from .models import Inventory, Order
 import MySQLdb, sys
 #from django.http import HttpResponse
 '''
@@ -19,12 +19,10 @@ def current_URL(request, context):
 def index(request):
     context = {}
     #current_URL(request, context)
-    #request.path gets the current URL
     return render (request, 'store/home.html', context)
 
 def home(request):
     context = {}
-    #current_URL(request, context)
     return render(request, 'store/home.html', context)
 
 def login(request):
@@ -39,12 +37,10 @@ def get_items(request):
 
 def services(request):
     context = {}
-    #current_URL(request, context)
     return render(request, 'store/services.html')
 
 def add_item(request):
     context = {}
-    #current_URL(request, context)
     return render(request, 'store/add_item.html')
 
 
@@ -58,7 +54,6 @@ def inventory(request):
     department_ids.append(department_id)
 """
     context = {}
-    #current_URL(request, context)
     InventoryItems = Inventory.objects.all()
     #sort
     # MC = Inventory(media_choices)
@@ -208,3 +203,34 @@ def get_name(request):
 #     model = Inventory
 #     template_name = 'store/form.html'
 #     fields = ['product','media_type','cost','container','volume','notes']
+def order(request):
+    context = {}
+    OrderTotal = Order.objects.all()
+    #sort
+    # MC = Inventory(media_choices)
+    # print(MC)
+    History = OrderTotal.order_by('date_created')
+#    sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
+ #   sort_arrows = {}
+    # render them in a list.
+    return render(request, 
+        'store/order.html', 
+        {
+        'OrderTotal' : OrderTotal,
+        }, context)
+
+def new_order(request):
+    context = {}
+    return render(request, 'store/order.html')
+
+def past_order(request):
+    context = {}
+    return render(request, 'store/order.html')
+
+def edit_past_order(request):
+    context = {}
+    return render(request, 'store/order.html')
+
+def recurring_order(request):
+    context = {}
+    return render(request, 'store/order.html')
