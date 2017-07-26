@@ -11,6 +11,12 @@ Goal 6/9 : 2 weeks to fill out inventory page with items
     Accomplished ahead of schedule
 
 Goal 6/23 : 3 weeks to LDAP; create/edit inventory items; Todd fix container/price/amt inventory stuff
+    _Reached? Kind of - started ssh on Ubuntu VM to test LDAP, need to install and figure out DM to test on the internet.
+
+Goal 7/14 : AC gone 1 week
+    SC - Continue Create/Edit inventory items (pages created and displaying corrently already, will add functionality to these pages), fix display of update items and work on functionality
+    AC - continue LDAP and ssh configuration of ubuntu VM (installation, etc)
+    
 
 ---------------------------------------
 

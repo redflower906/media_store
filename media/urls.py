@@ -1,3 +1,4 @@
+
 """media URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
@@ -35,19 +36,27 @@ urlpatterns = [
 
 
 #user views
+##services
     url(r'^inventory/$', views.inventory, name='inventory'),
 #    $ allows you to build on the URL while using different views
     url(r'^inventory/new', views.create_item, name='new_item'),
     url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
     url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
-    url(r'^services/', views.services, name='services'),
     #url(r'^inventory/new', FormCreate.as_view(), name='new_item'),
     #url(r'^inventory/(?P<id>[0-9]*)/edit$', update_item.as_view(), name='edit_single_item'),
 
 
+    url(r'^services/', views.services, name='services'),
+
 ## from nameform
     url(r'^name/', views.get_name, name='name'),
-]
+
+##orders
+    url(r'^order/$', views.order, name='order'),
+    url(r'^order/new', views.new_order, name='new_order'),
+    url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
+    url(r'^order/(?P<id>[0-9]*)$', views.edit_past_order, name='edit_past_order'),
+    url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
 
 #add link to dump to Resource Matrix here
 
@@ -58,3 +67,6 @@ urlpatterns = [
 
 #services
 #	url(r'^service/$', 'media')
+
+
+]

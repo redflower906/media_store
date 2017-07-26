@@ -141,8 +141,27 @@ class Inventory(models.Model):
     def __str__(self):
         return self.inventory_text
 
+class OrderStatus(models.Model):
+    class Meta:
+        verbose_name = "Order Status"
+        verbose_name_plural = "Order Statuses"
+    name = models.CharField(max_length=50, blank=True, null=True, unique=True)
+    def __unicode__(self):
+        return self.name
+
+
+'''class OrderManager(models.Model):
+    def billed(self):
+        try:
+            date = self.filter().order_by('date_billed').last().date_billed
+        except:
+            date = None
+        if not date :
+            date = datetime.date(2000,01,01)
+        return date'''
 
 class Order(models.Model):
+    status = models.ForeignKey(OrderStatus)
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
 #   submitter = models.ForeignKey(User, related_name='submitter')
     department = models.ForeignKey(Department, blank=True, null=True)
@@ -151,6 +170,26 @@ class Order(models.Model):
     date_modified = models.DateField(blank=True, null=True)
     date_submitted = models.DateField(blank=True, null=True)
     date_complete = models.DateField(blank=True, null=True)
+    date_billed = models.DateField(blank=True, null=True)
+#    objects = OrderManager()
+    is_recurring = models.BooleanField()
+    #make below an if statement if boolean is true and if boolean is false
+    date_recurring_start = models.DateField(auto_now_add=True)
+    date_recurring_stop = models.DateField(blank=True, null=True)
+
+
+    def already_billed(self):
+        if self.date_billed:
+            return True
+        return False
+    def total(self):
+        total = 0
+    #not done with total
+    def __unicode__(self):
+        return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
+    def is_closed(self):
+        return self.status.name == 'Filled'
+
 
 
 class Item_Model_Form_two(ModelForm):
