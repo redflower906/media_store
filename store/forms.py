@@ -19,30 +19,37 @@ from django.utils import timezone
 class NumInput(TextInput):
     input_type = 'number'
 
-def item_model_formset_factory(extra):
-    return modelformset_factory(Inventory,
-        fields = ('product','media_type','cost','container','volume','notes'),
-        widgets = {
-            'cost': forms.TextInput(attrs={'class': 'line_cost'}),
-            'container': forms.TextInput(attrs={'class': 'line-container'}),
-            'volume': forms.TextInput(attrs={'class': 'line-volume'}),
-            'notes': forms.Textarea(attrs={'cols': 20, 'rows': 10, 'class': 'line-notes'}),
-            #'vendor': forms.TextInput(attrs={'class': 'line-container'})
-        },
-        extra=extra, can_delete=True,
-    )
-
 class Item_Model_Form(forms.ModelForm):
     class Meta:
         model = Inventory
-        fields = ('product','media_type','cost','container','volume','notes')
+        fields = ('inventory_text','product','media_type','cost','container','volume','notes')
+        labels = {
+            'inventory_text': 'Descriptive name'
+        }
         widgets = {
-            'cost': forms.TextInput(attrs={'class': 'line_cost'}),
-            'container': forms.TextInput(attrs={'class': 'line-container'}),
-            'volume': forms.TextInput(attrs={'class': 'line-volume'}),
-            'notes': forms.Textarea(attrs={'cols': 20, 'rows': 10, 'class': 'line-notes'}),
+            'inventory_text': forms.TextInput(attrs={'class': 'form-text'}),
+            'product': forms.TextInput(attrs={'class': 'form-text'}),
+            'media_type': forms.Select(attrs={'class': 'form-text'}),
+            'cost': forms.TextInput(attrs={'class': 'form-text'}),
+            'container': forms.TextInput(attrs={'class': 'form-text'}),
+            'volume': forms.TextInput(attrs={'class': 'form-text'}),
+            'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
+def item_model_formset_factory(extra):
+    return modelformset_factory(Inventory,
+    fields = ('product','media_type','cost','container','volume','notes'),
+    widgets = {
+        'product': forms.TextInput(attrs={'class': 'form-text'}),
+        'media_type': forms.Select(attrs={'class': 'form-text'}),
+        'cost': forms.TextInput(attrs={'class': 'form-text'}),
+        'container': forms.TextInput(attrs={'class': 'form-text'}),
+        'volume': forms.TextInput(attrs={'class': 'form-text'}),
+        'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),
+        #'vendor': forms.TextInput(attrs={'class': 'line-container'})
+    },
+    extra=extra, can_delete=False,
+    )
 
 '''
     def __init__(self, *args, **kwargs):

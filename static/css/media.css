@@ -21,6 +21,29 @@ body{
   color: #FF0000;
 }
 
+#inventory-buttons {
+  align-items: center;
+  display: flex;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+
+#inv-h {
+  display: flex;
+  height: 96px;
+  align-items: center;
+}
+
+.pull-right {
+  float: right !important;
+}
+
+.form {
+  position: relative;
+}
+
 h1 {
     color:#333;
     text-decoration:none;
@@ -30,12 +53,9 @@ h1 {
     padding-top: 50px;
 }
 
-select{
-    background-color:transparent;
-    border:none;
-    outline:none;
+.form-text {
+  width: 300px
 }
-
 
 h1 {
   color:#333;

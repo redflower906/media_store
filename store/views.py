@@ -4,7 +4,8 @@ from django.template import context
 ## from nameform 
 from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form 
 from django.http import HttpResponseRedirect
-from .models import Inventory
+from .models import Inventory, Item_Model_Form_two
+from django.forms.models import formset_factory, modelformset_factory
 import MySQLdb, sys
 #from django.http import HttpResponse
 '''
@@ -61,8 +62,6 @@ def inventory(request):
     #current_URL(request, context)
     InventoryItems = Inventory.objects.all()
     #sort
-    # MC = Inventory(media_choices)
-    # print(MC)
     Items = InventoryItems.order_by('inventory_text')
     sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
     sort_arrows = {}
@@ -75,82 +74,38 @@ def inventory(request):
         'sort_arrows': sort_arrows
         }, context)
 
-# #@login_required(login_url='login')
-# def create_item(request):
-#     InventoryItems = Inventory.objects.all()
-#     ItemModelFormset = item_model_formset_factory(extra=2)
-#     IDs = Inventory.objects.values_list('id', flat=True)
-#     inventory = Inventory()
-#     formset = ItemModelFormset()
-#     print(IDs[0])
-
-#     #If usr select item pk exists, then go to item(id) page
-#     #else to to item_form
-
-#     #what does if request.method == "post" do???
-#     #from what I read, POST is used for form submissions that affect the database. So do we even
-#     #need the if? Nevermind, the if is to process the submitted form, otherwise it just returns
-#     #the blank form.
-#     if request.method == "POST":
-#         formset = ItemModelFormset(request.POST)
-#         # create item
-#         if formset.is_valid():
-#             formset.save()
-#             messages.success(request, 
-#             'Product {0} was successfully created.'.format(InventoryItems.product))
-#             return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
-        
-#     # just show the form
-#     return render(request, 
-#     'store/item_form.html', {
-#     'formset': formset,
-#     }, context)
-
 #@login_required(login_url='login')
 def create_item(request):
     ItemModelFormset = item_model_formset_factory(extra=1)
-    formset = ItemModelFormset(queryset=Inventory.objects.none())
+    print(request)
     if request.method == "POST":
         formset = ItemModelFormset(request.POST)
         # create item
         if formset.is_valid():
             formset.save()
-            messages.success(request, 
-            'Product {0} was successfully created.'.format(InventoryItems.product))
-            return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
-        
+            # messages.success(request, 
+            # 'Product {0} was successfully created.'.format(InventoryItems.product))
+            return HttpResponseRedirect('/inventory/')
+    else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
     return render(request, 
     'store/item_form.html', {
     'formset': formset,
     }, context)
     
-'''
-#is this necessary? shouldn't I just use edit single item?
-def _update_item(request, id):
-    SingleItem = get_object_or_404(Inventory, pk=id)
-    ItemModelFormSet = item_model_formset_factory()
-    return render(request, 
-    'store/item_form.html', {
-        'formset': formset
-        }, context)
-'''
-
 def update_item(request, id):
-    ItemModelFormset = item_model_formset_factory(extra=0)
     SingleItem = get_object_or_404(Inventory, pk=id)
-    Item_form = Item_Model_Form(instance=SingleItem)
-    #formset = ItemModelFormset(instance=SingleItem)
-
+    Item_form = Item_Model_Form()
     if request.method == "POST":
-        #formset = ItemModelFormset(request.POST, instance=SingleItem)
         Item_form = Item_Model_Form(request.POST, instance=SingleItem)
         # create item
-        if formset.is_valid():
-            formset.save()
+        if Item_form.is_valid():
+            Item_form.save()
             messages.success(request, 
-            'Product {0} was successfully created.'.format(InventoryItems.product))
-            return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
+            'Product {SingleItem.id} was successfully updated.'.format(SingleItem.product))
+            return HttpResponseRedirect('/inventory/'.format(SingleItem.id))
+    else:
+         Item_form = Item_Model_Form(instance=SingleItem)
 
     # just show the form
     return render(request, 
@@ -158,6 +113,34 @@ def update_item(request, id):
     'Item_form': Item_form,
     'SingleItem': SingleItem,
     }, context)
+
+# def update_item(request, id):
+#     ItemModelFormset = item_model_formset_factory(extra=0)
+#     SingleItem = get_object_or_404(Inventory, pk=id)
+#     qset = Inventory.objects.get(pk=id)
+#     Item_form = modelformset_factory(Inventory, form = Item_Model_Form)
+#     formset = Item_form()
+
+#     #formset = ItemModelFormset(queryset=SingleItem)
+
+#     if request.method == "POST":
+#         #formset = ItemModelFormset(request.POST, queryset=SingleItem)
+#         formset = Item_form(request.POST, queryset=qset)
+#         Item_form = Item_Model_Form(request.POST)
+#         # create item
+#         if formset.is_valid():
+#             formset.save()
+#             messages.success(request, 
+#             'Product {0} was successfully created.'.format(InventoryItems.product))
+#             return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
+
+#     # just show the form
+#     return render(request, 
+#     'store/item_form.html', {
+#     'Item_form': Item_form,
+#     'formset': formset,
+#     'SingleItem': SingleItem,
+#     }, context)
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)

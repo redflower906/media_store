@@ -120,16 +120,16 @@ class Inventory(models.Model):
     class Meta:
         verbose_name_plural = 'Inventory'
 
-    inventory_text = models.CharField(max_length=100)
-    product = models.CharField(max_length=50, blank=True, null=True)
-    media_type = models.CharField(max_length=50, blank=True, null=True, choices=MEDIA_CHOICES)
-    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    container = models.CharField(max_length=100, blank=True, null=True)
+    inventory_text = models.CharField(max_length=75)
+    product = models.CharField(max_length=40, blank=True, null=True)
+    media_type = models.CharField(max_length=30, blank=True, null=True, choices=MEDIA_CHOICES)
+    cost = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    container = models.CharField(max_length=50, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
-    date_modified = models.DateTimeField(auto_now=True)
+    date_modified = models.DateTimeField(auto_now_add=True)
     deposit = models.IntegerField(default=0, blank=True,null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
     part_num = models.CharField(max_length=20, blank=True, null=True)
@@ -153,9 +153,9 @@ class Order(models.Model):
     date_complete = models.DateField(blank=True, null=True)
 
 
-# class Item_Model_Form(ModelForm):
-#     class Meta:
-#         model = Inventory
-#         fields = ['product','media_type','cost','container', 'volume', 'notes','active']
-#         #product = forms.CharField(required=True, max_length=200)
+class Item_Model_Form_two(ModelForm):
+    class Meta:
+        model = Inventory
+        fields = ['product','media_type','cost','container', 'volume', 'notes','active']
+        #product = forms.CharField(required=True, max_length=200)
 
