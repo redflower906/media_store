@@ -214,23 +214,23 @@ def order(request):
  #   sort_arrows = {}
     # render them in a list.
     return render(request, 
-        'store/order.html', 
+        'store/order_list.html', 
         {
         'OrderTotal' : OrderTotal,
         }, context)
 
 def new_order(request):
     context = {}
-    return render(request, 'store/order.html')
+    return render(request, 'store/order_create.html')
 
 def past_order(request):
     context = {}
-    return render(request, 'store/order.html')
+    return render(request, 'store/order_list.html')
 
 def edit_past_order(request):
     context = {}
-    return render(request, 'store/order.html')
+    return render(request, 'store/order_edit.html')
 
 def recurring_order(request):
     context = {}
-    return render(request, 'store/order.html')
+    return render(request, 'store/order_list.html')

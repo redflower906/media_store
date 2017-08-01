@@ -19,9 +19,9 @@
             <li class="dropdown">
               <a href="/order" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders <span class="caret"></span></a>
               <ul class="dropdown-menu">
-                <li><a href="/order">Create</a></li>
-                <li><a href="#">Past Orders</a></li>
-                <li><a href="#">Recurring Orders</a></li>
+                <li><a href="/order/new">Create</a></li>
+                <li><a href="{% url 'past_order' OrderTotal.id %}">Past Orders</a></li>
+                <li><a href="/order/new">Recurring Orders</a></li>
               </ul>
             </li>
           </ul>

@@ -1,0 +1,53 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+{% load formset_tags %}
+<hr/>
+
+<div class="row">
+    <div class="col-xs-12, col-md-12">
+        <h2>New Order</h2>
+    </div>
+</div>
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                <a href="{{ sorting.product }}">
+                    Product
+                    {% if sort_arrows.product == "up" %}
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                    {% elif sort_arrows.product == "down" %}
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                    {% endif %}
+                </a>
+            </th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for InventoryItem in InventoryItems %}
+        <tr>
+            <td><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>
+            <td>
+                {% if InventoryItem.active %}
+                <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                {% else %}
+                <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}
