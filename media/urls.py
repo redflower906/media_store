@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from store import views #as store_views  #can add more here with, 
-#from store.views import FormCreate 
+from store.views import update_item 
 
 app_name = 'store'
 
@@ -43,6 +43,8 @@ urlpatterns = [
     url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
     url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
     #url(r'^inventory/new', FormCreate.as_view(), name='new_item'),
+    #url(r'^inventory/(?P<id>[0-9]*)/edit$', update_item.as_view(), name='edit_single_item'),
+
 
     url(r'^services/', views.services, name='services'),
 

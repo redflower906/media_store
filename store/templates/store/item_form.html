@@ -3,31 +3,62 @@
 {% include "store/navbar.html"%}
 {% endblock %}
 {% block content %}
-<div class="row">
-    <div class="col-xs-12">
+<div class="post form">
+    <div class='row', id='inv-h'>
+        <div class="col-md-8">
+            {% if SingleItem.id %}
+            <h2>Update product: {{ SingleItem.inventory_text }}</h2>
+            {% else %}
+            <h2>Create a new product</h2>
+            {% endif %}
+        </div>
+
+    </div>
+    <hr/>
+    <div class='row'>
+    <form method="POST" action="" class="post-form form-vertical">
+        {% csrf_token %}
         {% if SingleItem.id %}
-        <h2>Update product: {{ SingleItem.inventory_text }}</h2>
+        <div class='col-md-6'>
+            <table>
+                {{ Item_form.as_table }} 
+            </table>
+        </div>
         {% else %}
-        <h2>Create a new product</h2>
+        <div>
+            <table>
+            {{formset.as_table}}
+            </table>
+        </div>
+        {% endif %}
+    <div class='text-right', id='inventory-buttons'>
+        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+        {% if SingleItem.id %}
+        <a href="#" class="btn btn-danger pull-right">Inactivate</a>
+        <a href="{% url 'single_item' SingleItem.id %}" class="btn btn-default pull-right">Cancel</a>
+        {% else %}
+        <a href="/inventory" class="btn btn-default pull-right">Cancel</a>
         {% endif %}
     </div>
+    </form>    
+    </div>
 </div>
-<hr/>
-<form method="post" action="" class="form-horizontal">
-    <!--{% csrf_token %}-->
-    {% load formset_tags %}
 
-    {% for hidden in item_form.hidden_fields %}
+{% endblock %}
+
+    {% comment %} {% load formset_tags %}
+
+    {% for hidden in Item_form.hidden_fields %}
     {{ hidden }}
     {% endfor %}
 
-    {% if item_form.non_field_errors %}
+    {% if Item_form.non_field_errors %}
     <div class="row">
         <div class="col-xs-12 alert alert-danger">
-            {{ item_form.non_field_errors }}
+            {{ Item_form.non_field_errors }}
         </div>
     </div>
-    {% endif %}
+    {% endif %} 
 
 <!--errors!>
     <div class="row">
@@ -57,7 +88,7 @@
 
     <hr/>
 
-    {{ formset.management_form }}
+    {{ Item_form.management_form }}
     <div class="row">
         <div class="col-xs-12">
             <table id="item_line_table" class="table">
@@ -71,17 +102,15 @@
                         <th>Notes</th>
                         <th>Delete</th>
                     </tr>
-                </thead>
+                </thead> 
                 <tbody>
-                    {% for form in formset %}
+                    {% for item in Item_form%}
                     <tr>
                         {% for hidden in form.hidden_fields %}
                             {{hidden}}
                         {% endfor %}
-
-                        {% for SingleItem in form.visible_fields %}
-                        <td>{{SingleItem}}</td>
-                        {% endfor %}
+                        <tr>
+                        <td>{{Item_form}}</td>
                     </tr>
                     {% if form.errors %}
                     <tr>
@@ -120,10 +149,10 @@
         <td><input id="id_SingleItem_set-{{id}}-SingleItem_text" maxlength="100" name="SingleItem_set-{{id}}-SingleItem_text" type="text"></td>
         <td>
 
-<select id="id_SingleItem_set-{{id}}-category" class="chosen-select line-media" name="SingleItem_set-{{id}}-media">
+<select id="id_SingleItem_set-{{id}}-media_type" class="chosen-select line-media_type" name="SingleItem_set-{{id}}-media">
         {% endverbatim %}
         <option value="">------</option>
-        {% for option in formset.forms.0.instance.media_choices %}
+        {% for option in Item_form.forms.0.instance.MEDIA_CHOICES %}
         <option value="{{option.0}}">{{option.1}}</option>
         {% endfor %} 
         {% verbatim %}
@@ -136,5 +165,4 @@
         <td><input id="id_SingleItem_set-{{id}}-DELETE" name="SingleItem_set-{{id}}-DELETE" type="checkbox"></td>
     </tr>
 </script>
-{% endverbatim %}
-{% endblock %}
+{% endverbatim %} {% endcomment %}
