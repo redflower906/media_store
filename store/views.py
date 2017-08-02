@@ -1,31 +1,32 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.template import context
-## from nameform 
-from .forms import NameForm, item_model_formset_factory, NumInput, Item_Model_Form 
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.forms.models import formset_factory, modelformset_factory
-from .models import Inventory, Order
+from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm
+from .models import Inventory, Order, Announcements
 import MySQLdb, sys
-#from django.http import HttpResponse
-'''
-NOT WORKING
-def current_URL(request, context):
-    current = request.path
-    print(current)
-    current = current.strip("/")
-    context.setdefault('current', current)
-'''
+
 
 def index(request):
     context = {}
-    #current_URL(request, context)
-    return render (request, 'store/home.html', context)
+    return render (request, 'store/home_staff.html', context)
 
 def home(request):
-    context = {}
-    return render(request, 'store/home.html', context)
-
+    post = get_object_or_404(Announcements)
+    #if staff member
+    if request.method == "POST":
+        AForm = AnnouncementsForm(request.POST, instance=post)
+        if AForm.is_valid():
+            AForm.save()
+            messages.success(request, 
+            'Annoucements have been updated')
+            return HttpResponseRedirect('/store/')
+    else:
+        AForm = AnnouncementsForm(instance=post)
+    #return render(request, 'store/home.html', {'AForm': AForm})
+    return render(request, 'store/home.html', {'post': post} )
+ 
 def login(request):
     return render (request, 'store/login.html')
 
@@ -72,20 +73,22 @@ def inventory(request):
 #@login_required(login_url='login')
 def create_item(request):
     ItemModelFormset = item_model_formset_factory(extra=1)
-    print(request)
+    inventory = Inventory()
+
     if request.method == "POST":
         formset = ItemModelFormset(request.POST)
         # create item
         if formset.is_valid():
             formset.save()
-            # messages.success(request, 
-            # 'Product {0} was successfully created.'.format(InventoryItems.product))
+            messages.success(request, 
+            'Product was successfully created.')
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
     return render(request, 
     'store/item_form.html', {
     'formset': formset,
+    'inventory': inventory,
     }, context)
     
 def update_item(request, id):
@@ -97,45 +100,16 @@ def update_item(request, id):
         if Item_form.is_valid():
             Item_form.save()
             messages.success(request, 
-            'Product {SingleItem.id} was successfully updated.'.format(SingleItem.product))
-            return HttpResponseRedirect('/inventory/'.format(SingleItem.id))
+            '{0} was successfully updated.'.format(SingleItem.inventory_text))
+            return HttpResponseRedirect('/inventory/')
     else:
          Item_form = Item_Model_Form(instance=SingleItem)
-
     # just show the form
     return render(request, 
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
     }, context)
-
-# def update_item(request, id):
-#     ItemModelFormset = item_model_formset_factory(extra=0)
-#     SingleItem = get_object_or_404(Inventory, pk=id)
-#     qset = Inventory.objects.get(pk=id)
-#     Item_form = modelformset_factory(Inventory, form = Item_Model_Form)
-#     formset = Item_form()
-
-#     #formset = ItemModelFormset(queryset=SingleItem)
-
-#     if request.method == "POST":
-#         #formset = ItemModelFormset(request.POST, queryset=SingleItem)
-#         formset = Item_form(request.POST, queryset=qset)
-#         Item_form = Item_Model_Form(request.POST)
-#         # create item
-#         if formset.is_valid():
-#             formset.save()
-#             messages.success(request, 
-#             'Product {0} was successfully created.'.format(InventoryItems.product))
-#             return HttpResponseRedirect('/inventory/{0}'.format(InventoryItems.id))
-
-#     # just show the form
-#     return render(request, 
-#     'store/item_form.html', {
-#     'Item_form': Item_form,
-#     'formset': formset,
-#     'SingleItem': SingleItem,
-#     }, context)
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -144,15 +118,15 @@ def get_item(request, id):
     'SingleItem': SingleItem,
     })
 
-def delete_item(request, id):
-    SingleItem = get_object_or_404(Inventory, pk=id)
+# def delete_item(request, id):
+#     SingleItem = get_object_or_404(Inventory, pk=id)
 
-    #can't delete an item that's associated with an order
+#     #can't delete an item that's associated with an order
 
-    if item.order_set.count() > 0:
-        return HttpResponseBadRequest(simplejson.dumps({'failed': 'This item is still associated with existing orders and cant be deleted. Please mark it as inactive instead'}), content_type="application/json")
-    item.delete()
-    return HttpResponse(simplejson.dumps({'deleted': id}), content_type="application/json")
+#     if item.order_set.count() > 0:
+#         return HttpResponseBadRequest(simplejson.dumps({'failed': 'This item is still associated with existing orders and cant be deleted. Please mark it as inactive instead'}), content_type="application/json")
+#     item.delete()
+#     return HttpResponse(simplejson.dumps({'deleted': id}), content_type="application/json")
 
 def single_item(request, id):
     if request.method == "POST":
@@ -162,26 +136,6 @@ def single_item(request, id):
     else:
         return get_item(request, id)
         
-    # from nameform
-def get_name(request):
-    # if this is a POST request we need to process the form data
-    if request.method == 'POST':
-        # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/thanks/')
-
-    # if a GET (or any other method) we'll create a blank form
-    else:
-        form = NameForm()
-
-    return render(request, 'store/name.html', {'form': form})
-    result_set = []
-
 # class FormCreate(CreateView):
 #     model = Inventory
 #     template_name = 'store/form.html'

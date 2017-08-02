@@ -8,7 +8,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 import decimal
-import datetime
+from datetime import datetime
 
 
 
@@ -117,6 +117,7 @@ class Inventory(models.Model):
         ('Wurzburg Food','Wurzburg Food')
 
     )
+    BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     class Meta:
         verbose_name_plural = 'Inventory'
 
@@ -135,7 +136,7 @@ class Inventory(models.Model):
     part_num = models.CharField(max_length=20, blank=True, null=True)
     withdrawal = models.IntegerField(default=0, blank=True, null=True)
 #    current_amt = deposit - withdrawal
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=True, choices=BOOL_CHOICES)
 
 
     def __str__(self):
@@ -161,7 +162,8 @@ class OrderStatus(models.Model):
         return date'''
 
 class Order(models.Model):
-    status = models.ForeignKey(OrderStatus)
+    status = models.ForeignKey(OrderStatus, null=True)
+    #had to make null to migrate CHANGE LATER
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
 #   submitter = models.ForeignKey(User, related_name='submitter')
     department = models.ForeignKey(Department, blank=True, null=True)
@@ -172,9 +174,10 @@ class Order(models.Model):
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
 #    objects = OrderManager()
-    is_recurring = models.BooleanField()
+    is_recurring = models.BooleanField(default=False)
+    #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
-    date_recurring_start = models.DateField(auto_now_add=True)
+    date_recurring_start = models.DateField(default=datetime.now, blank=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
 
 
@@ -192,9 +195,7 @@ class Order(models.Model):
 
 
 
-class Item_Model_Form_two(ModelForm):
-    class Meta:
-        model = Inventory
-        fields = ['product','media_type','cost','container', 'volume', 'notes','active']
-        #product = forms.CharField(required=True, max_length=200)
+class Announcements(models.Model):
+   text = models.TextField()
+   show = models.BooleanField(default=False)
 

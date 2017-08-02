@@ -48,9 +48,6 @@ urlpatterns = [
 
     url(r'^services/', views.services, name='services'),
 
-## from nameform
-    url(r'^name/', views.get_name, name='name'),
-
 ##orders
     url(r'^order/$', views.order, name='order'),
     url(r'^order/new', views.new_order, name='new_order'),

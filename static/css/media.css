@@ -29,6 +29,10 @@ body{
   right: 0;
 }
 
+.messages {
+  text-align: center;
+}
+
 
 #inv-h {
   display: flex;
