@@ -5,11 +5,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import TextInput, HiddenInput
-<<<<<<< HEAD
-from .models import Inventory, Vendor, Order
-=======
-from .models import Inventory, Vendor, Announcements
->>>>>>> f31b3581c60c47620f351e328b4540bb1c6194b8
+from .models import Inventory, Vendor, Announcements, Order
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
@@ -72,23 +68,10 @@ def item_model_formset_factory(extra):
 '''
 
 
-class NameForm(forms.Form):
-    your_name = forms.CharField(label='Your name', max_length=100)
-
-#class 
-Update product: 4% agar, 100 mm (sleeve)
-Descriptive name:   
-Product:    
-Media type: 
-Cost:   
-Container:  
-Volume: 
-Notes:  
-
-class OrderForm(forms.ModelForm):
+"""class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('')
+        fields = ('')"""
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:
