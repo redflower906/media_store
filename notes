@@ -14,10 +14,11 @@ Goal 6/23 : 3 weeks to LDAP; create/edit inventory items; Todd fix container/pri
     _Reached? Kind of - started ssh on Ubuntu VM to test LDAP, need to install and figure out DM to test on the internet.
 
 Goal 7/14 : AC gone 1 week
-    SC - Continue Create/Edit inventory items (pages created and displaying corrently already, will add functionality to these pages), fix display of update items and work on functionality
+    COMPLETED::SC - Continue Create/Edit inventory items (pages created and displaying corrently already, will add functionality to these pages), fix display of update items and work on functionality
     AC - continue LDAP and ssh configuration of ubuntu VM (installation, etc)
     
-
+Goal 8/11: 
+    SC - work on staff/user views of created orders
 ---------------------------------------
 
 Long Term Goals (Set 6/9/17)

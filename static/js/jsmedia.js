@@ -18,32 +18,11 @@
     }); 
 });
 
-// var $makeActive = false;
-// $('#activate').on('click', 'a', function() {
-//    $makeActive = !($makeActive);
-//     console.log($makeActive);
-// });
-
-// var $makeInactive = true;
-// $('#inactivate').on('click', 'a', function() {
-//    $makeInactive = !($makeInactive);
-//     console.log($makeInactive);
-// });
-
-function updateActivation(){
-    var data = {'active': active};
-    $.post(URL, data, function(response){
-        if(response === 'success'){ console.log(data); }
-        else{ console.log('Error! :('); }
-    });
-}
-$(document).ready(function(){
-    $('#activate').click(function(){
-        active = true;
-        updateActivation();
-    });
-    $('#inactivate').click(function(){
-        active = false;
-        updateActivation();
-    });
-});
+$(document).ready(function() {
+    $('#inventory_table').DataTable( {
+        "order": [[ 0, "desc" ]],
+        stateSave: false,
+        "paging": false,
+        "dom": 'flrti',
+    } );
+} );

@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.template import context
 from django.contrib import messages
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.forms.models import formset_factory, modelformset_factory
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm
 from .models import Inventory, Order, Announcements
@@ -28,7 +30,14 @@ def home(request):
     return render(request, 'store/home.html', {'post': post} )
  
 def login(request):
-    return render (request, 'store/login.html')
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(request, username=username, password=password)
+    if user is not None:
+        login(request, user)
+        return HttpResponseRedirect('/store/')
+    else:
+        return render (request, 'store/login.html')
 
 def get_items(request):
 	result_set = []
@@ -58,7 +67,33 @@ def inventory(request):
     context = {}
     InventoryItems = Inventory.objects.all()
     #sort
-    Items = InventoryItems.order_by('inventory_text')
+    # ordering = request.GET.get('o')
+    # Items = InventoryItems.order_by('inventory_text')
+    # if ordering:
+    #     sort_by = ordering.split('.')
+
+    #     if sort_by:
+    #         Items = InventoryItems.order_by(*sort_by)
+
+    #     sort_urls = {}
+    #     sort_arrows = {}
+    #     columns = ('inventory_text', 'product', 'container', 'volume', 'active' )
+    #     for column in columns:
+    #         sort_columns = ordering.split('.')
+    #         url = '?o='
+    #         try:
+    #             position = sort_columns.index(column)
+    #             sort_columns.pop(position)
+    #             url += '-' + column
+    #             sort_arrows[column] = 'down'
+    #             if len(sort_columns):
+    #                 url += '.' + '.'.join(sort_columns)
+    #         sort_urls[column] = url
+    # else:
+    #     services = services.order_by('inventory_text')
+    #     sort_urls = {'inventory_text': '?o=inventory_text', 'product': '?o=product', 'container': '?o=container', 'volume': '?o=volume', 'active': '?o=active'}
+    #     sort_arrows = {}
+
     sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
     sort_arrows = {}
     # render them in a list.

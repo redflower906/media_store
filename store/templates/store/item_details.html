@@ -10,10 +10,7 @@
     </div>
     <div class="col-xs-6 text-right action-buttons">
         {% csrf_token %}
-        <a href="{% url 'edit_single_item' SingleItem.id %}" class="btn btn-default">Edit</a>
-        {% if service.workorder_set.count == 0 %}
-        <a href="" class="deleteService btn btn-danger">Delete</a>
-        {% endif %}
+        <a href="{% url 'edit_single_item' SingleItem.id %}" class="btn btn-primary">Edit</a>
     </div>
 </div>
 <hr/>

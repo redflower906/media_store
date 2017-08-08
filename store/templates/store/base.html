@@ -13,8 +13,8 @@
 
     <link href="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}" rel="stylesheet">
     <link rel = "stylesheet" href="{% static 'css/media.css' %}">
-
-
+    <!-- datatables.net -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>    
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -44,8 +44,10 @@
     <script src="{% static 'js/jsmedia.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+      <!-- datatables.net -->
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs/dt-1.10.15/r-2.1.1/datatables.min.js"></script>   
     <!-- Bootstrap CSS -->
-    <script src="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}"></script>
+    {% comment %} <script src="{% static 'bootstrap-3.3.7/css/bootstrap.min.css' %}"></script> {% endcomment %}
     {% block content %}
     {% endblock %}
     </div>

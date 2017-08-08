@@ -17,6 +17,11 @@ body{
   color: #008000;
 }
 
+#center_columns {
+  align-items: center;
+  text-align: center;
+}
+
 .disabled-icon {
   color: #FF0000;
 }
@@ -27,6 +32,11 @@ body{
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+#inventory_table_filter {
+  display: flex;
+  float: left !important;
 }
 
 .messages {
@@ -112,15 +122,12 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
   width: 100%;
 }
 
-
-
-
-/* a {
-  color: blue;
-  text-decoration: none;
+#table_header {
+  align-content: center;
+  text-align: center;
 }
 
-a:hover {
-  text-decoration: none;
+#name:hover, #prod:hover, #cont:hover, #vol:hover, #active:hover {
+  color: #23527c;
+  text-decoration: underline;
 }
-*/
