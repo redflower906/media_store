@@ -5,7 +5,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import TextInput, HiddenInput
-from .models import Inventory, Vendor
+from .models import Inventory, Vendor, Order
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
@@ -65,3 +65,16 @@ class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
 
 #class 
+Update product: 4% agar, 100 mm (sleeve)
+Descriptive name:   
+Product:    
+Media type: 
+Cost:   
+Container:  
+Volume: 
+Notes:  
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('')
