@@ -34,7 +34,6 @@
     <div class='text-right', id='inventory-buttons'>
         <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
         {% if SingleItem.id %}
-        <a href="#" class="btn btn-danger pull-right">Inactivate</a>
         <a href="{% url 'single_item' SingleItem.id %}" class="btn btn-default pull-right">Cancel</a>
         {% else %}
         <a href="/inventory" class="btn btn-default pull-right">Cancel</a>
@@ -43,7 +42,6 @@
     </form>    
     </div>
 </div>
-
 {% endblock %}
 
     {% comment %} {% load formset_tags %}
