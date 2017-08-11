@@ -14,20 +14,6 @@ from datetime import datetime
 
 # Create your models here.
 
-# MEDIA_CHOICES = (
-#     #('','---------'),
-#     ('Agar','Agar'),
-#     ('Antibiotics','Antibiotics'),
-#     ('Cornmeal Food','Cornmeal Food'),
-#     ('Dextrose Food','Dextrose Food'),
-#     ('Liquid Media','Liquid Media'),
-#     ('Miscellaneous','Miscellaneous'),
-#     ('Power Food','Power Food'),
-#     ('Solutions & Buffers','Solutions & Buffers'),
-#     ('Sylgard','Sylgard'),
-#     ('Wurzburg Food','Wurzburg Food')
-
-# )
 
 class Department(models.Model):
     name = models.CharField(max_length=100)
@@ -192,6 +178,12 @@ class Order(models.Model):
         return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
     def is_closed(self):
         return self.status.name == 'Filled'
+
+"""class OrderLine(models.Model):
+    o_id = models.ForeignKey(Order)
+    description = models.TextField(blank=True)"""
+
+
 
 
 

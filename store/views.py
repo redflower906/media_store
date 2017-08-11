@@ -8,6 +8,7 @@ from django.forms.models import formset_factory, modelformset_factory
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm
 from .models import Inventory, Order, Announcements
 import MySQLdb, sys
+import csv
 
 
 def index(request):
@@ -191,9 +192,32 @@ def order(request):
         'OrderTotal' : OrderTotal,
         }, context)
 
-def new_order(request):
+def new_order(request): #, copy_id=None
     context = {}
     return render(request, 'store/order_create.html')
+    #user = request.user
+    #user_profile = UserProfile.objects.get(user=user.id)
+    #department = Department.objects.get(number=user_profile.department.number)
+    #billed_date = Order.objects.already_billed()
+
+    #order_list = order_list(user, filters={'limit'=10})#need to add this!!!
+
+    '''initial={
+    'submitter'= user.id,
+    'date_complete'= time.strftime("%Y-%m-%d"), #not sure strftime!!!
+    'department'= department.id,
+    'logged_in'= user_profile,
+    }'''
+
+#    OrderInlineFormset=order_inline_formset_factory(1),
+
+'''if request.method='POST':
+    order=Order()
+    #create the order form
+    order_form = OrderModelForm(request.POST, instance=order, initial=initial)
+    #create orderline formset
+    line_formset = OrderInlineFormset'''
+
 
 def past_order(request):
     context = {}
