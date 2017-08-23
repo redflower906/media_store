@@ -12,7 +12,7 @@ import MySQLdb, sys
 
 def index(request):
     context = {}
-    return render (request, 'store/home_staff.html', context)
+    return render (request, 'store/home.html', context)
 
 def home(request):
     post = get_object_or_404(Announcements)

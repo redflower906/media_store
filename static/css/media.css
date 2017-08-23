@@ -11,6 +11,7 @@ border:none;
 
 body{
   padding-bottom:10px;
+  margin: 0;
 }
 
 .active-icon {
@@ -37,6 +38,14 @@ body{
 #inventory_table_filter {
   display: flex;
   float: left !important;
+}
+
+#search_row {
+  justify-content: end;
+}
+
+#add_inv_btn {
+  float: right;
 }
 
 .messages {

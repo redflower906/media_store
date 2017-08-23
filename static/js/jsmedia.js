@@ -18,11 +18,36 @@
     }); 
 });
 
+//Does nothing right now
+// $(".search_dt").html($(".dataTables_filter"));
+
 $(document).ready(function() {
     $('#inventory_table').DataTable( {
-        "order": [[ 0, "desc" ]],
+        "order": [[ 0, "asc" ]],
         stateSave: false,
         "paging": false,
         "dom": 'flrti',
+        "columns": [
+            null,
+            null,
+            null,
+            null,
+            { "type": "checked-in" },
+            { "sorting": false },
+          ]
     } );
 } );
+
+//Allows boolean sort for inventory table
+jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
+	var a_sort = parseInt($(a).data("sort"));
+	var b_sort =  parseInt($(b).data("sort"));
+	return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
+};
+
+jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
+	var a_sort = parseInt($(a).data("sort"));
+	var b_sort =  parseInt($(b).data("sort"));
+	return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
+};
+

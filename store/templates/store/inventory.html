@@ -6,11 +6,15 @@
 <hr/>
 {% comment %} if staff {% endcomment %}
 <div class="row">
-    <div class="col-xs-12, col-md-12">
+    <div class="col-xs-12, col-md-12 head_inv" id="head_inv">
         <h2>Inventory</h2>
     </div>
-    <div class="col-xsm-offset-4 text-right action-buttons" id="search_row">
-        <a href="/inventory/new" class="btn btn-default">Add inventory item</a>
+    <div class="col-xs-12, col-md-12 action-buttons" id="search_row">
+        <div class="search_dt">
+            {% comment %} <span class="input-group-addon">Search:</span>
+            <input type="text" id="searchbox"> {% endcomment %}
+        </div>
+        <a href="/inventory/new" id="add_inv_btn" class="btn btn-default">Add inventory item</a>
     </div>
 </div>
 
@@ -26,7 +30,7 @@
             <th id="cont" class="text-primary">Container</th>                 
             <th id="vol" class="text-primary">Volume</th>                 
             <th id="active" class="text-primary">Active</th>
-            <th>Actions</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -39,8 +43,10 @@
             <td id="center_columns">
                 {% if InventoryItem.active %}
                 <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                <div style="display:hidden" data-sort="1"></div>
                 {% else %}
                 <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                <div style="display:hidden" data-sort="0"></div>
                 {% endif %}
             </td>
             {% comment %} if staff {% endcomment %}

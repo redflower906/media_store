@@ -5,6 +5,19 @@ add container and volume columns to database and display on inventory page?
     quantity of plates in sleeve, vials in tray, etc in customer view description
     add unit price for items in batches (bottle, vial, plate, etc)
 
+new goal: set up staff view order page
+    what are tabs?
+        submitted/in-Progress/recurring (separated within same tab)
+        complete, not billed (non-recurring and recurring separated within same tab)
+        complete, last billing cycle (non-recurring and recurring separated within same tab)
+    set up virtual env within server, install git and other things, then install 
+    requirements.txt
+        ssh harrisons@(IP address)
+        cd up to top, cd into opt.
+        to leave, type exit.
+    work on javascript on inventory page, maybe searches
+    create error/404 pages
+
 Real Time Progress
 
 Goal 6/9 : 2 weeks to fill out inventory page with items
