@@ -1,14 +1,9 @@
 astroid==1.5.3
 certifi==2017.4.17
 chardet==3.0.3
-Django==1.11.2
-django-formset-js==0.5.0
-django-jquery-js==3.1.1
-idna==2.5
 isort==4.2.15
 lazy-object-proxy==1.3.1
 mccabe==0.6.1
-mysqlclient==1.3.10
 pyldap==2.4.37
 pylint==1.7.1
 pylint-django==0.7.2
@@ -70,7 +65,6 @@ pytz==2017.2
 pyxdg==0.25
 PyYAML==3.12
 reportlab==3.3.0
-requests==2.10.0
 SecretStorage==2.3.1
 sessioninstaller==0.0.0
 simplejson==3.10.0
@@ -94,7 +88,6 @@ unity-scope-tomboy==0.1
 unity-scope-virtualbox==0.1
 unity-scope-yelp==0.1
 unity-scope-zotero==0.1
-urllib3==1.15.1
 usb-creator==0.3.3
 virtualenv==15.1.0
 wadllib==1.3.2
