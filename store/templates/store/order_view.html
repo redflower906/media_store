@@ -16,7 +16,7 @@
 
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" {% if active_tab == 'p1' %}class="active"{% endif %} ><a href="#wo-created" aria-controls="home" role="tab" data-toggle="tab"><span class="badge">{{workorder_list.paginator.count}}</span> Orders not completed</a></li>
-    <li role="presentation" {% if active_tab == 'p3' %}class="active"{% endif %} ><a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab"><span class="badge">{{last_billed.paginator.count}}</span> Completed orders not yet billed</a></li>
+    <li role="presentation" {% if active_tab == 'p2' %}class="active"{% endif %} ><a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab"><span class="badge">{{last_billed.paginator.count}}</span> Completed orders not yet billed</a></li>
     <li role="presentation" {% if active_tab == 'p3' %}class="active"{% endif %} ><a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab"><span class="badge">{{last_billed.paginator.count}}</span> Completed orders billed the last billing period</a></li>    
 </ul>
 
