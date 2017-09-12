@@ -128,29 +128,9 @@ class Inventory(models.Model):
     def __str__(self):
         return self.inventory_text
 
-class OrderStatus(models.Model):
-    class Meta:
-        verbose_name = "Order Status"
-        verbose_name_plural = "Order Statuses"
-    name = models.CharField(max_length=50, blank=True, null=True, unique=True)
-    def __unicode__(self):
-        return self.name
-
-
-'''class OrderManager(models.Model):
-    def billed(self):
-        try:
-            date = self.filter().order_by('date_billed').last().date_billed
-        except:
-            date = None
-        if not date :
-            date = datetime.date(2000,01,01)
-        return date'''
 
 class Order(models.Model):
-    status = models.ForeignKey(OrderStatus, null=True)
     #had to make null to migrate CHANGE LATER
-    inventory = models.ForeignKey(Inventory, blank=True, null=True)
 #   submitter = models.ForeignKey(User, related_name='submitter')
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
@@ -159,13 +139,19 @@ class Order(models.Model):
     date_submitted = models.DateField(blank=True, null=True)
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
-#    objects = OrderManager()
     is_recurring = models.BooleanField(default=False)
     #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
-
+    status = models.CharField(max_length=30, blank=False, null=False, default='Complete',
+        choices=(
+            ('Submitted', 'Submitted'),
+            ('In_Progress', 'In Progress'),
+            ('Complete', 'Complete'),
+            ('Canceled', 'Canceled'),
+            )
+    )
 
     def already_billed(self):
         if self.date_billed:
@@ -177,15 +163,25 @@ class Order(models.Model):
     def __unicode__(self):
         return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
     def is_closed(self):
-        return self.status.name == 'Filled'
+        return self.status.name == 'Complete'
 
-"""class OrderLine(models.Model):
-    o_id = models.ForeignKey(Order)
-    description = models.TextField(blank=True)"""
-
-
-
-
+class OrderLine(models.Model):
+    order = models.ForeignKey(Order)
+    description = models.TextField(blank=True)
+    inventory = models.ForeignKey(Inventory, blank=True, null=True)
+    qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    unit = models.CharField(max_length=30, blank=True, null=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    def total(self):
+        total = 0.00
+        if self.cost and self.qty:
+            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.cost)),2)
+        return decimal.Decimal(total)
+    class Meta:
+        verbose_name_plural = 'order lines'
+    def __unicode__(self):
+        return u'%s' % self.pk
+    
 
 class Announcements(models.Model):
    text = models.TextField()
