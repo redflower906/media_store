@@ -21,7 +21,12 @@
 //Does nothing right now
 // $(".search_dt").html($(".dataTables_filter"));
 
+//Datatables.net jquery library settings
 $(document).ready(function() {
+    console.log(InventoryItem)
+});    
+$(document).ready(function() {
+    // console.log(InventoryItems);
     $('#inventory_table').DataTable( {
         "order": [[ 0, "asc" ]],
         stateSave: false,
@@ -34,20 +39,70 @@ $(document).ready(function() {
             null,
             { "type": "checked-in" },
             { "sorting": false },
+            // "className": 'details-control',
+            // "orderable": false,
+            // "data": null,
+            // "defaultContent": ''
+            // "render": function () {
+            //     return '<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>';
+            // },
           ]
+
     } );
-} );
+});
 
-//Allows boolean sort for inventory table
-jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
-	var a_sort = parseInt($(a).data("sort"));
-	var b_sort =  parseInt($(b).data("sort"));
-	return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
-};
+    //Allows boolean sort for inventory table
+    jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
+        var a_sort = parseInt($(a).data("sort"));
+        var b_sort =  parseInt($(b).data("sort"));
+        return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
+    };
 
-jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
-	var a_sort = parseInt($(a).data("sort"));
-	var b_sort =  parseInt($(b).data("sort"));
-	return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
-};
+    jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
+        var a_sort = parseInt($(a).data("sort"));
+        var b_sort =  parseInt($(b).data("sort"));
+        return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
+    };
 
+//     // Add event listener for opening and closing details
+//     $('#inventory_table tbody').on('click', 'td.details-control', function () {
+//         var tr = $(this).closest('tr');
+//         var tdi = tr.find("i.glyphicon");
+//         var row = table.row(tr);
+
+//         if (row.child.isShown()) {
+//         // This row is already open - close it
+//             row.child.hide();
+//             tr.removeClass('shown');
+//             tdi.first().removeClass('glyphicon glyphicon-minus');
+//             tdi.first().addClass('glyphicon glyphicon-plus');
+//         }
+//         else {
+//         // Open this row
+//             row.child(format(row.data())).show();
+//             tr.addClass('shown');
+//             tdi.first().removeClass('glyphicon glyphicon-plus');
+//             tdi.first().addClass('glyphicon glyphicon-minus');
+//         }
+//     });
+
+//     table.on("user-select", function (e, dt, type, cell, originalEvent) {
+//         if ($(cell.node()).hasClass("details-control")) {
+//             e.preventDefault();
+//             }
+//         });
+//     });
+
+//    function format(d){
+       
+//         // `d` is the original data object for the row
+//         // need to call d function
+//         // need to reference details-control in formatting
+//         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+//             '<tr>' +
+//                 '<td>notes:</td>' +
+//                 '<td>' + d.notes + '</td>' +
+//             '</tr>' +
+//         '</table>';  
+        
+//    }

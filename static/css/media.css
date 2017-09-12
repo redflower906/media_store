@@ -14,6 +14,17 @@ body{
   margin: 0;
 }
 
+td.details-control {
+  text-align:center;
+  color:forestgreen;
+cursor: pointer;
+}
+
+tr.shown td.details-control {
+text-align:center; 
+color:red;
+}
+
 .active-icon {
   color: #008000;
 }
@@ -25,6 +36,12 @@ body{
 
 .disabled-icon {
   color: #FF0000;
+}
+
+#expand:hover {
+  cursor: pointer;
+  color: #23527c;
+  text-decoration: underline;
 }
 
 #inventory-buttons {
@@ -136,7 +153,7 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
   text-align: center;
 }
 
-#name:hover, #prod:hover, #cont:hover, #vol:hover, #active:hover {
+#head_hov:hover {
   color: #23527c;
   text-decoration: underline;
 }
