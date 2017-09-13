@@ -26,7 +26,16 @@
     <table class="table table-hover" id="inventory_table">
         <thead>
             <tr id="table_header">
-                <th id="head_hov" class="text-primary">Name</th>
+                <th></th>
+                <th id="head_hov" class="text-primary sortable" data-sorting="inventory_text">Name
+                    {% if 'inventory_text' in Inventory.objects.query.order_by %}
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                    {% elif '-inventory_text' in Inventory.objects.query.order_by %}
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                    {% else %}
+                    <span class="glyphicon glyphicon-sort"></span>                    
+                    {% endif %}
+                </th>
                 <th id="head_hov" class="text-primary">Product</th>
                 <th id="head_hov" class="text-primary">Container</th>                 
                 <th id="head_hov" class="text-primary">Volume</th>                 
@@ -36,8 +45,11 @@
         </thead>
         <tbody>
             {% for InventoryItem in InventoryItems %}
-            <tr>
+            <tr class="item_{{InventoryItem.id}} koala">
                 {% comment %} <td><a data-toggle="collapse" data-parent="#accordion" href="#notes" aria-expanded="true" aria-controls="notes">{{InventoryItem.inventory_text}}</a></td> {% endcomment %}
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
                 <td><a>{{InventoryItem.inventory_text}}</a></td>                
                 <td>{{InventoryItem.product}}</td>
                 <td>{{InventoryItem.container|default:'N/A'}}</td>
@@ -56,10 +68,10 @@
                     <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
                 </td>
             </tr>
-            {% comment %} <tr id="notes" class="collapse" role="text">
-                <td class="hiddenRow"><div>{{InventoryItem.notes}}</div></td>
+            <tr id="notes" class="collapse" role="text">
+                <td><div>{{InventoryItem.notes}}</div></td>
                 <th></th><th></th><th></th><th></th><th></th>                
-            </tr>                 {% endcomment %}
+            </tr>                 
             {% endfor %}
         </tbody>
     </table>

@@ -22,47 +22,47 @@
 // $(".search_dt").html($(".dataTables_filter"));
 
 //Datatables.net jquery library settings
-$(document).ready(function() {
-    console.log(InventoryItem)
-});    
-$(document).ready(function() {
-    // console.log(InventoryItems);
-    $('#inventory_table').DataTable( {
-        "order": [[ 0, "asc" ]],
-        stateSave: false,
-        "paging": false,
-        "dom": 'flrti',
-        "columns": [
-            null,
-            null,
-            null,
-            null,
-            { "type": "checked-in" },
-            { "sorting": false },
-            // "className": 'details-control',
-            // "orderable": false,
-            // "data": null,
-            // "defaultContent": ''
-            // "render": function () {
-            //     return '<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>';
-            // },
-          ]
+// $(document).ready(function() {
+//     console.log(InventoryItem)
+// });    
+// $(document).ready(function() {
+//     // console.log(InventoryItems);
+//     $('#inventory_table').DataTable( {
+//         "order": [[ 0, "asc" ]],
+//         stateSave: false,
+//         "paging": false,
+//         "dom": 'flrti',
+//         "columns": [
+//             null,
+//             null,
+//             null,
+//             null,
+//             { "type": "checked-in" },
+//             { "sorting": false },
+//             // "className": 'details-control',
+//             // "orderable": false,
+//             // "data": null,
+//             // "defaultContent": ''
+//             // "render": function () {
+//             //     return '<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>';
+//             // },
+//           ]
 
-    } );
-});
+//     } );
+// });
 
-    //Allows boolean sort for inventory table
-    jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
-        var a_sort = parseInt($(a).data("sort"));
-        var b_sort =  parseInt($(b).data("sort"));
-        return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
-    };
+//     //Allows boolean sort for inventory table
+//     jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
+//         var a_sort = parseInt($(a).data("sort"));
+//         var b_sort =  parseInt($(b).data("sort"));
+//         return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
+//     };
 
-    jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
-        var a_sort = parseInt($(a).data("sort"));
-        var b_sort =  parseInt($(b).data("sort"));
-        return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
-    };
+//     jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
+//         var a_sort = parseInt($(a).data("sort"));
+//         var b_sort =  parseInt($(b).data("sort"));
+//         return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
+//     };
 
 //     // Add event listener for opening and closing details
 //     $('#inventory_table tbody').on('click', 'td.details-control', function () {
@@ -106,3 +106,23 @@ $(document).ready(function() {
 //         '</table>';  
         
 //    }
+
+//hide / expand table children. had to change toggle_notes from id to class for click event to
+//occur with all records
+$(document).ready(function(){
+    $(".toggle_notes").click(function(){
+        // figure out the next line items class and show / hide it
+        console.log($(this).find('i.glyphicon-plus').length)
+        if ($(this).find('i.glyphicon-plus').length) {
+            //add .length to see if an element exists in jquery
+            console.log('true', $(this))
+        $(this).closest('.koala').next().fadeIn();
+        $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus')
+        } else {
+            console.log('false', $(this))
+        $(this).closest('.koala').next().fadeOut();
+        $(this).find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
+        
+        }
+    });
+})

@@ -157,3 +157,7 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
   color: #23527c;
   text-decoration: underline;
 }
+
+.notes {
+  display: none;
+}
