@@ -5,8 +5,8 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.forms.models import formset_factory, modelformset_factory
-from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm
-from .models import Inventory, Order, Announcements
+from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm
+from .models import Inventory, Order, Announcements, OrderLine
 import MySQLdb, sys
 import csv
 
