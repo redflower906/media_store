@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.forms.models import formset_factory, modelformset_factory
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm
-from .models import Inventory, Order, Announcements, OrderLine
+from .models import Inventory, Order, Announcements, OrderLine, SortHeaders
 import MySQLdb, sys
 import csv
 
@@ -55,6 +55,13 @@ def add_item(request):
     context = {}
     return render(request, 'store/add_item.html')
 
+LIST_HEADERS = (
+    ('Name', 'inventory_text'),
+    ('Product', 'product'),
+    ('Container', 'container'),
+    ('Volume', 'volume'),
+    ('Active', 'active'),
+)
 
 def inventory(request):
     """
@@ -66,44 +73,14 @@ def inventory(request):
     department_ids.append(department_id)
 """
     context = {}
-    InventoryItems = Inventory.objects.all()
-    #sort
-    # ordering = request.GET.get('o')
-    # Items = InventoryItems.order_by('inventory_text')
-    # if ordering:
-    #     sort_by = ordering.split('.')
-
-    #     if sort_by:
-    #         Items = InventoryItems.order_by(*sort_by)
-
-    #     sort_urls = {}
-    #     sort_arrows = {}
-    #     columns = ('inventory_text', 'product', 'container', 'volume', 'active' )
-    #     for column in columns:
-    #         sort_columns = ordering.split('.')
-    #         url = '?o='
-    #         try:
-    #             position = sort_columns.index(column)
-    #             sort_columns.pop(position)
-    #             url += '-' + column
-    #             sort_arrows[column] = 'down'
-    #             if len(sort_columns):
-    #                 url += '.' + '.'.join(sort_columns)
-    #         sort_urls[column] = url
-    # else:
-    #     services = services.order_by('inventory_text')
-    #     sort_urls = {'inventory_text': '?o=inventory_text', 'product': '?o=product', 'container': '?o=container', 'volume': '?o=volume', 'active': '?o=active'}
-    #     sort_arrows = {}
-
-    sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
-    sort_arrows = {}
-    # render them in a list.
+    # InventoryItems = Inventory.objects.all()
+    sort_headers = SortHeaders(request, LIST_HEADERS)
+    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
     return render(request, 
         'store/inventory.html', 
         {
         'InventoryItems' : InventoryItems,
-        'sorting': sort_urls,
-        'sort_arrows': sort_arrows
+        'headers': list(sort_headers.headers())
         }, context)
 
 #@login_required(login_url='login')
@@ -172,10 +149,6 @@ def single_item(request, id):
     else:
         return get_item(request, id)
         
-# class FormCreate(CreateView):
-#     model = Inventory
-#     template_name = 'store/form.html'
-#     fields = ['product','media_type','cost','container','volume','notes']
 def order(request):
     context = {}
     OrderTotal = Order.objects.all()
@@ -230,3 +203,68 @@ def edit_past_order(request):
 def recurring_order(request):
     context = {}
     return render(request, 'store/order_list.html')
+
+@login_required(login_url='login')
+def order_view(request):
+    order_list = []
+    billed_to_list = []
+    last_billed_list = []
+    billed_date = Order.objects.last_billed()
+    billed_total = 0
+    workorder_total = 0
+
+    order_filters = {'billed': 'no'}
+    order_list = _orders_view_page(request, filters=order_filters, page_arg='p1')
+    for order in order_list:
+        # add the update flag here as we can't check it in the template
+        order_total += order.total()
+
+    billed_to_filters = {'billed':'both', 'billed_to':True}
+    billed_to_list = _orders_view_page(request, filters=billed_to_filters, page_arg='p2')
+    for billed_to in billed_to_list:
+        billed_total += billed_to.total()
+
+    last_billed_filters = {'billed':'last'}
+    last_billed_list = _workorders_home_page(request, filters=last_billed_filters, page_arg='p3')
+
+    if request.GET.get('p2'):
+        active_tab = 'p2'
+    elif request.GET.get('p3'):
+        active_tab = 'p3'
+    else:
+        active_tab = 'p1'
+
+    return render(request, "TimeMatrix/home_page.html", {
+        'workorder_list': workorder_list,
+        'wo_page_range': _trimmed_page_range(workorder_list),
+        'workorder_total': workorder_total,
+        'billed_total': billed_total,
+        'billed_to': billed_to_list,
+        'billed_to_range': _trimmed_page_range(billed_to_list),
+        'last_billed': last_billed_list,
+        'last_billed_range': _trimmed_page_range(last_billed_list),
+        'billed_date': billed_date,
+        # 'version': TimeMatrixVersion, necessary??
+        'search_form': WorkOrderSearch(initial=workorder_filters),
+        'billed_to_search': WorkOrderSearch(initial=billed_to_filters),
+        'last_billed_search': WorkOrderSearch(initial=last_billed_filters),
+        'active_tab': active_tab
+    }, context_instance=RequestContext(request))
+
+
+def _workorders_home_page(request, filters, page_arg):
+    user = request.user
+    workorder_list = _workorder_list(user, filters=filters)
+
+    paginator = Paginator(workorder_list, 30)
+
+    try:
+        workorders = paginator.page(request.GET.get(page_arg))
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        workorders = paginator.page(1)
+    except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        workorders = paginator.page(paginator.num_pages)
+
+    return workorders

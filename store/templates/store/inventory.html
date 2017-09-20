@@ -3,6 +3,7 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
+{% load store_tags %}
 <hr/>
 {% comment %} if staff {% endcomment %}
 <div class="row">
@@ -10,10 +11,6 @@
         <h2>Inventory</h2>
     </div>
     <div class="col-xs-12, col-md-12 action-buttons" id="search_row">
-        <div class="search_dt">
-            {% comment %} <span class="input-group-addon">Search:</span>
-            <input type="text" id="searchbox"> {% endcomment %}
-        </div>
         <a href="/inventory/new" id="add_inv_btn" class="btn btn-default">Add inventory item</a>
     </div>
 </div>
@@ -27,19 +24,7 @@
         <thead>
             <tr id="table_header">
                 <th></th>
-                <th id="head_hov" class="text-primary sortable" data-sorting="inventory_text">Name
-                    {% if 'inventory_text' in Inventory.objects.query.order_by %}
-                    <span class="glyphicon glyphicon-arrow-down"></span>
-                    {% elif '-inventory_text' in Inventory.objects.query.order_by %}
-                    <span class="glyphicon glyphicon-arrow-up"></span>
-                    {% else %}
-                    <span class="glyphicon glyphicon-sort"></span>                    
-                    {% endif %}
-                </th>
-                <th id="head_hov" class="text-primary">Product</th>
-                <th id="head_hov" class="text-primary">Container</th>                 
-                <th id="head_hov" class="text-primary">Volume</th>                 
-                <th id="head_hov" class="text-primary">Active</th>
+                {% table_header headers %}
                 <th></th>
             </tr>
         </thead>
