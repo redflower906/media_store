@@ -50,7 +50,7 @@ urlpatterns = [
 
 ##orders
     url(r'^order/$', views.order, name='order'),
-    url(r'^order/new', views.new_order, name='new_order'),
+    url(r'^order/new', views.create_order, name='create_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.edit_past_order, name='edit_past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),

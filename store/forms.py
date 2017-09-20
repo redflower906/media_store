@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import TextInput, HiddenInput
-from .models import Inventory, Vendor, Announcements, Order #, Department, UserProfile
+from .models import Inventory, Vendor, Announcements, Order, OrderLine #MEDIA_CHOICES, Department, UserProfile
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
@@ -78,51 +78,39 @@ def item_model_formset_factory(extra):
 class DateInput(TextInput):
     input_type='date'
 
-class OrderForm(forms.ModelForm): #create orders here
+class OrderLineForm(forms.ModelForm):
+    class Meta:
+        model = OrderLine
+        fields = ('description', 'qty', 'unit', 'cost', 'inventory')#category)
+
+class OrderForm(forms.ModelForm):
     #submitter = user_choice(queryset=User.objects.only('first_name','last_name'))
     #main_requester = user_choice(queryset=requester_queryset_generator())
-    #department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'sytle': 'width:250'}))
-
-    inventory = forms.ModelChoiceField(queryset=Inventory.objects.filter(active=True), required=False)
+    #department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'style' : 'width:250'}))
+    inventory_type = forms.ModelChoiceField(queryset=Inventory.objects.filter(active=True), required=False)
     date_complete = forms.DateField(widget=DateInput)
+
+    def clean_date_complete(self):
+        data = self.cleaned_data['date_complete']
+        last_billed = Order.objects.last_billed()
+        if last_billed > data:
+            raise forms.ValidationError(u'{0} is before the last billed date {1}'.format(data,last_billed))
+        return data
 
     class Meta:
         model = Order
-        fields = '__all__'
-        labels = {
-            'inventory':'Item',
-            'submitter':'Submitted by',
-            'department':'Department',
-            'special_instructions':'Instructions',
-            'is_recurring':'Is this a recurring order?',
-            'date_recurring_stop':'Last date for recurring order'
-        }
-        widgets = {
-            'inventory': forms.Select(attrs={'class': 'form-text'}),
-            'submitter': forms.TextInput(attrs={'class': 'form-text'}),
-            'department': forms.Select(attrs={'class': 'form-text'}),
-            'special_instructions': forms.TextInput(attrs={'class': 'form-text'}),
-            'is_recurring': forms.Select(attrs={'class': 'form-text'}),
-            'date_recurring_stop': forms.TextInput(attrs={'class': 'form-text'})
-        }
+        fields = ('date_complete', 'special_instructions')#'department', 'inventory_type' 'requester','submitter'
 
-'''    status = models.ForeignKey(OrderStatus, null=True)
-    #had to make null to migrate CHANGE LATER
-    inventory = models.ForeignKey(Inventory, blank=True, null=True)
-#   submitter = models.ForeignKey(User, related_name='submitter')
-    department = models.ForeignKey(Department, blank=True, null=True)
-    special_instructions = models.TextField(blank=True)
-    date_created = models.DateField(auto_now_add=True)
-    date_modified = models.DateField(blank=True, null=True)
-    date_submitted = models.DateField(blank=True, null=True)
-    date_complete = models.DateField(blank=True, null=True)
-    date_billed = models.DateField(blank=True, null=True)
-#    objects = OrderManager()
-    is_recurring = models.BooleanField(default=False)
-    #had to set a default to migrate
-    #make below an if statement if boolean is true and if boolean is false
-    date_recurring_start = models.DateField(default=datetime.now, blank=True)
-    date_recurring_stop = models.DateField(blank=True, null=True)'''
+def order_inline_formset_factory(extra):
+    return inlineformset_factory(Order, OrderLine,
+        fields = ('description', 'qty', 'unit', 'cost', 'inventory'),#category, 'inventory_type'
+        widgets = {
+            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
+            'cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
+            'inventory': HiddenInput(),
+            'unit': forms.TextInput(attrs={'class': 'line unit'})
+            #'category': forms.Select(attrs={'class': 'chosen-select line-category'})
+        })
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:

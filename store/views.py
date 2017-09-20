@@ -1,15 +1,11 @@
-from django.shortcuts import render, get_object_or_404
-from django.template import context
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.template import context, RequestContext
 from django.contrib import messages
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
-from django.forms.models import formset_factory, modelformset_factory
-from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm
-from .models import Inventory, Order, Announcements, OrderLine
-import MySQLdb, sys
-import csv
-
+from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
+from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory
 
 def index(request):
     context = {}
@@ -192,7 +188,7 @@ def order(request):
         'OrderTotal' : OrderTotal,
         }, context)
 
-def new_order(request): #, copy_id=None
+def create_order(request,id): #, copy_id=None
     context = {}
     return render(request, 'store/order_create.html')
     #user = request.user
@@ -209,14 +205,15 @@ def new_order(request): #, copy_id=None
     'logged_in'= user_profile,
     }'''
 
-#    OrderInlineFormset=order_inline_formset_factory(1),
+    OrderLineFormSet = order_inline_formset_factory(1)
 
-'''if request.method='POST':
-    order=Order()
-    #create the order form
-    order_form = OrderModelForm(request.POST, instance=order, initial=initial)
-    #create orderline formset
-    line_formset = OrderInlineFormset'''
+    if request.method=='POST':
+        order = Order()
+        order_form = OrderForm(request.POST, instance=order, initial=initial)
+        line_formset = OrderLineFormSet(request.POST, instance=order, prefix='orderlines')
+        line_message = 'There must be at least one valid line associated with the order. Check inventory'
+        total_message = 'The total billed for this workorder is $0. That seems wrong.'
+
 
 
 def past_order(request):
