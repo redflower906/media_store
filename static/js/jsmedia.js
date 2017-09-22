@@ -127,5 +127,16 @@ $(document).ready(function(){
     });
 })
 
-$(document).ready(function(){
-})
+$(document).ready(function () { 
+        (function ($) {
+            $('#filter').keyup(function () {
+                var rex = new RegExp($(this).val(), 'i');
+                $('.searchable tr.koala').hide();
+                $('.searchable tr.koala').find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
+                $('.searchable tr.koala').next().fadeOut();
+                $('.searchable tr.koala').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            });
+        }(jQuery));
+    });

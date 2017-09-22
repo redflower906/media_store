@@ -29,19 +29,8 @@ color:red;
   color: #008000;
 }
 
-#center_columns {
-  align-items: center;
-  text-align: center;
-}
-
 .disabled-icon {
   color: #FF0000;
-}
-
-#expand:hover {
-  cursor: pointer;
-  color: #23527c;
-  text-decoration: underline;
 }
 
 #inventory-buttons {
@@ -52,17 +41,9 @@ color:red;
   right: 0;
 }
 
-#inventory_table_filter {
-  display: flex;
-  float: left !important;
-}
-
-#search_row {
-  justify-content: end;
-}
-
 #add_inv_btn {
   float: right;
+  margin-left: 20px;
 }
 
 .messages {
@@ -94,9 +75,9 @@ h1 {
 }
 
 .form-text {
-  width: 300px
+  width: 300px;
 }
-
+ 
 h1 {
   color:#333;
   text-decoration:none;
@@ -171,3 +152,13 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
 .unsorted .glyphicon-arrow-up, .unsorted .glyphicon-arrow-down {
   display: none;
 }
+
+.Volume, .Active, #center_columns {
+  align-items: center;
+  text-align: center;
+}
+
+.something {
+  width: 100%;
+}
+

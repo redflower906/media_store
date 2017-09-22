@@ -10,8 +10,11 @@
     <div class="col-xs-12, col-md-12 head_inv" id="head_inv">
         <h2>Inventory</h2>
     </div>
-    <div class="col-xs-12, col-md-12 action-buttons" id="search_row">
+    <div class="col-xs-12, col-md-12 action-buttons">
         <a href="/inventory/new" id="add_inv_btn" class="btn btn-default">Add inventory item</a>
+                    <div class="form-group pull-right">
+                        <input id="filter" type="text" class="form-control" placeholder="Search for...">
+                    </div><!-- /input-group -->
     </div>
 </div>
 
@@ -19,7 +22,7 @@
 <p>There are no products at this time. Use the button to the right to create some.</p>
 
 {% else %}
-<div id="accordion" role="table" aria-multiselectable="true">
+    
     <table class="table table-hover" id="inventory_table">
         <thead>
             <tr id="table_header">
@@ -28,18 +31,17 @@
                 <th></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="searchable">
             {% for InventoryItem in InventoryItems %}
             <tr class="item_{{InventoryItem.id}} koala">
-                {% comment %} <td><a data-toggle="collapse" data-parent="#accordion" href="#notes" aria-expanded="true" aria-controls="notes">{{InventoryItem.inventory_text}}</a></td> {% endcomment %}
                 <td class="toggle_notes">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </td>
-                <td><a>{{InventoryItem.inventory_text}}</a></td>                
-                <td>{{InventoryItem.product}}</td>
-                <td>{{InventoryItem.container|default:'N/A'}}</td>
-                <td id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
-                <td id="center_columns">
+                <td class="col-xs-3"><a>{{InventoryItem.inventory_text}}</a></td>                
+                <td class="col-xs-2">{{InventoryItem.product}}</td>
+                <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
+                <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
+                <td class="col-xs-2"id="center_columns">
                     {% if InventoryItem.active %}
                     <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
                     <div style="display:hidden" data-sort="1"></div>
@@ -49,18 +51,25 @@
                     {% endif %}
                 </td>
                 {% comment %} if staff {% endcomment %}
-                <td id="center_columns">
+                <td class="col-xs-1" id="center_columns">
                     <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
                 </td>
+                <tr id="notes" class="collapse" role="text">
+                    <td colspan="10">
+                        <table class ='table table-striped'>
+                            <thead>
+                                <tr>
+                                    <td class="col-md-12">{{InventoryItem.notes}}</td>
+                                </tr>
+                            </thead>
+                        </table>
+                        </td>              
+                </tr>
+            
             </tr>
-            <tr id="notes" class="collapse" role="text">
-                <td><div>{{InventoryItem.notes}}</div></td>
-                <th></th><th></th><th></th><th></th><th></th>                
-            </tr>                 
             {% endfor %}
         </tbody>
     </table>
-</div>
 {% endif %}
 
 {% endblock %}
