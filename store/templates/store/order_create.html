@@ -4,6 +4,7 @@
 {% endblock %}
 {% block content %}
 {% load formset_tags %}
+{% load store_tags %}
 
 <div class="row">
     <div class="col-xs-12">
@@ -28,101 +29,117 @@
 
 <hr/>
 
-{{ form.non_field_errors }}
+<!--{{ form.non_field_errors }}-->
 
-<form method="post" action="" id="order_form" class="form-horizontal">
+<form method="post" action="" id="order_form-h" class="form-horizontal">
     {% csrf_token %}
-
     {% for hidden in order_form.hidden_fields %}
     {{ hidden }}
     {% endfor %}
 
     <fieldset>
         <legend>Who is creating this Order?</legend>
- <!--   <div class="row">
-        <div class="form-group {% if order_form.submitter.errors %}has-error{% endif %}">
-            <div class="col-xs-2 text-right">
-                <label class="control-label" for="{{order_form.submitter.id_for_label}}">Submitter:</label>
-            </div>
-            <div class="col-xs-3">{{order_form.submitter}}</div>
-            <div class="col-xs-4">
-                <span class="help-block">{{order_form.submitter.errors}}</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="form-group {% if order_form.department.errors %}has-error{% endif %}">
-            <div class="col-xs-2 text-right">
-                <label class="control-label" for="{{order_form.department.id_for_label}}">Department:</label>
-            </div>
-            <div class="col-xs-3">{{order_form.department}}</div>
-            <div class="col-xs-4">
-                <span class="help-block">{{order_form.department.errors}}</span>
-            </div>
-        </div>
-    </div> -->
-</fieldset>
+    </fieldset>
 
 
     <fieldset>
         <legend>Who is paying?</legend>
-<!--    <div class="row">
-        <div class="form-group {% if order_form.main_requester.errors %}has-error{% endif %}">
-            <div class="col-xs-2 text-right">
-                <label class="control-label" for="{{order_form.main_requester.id_for_label}}">Requester:</label>
-            </div>
-            <div class="col-xs-3">{{order_form.main_requester}}</div>
-            <div class="col-xs-4">
-                <span class="help-block">{{order_form.main_requester.errors}}</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-xs-offset-2 col-xs-8">
-            {{ dept_formset.management_form }}
-            {{ dept_formset.media }}
-            <table class="table workorder_dept_table">
-                <thead>
-                    <tr>
-                        <th>Department</th>
-                        <th>Project ID</th>
-                        <th>% Charged</th>
-                        <th>Delete?</th>
-                    </tr> 
-                </thead>
-                <tbody>
-                    {% for form in dept_formset %}
-                    <tr>
-                    {% for hidden in form.hidden_fields %}
-                        {{hidden}}
-                    {% endfor %}
-
-                    {% for field in form.visible_fields %}
-                    <td>{{field}} {{field.errors}}</td>
-                    {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            <input type="button" class="add-workorder-dept btn btn-default" value="Add another department"/>
-        </div>
-    </div> -->
-
     </fieldset>
-<fieldset>
-    <legend>Is this a recurring order?</legend>
-</fieldset>
+
+    <fieldset>
+        <legend>Is this a Recurring Order?</legend>
+        <section id='first' class = 'section'>
+            <div class = 'container'>
+                <input type="radio" name="group1" id='radio_1'>
+                <label for = 'radio_1'><span class="radio">Yes</span></label>
+            </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio_2">
+                <label for = 'radio_2'><span class="='radio">No</span></label>
+            </div>
+        </section>
+    </fieldset>
 
     <fieldset>
         <legend>What would you like to order?</legend>
-
-        <div class="row">
-            <div class="form-group {% if order_form.inventory.errors %}has-error{% endif %}">
-                <div class="col-xs-2 text-right">
-                    <label class="control-label" for="{{order_form.inventory.id_for_label}}">Service:</label>
+        {% if radio_1 %}
+            <div class="row">
+                <div class="form-group {% if order_form.inventory.errors %}has-error{% endif %}">
+                    <div class="col-xs-2 text-right">
+                        <label class="control-label" for="{{order_form.inventory.id_for_label}}">Item:</label>
+                    </div>
                 </div>
+            </div>
+
+            {{ line_formset.management_form }}
+            <div class='row'>
+                <div class="col-xs-12">
+                    <table id='order_create' class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Container</th>
+                            <th>Notes</th>
+                            <th>Qty</th>
+                            <th>Unit</th>
+                            <th>Cost</th>
+                            <th>Delete?<input type="checkbox" class="delete-all" /></th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in line_formset %} <!--item or form in order_form-->
+                        <tr>
+                            {% for hidden in form.hidden_fields %}
+                            {{hidden}}
+                            {% endfor %}
+                            {% for field in form.visible_fields %}
+                        <td>
+                        {{line_formset}}
+                        </td>
+                        <td class='line_total'>
+                        {{form.instance.total | currency}}</td>
+                        </tr>
+                        {% if form.errors %}
+                        <tr>
+                            {% for field in form.visible_fields %}
+                            <td>{{field.errors}}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endif %}
+                        {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <input type="add_order_line" class='btn-default' type='button' value="Add another order line" />
+                </div>
+                <div class="col-xs-offset-7 col-xs-2 text-right">
+                    <p class="aggregate_total">{{line_formset.instance.total | currency}}</p>
+                </div>
+            </div>
+        {% endfor %}
+            <div class ='row'>
+                <p>This is a test.</p>
+            </div>
+        {% endif %}
+    </fieldset>
+
+
+
+
+
+
+
+
+
+
+<!--                <div class="col-xs-3">
+                    <select id='inventory_id' name='inventory' class="chosen-select" style="display: none;"></select>
+
                 <div class="col-xs-3">{{order_form.inventory}}</div>
                 <div class="col-xs-4">
                     <span class="help-block">{{order_form.inventory.errors}}</span>
@@ -130,7 +147,6 @@
             </div>
         </div>
         <hr/>
-
         <div class="row">
             <div class="col-xs-12">
                 <table id='form_holder'>
@@ -139,29 +155,16 @@
                             {{ line_formset.management_form }}
                             {{ line_formset.media }}
                             <table id="order_table">
-                            <thead>
-                                <tr>
-                                <th>Item</th>
-                                <th>Container</th>
-                                <th>Notes</th>
-                                <th>Qty</th>
-                                <th>Unit</th>
-                                <th>Cost</th>
-                                <th>Delete?<input type="checkbox" class="delete-all" /></th>
-                                <th>Total</th>
-                                </tr>
-                            </thead>
- <!--                            <tbody>
+
+                            <tbody>
                                 {% for form in line_formset %}
                                 <tr>
                                 {% for hidden in form.hidden_fields %}
                                     {{hidden}}
                                 {% endfor %}
-
                                 {% for field in form.visible_fields %}
                                 <td>{% if field.name == 'cost' %}${% endif %}{{field}}</td>
                                 {% endfor %}
-
                                 </tr>
                                 {% if form.errors %}
                                 <tr>
@@ -171,27 +174,21 @@
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
-                            </tbody> -->
+                            </tbody>
                             </table>
-
                         </td>
                     </tr>
                 </table>
             </div>
         </div>
-
         <div class="row">
             <div class="col-xs-3">
-                <input id="add_order_line" class="btn btn-default" type="button" value="Add another service" />
-
+            <tr>
+                <td><input id="add_order_line" class="btn btn-default" type="button" value="Add another service" /></td>
+                <td><input id='clear_all' class="btn clear" type='button' value="Delete All"></td>
+            </tr>
         </div>
-
-        <hr/>
-
-        </fieldset>
-
+        <hr/>-->
 
 {% endblock %}
-
-
 
