@@ -166,7 +166,8 @@ def order(request):
         'OrderTotal' : OrderTotal,
         }, context)
 
-def create_order(request,id): #, copy_id=None
+def create_order(request,id=1, copy_id=None): #MUST CHANGE id=1 to id
+#ADD LOGIC FOR RADIO BUTTON FOR RECURRING ORDERS TO SHOW OR HIDE LINE ITEMS
     context = {}
     return render(request, 'store/order_create.html')
     #user = request.user
@@ -191,6 +192,79 @@ def create_order(request,id): #, copy_id=None
         line_formset = OrderLineFormSet(request.POST, instance=order, prefix='orderlines')
         line_message = 'There must be at least one valid line associated with the order. Check inventory'
         total_message = 'The total billed for this workorder is $0. That seems wrong.'
+
+        if all([have_minimum(line_formset,1, request, line_message), order_form.is_valid(), line_formset.is_valid(), check_total_is_not_zero(line_formset, request, total_message) ]):
+            order_form.save()
+            line_formset.save()
+            messages.success(request, 'order {0} was successfully created.'.format(order_form.instance.id))
+            if request.POST.get('order_submit') == 'Save':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/home')
+        elif not line_formset.is_valid():
+            messages.error(request, 'There was a problem with one of the order lines. Please see below.')
+    else:
+        if copy_id:
+            order_form, line_formset = _copy_order_form(copy_id, request, alternative, initial)
+        else:
+            order_form = OrderForm(initial=initial)
+            line_formset = OrderLineFormSet(prefix='orderlines')
+#MUST ADD ALL DEPARTMENT INFO IN IF STATEMENTS!!!!!!!!!!!!!!!!!!
+    return render(request, 'media/order_create.html', {
+        'copy_id' : copy_id,
+        'order_form' : order_form,
+        'line_formset' : line_formset,
+        'order_list' : order_list,
+        'date_billed' : date_billed
+    }, context_instance=RequestContext(request))
+
+def _copy_order_form(id, request, alternative, initial):
+    original = Order.objects.get(id=id)
+    original_lines = OrderLine.objects.filter(order_id=original.id).order_by('id')
+#MUST ADD DEPARTMENT INFO HERE!!!!!!!!!!!
+    
+    if alternative:
+        fields = Order._meta.get_all_field_names()
+        new_order = Order()
+        ignored = ('main_requester', 'bill_to', 'order', 'orderline')
+        for field in fields:
+            if field in ignored:
+                continue
+            setattr(new_order, field, getattr(original, field))
+    else:
+        new_order = original
+
+    new_order.pk = None
+
+    if new_order.department_id != initial['department']:
+        user_profile = UserProfile.objects.get(user=initial['submitter'])
+        if new_order.department in user_profile.alt_departments.all():
+            initial['department'] = new_order.department_id
+
+    OrderInLineFormSet = order_inline_formset_factory(extra=len(original_lines))
+
+    if alternative:
+        dept_count = 1
+    else:
+        dept_count = len(original_depts)
+
+    order_form = OrderForm(
+        instance=new_order,
+        initial=initial,
+        )
+
+    formset = OrderInLineFormSet(instance=new_order, prefix='orderlines')
+
+    ignored_lines = ('qty')
+
+    for form, data in zip(formset.forms, original_lines):
+        fields = form.base_fields.keys()
+        form.initial = {}
+        for field in fields:
+            if alternative and field in ignored_lines:
+                continue
+            form.initial[field] = getattr(data, field)
+
 
 
 

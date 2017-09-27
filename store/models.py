@@ -153,7 +153,7 @@ class Order(models.Model):
             ('Canceled', 'Canceled'),
             )
     )
-
+    
     def already_billed(self):
         if self.date_billed:
             return True
