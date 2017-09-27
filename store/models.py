@@ -16,7 +16,7 @@ from datetime import datetime
 
 
 class Department(models.Model):
-    name = models.CharField(max_length=100)
+    department_name = models.CharField(max_length=100)
     number = models.CharField(unique=True, max_length=6)
     account_code = models.IntegerField(null=True, blank=True)
     is_shared_resource = models.BooleanField(default=False)
@@ -132,7 +132,7 @@ class Inventory(models.Model):
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
 #   submitter = models.ForeignKey(User, related_name='submitter')   #submitting order
-#    requester = models.ForeignKey(User, related_name='requester')  #only use when billing other person
+#   requester = models.ForeignKey(User, related_name='requester')  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
@@ -145,13 +145,19 @@ class Order(models.Model):
     #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
+    location = models.CharField(max_length=30, blank=False, null=False, default='One',
+        choices=(
+            ('One', 'One'),
+            ('Two', 'Two'),
+        )
+    )
     status = models.CharField(max_length=30, blank=False, null=False, default='Complete',
         choices=(
             ('Submitted', 'Submitted'),
             ('In_Progress', 'In Progress'),
             ('Complete', 'Complete'),
             ('Canceled', 'Canceled'),
-            )
+        )
     )
 
     def already_billed(self):

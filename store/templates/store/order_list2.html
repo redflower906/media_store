@@ -1,0 +1,55 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+<hr/>
+{% comment %} if staff {% endcomment %}
+
+{% if OrdersAll.count == 0 %}
+<p>There are no orders at this time.</p>
+
+{% else %}
+    
+<table class="table table-hover" id="inventory_table">
+        <thead>
+            <tr id="table_header">
+                <th></th>
+                {% table_header headers %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="searchable">
+            {% for Order in Orders %}
+            <tr class="item_{{Order.id}} koala">
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
+                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{Order.id}}</a></td>                
+                <td class="col-xs-2">{{Order.status}}</td>
+                <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
+                <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
+                <td class="col-xs-2"id="center_columns">
+                    {% if InventoryItem.active %}
+                    <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="1"></div>
+                    {% else %}
+                    <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="0"></div>
+                    {% endif %}
+                </td>
+                {% comment %} if staff {% endcomment %}
+                <td class="col-xs-1" id="center_columns">
+                    <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
+                </td>
+                <tr id="notes" class="collapse" role="text">
+                    <td colspan="10">
+                        <div><p>{{InventoryItem.notes}}</p></div>
+                    </td>              
+                </tr>
+            
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+{% endblock %}

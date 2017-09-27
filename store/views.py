@@ -57,7 +57,7 @@ def add_item(request):
     context = {}
     return render(request, 'store/add_item.html')
 
-LIST_HEADERS = (
+INVENTORY_LIST_HEADERS = (
     ('Name', 'inventory_text'),
     ('Product', 'product'),
     ('Container', 'container'),
@@ -75,7 +75,7 @@ def inventory(request):
     department_ids.append(department_id)
 """
     InventoryItemsAll = Inventory.objects.all()
-    sort_headers = SortHeaders(request, LIST_HEADERS)
+    sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
     return render(request, 
         'store/inventory.html', 
@@ -204,24 +204,22 @@ def recurring_order(request):
     context = {}
     return render(request, 'store/order_list.html')
 
-def inventory2(request):
-    
-    InventoryItemsAll = Inventory.objects.all()
-    sort_headers = SortHeaders(request, LIST_HEADERS)
-    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
-    return render(request, 
-        'store/order_list.html', 
-        {
-        'InventoryItems' : InventoryItems,
-        'headers': list(sort_headers.headers()),
-        'InventoryItemsAll': InventoryItemsAll,
-        },)
+ORDER_LIST_HEADERS = (
+    ('Order ID', 'order'),
+    ('Department to Bill', 'department_name'),
+    ('Requester', 'requester'),
+    ('Date Submitted', 'date_submitted'),
+    ('Start Date', 'date_recurring_start'),
+    ('End Date', 'date_recurring_stop'),
+    ('Location', 'location'),
+    ('Status', 'status'),
+)
 
 def view_order(request):
     o = Order.objects.get(id=1)
-    Orders = Order.objects.all()
+    Orders = Order.objects.all().values()
     InventoryItemsAll = Inventory.objects.all()
-    sort_headers = SortHeaders(request, LIST_HEADERS)
+    sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
 
 
