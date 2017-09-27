@@ -164,7 +164,7 @@ def order(request):
         'OrderTotal' : OrderTotal,
         }, context)
 
-def create_order(request,id): #, copy_id=None
+def create_order(request): #, copy_id=None, id
     context = {}
     return render(request, 'store/order_create.html')
     #user = request.user
