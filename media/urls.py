@@ -42,9 +42,6 @@ urlpatterns = [
     url(r'^inventory/new', views.create_item, name='new_item'),
     url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
     url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
-    #url(r'^inventory/new', FormCreate.as_view(), name='new_item'),
-    #url(r'^inventory/(?P<id>[0-9]*)/edit$', update_item.as_view(), name='edit_single_item'),
-
 
     url(r'^services/', views.services, name='services'),
 
@@ -54,6 +51,7 @@ urlpatterns = [
     url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.edit_past_order, name='edit_past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
+    url(r'^order/view', views.view_order, name='view_order'),
 
 #add link to dump to Resource Matrix here
 

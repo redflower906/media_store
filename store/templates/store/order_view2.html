@@ -4,120 +4,56 @@
 {% endblock %}
 {% block content %}
 <hr/>
-
-{% comment %} IF THIS PAGE IS THE SAME FOR STAFF AND CUSTOMER
-{% if workorder_list.count == 0 %}
-<div class="row">
-    <div class="col-xs-12">
-        <h2><a href="/shared_resources">Start Creating a New Workorder</a></h2>
-    </div>
-</div>
-{% endif %} {% endcomment %}
-
-<ul class="nav nav-tabs" role="tablist">
-    <li role="presentation" {% if active_tab == 'p1' %}class="active"{% endif %} >
-        <a href="#wo-created" aria-controls="home" role="tab" data-toggle="tab">
-            <span class="badge">{{workorder_list.paginator.count}}</span> 
-            Orders not completed
-        </a>
-    </li>
-    <li role="presentation" {% if active_tab == 'p2' %}class="active"{% endif %} >
-        <a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="badge">{{last_billed.paginator.count}}</span> 
-            Completed orders not yet billed
-        </a>
-    </li>
-    <li role="presentation" {% if active_tab == 'p3' %}class="active"{% endif %} >
-        <a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="badge">{{last_billed.paginator.count}}</span> 
-            Completed orders billed the last billing period
-        </a>
-    </li>    
+<ul class="nav nav-tabs">
+        <li class="active">
+          <a class="nav-link" data-toggle="tab" href="#not_complete" id='clickme'>Not Complete</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
+        </li>
+        <li class="disabled">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
 </ul>
-
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p1' %}active{% endif %}" id="wo-created">
+    <div role="tabpanel" class="tab-pane fade in active" id="not_complete">
         <div class="row">
             <div class="col-xs-12">
-                <h3>Unbilled Workorders you created after {{billed_date}}</h3>
+                <h3>Submitted/In-Progress/Recurring Orders</h3>
             </div>
-        </div>
-
-        {% include "TimeMatrix/workorder_search_form.html" %}
-
+        </div>    
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {% include "TimeMatrix/workorder_list.html" with filtering="on" billed="no" nav_name="unbilled_pagination" page_nav_arg="p1" page_range=wo_page_range %}
+                {% include "store/order_list.html" %}
             </div>
         </div>
     </div>
-
-
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p2' %}active{% endif %}" id="wo-billed">
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Workorders billed to you from current and previous billing cycle.</h3>
-            </div>
-        </div>
-
-        {% include "TimeMatrix/workorder_search_form.html" with search_form=billed_to_search %}
-
-        <div class="row">
-            <div class="col-xs-12 workorder_list">
-                {% include "TimeMatrix/workorder_list.html" with title="off" workorder_list=billed_to type="billed_to" filtering="on" nav_name="billed_to_pagination" page_nav_arg="p2" page_range=billed_to_range user=user only %}
-            </div>
-        </div>
-    </div>
-
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p3' %}active{% endif %}" id="wo-last-billed">
-        <div class="row">
-            <div class="col-xs-12">
-                <h3>Workorders from last billing period ending {{billed_date}}</h3>
-            </div>
-        </div>
-
-        {% include "TimeMatrix/workorder_search_form.html" with search_form=last_billed_search %}
-
-        <div class="row">
-            <div class="col-xs-12 workorder_list">
-                {% include "TimeMatrix/workorder_list.html" with title="off" workorder_list=last_billed type="last_billed" filtering="on" nav_name="last_billed_pagination" page_nav_arg="p3" page_range=last_billed_range user=user only %}
-            </div>
-        </div>
-    </div>
-
-    <div role="tabpanel" class="tab-pane" id="wo-stats">
-        <div class="row">
-            <div class="col-xs-12">
-                <h4>Net Income</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">
-                <div class="col-xs-6">
-                    <p>Income</p>
-                    <p>Expense</p>
-                    <hr/>
-                    <p>Net</p>
+        <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Complete, Not Billed</h3>
                 </div>
-                <div class="col-xs-6">
-                    <p class="active-icon">{{workorder_total | currency}}</p>
-                    <p class="disabled-icon"> - {{billed_total | currency}}</p>
-                    <hr/>
-                    <p>{{ net_total | currency }}</p>
+            </div>    
+            <div class="row">
+                <div class="col-xs-12 workorder_list">
+                    {% comment %} {% include "store/order_list.html" %} {% endcomment %}
                 </div>
             </div>
         </div>
-    </div>
+        <div role="tabpanel" class="tab-pane fade" id="complete_billed">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Complete and Billed</h3>
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-xs-12 workorder_list">
+                    {% comment %} {% include "store/order_list.html" %} {% endcomment %}
+                </div>
+            </div>
+        </div>
 </div>
-
-{% else %}
-<div class="row">
-    <div class="col-xs-12">
-        <h2>Welcome to ResourceMatrix</h2>
-        <h3><a href="/login">Please login to continue</a></h3>
-    </div>
-</div>
-
-{% endif %}
-<p class="text-muted">v: {{version}}</p>
-{% endblock %}
+{% endblock %} 

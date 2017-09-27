@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory
 from .models import Inventory, Order, Announcements, OrderLine, SortHeaders
@@ -73,16 +74,16 @@ def inventory(request):
     department_ids = [dept.id for dept in user_profile.alt_departments.all()]
     department_ids.append(department_id)
 """
-    context = {}
-    # InventoryItems = Inventory.objects.all()
+    InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
     return render(request, 
         'store/inventory.html', 
         {
         'InventoryItems' : InventoryItems,
-        'headers': list(sort_headers.headers())
-        }, context)
+        'headers': list(sort_headers.headers()),
+        'InventoryItemsAll': InventoryItemsAll,
+        },)
 
 #@login_required(login_url='login')
 def create_item(request):
@@ -153,12 +154,9 @@ def single_item(request, id):
 def order(request):
     context = {}
     OrderTotal = Order.objects.all()
-    #sort
     # MC = Inventory(media_choices)
     # print(MC)
     History = OrderTotal.order_by('date_created')
-#    sort_urls = {'product': '?o=product','container': '?o=container','volume': '?o=volume'}
- #   sort_arrows = {}
     # render them in a list.
     return render(request, 
         'store/order_list.html', 
@@ -206,28 +204,64 @@ def recurring_order(request):
     context = {}
     return render(request, 'store/order_list.html')
 
-@login_required(login_url='login')
+def inventory2(request):
+    
+    InventoryItemsAll = Inventory.objects.all()
+    sort_headers = SortHeaders(request, LIST_HEADERS)
+    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
+    return render(request, 
+        'store/order_list.html', 
+        {
+        'InventoryItems' : InventoryItems,
+        'headers': list(sort_headers.headers()),
+        'InventoryItemsAll': InventoryItemsAll,
+        },)
+
+def view_order(request):
+    o = Order.objects.get(id=1)
+    Orders = Order.objects.all()
+    InventoryItemsAll = Inventory.objects.all()
+    sort_headers = SortHeaders(request, LIST_HEADERS)
+    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
+
+
+    print (o.status)
+    print(Orders)
+
+    return render(request, 
+        'store/order_view2.html',{
+        'o': o,
+        'Orders': Orders,
+        'inventory':inventory,
+        'InventoryItems' : InventoryItems,
+        'headers': list(sort_headers.headers()),
+        })
+
+# @login_required(login_url='login')
 def order_view(request):
     order_list = []
     billed_to_list = []
+    OrdersAll = Order.objects.all()
     last_billed_list = []
-    billed_date = Order.objects.last_billed()
+    o = Order()
+    # billed_date = o.date_billed()
+    billed = o.already_billed()
     billed_total = 0
-    workorder_total = 0
+    order_total = 0
 
-    order_filters = {'billed': 'no'}
-    order_list = _orders_view_page(request, filters=order_filters, page_arg='p1')
-    for order in order_list:
-        # add the update flag here as we can't check it in the template
-        order_total += order.total()
+    p1_filters = {'status': 'Submitted', 'status': 'In_Progress', 'is_recurring': True,}
+    order_list = _orders_view_page(request, filters=p1_filters, page_arg='p1')
+    # for order in order_list:
+    #     # add the update flag here as we can't check it in the template
+    #     order_total += order.total()
 
-    billed_to_filters = {'billed':'both', 'billed_to':True}
-    billed_to_list = _orders_view_page(request, filters=billed_to_filters, page_arg='p2')
-    for billed_to in billed_to_list:
-        billed_total += billed_to.total()
+    C_not_B_filters = {'status':'Complete'}
+    C_not_B_list = _orders_view_page(request, filters=C_not_B_filters, page_arg='p2')
+    # for billed_to in billed_to_list:
+    #     billed_total += billed_to.total()
 
-    last_billed_filters = {'billed':'last'}
-    last_billed_list = _workorders_home_page(request, filters=last_billed_filters, page_arg='p3')
+    last_billed_filters = {'status':'Complete','billed': True,}
+    last_billed_list = _orders_view_page(request, filters=last_billed_filters, page_arg='p3')
 
     if request.GET.get('p2'):
         active_tab = 'p2'
@@ -236,37 +270,41 @@ def order_view(request):
     else:
         active_tab = 'p1'
 
-    return render(request, "TimeMatrix/home_page.html", {
-        'workorder_list': workorder_list,
-        'wo_page_range': _trimmed_page_range(workorder_list),
-        'workorder_total': workorder_total,
-        'billed_total': billed_total,
-        'billed_to': billed_to_list,
-        'billed_to_range': _trimmed_page_range(billed_to_list),
+    return render(request, "store/order_view2.html", {
+        'order_list': workorder_list,
+        # 'wo_page_range': _trimmed_page_range(workorder_list),
+        # 'workorder_total': workorder_total,
+        # 'billed_total': billed_total,
+        'C_not_B': C_not_B_list,
+        # 'billed_to_range': _trimmed_page_range(billed_to_list),
         'last_billed': last_billed_list,
-        'last_billed_range': _trimmed_page_range(last_billed_list),
+        # 'last_billed_range': _trimmed_page_range(last_billed_list),
         'billed_date': billed_date,
         # 'version': TimeMatrixVersion, necessary??
-        'search_form': WorkOrderSearch(initial=workorder_filters),
-        'billed_to_search': WorkOrderSearch(initial=billed_to_filters),
-        'last_billed_search': WorkOrderSearch(initial=last_billed_filters),
-        'active_tab': active_tab
-    }, context_instance=RequestContext(request))
+        # 'search_form': WorkOrderSearch(initial=workorder_filters),
+        # 'billed_to_search': WorkOrderSearch(initial=billed_to_filters),
+        # 'last_billed_search': WorkOrderSearch(initial=last_billed_filters),
+        'active_tab': active_tab,
+        'OrdersAll': OrdersAll,
+    })
 
 
-def _workorders_home_page(request, filters, page_arg):
-    user = request.user
-    workorder_list = _workorder_list(user, filters=filters)
+def _orders_view_page(request, filters, page_arg):
+    # for user view
+    # user = request.user
+    # order_list = _workorder_list(user, filters=filters)
 
-    paginator = Paginator(workorder_list, 30)
+    order_list = Order.objects.all
+
+    paginator = Paginator(order_list, 30)
 
     try:
-        workorders = paginator.page(request.GET.get(page_arg))
+        orders = paginator.page(request.GET.get(page_arg))
     except PageNotAnInteger:
         # If page is not an integer, deliver first page.
-        workorders = paginator.page(1)
+        orders = paginator.page(1)
     except EmptyPage:
         # If page is out of range (e.g. 9999), deliver last page of results.
-        workorders = paginator.page(paginator.num_pages)
+        orders = paginator.page(paginator.num_pages)
 
-    return workorders
+    return orders

@@ -18,7 +18,7 @@
     </div>
 </div>
 
-{% if InventoryItems.count == 0 %}
+{% if InventoryItemsAll.count == 0 %}
 <p>There are no products at this time. Use the button to the right to create some.</p>
 
 {% else %}
@@ -37,7 +37,7 @@
                 <td class="toggle_notes">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </td>
-                <td class="col-xs-3"><a>{{InventoryItem.inventory_text}}</a></td>                
+                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>                
                 <td class="col-xs-2">{{InventoryItem.product}}</td>
                 <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
                 <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
@@ -56,13 +56,13 @@
                 </td>
                 <tr id="notes" class="collapse" role="text">
                     <td colspan="10">
-                        <table class ='table table-striped'>
+                        {% comment %} <table class ='table table-striped'>
                             <thead>
-                                <tr>
-                                    <td class="col-md-12">{{InventoryItem.notes}}</td>
-                                </tr>
+                                <tr> {% endcomment %}
+                                    <div><p>{{InventoryItem.notes}}</p></div>
+                                {% comment %} </tr>
                             </thead>
-                        </table>
+                        </table> {% endcomment %}
                         </td>              
                 </tr>
             

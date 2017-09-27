@@ -1,59 +1,61 @@
-{% extends "store/base.html" %}
-{% block navbar %}
-{% include "store/navbar.html" %}
-{% endblock %}
+{% extends "store/empty_base.html" %}
 {% block content %}
+{% load store_tags %}
 <hr/>
-{% comment %} THIS WILL BE THE SEARCH/FILTER PAGE {% endcomment %}
+{% comment %} if staff {% endcomment %}
 
-<div class="row">
-    <div class="col-xs-12, col-md-12">
-        <h2>Orders</h2>
-    </div>
-    <div class="col-xsm-offset-4 text-right action-buttons">
-        <a href="/inventory/new" class="btn btn-default">Add inventory item</a></h2>
-    </div>
-</div>
-
-{% if Items.count == 0 %}
-<p>There are no services for your department at this time. Use the button to the right to create some.</p>
+{% if OrdersAll.count == 0 %}
+<p>There are no orders at this time.</p>
 
 {% else %}
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                <a href="{{ sorting.product }}">
-                    Product
-                    {% if sort_arrows.product == "up" %}
-                    <span class="glyphicon glyphicon-arrow-up"></span>
-                    {% elif sort_arrows.product == "down" %}
-                    <span class="glyphicon glyphicon-arrow-down"></span>
+    
+<table class="table table-hover" id="inventory_table">
+        <thead>
+            <tr id="table_header">
+                <th></th>
+                {% table_header headers %}                
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="searchable">
+            {% for InventoryItem in InventoryItems %}
+            <tr class="item_{{InventoryItem.id}} koala">
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
+                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>                
+                <td class="col-xs-2">{{InventoryItem.product}}</td>
+                <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
+                <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
+                <td class="col-xs-2"id="center_columns">
+                    {% if InventoryItem.active %}
+                    <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="1"></div>
+                    {% else %}
+                    <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="0"></div>
                     {% endif %}
-                </a>
-            </th>
-            <th>Active</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for InventoryItem in InventoryItems %}
-        <tr>
-            <td><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>
-            <td>
-                {% if InventoryItem.active %}
-                <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
-                {% else %}
-                <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
-                {% endif %}
-            </td>
-            <td>
-                <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endif %}
+                </td>
+                {% comment %} if staff {% endcomment %}
+                <td class="col-xs-1" id="center_columns">
+                    <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
+                </td>
+                <tr id="notes" class="collapse" role="text">
+                    <td colspan="10">
+                        {% comment %} <table class ='table table-striped'>
+                            <thead>
+                                <tr> {% endcomment %}
+                                    <div><p>{{InventoryItem.notes}}</p></div>
+                                {% comment %} </tr>
+                            </thead>
+                        </table> {% endcomment %}
+                        </td>              
+                </tr>
+            
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
 
 {% endblock %}
