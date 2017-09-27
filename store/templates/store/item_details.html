@@ -33,22 +33,22 @@
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>Product Name</th>
-                    <th>Media Type</th>
-                    <th>Cost</th>
-                    <th>Container</th>
-                    <th>Volume</th>
-                    <th>Notes</th>
+                    <th id="center_columns">Product Name</th>
+                    <th id="center_columns">Media Type</th>
+                    <th id="center_columns">Cost</th>
+                    <th id="center_columns">Container</th>
+                    <th id="center_columns">Volume</th>
+                    <th id="center_columns">Notes</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr id="center_columns">
                     <td>{{SingleItem.product}}</td>
                     <td>{{SingleItem.media_type}}</td>
                     <td>{{SingleItem.cost}}</td>
-                    <td>{{SingleItem.container}}</td>
-                    <td>{{SingleItem.volume}}</td>
-                    <td>{{SingleItem.notes}}</td>
+                    <td>{{SingleItem.container|default:'N/A'}}</td>
+                    <td>{{SingleItem.volume|default:'N/A'}}</td>
+                    <td class="col-xs-4">{{SingleItem.notes}}</td>
                 </tr>
             </tbody>
         </table>

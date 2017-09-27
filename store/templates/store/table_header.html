@@ -1,5 +1,6 @@
 {% for header in headers %}
     <th class="{{ header.class_attr }} click">
+        <div class="{{ header.text }}">
         {% if header.sortable %}
             <a href="{{ header.url|escape }}">
         {% endif %}
@@ -10,4 +11,6 @@
             <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
             <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>            
         {% endif %}
-    </th>{% endfor %}
+        </div>
+    </th>
+{% endfor %}

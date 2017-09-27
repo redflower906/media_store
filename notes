@@ -10,6 +10,9 @@ new goal: set up staff view order page
         submitted/in-Progress/recurring (separated within same tab)
         complete, not billed (non-recurring and recurring separated within same tab)
         complete, last billing cycle (non-recurring and recurring separated within same tab)
+            top headers: order ID, Department, requestor, date submitted, start date, end date, location,
+            status change (checkbox depending on what current status to next status is)
+                expanded headers: item, submitter, qty, unit, cost
     keep a requester field in case submitter and requester are different
     set up virtual env within server, install git and other things, then install 
     requirements.txt
@@ -38,6 +41,9 @@ Goal 8/11:
 
 Goal 9/13:
     SC - work on staff/user views of created orders
+
+Goal 9/20:
+    SC - finished replacing datatables with customized sort and expand features
 ---------------------------------------
 
 Long Term Goals (Set 6/9/17)

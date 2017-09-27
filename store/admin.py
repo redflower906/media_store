@@ -4,8 +4,8 @@ from django.contrib import admin
 from store.models import Department, Inventory, Order, Vendor
 
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'number', 'account_code', 'is_shared_resource', 'active')
-    search_fields = ['name', 'number']
+    list_display = ('department_name', 'number', 'account_code', 'is_shared_resource', 'active')
+    search_fields = ['department_name', 'number']
     actions = ['make_inactive']
 
     def make_inactive(self, request, queryset):

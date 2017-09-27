@@ -1,0 +1,59 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+<hr/>
+<ul class="nav nav-tabs">
+        <li class="active">
+          <a class="nav-link" data-toggle="tab" href="#not_complete" id='clickme'>Not Complete</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
+        </li>
+        <li class="disabled">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade in active" id="not_complete">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Submitted/In-Progress/Recurring Orders</h3>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {% include "store/order_list2.html" %}
+            </div>
+        </div>
+    </div>
+        <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Complete, Not Billed</h3>
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-xs-12 workorder_list">
+                    {% comment %} {% include "store/order_list.html" %} {% endcomment %}
+                </div>
+            </div>
+        </div>
+        <div role="tabpanel" class="tab-pane fade" id="complete_billed">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Complete and Billed</h3>
+                </div>
+            </div>    
+            <div class="row">
+                <div class="col-xs-12 workorder_list">
+                    {% comment %} {% include "store/order_list.html" %} {% endcomment %}
+                </div>
+            </div>
+        </div>
+</div>
+{% endblock %} 

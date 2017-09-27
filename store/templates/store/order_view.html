@@ -4,46 +4,51 @@
 {% endblock %}
 {% block content %}
 <hr/>
-
-{% comment %} IF THIS PAGE IS THE SAME FOR STAFF AND CUSTOMER
-{% if workorder_list.count == 0 %}
-<div class="row">
-    <div class="col-xs-12">
-        <h2><a href="/shared_resources">Start Creating a New Workorder</a></h2>
-    </div>
-</div>
-{% endif %} {% endcomment %}
-
+{% comment %} <ul class="nav nav-tabs">
+        <li class="active">
+          <a class="nav-link active" href="#">Active</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="disabled">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+{% endblock %} {% endcomment %}
 <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" {% if active_tab == 'p1' %}class="active"{% endif %} >
-        <a href="#wo-created" aria-controls="home" role="tab" data-toggle="tab">
-            <span class="badge">{{workorder_list.paginator.count}}</span> 
+        <a href="#not_complete" aria-controls="home" role="tab" data-toggle="tab">
+            {% comment %} <span class="badge">{{workorder_list.paginator.count}}</span>  {% endcomment %}
             Orders not completed
         </a>
     </li>
     <li role="presentation" {% if active_tab == 'p2' %}class="active"{% endif %} >
-        <a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="badge">{{last_billed.paginator.count}}</span> 
+        <a href="#complete_not_billed" aria-controls="profile" role="tab" data-toggle="tab">
+            {% comment %} <span class="badge">{{last_billed.paginator.count}}</span>  {% endcomment %}
             Completed orders not yet billed
         </a>
     </li>
     <li role="presentation" {% if active_tab == 'p3' %}class="active"{% endif %} >
-        <a href="#wo-last-billed" aria-controls="profile" role="tab" data-toggle="tab">
-            <span class="badge">{{last_billed.paginator.count}}</span> 
+        <a href="#billed" aria-controls="profile" role="tab" data-toggle="tab">
+            {% comment %} <span class="badge">{{last_billed.paginator.count}}</span>  {% endcomment %}
             Completed orders billed the last billing period
         </a>
     </li>    
 </ul>
 
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p1' %}active{% endif %}" id="wo-created">
+    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p1' %}active{% endif %}" id="not_complete">
         <div class="row">
             <div class="col-xs-12">
                 <h3>Unbilled Workorders you created after {{billed_date}}</h3>
             </div>
         </div>
 
-        {% include "TimeMatrix/workorder_search_form.html" %}
+        {% comment %} {% include "TimeMatrix/workorder_search_form.html" %} {% endcomment %}
 
         <div class="row">
             <div class="col-xs-12 workorder_list">
@@ -53,14 +58,14 @@
     </div>
 
 
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p2' %}active{% endif %}" id="wo-billed">
+    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p2' %}active{% endif %}" id="complete_not_billed">
         <div class="row">
             <div class="col-xs-12">
                 <h3>Workorders billed to you from current and previous billing cycle.</h3>
             </div>
         </div>
 
-        {% include "TimeMatrix/workorder_search_form.html" with search_form=billed_to_search %}
+        {% comment %} {% include "TimeMatrix/workorder_search_form.html" with search_form=billed_to_search %} {% endcomment %}
 
         <div class="row">
             <div class="col-xs-12 workorder_list">
@@ -69,14 +74,14 @@
         </div>
     </div>
 
-    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p3' %}active{% endif %}" id="wo-last-billed">
+    <div role="tabpanel" class="tab-pane workorder_container {% if active_tab == 'p3' %}active{% endif %}" id="billed">
         <div class="row">
             <div class="col-xs-12">
                 <h3>Workorders from last billing period ending {{billed_date}}</h3>
             </div>
         </div>
 
-        {% include "TimeMatrix/workorder_search_form.html" with search_form=last_billed_search %}
+        {% comment %} {% include "TimeMatrix/workorder_search_form.html" with search_form=last_billed_search %} {% endcomment %}
 
         <div class="row">
             <div class="col-xs-12 workorder_list">
@@ -85,32 +90,9 @@
         </div>
     </div>
 
-    <div role="tabpanel" class="tab-pane" id="wo-stats">
-        <div class="row">
-            <div class="col-xs-12">
-                <h4>Net Income</h4>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-3">
-                <div class="col-xs-6">
-                    <p>Income</p>
-                    <p>Expense</p>
-                    <hr/>
-                    <p>Net</p>
-                </div>
-                <div class="col-xs-6">
-                    <p class="active-icon">{{workorder_total | currency}}</p>
-                    <p class="disabled-icon"> - {{billed_total | currency}}</p>
-                    <hr/>
-                    <p>{{ net_total | currency }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
-{% else %}
+{% comment %} {% else %}
 <div class="row">
     <div class="col-xs-12">
         <h2>Welcome to ResourceMatrix</h2>
@@ -118,6 +100,6 @@
     </div>
 </div>
 
-{% endif %}
-<p class="text-muted">v: {{version}}</p>
-{% endblock %}
+{% endif %} {% endcomment %}
+{% comment %} <p class="text-muted">v: {{version}}</p> {% endcomment %}
+{% endblock %} 

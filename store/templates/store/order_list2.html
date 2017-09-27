@@ -13,18 +13,18 @@
         <thead>
             <tr id="table_header">
                 <th></th>
-                {% table_header headers %}                
+                {% table_header headers %}
                 <th></th>
             </tr>
         </thead>
         <tbody class="searchable">
-            {% for InventoryItem in InventoryItems %}
-            <tr class="item_{{InventoryItem.id}} koala">
+            {% for Order in Orders %}
+            <tr class="item_{{Order.id}} koala">
                 <td class="toggle_notes">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </td>
-                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>                
-                <td class="col-xs-2">{{InventoryItem.product}}</td>
+                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{Order.id}}</a></td>                
+                <td class="col-xs-2">{{Order.status}}</td>
                 <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
                 <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
                 <td class="col-xs-2"id="center_columns">
@@ -42,14 +42,8 @@
                 </td>
                 <tr id="notes" class="collapse" role="text">
                     <td colspan="10">
-                        {% comment %} <table class ='table table-striped'>
-                            <thead>
-                                <tr> {% endcomment %}
-                                    <div><p>{{InventoryItem.notes}}</p></div>
-                                {% comment %} </tr>
-                            </thead>
-                        </table> {% endcomment %}
-                        </td>              
+                        <div><p>{{InventoryItem.notes}}</p></div>
+                    </td>              
                 </tr>
             
             </tr>

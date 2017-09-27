@@ -18,108 +18,16 @@ $(document).ready(function() {
     }); 
 });
 
-//Does nothing right now
-// $(".search_dt").html($(".dataTables_filter"));
-
-//Datatables.net jquery library settings
-// $(document).ready(function() {
-//     console.log(InventoryItem)
-// });    
-// $(document).ready(function() {
-//     // console.log(InventoryItems);
-//     $('#inventory_table').DataTable( {
-//         "order": [[ 0, "asc" ]],
-//         stateSave: false,
-//         "paging": false,
-//         "dom": 'flrti',
-//         "columns": [
-//             null,
-//             null,
-//             null,
-//             null,
-//             { "type": "checked-in" },
-//             { "sorting": false },
-//             // "className": 'details-control',
-//             // "orderable": false,
-//             // "data": null,
-//             // "defaultContent": ''
-//             // "render": function () {
-//             //     return '<i class="glyphicon glyphicon-plus" aria-hidden="true"></i>';
-//             // },
-//           ]
-
-//     } );
-// });
-
-//     //Allows boolean sort for inventory table
-//     jQuery.fn.dataTableExt.oSort['checked-in-asc']  = function(a,b) {
-//         var a_sort = parseInt($(a).data("sort"));
-//         var b_sort =  parseInt($(b).data("sort"));
-//         return ((a_sort < b_sort) ? -1 : ((a_sort > b_sort) ?  1 : 0));
-//     };
-
-//     jQuery.fn.dataTableExt.oSort['checked-in-desc'] = function(a,b) {
-//         var a_sort = parseInt($(a).data("sort"));
-//         var b_sort =  parseInt($(b).data("sort"));
-//         return ((a_sort < b_sort) ?  1 : ((a_sort > b_sort) ? -1 : 0));
-//     };
-
-//     // Add event listener for opening and closing details
-//     $('#inventory_table tbody').on('click', 'td.details-control', function () {
-//         var tr = $(this).closest('tr');
-//         var tdi = tr.find("i.glyphicon");
-//         var row = table.row(tr);
-
-//         if (row.child.isShown()) {
-//         // This row is already open - close it
-//             row.child.hide();
-//             tr.removeClass('shown');
-//             tdi.first().removeClass('glyphicon glyphicon-minus');
-//             tdi.first().addClass('glyphicon glyphicon-plus');
-//         }
-//         else {
-//         // Open this row
-//             row.child(format(row.data())).show();
-//             tr.addClass('shown');
-//             tdi.first().removeClass('glyphicon glyphicon-plus');
-//             tdi.first().addClass('glyphicon glyphicon-minus');
-//         }
-//     });
-
-//     table.on("user-select", function (e, dt, type, cell, originalEvent) {
-//         if ($(cell.node()).hasClass("details-control")) {
-//             e.preventDefault();
-//             }
-//         });
-//     });
-
-//    function format(d){
-       
-//         // `d` is the original data object for the row
-//         // need to call d function
-//         // need to reference details-control in formatting
-//         return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-//             '<tr>' +
-//                 '<td>notes:</td>' +
-//                 '<td>' + d.notes + '</td>' +
-//             '</tr>' +
-//         '</table>';  
-        
-//    }
-
 //hide / expand table children. had to change toggle_notes from id to class for click event to
 //occur with all records
 $(document).ready(function(){
     $(".toggle_notes").click(function(){
         // figure out the next line items class and show / hide it
-        console.log($(this).find('i.glyphicon-plus').length)
         if ($(this).find('i.glyphicon-plus').length) {
             //add .length to see if an element exists in jquery
-            console.log('true', $(this))
         $(this).closest('.koala').next().fadeIn();
         $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus')
         } else {
-            console.log('false', $(this))
         $(this).closest('.koala').next().fadeOut();
         $(this).find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
         
@@ -127,5 +35,29 @@ $(document).ready(function(){
     });
 })
 
-$(document).ready(function(){
-})
+$(document).ready(function () { 
+        (function ($) {
+            //As you type in id=filter, it searches each character
+            $('#filter').keyup(function () {
+                //creates a regex to compare the typed values with values in table
+                var rex = new RegExp($(this).val(), 'i');
+                //hides every row in the table
+                $('.searchable tr.koala').hide();
+                //finds any instance of a minus glyph and changes it to a plus
+                $('.searchable tr.koala').find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
+                //closes all notes
+                $('.searchable tr.koala').next().fadeOut();
+                //searches each row for the regex and then shows it
+                $('.searchable tr.koala').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            });
+        }(jQuery));
+    });
+
+    $(document).ready(function(){
+        $("#clickme").click(function(){
+            console.log(Orders)
+            // console.log('hi')
+        });
+    })
