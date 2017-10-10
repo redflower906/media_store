@@ -16,8 +16,10 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
+from django.views.generic import ListView
+from store.models import Order
 from store import views #as store_views  #can add more here with, 
-from store.views import update_item 
+from store.views import update_item, OrderListView
 
 app_name = 'store'
 
@@ -52,6 +54,7 @@ urlpatterns = [
     url(r'^order/(?P<id>[0-9]*)$', views.edit_past_order, name='edit_past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
     url(r'^order/view', views.view_order, name='view_order'),
+    # url(r'^order/view', views.OrderListView.as_view(model=Order), name='view_order')
 
 #add link to dump to Resource Matrix here
 
