@@ -183,7 +183,7 @@ class OrderLine(models.Model):
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
     qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     unit = models.CharField(max_length=30, blank=True, null=True)
-    cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     def total(self):
         total = 0.00
         if self.cost and self.qty:

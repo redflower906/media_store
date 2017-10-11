@@ -5,7 +5,7 @@ import logging
 
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import TextInput, HiddenInput
+from django.forms.widgets import TextInput, HiddenInput, NumberInput
 from .models import Inventory, Vendor, Announcements, Order, OrderLine #MEDIA_CHOICES, Department, UserProfile
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
@@ -59,7 +59,6 @@ def item_model_formset_factory(extra):
     },
     extra=extra, can_delete=False,
     )
-
 '''
     def __init__(self, *args, **kwargs):()
         super(ServiceModelForm, self).__init__(*args, **kwargs)
@@ -81,7 +80,7 @@ class DateInput(TextInput):
 class OrderLineForm(forms.ModelForm):
     class Meta:
         model = OrderLine
-        fields = ('description', 'qty', 'unit', 'cost', 'inventory')#category)
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory')#category)
 
 class OrderForm(forms.ModelForm):
     #submitter = user_choice(queryset=User.objects.only('first_name','last_name'))
@@ -99,18 +98,22 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('date_complete', 'special_instructions')#'department', 'inventory_type' 'requester','submitter'
+        fields = ('date_complete', 'special_instructions', 'date_billed')#'department', 'inventory_type' 'requester','submitter'
 
-def order_inline_formset_factory(extra):
+def order_inline_formset_factory():
     return inlineformset_factory(Order, OrderLine,
-        fields = ('description', 'qty', 'unit', 'cost', 'inventory'),#category, 'inventory_type'
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'media_type', 'cost', 'inventory_text'),#category, 'inventory_type'
         widgets = {
+            'media_choice': forms.Select(attrs={'class': 'form-text'}),
             'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
-            'cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
+            'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
             'inventory': HiddenInput(),
+            'inventory_text': forms.Select(attrs={'class': 'form-text'}),
+            'description': forms.TextInput(attrs={'class': 'form-text'}),
             'unit': forms.TextInput(attrs={'class': 'line unit'})
-            #'category': forms.Select(attrs={'class': 'chosen-select line-category'})
-        })
+        },
+        can_delete=True
+        )
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:
