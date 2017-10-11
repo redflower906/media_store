@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.db.models import Q
 from django.views import generic
 from django.template import context, RequestContext
 from django.contrib import messages
@@ -302,31 +303,19 @@ class OrderListView(generic.ListView):
     tab3 = Order.objects.filter(status__icontains='complete')
 
 def view_order(request):
-    o = Order.objects.get(id=1)
-    Orders = Order.objects.all().values()
-    Departments = Department.objects.all().values()
-    InventoryItemsAll = Inventory.objects.all()
+    Orders = Order.objects.all()
+    # thing = Order.objects.all()[3]
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
-    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
-    tabs = Orders.filter(status__icontains='complete')
-    deps = 1
-    # one = Departments.Orders_set.all()
-    print(deps)
-    # print(tabs)
+    Not_C = Orders.filter(
+        Q(status__icontains='In_progress')| Q(status__icontains='Submitted')| Q(is_recurring=True),
+        )
+    C_not_B = Orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
 
-
-
-    # print (o.status)
-    # print(Orders)
 
     return render(request, 
         'store/order_view2.html',{
-        'o': o,
-        'Orders': Orders,
-        'inventory':inventory,
-        'InventoryItems' : InventoryItems,
-        'tabs': tabs,
-        'deps': deps,
+        'C_not_B': C_not_B,
+        'Not_C': Not_C,
         'headers': list(sort_headers.headers()),
         })
 

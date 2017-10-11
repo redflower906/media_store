@@ -26,10 +26,11 @@ class Department(models.Model):
 #   all_objects = models.Manager()
 
     def __unicode__(self):
-        return self.number + " " + self.name
+        return self.number + " " + self.department_name
 #	category = models.CharField(max_length=30,blank=True,null=True,choices = CATEGORY_CHOICES)
 #note sure category choices should be the same but not sure if RM requires it to be the same?
-
+    def __str__(self):
+        return self.department_name
 
     class Meta:
         ordering = ('number',)
@@ -85,6 +86,9 @@ class Vendor(models.Model):
     contact = models.CharField(max_length=100, blank=True, null=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
     active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.company
 
 MEDIA_CHOICES = (
     #('','---------'),
@@ -143,7 +147,7 @@ class Order(models.Model):
     is_recurring = models.BooleanField(default=False)
     #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
-    date_recurring_start = models.DateField(default=datetime.now, blank=True)
+    date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=30, blank=False, null=False, default='One',
         choices=(
@@ -151,12 +155,13 @@ class Order(models.Model):
             ('Two', 'Two'),
         )
     )
-    status = models.CharField(max_length=30, blank=False, null=False, default='Complete',
+    status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
         choices=(
             ('Submitted', 'Submitted'),
             ('In_Progress', 'In Progress'),
             ('Complete', 'Complete'),
             ('Canceled', 'Canceled'),
+            ('Problem', 'Problem')
         )
     )
     
