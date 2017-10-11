@@ -267,7 +267,7 @@ ORDER_LIST_HEADERS = (
 
 class OrderListView(generic.ListView):
     model = Order
-    billed = Order.objects.get(id=1)
+    billed = Order.objects.get(id=None)
     dep = billed.department
     billed1 = billed.already_billed()
     print(dep)
