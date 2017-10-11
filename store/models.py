@@ -178,7 +178,7 @@ class Order(models.Model):
         return self.status.name == 'Complete'
 
 class OrderLine(models.Model):
-    order = models.ForeignKey(Order)
+    order = models.ForeignKey(Order, related_name='b')
     description = models.TextField(blank=True)
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
     qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)

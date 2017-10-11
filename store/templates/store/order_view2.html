@@ -20,12 +20,22 @@
     <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
         <div class="row">
             <div class="col-xs-12">
-                <h3>Submitted/In-Progress/Recurring Orders</h3>
+                <h3>Submitted/In-Progress Orders</h3>
             </div>
         </div>    
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=Not_C%}
+                {%include "store/list_generic.html" with orders=incomp%}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Recurring Orders</h3>
+            </div>
+        </div>  
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orders=recur%}
             </div>
         </div>
     </div>
@@ -37,21 +47,21 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=C_not_B%}
+                {%include "store/list_generic.html" with orders=compNotBill%}
             </div>
         </div>
     </div>    
-        <div role="tabpanel" class="tab-pane fade" id="complete_billed">
-            <div class="row">
-                <div class="col-xs-12">
-                    <h3>Complete and Billed</h3>
-                </div>
-            </div>    
-            <div class="row">
-                <div class="col-xs-12 workorder_list">
-                    {% comment %} {% include "store/order_list.html" %} {% endcomment %}
-                </div>
+    <div role="tabpanel" class="tab-pane fade" id="complete_billed">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Complete and Billed</h3>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orders=compBill%}
+            </div>
+        </div>    
+    </div>
 </div>
 {% endblock %} 
