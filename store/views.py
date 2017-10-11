@@ -184,8 +184,9 @@ def have_minimum(formset, count, request, message):
 def order(request):
     OrdersAll=Order.objects.all()
     return render(request, 
-        'store/order_list.html',{
-        'OrdersAll': OrdersAll,
+        'store/order_list2.html', 
+        {
+        'OrderTotal' : OrderTotal,
         }, context)
 
 
@@ -265,84 +266,59 @@ ORDER_LIST_HEADERS = (
     ('Status', 'status'),
 )
 
-class OrderListView(generic.ListView):
-    model = Order
-    billed = Order.objects.get(id=None)
-    dep = billed.department
-    billed1 = billed.already_billed()
-    print(dep)
-    context_object_name = 'order_list'
-    tab1 = Order.objects.filter(status__icontains='submitted')|Order.objects.filter(status__icontains='in-progress')|Order.objects.filter(is_recurring=True)
-    tab2 = Order.objects.filter(status__icontains='complete')
-    tab3 = Order.objects.filter(status__icontains='complete')
+
 
 def view_order(request):
-    Orders = Order.objects.all()
-    # thing = Order.objects.all()[3]
+    orders = Order.objects.all()
+    oline = OrderLine.objects.all()
+    thing1 = orders.values('department')
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
-    Not_C = Orders.filter(
-        Q(status__icontains='In_progress')| Q(status__icontains='Submitted')| Q(is_recurring=True),
+    incomp = orders.filter(
+        Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
         )
-    C_not_B = Orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
+    recur = orders.filter(is_recurring=True)
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False)
+    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
+    print(thing1)
 
 
     return render(request, 
         'store/order_view2.html',{
-        'C_not_B': C_not_B,
-        'Not_C': Not_C,
+        'compNotBill': compNotBill,
+        'incomp': incomp,
         'headers': list(sort_headers.headers()),
+        'compBill': compBill,
+        'recur': recur,
+        'headers': list(sort_headers.headers()),
+
         })
 
-# @login_required(login_url='login')
 def order_view(request):
-    order_list = []
-    billed_to_list = []
-    OrdersAll = Order.objects.all()
-    last_billed_list = []
-    o = Order()
-    # billed_date = o.date_billed()
-    billed = o.already_billed()
-    billed_total = 0
-    order_total = 0
+    orders = Order.objects.all()
+    oline = OrderLine.objects.all()
+    thing = 1
+    sort_headers_order = SortHeaders(request, ORDER_LIST_HEADERS)
+    sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
+    incomp = orders.filter(
+        Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
+        )
+    recur = orders.filter(is_recurring=True)
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False)
+    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
 
-    p1_filters = {'status': 'Submitted', 'status': 'In_Progress', 'is_recurring': True,}
-    order_list = _orders_view_page(request, filters=p1_filters, page_arg='p1')
-    # for order in order_list:
-    #     # add the update flag here as we can't check it in the template
-    #     order_total += order.total()
 
-    C_not_B_filters = {'status':'Complete'}
-    C_not_B_list = _orders_view_page(request, filters=C_not_B_filters, page_arg='p2')
-    # for billed_to in billed_to_list:
-    #     billed_total += billed_to.total()
-
-    last_billed_filters = {'status':'Complete','billed': True,}
-    last_billed_list = _orders_view_page(request, filters=last_billed_filters, page_arg='p3')
-
-    if request.GET.get('p2'):
-        active_tab = 'p2'
-    elif request.GET.get('p3'):
-        active_tab = 'p3'
-    else:
-        active_tab = 'p1'
-
-    return render(request, "store/order_view2.html", {
-        'order_list': workorder_list,
-        # 'wo_page_range': _trimmed_page_range(workorder_list),
-        # 'workorder_total': workorder_total,
-        # 'billed_total': billed_total,
-        'C_not_B': C_not_B_list,
-        # 'billed_to_range': _trimmed_page_range(billed_to_list),
-        'last_billed': last_billed_list,
-        # 'last_billed_range': _trimmed_page_range(last_billed_list),
-        'billed_date': billed_date,
-        # 'version': TimeMatrixVersion, necessary??
-        # 'search_form': WorkOrderSearch(initial=workorder_filters),
-        # 'billed_to_search': WorkOrderSearch(initial=billed_to_filters),
-        # 'last_billed_search': WorkOrderSearch(initial=last_billed_filters),
-        'active_tab': active_tab,
-        'OrdersAll': OrdersAll,
-    })
+    return render(request, 
+        'store/order_list2.html',{
+        'compNotBill': compNotBill,
+        'incomp': incomp,
+        'headers': list(sort_headers.headers()),
+        'compBill': compBill,
+        'recur': recur,
+        'thing': thing,
+        'orders': orders,
+        'oline': oline,
+        'headers1': list(sort_headers_order.headers()),
+        })
 
 
 def _orders_view_page(request, filters, page_arg):

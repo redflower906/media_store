@@ -3,7 +3,7 @@
 {% load store_tags %}
 <hr/>
 
-<table class="table table-hover" id="inventory_table">
+    <table class="table table-hover" id="inventory_table">
         <thead>
             <tr id="table_header">
                 <th></th>
@@ -25,8 +25,21 @@
                 <td class="">{{order.date_recurring_stop|default:'N/A'}}</td>
                 <td class="">{{order.location}}</td>
                 <td class="">{{order.status}}</td>
+                <tr id="notes" class="collapse" role="text">
+                        <td colspan="10">
+                            {% comment %} <table class ='table table-striped'>
+                                <thead>
+                                    <tr> {% endcomment %}
+                                        <div><p>{{order.b.qty}}</p></div>
+                                    {% comment %} </tr>
+                                </thead>
+                            </table> {% endcomment %}
+                            </td>              
+                    </tr>
+                
+                </tr>
             {% endfor %}
             </tr>
             </tbody>
-            </table>
+    </table>
 {% endblock %} 
