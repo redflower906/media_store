@@ -54,10 +54,3 @@ $(document).ready(function () {
             });
         }(jQuery));
     });
-
-    $(document).ready(function(){
-        $("#clickme").click(function(){
-            console.log(Orders)
-            // console.log('hi')
-        });
-    })

@@ -1,0 +1,32 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+<hr/>
+
+<table class="table table-hover" id="inventory_table">
+        <thead>
+            <tr id="table_header">
+                <th></th>
+                {% table_header headers %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="searchable">
+            {% for order in orders %}
+            <tr class="order_{{order.id}} koala">
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
+                <td class=""><a href="#">{{order.id}}</a></td>                
+                <td class="">{{order.department.department_name}}</td>
+                <td class="">requester</td>
+                <td class="">{{order.date_submitted}}</td>
+                <td class="">{{order.date_recurring_start|default:'N/A'}}</td>
+                <td class="">{{order.date_recurring_stop|default:'N/A'}}</td>
+                <td class="">{{order.location}}</td>
+                <td class="">{{order.status}}</td>
+            {% endfor %}
+            </tr>
+            </tbody>
+            </table>
+{% endblock %} 

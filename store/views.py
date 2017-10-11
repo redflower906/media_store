@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.db.models import Q
+from django.views import generic
 from django.template import context, RequestContext
 from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
@@ -7,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm
-from .models import Inventory, Order, Announcements, OrderLine, SortHeaders
+from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
 import MySQLdb, sys
 import csv
 import time
@@ -186,10 +188,12 @@ def order(request):
         'OrdersAll': OrdersAll,
         }, context)
 
+
 '''def create_order(request, order_id):
     order = Order.objects.get(pk=order_id)
     OrderLineInlineFormset = inlineformset_factory(Order, OrderLine, )
     InventoryInlineFormset = inlineformset_factory(Order)'''
+
 
 def create_order(request, copy_id=None):
     OrderInlineFormset = order_inline_formset_factory
@@ -261,23 +265,31 @@ ORDER_LIST_HEADERS = (
     ('Status', 'status'),
 )
 
+class OrderListView(generic.ListView):
+    model = Order
+    billed = Order.objects.get(id=1)
+    dep = billed.department
+    billed1 = billed.already_billed()
+    print(dep)
+    context_object_name = 'order_list'
+    tab1 = Order.objects.filter(status__icontains='submitted')|Order.objects.filter(status__icontains='in-progress')|Order.objects.filter(is_recurring=True)
+    tab2 = Order.objects.filter(status__icontains='complete')
+    tab3 = Order.objects.filter(status__icontains='complete')
+
 def view_order(request):
-    o = Order.objects.get(id=1)
-    Orders = Order.objects.all().values()
-    InventoryItemsAll = Inventory.objects.all()
+    Orders = Order.objects.all()
+    # thing = Order.objects.all()[3]
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
-    InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
+    Not_C = Orders.filter(
+        Q(status__icontains='In_progress')| Q(status__icontains='Submitted')| Q(is_recurring=True),
+        )
+    C_not_B = Orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
 
-
-    print (o.status)
-    print(Orders)
 
     return render(request, 
         'store/order_view2.html',{
-        'o': o,
-        'Orders': Orders,
-        'inventory':inventory,
-        'InventoryItems' : InventoryItems,
+        'C_not_B': C_not_B,
+        'Not_C': Not_C,
         'headers': list(sort_headers.headers()),
         })
 
