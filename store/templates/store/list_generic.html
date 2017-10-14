@@ -30,7 +30,9 @@
                             {% comment %} <table class ='table table-striped'>
                                 <thead>
                                     <tr> {% endcomment %}
-                                        <div><p>{{order.b.qty}}</p></div>
+                                        {% for oline in oline %}
+                                        <div><p>{{oline.qty}}</p></div>
+                                        {% endfor %}
                                     {% comment %} </tr>
                                 </thead>
                             </table> {% endcomment %}

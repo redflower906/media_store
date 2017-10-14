@@ -266,12 +266,9 @@ ORDER_LIST_HEADERS = (
     ('Status', 'status'),
 )
 
-
-
 def view_order(request):
     orders = Order.objects.all()
     oline = OrderLine.objects.all()
-    thing1 = orders.values('department')
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
     incomp = orders.filter(
         Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
@@ -279,7 +276,6 @@ def view_order(request):
     recur = orders.filter(is_recurring=True)
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False)
     compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
-    print(thing1)
 
 
     return render(request, 
@@ -289,15 +285,13 @@ def view_order(request):
         'headers': list(sort_headers.headers()),
         'compBill': compBill,
         'recur': recur,
-        'headers': list(sort_headers.headers()),
-
+        'oline': oline,
         })
 
 def order_view(request):
     orders = Order.objects.all()
     oline = OrderLine.objects.all()
     thing = 1
-    sort_headers_order = SortHeaders(request, ORDER_LIST_HEADERS)
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
     incomp = orders.filter(
         Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
@@ -317,7 +311,6 @@ def order_view(request):
         'thing': thing,
         'orders': orders,
         'oline': oline,
-        'headers1': list(sort_headers_order.headers()),
         })
 
 
