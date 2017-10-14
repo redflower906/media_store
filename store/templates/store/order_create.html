@@ -46,15 +46,18 @@
 
         <h3>What would you like to order?</h3>
     <hr/>
+
         <div class="row">
             <div class="col-xs-2 text-right">
-                <label class='meida-label' for 'MEDIA_CHOICES'>Type:</label>
+                <label class='media-label' for='{{order_form.media.id_for_label}}'>Type:</label>
             </div>
+            <div class='col-xs-3'>{{order_form.media}}</div>
+
             <div class='col-xs-12'>
                 <table id='form_holder'>
                     <tr>
                         <td style="padding:0" class="OrderLines">
-                        {{ line_formset.management_form }}
+                        {{ formset.management_form }}
                             <table id='OrderCreate'>
                             <thead>
                                 <th>Item</th>
@@ -67,16 +70,16 @@
                                 <th>Total</th>
                             </thead>
                             <tbody>
-                                {% for item in line_formset %}
+                                {% for item in formset %}
                                 <tr>
                                 {% for hidden in form.hidden_fields %}
                                     {{ hidden }}
                                 {% endfor %}
                                     <td>{{ OrderForm }}</td>
                                 </tr>
-                                {% if form.errors %}
+                                {% if order_form.errors %}
                                 <tr>
-                                {% for field in form.visible_fields %}
+                                {% for field in order_form.visible_fields %}
                                     <td>{{field.errors}}</td>
                                 {% endfor %}
                                 </tr>
@@ -89,8 +92,6 @@
                 </table>
             </div>
         </div>
-
-
     </div>
 </div>
 
@@ -100,7 +101,7 @@
         <input id='id_OrderAll_set-{{id}}-id' name='id_OrderAll_set-{{id}}-id' type='hidden'>
         <input id='id_OrderItem_set-{{id}}-id' name='id_OrderItem_set-{{id}}-id' type='hidden'>
         <td>
-            <select id='id.media_choice' name='media_choice' class='chosen-select' style='display: none;'>==$0
+            <select id='id.media_type' name='media_type' class='chosen-select' style='display: none;'>==$0
             {% endverbatim %}
             <option value=''>------</option>
             {% for option in Order_form.forms.0.instance.MEDIA_CHOICES %}
@@ -116,27 +117,3 @@
 {% endverbatim %}
 {% endblock %}
 
-{% verbatim %}
-<script id="item-line-form" type="text/x-handlebars-template">
-    <tr>
-        <input id="id_SingleItem_set-{{id}}-id" name="SingleItem_set-{{id}}-id" type="hidden">
-        <td><input id="id_SingleItem_set-{{id}}-SingleItem_text" maxlength="100" name="SingleItem_set-{{id}}-SingleItem_text" type="text"></td>
-        <td>
-
-<select id="id_SingleItem_set-{{id}}-media_type" class="chosen-select line-media_type" name="SingleItem_set-{{id}}-media">
-        {% endverbatim %}
-        <option value="">------</option>
-        {% for option in Item_form.forms.0.instance.MEDIA_CHOICES %}
-        <option value="{{option.0}}">{{option.1}}</option>
-        {% endfor %} 
-        {% verbatim %}
-    </select>
-        </td>
-        <td><input class="line_cost" id="id_SingleItem_set-{{id}}-cost" maxlength="5" name="SingleItem_set-{{id}}-cost" type="text"></td>
-        <td><input class="line-container" id="id_SingleItem_set-{{id}}-container" maxlength="30" name="SingleItem_set-{{id}}-container" type="text"></td>
-        <td><input class="line-volume" id="id_SingleItem_set-{{id}}-volume" maxlength="30" name="SingleItem_set-{{id}}-volume" type="text"></td>
-        <td><input class="line-notes" id="id_SingleItem_set-{{id}}-notes" maxlength="500" name="SingleItem_set-{{id}}-notes" type="text"></td>
-        <td><input id="id_SingleItem_set-{{id}}-DELETE" name="SingleItem_set-{{id}}-DELETE" type="checkbox"></td>
-    </tr>
-</script>
-{% endverbatim %}

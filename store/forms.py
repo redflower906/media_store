@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import TextInput, HiddenInput, NumberInput
-from .models import Inventory, Vendor, Announcements, Order, OrderLine #MEDIA_CHOICES, Department, UserProfile
+from .models import Inventory, Vendor, Announcements, Order, OrderLine, MEDIA_CHOICES, Department#, UserProfile
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
@@ -86,7 +86,11 @@ class OrderForm(forms.ModelForm):
     #submitter = user_choice(queryset=User.objects.only('first_name','last_name'))
     #main_requester = user_choice(queryset=requester_queryset_generator())
     #department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'style' : 'width:250'}))
-    inventory_type = forms.ModelChoiceField(queryset=Inventory.objects.filter(active=True), required=False)
+    try:
+        media_choices = (('', '-----------------'),) + MEDIA_CHOICES
+    except ProgrammingError as e:
+        media_choices = (('', '-----------------'),)
+    media = forms.ChoiceField(required=False, choices=media_choices, widget=forms.Select(attrs={'class': 'chosen-select'}))
     date_complete = forms.DateField(widget=DateInput)
 
     def clean_date_complete(self):
@@ -102,9 +106,8 @@ class OrderForm(forms.ModelForm):
 
 def order_inline_formset_factory():
     return inlineformset_factory(Order, OrderLine,
-        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'media_type', 'cost', 'inventory_text'),#category, 'inventory_type'
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'cost', 'inventory_text'),#category, 'inventory_type'
         widgets = {
-            'media_choice': forms.Select(attrs={'class': 'form-text'}),
             'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
             'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
             'inventory': HiddenInput(),

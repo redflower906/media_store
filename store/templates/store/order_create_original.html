@@ -324,3 +324,30 @@ def edit_past_order(request):
 def recurring_order(request):
     context = {}
     return render(request, 'store/order_list.html')
+
+
+
+    {% verbatim %}
+<script id="item-line-form" type="text/x-handlebars-template">
+    <tr>
+        <input id="id_SingleItem_set-{{id}}-id" name="SingleItem_set-{{id}}-id" type="hidden">
+        <td><input id="id_SingleItem_set-{{id}}-SingleItem_text" maxlength="100" name="SingleItem_set-{{id}}-SingleItem_text" type="text"></td>
+        <td>
+
+<select id="id_SingleItem_set-{{id}}-media_type" class="chosen-select line-media_type" name="SingleItem_set-{{id}}-media">
+        {% endverbatim %}
+        <option value="">------</option>
+        {% for option in Item_form.forms.0.instance.MEDIA_CHOICES %}
+        <option value="{{option.0}}">{{option.1}}</option>
+        {% endfor %} 
+        {% verbatim %}
+    </select>
+        </td>
+        <td><input class="line_cost" id="id_SingleItem_set-{{id}}-cost" maxlength="5" name="SingleItem_set-{{id}}-cost" type="text"></td>
+        <td><input class="line-container" id="id_SingleItem_set-{{id}}-container" maxlength="30" name="SingleItem_set-{{id}}-container" type="text"></td>
+        <td><input class="line-volume" id="id_SingleItem_set-{{id}}-volume" maxlength="30" name="SingleItem_set-{{id}}-volume" type="text"></td>
+        <td><input class="line-notes" id="id_SingleItem_set-{{id}}-notes" maxlength="500" name="SingleItem_set-{{id}}-notes" type="text"></td>
+        <td><input id="id_SingleItem_set-{{id}}-DELETE" name="SingleItem_set-{{id}}-DELETE" type="checkbox"></td>
+    </tr>
+</script>
+{% endverbatim %}
