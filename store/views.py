@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm
-from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor, OrderManager
+from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
 import MySQLdb, sys
 import json as simplejson
 import csv
