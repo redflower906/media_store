@@ -21,8 +21,9 @@ $(document).ready(function() {
 //hide / expand table children. had to change toggle_notes from id to class for click event to
 //occur with all records
 $(document).ready(function(){
-    $(".toggle_notes").click(function(){
+    $(".toggle_notes").off("click").click(function(e){
         // figure out the next line items class and show / hide it
+
         if ($(this).find('i.glyphicon-plus').length) {
             //add .length to see if an element exists in jquery
         $(this).closest('.koala').next().fadeIn();
@@ -34,6 +35,22 @@ $(document).ready(function(){
         }
     });
 })
+
+$(document).ready(function(){
+    $(".toggle_details").click(function(){
+        // figure out the next line items class and show / hide it
+        if ($(this).find('i.glyphicon-plus').length) {
+            //add .length to see if an element exists in jquery
+        $(this).closest('.bear').next().fadeIn();
+        $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus')
+        } else {
+        $(this).closest('.bear').next().fadeOut();
+        $(this).find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
+        
+        }
+    });
+})
+
 
 $(document).ready(function () { 
         (function ($) {

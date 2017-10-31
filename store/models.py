@@ -132,6 +132,9 @@ class Inventory(models.Model):
     def __str__(self):
         return self.inventory_text
 
+class OrderManager(models.Manager):
+    def odline(self):
+        return self.orderline_set.all()    
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
@@ -164,21 +167,29 @@ class Order(models.Model):
             ('Problem', 'Problem')
         )
     )
+    objects = OrderManager()
     
     def already_billed(self):
         if self.date_billed:
             return True
         return False
+
     def total(self):
         total = 0
-    #not done with total
+        list = self.orderline_set.all()
+        for line in list:
+            total += line.total()
+        return total
+
     def __unicode__(self):
         return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
+
     def is_closed(self):
         return self.status.name == 'Complete'
 
+
 class OrderLine(models.Model):
-    order = models.ForeignKey(Order, related_name='b')
+    order = models.ForeignKey(Order)
     description = models.TextField(blank=True)
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
     qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)

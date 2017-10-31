@@ -18,10 +18,7 @@
     </div>
 </div>
 
-{% if InventoryItemsAll.count == 0 %}
-<p>There are no products at this time. Use the button to the right to create some.</p>
-
-{% else %}
+{% if InventoryItemsAll %}
     
     <table class="table table-hover" id="inventory_table">
         <thead>
@@ -70,6 +67,10 @@
             {% endfor %}
         </tbody>
     </table>
+{% else %}
+
+<p>There are no products at this time. Use the button to the right to create some.</p>
+
 {% endif %}
 
 {% endblock %}

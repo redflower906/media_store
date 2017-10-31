@@ -9,7 +9,7 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm
-from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
+from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor, OrderManager
 import MySQLdb, sys
 import csv
 import time
@@ -270,13 +270,11 @@ def view_order(request):
     orders = Order.objects.all()
     oline = OrderLine.objects.all()
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
-    incomp = orders.filter(
-        Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
-        )
+    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete')
     recur = orders.filter(is_recurring=True)
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False)
     compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
-
+    print(sort_headers.headers())
 
     return render(request, 
         'store/order_view2.html',{
@@ -285,13 +283,11 @@ def view_order(request):
         'headers': list(sort_headers.headers()),
         'compBill': compBill,
         'recur': recur,
-        'oline': oline,
         })
 
 def order_view(request):
     orders = Order.objects.all()
     oline = OrderLine.objects.all()
-    thing = 1
     sort_headers = SortHeaders(request, ORDER_LIST_HEADERS)
     incomp = orders.filter(
         Q(status__icontains='progress')| Q(status__icontains='Submitted')| Q(is_recurring=False),
@@ -301,6 +297,7 @@ def order_view(request):
     compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True)
 
 
+
     return render(request, 
         'store/order_list2.html',{
         'compNotBill': compNotBill,
@@ -308,7 +305,6 @@ def order_view(request):
         'headers': list(sort_headers.headers()),
         'compBill': compBill,
         'recur': recur,
-        'thing': thing,
         'orders': orders,
         'oline': oline,
         })

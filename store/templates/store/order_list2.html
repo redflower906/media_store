@@ -21,14 +21,14 @@
             </tr>
         </thead>
         <tbody class="searchable">
-            {% for oline in oline %}
+            {% for thing in thing %}
             <tr class="order_{{oline.id}} koala">
                 <td class="toggle_notes">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </td>
-                <td class=""><a href="#">{{oline.order.id}}</a></td>                
-                <td class="">{{oline.order.department.department_name}}</td>
-                <td class="">requester</td>
+                <td class=""><a href="#">{{thing.id}}</a></td>                
+                <td class="">{{thing.department.department_name}}</td>
+                {% comment %}<td class="">requester</td>
                 <td class="">{{oline.order.date_submitted}}</td>
                 <td class="">{{oline.order.date_recurring_start|default:'N/A'}}</td>
                 <td class="">{{oline.order.date_recurring_stop|default:'N/A'}}</td>
@@ -53,7 +53,7 @@
                                 </tbody>    
                             </table>
                         </td>              
-                    </tr>
+                    </tr> {% endcomment %}
                 
                 </tr>
             {% endfor %}                                            
