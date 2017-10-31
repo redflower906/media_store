@@ -19,9 +19,7 @@
 
 
 
-<div class='row'>
-    <div class='col-xs-12'>
-    <form id='OrderForm' method="post" action="" class="post-form form-horizontal">
+<form id='order_form' method="post" action="" class="post-form form-horizontal">
     {% csrf_token %}
     {% for hidden in form.hidden_fields %}
         {{ hidden }}
@@ -32,31 +30,43 @@
         {{ field.help_text }}
         {{ field }}
     {% endfor %}
-        <h3>Who is creating this order?</h3>
-    <hr/>
+    <fieldset>
+        <legend>Who is creating this order?</legend>
+    </fieldset>
     <p>&nbsp;</p>
 
-        <h3>Who is paying?</h3>
-    <hr/>
+    <fieldset>
+        <legend>Who is paying?</legend>
     <p>&nbsp;</p>
+    </fieldset>
 
-        <h3>Is this a recurring order?</h3>
-    <hr/>
-    <p>&nbsp;</p>
 
-        <h3>What would you like to order?</h3>
-    <hr/>
-        <div class="row">
-            <div class="col-xs-2 text-right">
-                <label class='meida-label' for 'MEDIA_CHOICES'>Type:</label>
+    <fieldset>
+        <legend>Is this a recurring order?</legend>
+        <section id='first' class = 'section'>
+            <div class = 'container'>
+                <input type="radio" name="group1" id='radio_1'>
+                <label for = 'radio_1'><span class="radio">Yes</span></label>
             </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio_2">
+                <label for = 'radio_2'><span class="='radio">No</span></label>
+            </div>
+        </section>
+    </fieldset>
+    <p>&nbsp;</p>
+
+    <fieldset>
+        <legend>What would you like to order?</legend>
             <div class='col-xs-12'>
                 <table id='form_holder'>
                     <tr>
                         <td style="padding:0" class="OrderLines">
-                        {{ line_formset.management_form }}
-                            <table id='OrderCreate'>
+                            {{ formset.management_form }}
+                            {{ formset.media }}
+                            <table id='order_table'>
                             <thead>
+                                <th>Media Type</th>
                                 <th>Item</th>
                                 <th>Container</th>
                                 <th>Notes</th>
@@ -67,18 +77,24 @@
                                 <th>Total</th>
                             </thead>
                             <tbody>
-                                {% for item in line_formset %}
+                                {% for form in formset %}
                                 <tr>
                                 {% for hidden in form.hidden_fields %}
                                     {{ hidden }}
                                 {% endfor %}
-                                    <td>{{ OrderForm }}</td>
+
+                                {% for field in form.visible_fields %}
+                                <td>{% if field.name == 'cost' %}${% endif %}{{field}}</td>
+                                {% endfor %}
+
+                                <td class='total'>
+                                {{form.instance.total | currency}}</td>
                                 </tr>
                                 {% if form.errors %}
                                 <tr>
                                 {% for field in form.visible_fields %}
                                     <td>{{field.errors}}</td>
-                                {% endfor %}
+                                    {% endfor %}
                                 </tr>
                                 {% endif %}
                                 {% endfor %}
@@ -88,55 +104,59 @@
                     </tr>
                 </table>
             </div>
-        </div>
+
+            <div class='row'>
+                <div class = 'col-xs-3'>
+                    <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" />
+                </div>
+                <div class='col-xs-offset-7 col-xs-2 text-right'>
+                    <p class="aggregate_total">
+                    {{order_form.instance.total | currency}}</p>
+                </div>
+            </div>
+        </fieldset>
+            <div class='row'>
+                <hr/>
+                <p></p>
+                <div class='col-xs-11'>
+                    <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
+                </div>
+                <div class="col-xs-1">
+                    <a href='/' class="btn btn-danger">Cancel</a>
+                </div>
+            </div>
+</form>
+
+<p>&nbsp;</p>
 
 
-    </div>
-</div>
-
-{% verbatim %}
-<script id='order-lineform' type='text/x-handlebars-template'>
+{% verbatim %}s
+<script id='order-line-form' type='text/x-handlebars-template'>
     <tr class='highlight'>
-        <input id='id_OrderAll_set-{{id}}-id' name='id_OrderAll_set-{{id}}-id' type='hidden'>
-        <input id='id_OrderItem_set-{{id}}-id' name='id_OrderItem_set-{{id}}-id' type='hidden'>
+        <input id='id_orderlines-{{id}}-id' name='orderlines-{{id}}-id' type='hidden'>
+        <input id='id_orderlines-{{id}}-order' name='orderlines-{{id}}-order' type='hidden'>
+
         <td>
-            <select id='id.media_choice' name='media_choice' class='chosen-select' style='display: none;'>==$0
-            {% endverbatim %}
-            <option value=''>------</option>
-            {% for option in Order_form.forms.0.instance.MEDIA_CHOICES %}
-            <option value='{{option.0}}'>{{option.1}}</option>
-            {% endfor %}
-            {% verbatim %}
+            <select id='id_orderlines-{{id}}-inventory' class="chosen-select line-inventory" name='orderlines-{{id}}-inventory'>
+                {% endverbatim %}
+                <option value=''>----------</option>
+                {% for option in OrderInlineFormset.forms.0.instance.media_choices %}
+                <option value='{{option.0}}'>{{option.1}}</option>
+                {% endfor %}
+                {% verbatim %}
             </select>
         </td>
-        <td>
-        <td></td>
+        <td><input class='line-container' id='id_orderlines-{{id}}-container' name='orderlines-{{id}}-containier' type ='text' value='{{container}}'></td>
+        <td><textarea cols='40' id='id_orderlines-{{id}}-description' name='orderlines-{{id}}-notes' rows='10'></textarea>}
+        {{description}}</td>
+        <td><input class="line_calc line_qty" id='id_orderlines-{{id}}-qty' name='orderlines-{{id}}-qty' step='any' type='number' value='{{qty}}'></td>
+        <td><input class='line-unit' id='id_orderlines-{{id}}-unit' maxlength='30' name='orderlines-{{id}}-unit' type='text' value='{{unit}}'></td>
+        <td><input class="line_calc line_cost" id='id_orderlines-{{id}}-cost' name='orderlines-{{id}}-cost' step='any' type='number' value='{{cost}}'></td>
+        <td><input id='id_orderlines-{{id}}-DELETE' name='orderlines-{{id}}-DELETE' type='checkbox'></td>
+        <td class='line_total'>$0.00</td>
+
     </tr>
 </script>
 {% endverbatim %}
 {% endblock %}
 
-{% verbatim %}
-<script id="item-line-form" type="text/x-handlebars-template">
-    <tr>
-        <input id="id_SingleItem_set-{{id}}-id" name="SingleItem_set-{{id}}-id" type="hidden">
-        <td><input id="id_SingleItem_set-{{id}}-SingleItem_text" maxlength="100" name="SingleItem_set-{{id}}-SingleItem_text" type="text"></td>
-        <td>
-
-<select id="id_SingleItem_set-{{id}}-media_type" class="chosen-select line-media_type" name="SingleItem_set-{{id}}-media">
-        {% endverbatim %}
-        <option value="">------</option>
-        {% for option in Item_form.forms.0.instance.MEDIA_CHOICES %}
-        <option value="{{option.0}}">{{option.1}}</option>
-        {% endfor %} 
-        {% verbatim %}
-    </select>
-        </td>
-        <td><input class="line_cost" id="id_SingleItem_set-{{id}}-cost" maxlength="5" name="SingleItem_set-{{id}}-cost" type="text"></td>
-        <td><input class="line-container" id="id_SingleItem_set-{{id}}-container" maxlength="30" name="SingleItem_set-{{id}}-container" type="text"></td>
-        <td><input class="line-volume" id="id_SingleItem_set-{{id}}-volume" maxlength="30" name="SingleItem_set-{{id}}-volume" type="text"></td>
-        <td><input class="line-notes" id="id_SingleItem_set-{{id}}-notes" maxlength="500" name="SingleItem_set-{{id}}-notes" type="text"></td>
-        <td><input id="id_SingleItem_set-{{id}}-DELETE" name="SingleItem_set-{{id}}-DELETE" type="checkbox"></td>
-    </tr>
-</script>
-{% endverbatim %}

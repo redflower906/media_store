@@ -102,7 +102,6 @@ MEDIA_CHOICES = (
     ('Miscellaneous','Miscellaneous'),
     ('Solutions & Buffers','Solutions & Buffers'),
     ('Sylgard','Sylgard'),
-
 )
 
 class Inventory(models.Model):
@@ -129,12 +128,12 @@ class Inventory(models.Model):
     active = models.BooleanField(default=True, choices=BOOL_CHOICES)
 
 
-    def __str__(self):
+    def __unicode__(self):
         return self.inventory_text
 
-class OrderManager(models.Manager):
-    def odline(self):
-        return self.orderline_set.all()    
+    def list_media_type(self):
+        return self.media_type
+
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
@@ -167,19 +166,18 @@ class Order(models.Model):
             ('Problem', 'Problem')
         )
     )
-    objects = OrderManager()
     
     def already_billed(self):
         if self.date_billed:
             return True
         return False
 
-    def total(self):
-        total = 0
-        list = self.orderline_set.all()
-        for line in list:
-            total += line.total()
-        return total
+    # def total(self):
+    #     total = 0
+    #     list = self.orderline_set.all()
+    #     for line in list:
+    #         total += line.total()
+    #     return total
 
     def __unicode__(self):
         return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
