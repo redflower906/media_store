@@ -1,13 +1,12 @@
-
-/*!
- * .table thead>tr>th,
- * .table tbody>tr>th,
- * .table tfoot>tr>th,
- * .table thead>tr>td,
- * .table tbody>tr>td,
- * .table tfoot>tr>td{
+/*.table thead>tr>th,
+.table tbody>tr>th,
+.table tfoot>tr>th,
+.table thead>tr>td,
+.table tbody>tr>td,
+.table tfoot>tr>td{
 border:none;
 }*/
+
 
 body{
   padding-bottom:10px;
@@ -160,5 +159,49 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
 
 .something {
   width: 100%;
+}
+
+fieldset.submitter-data {
+  margin-bottom: 2em;
+}
+
+#form_holder, #order_table, .display_lines {
+  width: 100%
+}
+
+#form_holder tr td, 
+.display_lines tr td, {
+  padding: 5px 10px 5px 5px;
+}
+
+textarea {
+  width: 20em;
+  height: 4em
+}
+
+#order_table textarea {
+  width: 15em;
+}
+
+select {
+  width: 200px;
+}
+
+input[type=number] {
+  width: 75px;
+}
+
+#order_id {
+  width: 10em;
+}
+
+tr.deleted {
+  background: #eee;
+  color: #aaa;
+  border: 1px solid #ccc;
+}
+
+.line_items {
+  display: none;
 }
 

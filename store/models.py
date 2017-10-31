@@ -102,7 +102,6 @@ MEDIA_CHOICES = (
     ('Miscellaneous','Miscellaneous'),
     ('Solutions & Buffers','Solutions & Buffers'),
     ('Sylgard','Sylgard'),
-
 )
 
 class Inventory(models.Model):
@@ -129,8 +128,11 @@ class Inventory(models.Model):
     active = models.BooleanField(default=True, choices=BOOL_CHOICES)
 
 
-    def __str__(self):
+    def __unicode__(self):
         return self.inventory_text
+
+    def list_media_type(self):
+        return self.media_type
 
 
 class Order(models.Model):

@@ -351,3 +351,335 @@ def recurring_order(request):
     </tr>
 </script>
 {% endverbatim %}
+
+
+
+
+
+
+
+
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                                    <td>{{ OrderForm }}</td>
+                                </tr>
+                                {% if order_form.errors %}
+                                <tr>
+                                {% for field in order_form.visible_fields %}
+                                    <td>{{field.errors}}</td>
+                                {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="row">
+            <div class="col-xs-2 text-right">
+                <label class='media-label' for='{{order_form.media.id_for_label}}'>Select Type:</label>
+            </div>
+            <div class='col-xs-3'>{{order_form.media}}</div>
+
+
+
+
+
+
+
+
+
+def order_inline_formset_factory():
+    return inlineformset_factory(Order, OrderLine,
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'cost', 'inventory_text', 'media_type'),#category, 'inventory_type'
+        widgets = {
+            'media_type' : forms.Select(attrs={'class' : 'form-text'}),
+            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
+            'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
+            'inventory': HiddenInput(),
+            'inventory_text': forms.Select(attrs={'class': 'form-text'}),
+            'description': forms.TextInput(attrs={'class': 'form-text'}),
+            'unit': forms.TextInput(attrs={'class': 'line unit'})
+        },
+        can_delete=True
+        )
+
+
+
+
+
+
+
+var row_count = 0; //global to set number of order lines to 0 in formset
+
+function orderline_add(){
+    $('#id_inventory').on('change', function(){
+        var optionSelected = $(this).find('option:selected');
+        var valueSelected = optionSelected.val();
+        var inventory = optionSelected.text();
+        var qty = $('#service_qty').val();
+        var num_qty = parseInt(qty);
+        var service_id = document.getElementById('services');
+        var data = {'id':valueSelected, 'name': service_name};
+        $.ajax({
+            url:'/home',
+            data:data,
+            success: function(response){
+                var line_type = response[0]['line_type'];
+                var qty = response[0]['qty'];
+                var unit = response[0]['unit'];
+                var cost = response[0]['cost'];
+                var category = response[0] ['category'];
+
+                $('#order_table tbody tr').each(function() {
+                    var empty = true;
+                    $(this).find(':input').not(':checkbox').each(function() {
+                        if($(this).val() !== '' && $(this).val() !== '0') {
+                            empty=false;
+                        }
+                    });
+                    if(empty) {
+                        $(this).remove();
+                    }
+                });
+                for(var i =0; i < line_type.length; i++){
+                    add_row({'line_type': line_type[i], 'qty':qty[i], 'unit': unit[i], 'cost': cost[i], 'service': valueSelected});
+                    $('order_table.chosen-select:last').val(category[i])
+                    $('order_table.chosen-select:last').chosen({'disable_search_threshold': 10, 'enable_split_word_search': false, 'search_contains': true});
+                }
+                updateTotals();
+            },
+            error: function() {
+                console.log('failure');
+            }
+        });
+    });
+}
+orderline_add();
+
+$('#add_order_line').css('display', 'none');
+
+$('#add_qty').click(function(){
+    $('#add_order_line').toggle();
+    var add_css = $('#add_order_line').css('display', 'block');
+});
+
+$('#hide').click(function(){
+    $('#order_list_div').toggle();
+    if($(this).val() == 'hide all orders'){
+        $(this).val()('show all orders');
+    } else {
+        $(this).val('hide all orders');
+    }
+});
+
+$('body').on('click', 'delete_wo', function(e){
+    e.preventDefault();
+    $(this).closest('.order_container').find('.confirmDeleteID').text(wo_id);
+    $(this).closest('.order_container').find('.confirmDelete').modal('show');
+});
+
+$('body').on('click', '#deleteConfirmed', function(){
+    var wo_id = $(this).closest('modal-content').find('confirmDeleteID').text();
+    var csrftoken = getCookie('csrftoken');
+    var data = {'wo_id':wo_id, 'csrfmiddlewaretoken':csrftoken};
+
+    $.post('/order_delete', data, function(){
+        $('.wo_'+ wo_id).next().remove().end().remove();
+        var count = $('.order').size();
+        $('#wo_count').html(count);
+    }).error(function(xhr, status, error){
+        var message = 'Server error. Unable to delete order ' + wo_id;
+        if(xhr.responseJSON.message){
+            message = 'Unable to delete order ' + wo_id + ': ' + xhr.responseJSON.message;
+        }
+        $('.messages').append('<div class = "alert alert-danger" role= "alert">' + message + '</div>');
+    }).always(function(){
+        $('confirmDelete').modal('hide');
+    });
+});
+
+$("[name='order_edit']").on('submit', function(event){
+    wo_id_value = $(this).attr('id');
+    data = {'id': wo_id_value};
+    $.ajax({
+        url:'edit',
+        data:data,
+    });
+});
+
+$('#update_qty').click(function(){
+    var optionSelected = $('#id_service_type').find('option:selected');
+    var valueSelected = optionSelected.val();
+    var service_name = optionSelected.text();
+    var toggle_value = $('#add_qty').is(':hidden');
+    if(toggle_value === false){
+        var qty = $('#service_qty').val();
+        var qty_int = parseInt(qty);
+        var optionSelected = $('id_service_type').find('option:selected');
+        var valueSelected = optionSelected.val();
+        var service_name = optionSelected.text();
+        var qty = $('#service_qty').val();
+        var num_qty = parseInt(qty);
+        service_id = document.getElementById('services');
+        for(var i = 0; i<qty_int; i++){
+            row_count +=1;
+            data = {'id':valueSelected, 'name': service_name};
+            $.ajax({
+                url:'get_service_info',
+                data:data,
+                success: function(response){
+                    line_type = response[0]['line_type'];
+                    qty = response[0]['qty'];
+                    unit = response[0]['unit'];
+                    cost = response[0]['cost'];
+                    var row_index = 0;
+                    var table = document.getElementById('order_table');
+                    var row_length = table.rows.length;
+                    var check_null = document.forms['form']['id_orderline_set-0-line_type'].value;
+                    if(check_null == ''){
+                        var last_row = 0;
+                    } else {
+                        var last_row = row_length-1;
+                    }
+                    row_index = last_row;
+                    for(var i =0; i<line_type.length; i++){
+                        if(i>=1){
+                            var previous_index = row_index-1;
+                            if(previous_index<0){
+                                row_index +=Math.abs(previous_index);
+                            } else{
+                                var previous_row = document.forms['form']['id_orderline_set-'+previous_index+'-line_type'].value;
+                                if(previous_row == '' || previous_row == null){
+                                    row_index -=1;
+                                } else{
+                                    row_index +=1;
+                                }
+                            }
+                            add_row({'line_type': line_type[i], 'qty':qty[i], 'unit':unit[i], 'cost':cost[i]});
+                        } else {
+                            var previous_index = parseInt(row_index-1);
+                            if(previous_index<0){
+                                row_index += Math.abs(previous_index);
+                            } else{
+                                previous_index += 0;
+                                var previous_row = document.forms['form']['id_orderline_set'+previous_index+'-line_type'].value;
+                            }
+                            if(previous_row == '' || previous_row == null){
+                                row_index -= 1;
+                            } else{
+                                row_index += 1;
+                            }
+                            add_row({'line_type': line_type[i], 'qty': qty[i], 'unit': unit[i], 'cost': cost[i]});
+                        }
+                        updateTotals();
+                    }
+                },
+                error: function(){
+                    console.log('failure');
+                }
+            });
+        }
+    } else{
+        service_add();
+    }
+});
+
+
+
+
+
+
+function add_row(data, table_id, template_id, mngmt_total_id, form_id){
+
+  if (!table_id){
+    table_id='order_table';
+    template_id = 'order-line-form';
+    mngmt_total_id = 'id_orderlines-TOTAL_FORMS';
+    form_id = 'order_form';
+  }
+
+  var count =  $('#' + table_id +' tbody').children().length;
+  var template = $('#' + template_id +'').html();
+  var compiled = Handlebars.compile(template);
+  data['id'] = count;
+  var html = compiled(data);
+  $('#' + table_id +' tbody').append(html);
+  $('#' + mngmt_total_id).attr('value', count + 1);
+  $('#' + form_id).trigger('rescan.areYouSure');
+  return count;//return the row id
+}
+
+$('#add_order_line').on('click', function() {
+    add_row([])
+    $("#order_table .chosen-select:last").chosen({'disable_search_threshold': 10, 'enable_split_word_search': false, 'search_contains': true });
+});
+
+//make sure the checkboxes that are present on initial page load also get the hide functionality
+$('#order_table').on('change', 'tbody input[type=checkbox]', function() {
+  //TODO: possibly replace with undo link.
+  if ($(this).prop('checked')) {
+    $(this).parent().parent().addClass('deleted');
+  } else {
+    $(this).parent().parent().removeClass('deleted');
+  }
+});
+
+$('#order_table, #dept_cost_assign').on('change', 'thead input[type=checkbox]', function() {
+  //TODO: possibly replace with undo link.
+  if ($(this).prop('checked')) {
+    $('#order_table, #dept_cost_assign').find('input[name$="DELETE"]').prop('checked', true).trigger('change')
+  } else {
+    $('#order_table, #dept_cost_assign').find('input[name$="DELETE"]').prop('checked', false).trigger('change')
+  }
+});
+
+function getCookie(name){
+    var cookieValue = null;
+    if(document.cookie && document.cookie != ''){
+        var cookies = document.cookie.split(';');
+        for(var i = 0; i<cookies.length; i++){
+            var cookie = jQuery.trim(cookies[i]);
+            if(cookie.substring(0, name.length +1) == (name + '=')){
+                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+var updateTotals = function() {
+    var total = 0;
+    var lines = $('#order_table tbody tr');
+
+    lines.each(function(line) {
+        if (!$(this).find('input[type=checkbox]').prop('checked')) {
+            var qty = parseFloat($(this).find('line_qty').val());
+            var cost = parseFloat($(this).find('line_cost').val());
+            var line_total = 0;
+            if (fixed) {
+                line_total = fixed;
+            } else if (cost && qty) {
+                line_total = cost * qty;
+            }
+            total += line_total;
+            var as_currency = line_total.toLocaleString('en_US', {style: 'currency', currency: 'USD' });
+            $(this).find('.line_total').text(as_currency);
+        }
+    });
+    $('.aggregate_total').text(total.toLocaleString('en_US', {style: 'currency', currency: 'USD' });
+});

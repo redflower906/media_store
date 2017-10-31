@@ -11,6 +11,7 @@ from django.forms.models import formset_factory, modelformset_factory, inlinefor
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm
 from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
 import MySQLdb, sys
+import json as simplejson
 import csv
 import time
 
@@ -211,7 +212,7 @@ def create_order(request, copy_id=None):
     }
     if request.method == "POST":
             order = Order()
-            formset = OrderInlineFormset(request.POST)
+            formset = OrderInlineFormset(request.POST, instance=order, prefix='orderlines')
             order_form = OrderForm(request.POST, extra=1)
             orderline_form = OrderLineForm(request.POST, extra=1)
             if all([have_minimum(orderline_form, 1, request), order_form.is_valid(), orderline_form.is_valid(), check_total_is_not_zero(orderline_form,request, total_message)  ]):
@@ -237,6 +238,7 @@ def create_order(request, copy_id=None):
         'order_form' : order_form,
         'orderline_form' : orderline_form
     })
+
 
 def past_order(request):
     context = {}
