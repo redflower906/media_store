@@ -23,6 +23,8 @@ from store.views import update_item
 
 app_name = 'store'
 
+
+
 urlpatterns = [
 
 #main views
@@ -70,3 +72,9 @@ urlpatterns = [
 
 
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns=[
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+        ]+urlpatterns
