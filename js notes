@@ -1,0 +1,18 @@
+Ajax:
+allows databse change without reloading the page (for something small). Change orderline expand to ajax?
+ajax call to status change dropdown
+jquery.get(), jquery.post(), jquery.getJSON() (getting the JSON data is better)
+    need a handler if request fails/gets bad data (.done, .fail, .always)
+
+Debugging:
+have console/debugger open when running js and it'll highlight and stop on the failed line
+callstack: shows all functions that were called to get to the place you are rn
+event listener: in chrome, can find all events called on page
+
+cookies:
+set up csrfmiddlewear in settings in django.
+    maybe throw in later, not suuuuper necessary
+
+ipdp:
+debug in python
+import ipdp; ipdp.set_trace()

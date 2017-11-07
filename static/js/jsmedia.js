@@ -11,6 +11,7 @@
   
 //   $('#add_item_line').on('click', add_item_line);
 
+//Properly Highlight Navbar Links
 $(document).ready(function() {
     $.each($('#navbar').find('li'), function() {
         $(this).toggleClass('active', 
@@ -36,22 +37,7 @@ $(document).ready(function(){
     });
 })
 
-$(document).ready(function(){
-    $(".toggle_details").click(function(){
-        // figure out the next line items class and show / hide it
-        if ($(this).find('i.glyphicon-plus').length) {
-            //add .length to see if an element exists in jquery
-        $(this).closest('.bear').next().fadeIn();
-        $(this).find('i').removeClass('glyphicon-plus').addClass('glyphicon-minus')
-        } else {
-        $(this).closest('.bear').next().fadeOut();
-        $(this).find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
-        
-        }
-    });
-})
-
-
+//Search Function
 $(document).ready(function () { 
         (function ($) {
             //As you type in id=filter, it searches each character
@@ -71,3 +57,10 @@ $(document).ready(function () {
             });
         }(jQuery));
     });
+
+    document.getElementById("fname").onchange = function() {myFunction()};
+    
+    function myFunction() {
+        var x = document.getElementById("fname");
+        x.value = x.value.toUpperCase();
+    }

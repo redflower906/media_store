@@ -3,12 +3,12 @@
 {% load store_tags %}
 <hr/>
 
-    <table class="table table-hover" id="inventory_table">
+    <table class="table table-hover" id="order_table">
+        {% if orders %}
         <thead>
             <tr id="table_header">
                 <th></th>
                 {% table_header headers %}
-                <th></th>
             </tr>
         </thead>
         <tbody class="searchable">
@@ -21,27 +21,54 @@
                 <td class="">{{order.department.department_name}}</td>
                 <td class="">requester</td>
                 <td class="">{{order.date_submitted}}</td>
+                {% if orders == recur %}
                 <td class="">{{order.date_recurring_start|default:'N/A'}}</td>
                 <td class="">{{order.date_recurring_stop|default:'N/A'}}</td>
+                {% elif orders == compNotBill %}
+                <td class="">{{order.date_complete}}</td>
+                {% elif orders == incomp %}     
+                {% else %}
+                <td class="">{{order.date_billed}}</td>
+                {% endif %}                
                 <td class="">{{order.location}}</td>
-                <td class="">{{order.status}}</td>
-                <tr id="notes" class="collapse" role="text">
-                        <td colspan="10">
-                            {% comment %} <table class ='table table-striped'>
-                                <thead>
-                                    <tr> {% endcomment %}
-                                        {% for line in lines %}
-                                        <div><p>{{line.qty}}</p></div>
-                                        {% endfor %}
-                                    {% comment %} </tr>
-                                </thead>
-                            </table> {% endcomment %}
-                            </td>              
-                    </tr>
-                
+                {% comment %}IF STAFF VIEW THEN ALLOW FOR EDITING OF STATUS{% endcomment %}
+                <td>
+                    <form method="POST">
+                        <option value="{{ order.id }}"></option>{{ form.status }}</option>
+                    </form>
+                </td>
+                {% comment %}IF STAFF VIEW{% endcomment %}
+                <td class=""></td>
+                <tr id="notes" class="collapse" role="text">                        
+                    <td colspan="10">
+                        <table class ='table'>
+                            {% if order.orderline_set.all %}
+                            <thead>
+                                <tr id="table_header">
+                                    <th>Description</th>
+                                    <th>id</th>
+                                    <th>order id</th>
+                                </tr>
+                            {% for line in order.orderline_set.all %}                                
+{% comment %} have to call from "order" variable for each line to know which order it's getting info from {% endcomment %}
+                            </thead>
+                            <tr>
+                                <td>{{line.description}}</td>
+                                <td>{{line.id}}</td>
+                                <td>{{line.order_id}}</td>
+                            {% endfor %}
+                            {% else %}
+                                <div><p>There are no order details for this order.</p></div>
+                                </tr>
+                            {% endif %}
+                        </table>                            
+                    </td>                              
                 </tr>
-            {% endfor %}
             </tr>
-            </tbody>
+            {% endfor %}
+        </tbody>
+        {% else %}
+            <div><p>There are no orders at this time.</p></div>        
+        {% endif %}
     </table>
 {% endblock %} 
