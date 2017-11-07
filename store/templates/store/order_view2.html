@@ -25,7 +25,7 @@
         </div>    
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_gen2.html" with orders=incomp%}
+                {%include "store/list_generic.html" with orders=incomp headers=headers1%}
             </div>
         </div>
         <div class="row">
@@ -35,7 +35,7 @@
         </div>  
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_gen2.html" with orders=recur%}
+                {%include "store/list_generic.html" with orders=recur headers=headers2%}
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_gen2.html" with orders=compNotBill%}
+                {%include "store/list_generic.html" with orders=compNotBill headers=headers3%}
             </div>
         </div>
     </div>    
@@ -59,7 +59,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_gen2.html" with orders=compBill%}
+                {%include "store/list_generic.html" with orders=compBill headers=headers4%}
             </div>
         </div>    
     </div>

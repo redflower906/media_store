@@ -131,3 +131,9 @@ class AnnouncementsForm(forms.ModelForm):
             'text': forms.Textarea (attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
+
+class OrderStatusForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('status',)
+        widgets = {'status': forms.Select(),}

@@ -48,7 +48,6 @@ urlpatterns = [
     url(r'^services/', views.services, name='services'),
 
 ##orders
-    url(r'^order/$', views.order_view, name='order'),
     url(r'^order/new', views.create_order, name='create_order'),
     url(r'^order/past', views.past_order, name='past_order'),
     url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
@@ -70,3 +69,9 @@ urlpatterns = [
 
 
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

@@ -134,6 +134,23 @@ class Inventory(models.Model):
     def list_media_type(self):
         return self.media_type
 
+class OrderManager(models.Manager):
+    def preferred_order(self, *args, **kwargs):
+        """Sort patterns by preferred order of Y then -- then N"""
+        orders = self.get_queryset().filter(*args, **kwargs)
+        orders = orders.annotate( custom_order=
+            models.Case( 
+                models.When(status='Submitted', then=models.Value(0)),
+                models.When(status='In Progress', then=models.Value(1)),
+                models.When(status='Complete', then=models.Value(2)),
+                models.When(status='Canceled', then=models.Value(3)),
+                models.When(status='Problem', then=models.Value(4)),
+                default=models.Value(5),
+                output_field=models.IntegerField(), )
+            ).order_by('custom_order', 'date_recurring_stop'
+        )
+        return orders
+
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
@@ -160,12 +177,13 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
         choices=(
             ('Submitted', 'Submitted'),
-            ('In_Progress', 'In Progress'),
+            ('In Progress', 'In Progress'),
             ('Complete', 'Complete'),
             ('Canceled', 'Canceled'),
             ('Problem', 'Problem')
         )
     )
+    objects = OrderManager()
     
     def already_billed(self):
         if self.date_billed:
