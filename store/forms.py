@@ -135,5 +135,14 @@ class AnnouncementsForm(forms.ModelForm):
 class OrderStatusForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('status',)
+        fields = ['status',]
         widgets = {'status': forms.Select(),}
+
+def order_model_formset_factory(extra):
+    return modelformset_factory(Order,
+    fields = ('status'),
+    widgets = {
+        'status': forms.Select(),
+    },
+    extra=extra, can_delete=False,
+    )

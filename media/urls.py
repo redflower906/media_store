@@ -28,7 +28,6 @@ urlpatterns = [
 #main views
 
     url(r'^$', views.home, name='home'),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.home, name='home'),
     url(r'^login/', views.login, name='login'),
@@ -38,7 +37,7 @@ urlpatterns = [
 
 
 #user views
-##services
+##Inventory
     url(r'^inventory/$', views.inventory, name='inventory'),
 #    $ allows you to build on the URL while using different views
     url(r'^inventory/new', views.create_item, name='new_item'),
@@ -75,3 +74,8 @@ if settings.DEBUG:
     urlpatterns = [
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
+
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+]

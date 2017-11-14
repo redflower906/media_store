@@ -32,11 +32,11 @@
                 {% endif %}                
                 <td class="">{{order.location}}</td>
                 {% comment %}IF STAFF VIEW THEN ALLOW FOR EDITING OF STATUS{% endcomment %}
-                <td>
-                    <form method="POST">
-                        <option value="{{ order.id }}"></option>{{ form.status }}</option>
-                    </form>
-                </td>
+                    <td class='status_drop'>
+                        <form method="POST">                         
+                            {{ form.status }}
+                        </form>
+                    </td>
                 {% comment %}IF STAFF VIEW{% endcomment %}
                 <td class=""></td>
                 <tr id="notes" class="collapse" role="text">                        

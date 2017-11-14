@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django import forms
 from django.db.models import Q
 from django.views import generic
 from django.template import context, RequestContext
@@ -8,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
-from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm
+from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm, order_model_formset_factory
 from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
 import MySQLdb, sys
 import json as simplejson
@@ -132,7 +133,7 @@ def update_item(request, id):
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
-    }, context)
+    })
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -249,7 +250,25 @@ def recurring_order(request):
 
 
 
-
+# def update_item(request, id):
+#     SingleItem = get_object_or_404(Inventory, pk=id)
+#     Item_form = Item_Model_Form()
+#     if request.method == "POST":
+#         Item_form = Item_Model_Form(request.POST, instance=SingleItem)
+#         # create item
+#         if Item_form.is_valid():
+#             Item_form.save()
+#             messages.success(request, 
+#             '{0} was successfully updated.'.format(SingleItem.inventory_text))
+#             return HttpResponseRedirect('/inventory/')
+#     else:
+#          Item_form = Item_Model_Form(instance=SingleItem)
+#     # just show the form
+#     return render(request, 
+#     'store/item_form.html', {
+#     'Item_form': Item_form,
+#     'SingleItem': SingleItem,
+#     })
 
 
 
@@ -314,19 +333,19 @@ def view_order(request):
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete')
     compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed')
 
-
+    # selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
     # if request.method == 'POST':
-    #     selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
-    #   # get the user you want (connect for example) in the var "user"
+    #       # get the user you want (connect for example) in the var "user"
     #     if selected_order.is_valid():
     #         selected_order.save()
     #         messages.success(request, 
     #         'Order status was successfully changed.')
     #         return HttpResponseRedirect('/order/view/')
-    # # else: formset = ItemModelFormset(queryset=Inventory.objects.none())
-
-
+    # orderFormset=order_model_formset_factory
+    # formset=orderFormset(queryset=recur)
+    # init_status = Order.objects.values('status')
     form_class = OrderStatusForm()
+    print()
 
     return render(request, 
         'store/order_view2.html',{
@@ -339,6 +358,9 @@ def view_order(request):
         'compBill': compBill,
         'recur': recur,
         'form': form_class,
+        # 'init_status': init_status,
+        # 'formset': formset,
+        # 'selected_order': selected_order,
         # 'pages': pages,
         })
 

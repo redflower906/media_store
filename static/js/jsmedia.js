@@ -35,10 +35,32 @@ $(document).ready(function(){
         
         }
     });
+
+    // $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+    //     if ($(this).find('koala').length) { // if class already has 'one', un-highlight
+    //         console.log('off');
+    //         // $(this).closest('.sdd').removeClass('sdd');
+    //     } else {
+    //         console.log('on');
+    //         $(this).closest('.koala').addClass('sdd'); // Select the one clicked
+    //     }
+    // });
+})
+
+$(document).ready(function(){
+    $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+        if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+            console.log('hi');
+            $(this).closest('.sdd').removeClass('sdd');
+        } else {
+            console.log($(this).parent());
+            $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
+        }
+    });
 })
 
 //Search Function
-$(document).ready(function () { 
+$(document).ready(function(){ 
         (function ($) {
             //As you type in id=filter, it searches each character
             $('#filter').keyup(function () {
@@ -57,10 +79,3 @@ $(document).ready(function () {
             });
         }(jQuery));
     });
-
-    document.getElementById("fname").onchange = function() {myFunction()};
-    
-    function myFunction() {
-        var x = document.getElementById("fname");
-        x.value = x.value.toUpperCase();
-    }

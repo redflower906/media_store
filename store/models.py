@@ -4,6 +4,7 @@ All data models for Media Store
 
 from django.db import models
 #from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -35,9 +36,9 @@ class Department(models.Model):
     class Meta:
         ordering = ('number',)
 
-"""class UserProfile(models.Model):
-#   user = models.ForeignKey(User, related_name='user_profile')
-#   department = models.ForeignKey(Department, blank=True, null=True)
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, related_name='user_profile')
+    department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True)
     employee_id = models.CharField(max_length=20, blank=True, null=True)
@@ -50,6 +51,10 @@ class Department(models.Model):
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
 
+    def name(self):
+        return self.last_name + ", " + self.first_name
+    
+"""
     skip_updates = models.BooleanField(default=False)
 
 
@@ -65,9 +70,6 @@ class Department(models.Model):
         deparment_ids = [dept.id for dept in self.alt_departments.all()]
         deparment_ids.append(self.department_id)
         return deparment_ids
-
-    def name(self):
-        return self.last_name + ", " + self.first_name
 
     def manager_name(self):
         if self.manager:
@@ -174,7 +176,7 @@ class Order(models.Model):
             ('Two', 'Two'),
         )
     )
-    status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
+    status = models.CharField(max_length=30, blank=False, null=False,
         choices=(
             ('Submitted', 'Submitted'),
             ('In Progress', 'In Progress'),

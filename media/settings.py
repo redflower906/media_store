@@ -166,11 +166,11 @@ HIJACK_NOTIFY_ADMIN = True
 
 AUTHENTICATION_BACKENDS = (
     #'TimeMatrix.backend.LDAPBackend',
-    'django_auth_ldap.backend.LDAPBackend',
+    #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
 '''
+AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
@@ -270,3 +270,5 @@ try:
 except ImportError:
     pass"""
 '''
+# Redirect to home URL after login (Default redirects to /accounts/profile/)
+LOGIN_REDIRECT_URL = '/'
