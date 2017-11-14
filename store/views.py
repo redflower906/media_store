@@ -320,6 +320,7 @@ def view_order(request):
     )    
 
     orders = Order.objects.preferred_order().all()
+    orders = orders.filter(submitter=request.user)
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
