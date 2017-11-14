@@ -37,7 +37,9 @@ class Department(models.Model):
         ordering = ('number',)
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='user_profile')
+    user = models.OneToOneField(User, 
+    #related_name='user_profile'
+    )
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True)
@@ -154,8 +156,8 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
-#   submitter = models.ForeignKey(User, related_name='submitter')   #submitting order
-#   requester = models.ForeignKey(User, related_name='requester')  #only use when billing other person
+    submitter = models.OneToOneField(User, related_name='submitter')   #submitting order
+    requester = models.OneToOneField(User, related_name='requester')  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)

@@ -25,6 +25,7 @@ def index(request):
 
 def home(request):
     post = get_object_or_404(Announcements)
+    user = request.user
     #if staff member
     if request.method == "POST":
         AForm = AnnouncementsForm(request.POST, instance=post)
@@ -38,7 +39,8 @@ def home(request):
     #return render(request, 'store/home.html', {'AForm': AForm})
     return render(request, 'store/home.html', {
         'post': post,
-        'AForm': AForm
+        'AForm': AForm,
+        'user': user,
         } 
     )
  
@@ -87,6 +89,7 @@ def inventory(request):
     InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
+    user = request.user
     return render(request, 
         'store/inventory.html', 
         {
@@ -114,6 +117,7 @@ def create_item(request):
     'store/item_form.html', {
     'formset': formset,
     'inventory': inventory,
+    'user': user,
     }, context)
     
 def update_item(request, id):
@@ -273,7 +277,7 @@ def recurring_order(request):
 
 
 
-
+@login_required
 def view_order(request):
     ORDER_LIST_HEADERS_INCOMP = (
         ('Order ID', 'order'),
@@ -347,7 +351,6 @@ def view_order(request):
     # init_status = Order.objects.values('status')
     form_class = OrderStatusForm()
     user = request.user
-    print(user)
 
     return render(request, 
         'store/order_view2.html',{
