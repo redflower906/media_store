@@ -37,7 +37,7 @@ class Department(models.Model):
         ordering = ('number',)
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, related_name='user_profile')
+    user = models.OneToOneField(User, related_name='user_profile')
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True)
@@ -50,15 +50,13 @@ class UserProfile(models.Model):
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
+    is_privileged = models.BooleanField(default=False)
 
     def name(self):
         return self.last_name + ", " + self.first_name
-    
+
 """
     skip_updates = models.BooleanField(default=False)
-
-
-    is_privileged = models.BooleanField(default=False)
 
 
     offboard_date = models.DateField(blank=True, null=True)

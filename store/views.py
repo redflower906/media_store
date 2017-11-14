@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.contrib.auth.models import Group, User
 from django import forms
 from django.db.models import Q
 from django.views import generic
@@ -10,7 +11,7 @@ from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm, order_model_formset_factory
-from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
+from .models import *
 import MySQLdb, sys
 import json as simplejson
 import csv
@@ -345,7 +346,8 @@ def view_order(request):
     # formset=orderFormset(queryset=recur)
     # init_status = Order.objects.values('status')
     form_class = OrderStatusForm()
-    print()
+    user = request.user
+    print(user)
 
     return render(request, 
         'store/order_view2.html',{
@@ -358,6 +360,7 @@ def view_order(request):
         'compBill': compBill,
         'recur': recur,
         'form': form_class,
+        'user':user,
         # 'init_status': init_status,
         # 'formset': formset,
         # 'selected_order': selected_order,
