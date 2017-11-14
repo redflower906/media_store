@@ -23,6 +23,8 @@ from store.views import update_item
 
 app_name = 'store'
 
+
+
 urlpatterns = [
 
 #main views
@@ -30,8 +32,6 @@ urlpatterns = [
     url(r'^$', views.home, name='home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.home, name='home'),
-    url(r'^login/', views.login, name='login'),
-#   url(r'^logout', 'store_views.logout'),
 #   url(r'^invalid', 'store_views.invalid_login'),
 #   url(r'^hijack/', include('hijack.urls')), #to hijack other users
 
@@ -71,7 +71,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     import debug_toolbar
-    urlpatterns = [
+    urlpatterns=[
         url(r'^__debug__/', include(debug_toolbar.urls)),
     ] + urlpatterns
 

@@ -108,11 +108,11 @@ def order_inline_formset_factory():
     return inlineformset_factory(Order, OrderLine,
         fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'cost', 'inventory_text', 'media_type'),#category, 'inventory_type'
         widgets = {
-            'media_type' : forms.ModelChoiceField(queryset=models.Inventory.media_type.objects.all()),
+            'media_type' : forms.Select(attrs={'class': 'chosen-select line-media_type'}),
             'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
             'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
             'inventory': HiddenInput(),
-            'inventory_text': forms.ModelChoiceField(queryset=models.Inventory.inventory_text.none()),
+            'inventory_text': forms.Select(attrs={'class': 'chosen-select line-inventory_text'}),
             'description': forms.TextInput(attrs={'class': 'form-text'}),
             'unit': forms.TextInput(attrs={'class': 'line unit'})
         },

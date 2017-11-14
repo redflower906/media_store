@@ -54,6 +54,7 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['*']
 
+
 COMPRESS_OFFLINE=True
 COMPRESS_ENABLED=True
 
@@ -75,6 +76,7 @@ INSTALLED_APPS = [
     'djangoformsetjs',
 #    'hijack',
 #    'south',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -82,6 +84,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -107,7 +110,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'media.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
