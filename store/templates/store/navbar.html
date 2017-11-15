@@ -32,13 +32,13 @@
             </li>
           </ul>
       <ul class="nav navbar-nav navbar-right" margin-right: 10>
-        {% if user.is_authenticated %}
-          <li class='navbar-text'>Welcome, {{ user.first_name }}!</li>
-          <li><a href="{% url 'logout'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
-          <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
-        {% else %}
-          <li><a href="{% url 'login'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>   
-        {% endif %} 
+      {% if user.is_authenticated %}
+        <li class='navbar-text'>Welcome, {{ user.first_name }}!</li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
+        <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+      {% else %}
+        <li><a href="{% url 'login'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>   
+      {% endif %}
         <li><span>&nbsp;&nbsp;&nbsp;</span></li> <!--not elegant (fix later?)-->
       </ul>
       </div><!--/.nav-collapse -->

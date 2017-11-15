@@ -16,7 +16,7 @@ body{
 td.details-control {
   text-align:center;
   color:forestgreen;
-  cursor: pointer;
+cursor: pointer;
 }
 
 tr.shown td.details-control {
@@ -77,10 +77,6 @@ h1 {
   width: 300px;
 }
  
-.sdd {
-  background-color: #ceffd8;
-}
-
 h1 {
   color:#333;
   text-decoration:none;
@@ -209,8 +205,3 @@ tr.deleted {
   display: none;
 }
 
-li.navbar-text {
-  font-size: 95%;
-  
-  
-}

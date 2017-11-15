@@ -138,7 +138,7 @@ def update_item(request, id):
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
-    })
+    }, context)
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -255,25 +255,7 @@ def recurring_order(request):
 
 
 
-# def update_item(request, id):
-#     SingleItem = get_object_or_404(Inventory, pk=id)
-#     Item_form = Item_Model_Form()
-#     if request.method == "POST":
-#         Item_form = Item_Model_Form(request.POST, instance=SingleItem)
-#         # create item
-#         if Item_form.is_valid():
-#             Item_form.save()
-#             messages.success(request, 
-#             '{0} was successfully updated.'.format(SingleItem.inventory_text))
-#             return HttpResponseRedirect('/inventory/')
-#     else:
-#          Item_form = Item_Model_Form(instance=SingleItem)
-#     # just show the form
-#     return render(request, 
-#     'store/item_form.html', {
-#     'Item_form': Item_form,
-#     'SingleItem': SingleItem,
-#     })
+
 
 
 
@@ -339,19 +321,19 @@ def view_order(request):
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete')
     compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed')
 
-    # selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
+
     # if request.method == 'POST':
-    #       # get the user you want (connect for example) in the var "user"
+    #     selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
+    #   # get the user you want (connect for example) in the var "user"
     #     if selected_order.is_valid():
     #         selected_order.save()
     #         messages.success(request, 
     #         'Order status was successfully changed.')
     #         return HttpResponseRedirect('/order/view/')
-    # orderFormset=order_model_formset_factory
-    # formset=orderFormset(queryset=recur)
-    # init_status = Order.objects.values('status')
+    # # else: formset = ItemModelFormset(queryset=Inventory.objects.none())
+
+
     form_class = OrderStatusForm()
-    user = request.user
 
     return render(request, 
         'store/order_view2.html',{
@@ -364,10 +346,6 @@ def view_order(request):
         'compBill': compBill,
         'recur': recur,
         'form': form_class,
-        'user':user,
-        # 'init_status': init_status,
-        # 'formset': formset,
-        # 'selected_order': selected_order,
         # 'pages': pages,
         })
 

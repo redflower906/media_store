@@ -4,7 +4,6 @@ All data models for Media Store
 
 from django.db import models
 #from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -35,7 +34,7 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-
+"""
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
     #related_name='user_profile'
@@ -57,7 +56,6 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-"""
     skip_updates = models.BooleanField(default=False)
 
 
@@ -71,6 +69,9 @@ class UserProfile(models.Model):
         deparment_ids.append(self.department_id)
         return deparment_ids
 
+    def name(self):
+        return self.last_name + ", " + self.first_name
+
     def manager_name(self):
         if self.manager:
             return ' '.join([self.manager.first_name, self.manager.last_name])
@@ -78,7 +79,8 @@ class UserProfile(models.Model):
 
     def has_job_privileges(self):
         return (self.user.is_superuser or
-            (self.is_manager and self.department.number == '093098'))"""
+            (self.is_manager and self.department.number == '093098'))
+"""
 
 
 
@@ -156,13 +158,8 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
-<<<<<<< HEAD
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
-=======
-    submitter = models.OneToOneField(User, related_name='submitter')   #submitting order
-    requester = models.OneToOneField(User, related_name='requester')  #only use when billing other person
->>>>>>> parent of 8e7a801... commiting before I change migrations again
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
@@ -181,7 +178,7 @@ class Order(models.Model):
             ('Two', 'Two'),
         )
     )
-    status = models.CharField(max_length=30, blank=False, null=False,
+    status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
         choices=(
             ('Submitted', 'Submitted'),
             ('In Progress', 'In Progress'),
