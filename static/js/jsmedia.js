@@ -48,12 +48,11 @@ $(document).ready(function(){
 })
 
 $(document).ready(function(){
-    $("select option:selected").each(function() {
-        var str='';   
-        str = $(this).text();
-        console.log(str);
-    });
-})
+    var selectValues = new Array();
+    $('tbody.searchable').find('select').each(function() {
+        selectValues.push($(this).val());
+        print()
+    }
 
 //highlight clicked status
 $(document).ready(function(){
