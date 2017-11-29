@@ -14,12 +14,6 @@ new goal: set up staff view order page
             status change (checkbox depending on what current status to next status is)
                 expanded headers: item, submitter, qty, unit, cost
         sort orders via status then end date (for recurring)
-        ***recurring orders may need to change from in-progress-complete and back each week.***
-            add extra "complete" status for recurring orders that move to complete but also stay under recurring tab under in progress? submitted?
-            so they can be billed but still be viewed as not totally complete
-        add feedback input for users (suggestion box)
-        *****reminders for orders that haven't changed status in a week?****
-            media set date to change status and if status doesn't change on that date a reminder pops up
     keep a requester field in case submitter and requester are different
     set up virtual env within server, install git and other things, then install 
     requirements.txt

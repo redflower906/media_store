@@ -79,7 +79,7 @@ $(document).ready(function(){
 // })
 
 //Search Function
-$(document).ready(function(){ 
+$(document).ready(function () { 
         (function ($) {
             //As you type in id=filter, it searches each character
             $('#filter').keyup(function () {
@@ -99,3 +99,9 @@ $(document).ready(function(){
         }(jQuery));
     });
 
+    document.getElementById("fname").onchange = function() {myFunction()};
+    
+    function myFunction() {
+        var x = document.getElementById("fname");
+        x.value = x.value.toUpperCase();
+    }

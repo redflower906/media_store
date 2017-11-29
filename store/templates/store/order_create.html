@@ -21,15 +21,10 @@
 
 <form id='order_form' method="post" action="" class="post-form form-horizontal">
     {% csrf_token %}
-    {% for hidden in form.hidden_fields %}
+    {% for hidden in formset.hidden_fields %}
         {{ hidden }}
     {% endfor %}
 
-    {% for field in form.visible_fields %}
-        {{ field.errors }}
-        {{ field.help_text }}
-        {{ field }}
-    {% endfor %}
     <fieldset>
         <legend>Who is creating this order?</legend>
     </fieldset>
@@ -58,14 +53,17 @@
 
     <fieldset>
         <legend>What would you like to order?</legend>
+
+        <div class='row'>
             <div class='col-xs-12'>
                 <table id='form_holder'>
                     <tr>
                         <td style="padding:0" class="OrderLines">
-                            {{ formset.management_form }}
-                            {{ formset.media }}
+                            {{formset.management_form}}
+                            {{formset.media}}
                             <table id='order_table'>
                             <thead>
+                                <tr>
                                 <th>Media Type</th>
                                 <th>Item</th>
                                 <th>Container</th>
@@ -75,24 +73,25 @@
                                 <th>Cost</th>
                                 <th>Delete?<input type='checkbox' class='delete-all' /></th>
                                 <th>Total</th>
+                                </tr>
                             </thead>
                             <tbody>
                                 {% for form in formset %}
                                 <tr>
-                                {% for hidden in form.hidden_fields %}
+                                    {% for hidden in formset.hidden_fields %}
                                     {{ hidden }}
-                                {% endfor %}
+                                    {% endfor %}
 
-                                {% for field in form.visible_fields %}
-                                <td>{% if field.name == 'cost' %}${% endif %}{{field}}</td>
-                                {% endfor %}
-
-                                <td class='total'>
-                                {{form.instance.total | currency}}</td>
+                                    {% for field in formset.visible_fields %}
+                                <td>
+                                    {{field}}
+                                </td>
+                                    {% endfor %}
+                                <!--<td class='line_total'>{{form.instance.total | currency}}</td>-->
                                 </tr>
                                 {% if form.errors %}
                                 <tr>
-                                {% for field in form.visible_fields %}
+                                    {% for field in formset.visible_fields %}
                                     <td>{{field.errors}}</td>
                                     {% endfor %}
                                 </tr>
@@ -104,8 +103,7 @@
                     </tr>
                 </table>
             </div>
-            import ipdb; ipdb.set_trace()
-
+        </div>
             <div class='row'>
                 <div class = 'col-xs-3'>
                     <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" />
@@ -116,48 +114,17 @@
                 </div>
             </div>
         </fieldset>
-            <div class='row'>
-                <hr/>
-                <p></p>
-                <div class='col-xs-11'>
-                    <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
-                </div>
-                <div class="col-xs-1">
-                    <a href='/' class="btn btn-danger">Cancel</a>
-                </div>
+        <div class='row'>
+        <hr/>
+            <p></p>
+            <div class='col-xs-11'>
+                <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
             </div>
+            <div class="col-xs-1">
+                <a href='/' class="btn btn-danger">Cancel</a>
+            </div>
+        </div>
 </form>
 
 <p>&nbsp;</p>
-s
-
-{% verbatim %}s
-<script id='order-line-form' type='text/x-handlebars-template'>
-    <tr class='highlight'>
-        <input id='id_orderlines-{{id}}-id' name='orderlines-{{id}}-id' type='hidden'>
-        <input id='id_orderlines-{{id}}-order' name='orderlines-{{id}}-order' type='hidden'>
-
-        <td>
-            <select id = 'id_orderlines-{{id}}-media_type' class='chosen-select line-media_type' name = 'orderlines-{{id}}-media_type'>
-            {% endverbatim %}
-            <option value=''>-----------</option>
-            {% for option in line_formset.forms.0.instance.media_type %}
-            <option value='{{option.0}}'>{{option.1}}</option>
-            {% endfor %}
-            {% verbatim %}
-            </select>
-        </td>
-        <td><input class='line-container' id='id_orderlines-{{id}}-container' name='orderlines-{{id}}-containier' type ='text' value='{{container}}'></td>
-        <td><textarea cols='40' id='id_orderlines-{{id}}-description' name='orderlines-{{id}}-notes' rows='10'></textarea>}
-        {{description}}</td>
-        <td><input class="line_calc line_qty" id='id_orderlines-{{id}}-qty' name='orderlines-{{id}}-qty' step='any' type='number' value='{{qty}}'></td>
-        <td><input class='line-unit' id='id_orderlines-{{id}}-unit' maxlength='30' name='orderlines-{{id}}-unit' type='text' value='{{unit}}'></td>
-        <td><input class="line_calc line_cost" id='id_orderlines-{{id}}-cost' name='orderlines-{{id}}-cost' step='any' type='number' value='{{cost}}'></td>
-        <td><input id='id_orderlines-{{id}}-DELETE' name='orderlines-{{id}}-DELETE' type='checkbox'></td>
-        <td class='line_total'>$0.00</td>
-
-    </tr>
-</script>
-{% endverbatim %}
 {% endblock %}
-

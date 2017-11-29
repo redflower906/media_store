@@ -138,7 +138,7 @@ def update_item(request, id):
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
-    })
+    }, context)
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -199,11 +199,8 @@ def have_minimum(formset, count, request, message):
 
 
 def create_order(request, copy_id=None):
-    OrderInlineFormset = order_inline_formset_factory
-    order_line = OrderLine()
-    inventory = Inventory()
-    total_message = 'The total billed is $0. Please review.'
 
+    OrderInlineFormset = order_inline_formset_factory(1)
 
     initial ={
 #        'submitter': user.id,
@@ -211,14 +208,15 @@ def create_order(request, copy_id=None):
 #        'department': department.id,
 #        'logged-in': user_profile,
     }
+
     if request.method == "POST":
             order = Order()
+            order_form = OrderForm(request.POST, instance=order, initial=initial)
             formset = OrderInlineFormset(request.POST, instance=order, prefix='orderlines')
-            order_form = OrderForm(request.POST, extra=1)
-            orderline_form = OrderLineForm(request.POST, extra=1)
-            if all([have_minimum(orderline_form, 1, request), order_form.is_valid(), orderline_form.is_valid(), check_total_is_not_zero(orderline_form,request, total_message)  ]):
+            total_message = 'The total billed is $0. Please review.'
+            if all([have_minimum(formset, 1, request), order_form.is_valid(), formset.is_valid(), check_total_is_not_zero(orderline_form,request, total_message)  ]):
                 order_form.save()
-                orderline_form.save()
+                formset.save()
                 message.success(request,
                     'Order {0} was successfully created.'.format(order_form.instance.id))
                 if request.POST.get('order_submit') == 'Save':
@@ -229,16 +227,17 @@ def create_order(request, copy_id=None):
                 messages.error(request, 'There was a problem with one of the order lines. Please review.')
     else :
         if copy_id : 
-            order_form, orderline_form, = copy_order_form(copy_id, request, alternative, initial)
+            order_form, formset, = copy_order_form(copy_id, request, alternative, initial)
         else:
             order_form = OrderForm(initial=initial)
-            orderline_form = OrderLineForm(prefix='orderlines')
+            formset = OrderInlineFormset(prefix='orderlines')
 
     return render(request, 'store/order_create.html', {
         'copy_id' : copy_id,
         'order_form' : order_form,
-        'orderline_form' : orderline_form
+        'formset' : formset,
     })
+
 
 
 def past_order(request):
@@ -255,25 +254,7 @@ def recurring_order(request):
 
 
 
-# def update_item(request, id):
-#     SingleItem = get_object_or_404(Inventory, pk=id)
-#     Item_form = Item_Model_Form()
-#     if request.method == "POST":
-#         Item_form = Item_Model_Form(request.POST, instance=SingleItem)
-#         # create item
-#         if Item_form.is_valid():
-#             Item_form.save()
-#             messages.success(request, 
-#             '{0} was successfully updated.'.format(SingleItem.inventory_text))
-#             return HttpResponseRedirect('/inventory/')
-#     else:
-#          Item_form = Item_Model_Form(instance=SingleItem)
-#     # just show the form
-#     return render(request, 
-#     'store/item_form.html', {
-#     'Item_form': Item_form,
-#     'SingleItem': SingleItem,
-#     })
+
 
 
 
@@ -333,9 +314,10 @@ def view_order(request):
     # except EmptyPage:
     #     pages = paginator.page(paginator.num_pages)
 
-    # selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
+
     # if request.method == 'POST':
-    #       # get the user you want (connect for example) in the var "user"
+    #     selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
+    #   # get the user you want (connect for example) in the var "user"
     #     if selected_order.is_valid():
     #         selected_order.save()
     #         messages.success(request, 

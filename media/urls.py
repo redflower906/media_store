@@ -30,6 +30,7 @@ urlpatterns = [
 #main views
 
     url(r'^$', views.home, name='home'),
+
     url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.home, name='home'),
 #   url(r'^invalid', 'store_views.invalid_login'),
@@ -37,7 +38,7 @@ urlpatterns = [
 
 
 #user views
-##Inventory
+##services
     url(r'^inventory/$', views.inventory, name='inventory'),
 #    $ allows you to build on the URL while using different views
     url(r'^inventory/new', views.create_item, name='new_item'),

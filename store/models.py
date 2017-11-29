@@ -4,7 +4,6 @@ All data models for Media Store
 
 from django.db import models
 #from django.contrib.admin.models import LogEntry
-from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -35,7 +34,7 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-
+"""
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
     #related_name='user_profile'
@@ -57,7 +56,6 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-"""
     skip_updates = models.BooleanField(default=False)
 
 
@@ -71,6 +69,9 @@ class UserProfile(models.Model):
         deparment_ids.append(self.department_id)
         return deparment_ids
 
+    def name(self):
+        return self.last_name + ", " + self.first_name
+
     def manager_name(self):
         if self.manager:
             return ' '.join([self.manager.first_name, self.manager.last_name])
@@ -78,7 +79,8 @@ class UserProfile(models.Model):
 
     def has_job_privileges(self):
         return (self.user.is_superuser or
-            (self.is_manager and self.department.number == '093098'))"""
+            (self.is_manager and self.department.number == '093098'))
+"""
 
 
 
@@ -176,7 +178,7 @@ class Order(models.Model):
             ('Two', 'Two'),
         )
     )
-    status = models.CharField(max_length=30, blank=False, null=False,
+    status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
         choices=(
             ('Submitted', 'Submitted'),
             ('In Progress', 'In Progress'),
@@ -215,8 +217,8 @@ class OrderLine(models.Model):
     line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     def total(self):
         total = 0.00
-        if self.cost and self.qty:
-            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.cost)),2)
+        if self.line_cost and self.qty:
+            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.line_cost)),2)
         return decimal.Decimal(total)
     class Meta:
         verbose_name_plural = 'order lines'
