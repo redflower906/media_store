@@ -34,10 +34,10 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-"""
+'''
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
-    #related_name='user_profile'
+    related_name='user_profile'
     )
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
@@ -80,7 +80,7 @@ class UserProfile(models.Model):
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
-"""
+'''
 
 
 
@@ -158,8 +158,8 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
-    submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
-    requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
+    #submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
+    #requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
