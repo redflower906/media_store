@@ -34,7 +34,7 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-'''
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
     related_name='user_profile'
@@ -80,7 +80,7 @@ class UserProfile(models.Model):
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
-'''
+
 
 
 

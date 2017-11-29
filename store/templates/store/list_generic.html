@@ -31,13 +31,15 @@
                 <td class="">{{order.date_billed}}</td>
                 {% endif %}                
                 <td class="">{{order.location}}</td>
-                {% comment %} {% if user.userprofile.is_privileged is True %} {% endcomment %}
-                {% comment %}IF STAFF VIEW THEN ALLOW FOR EDITING OF STATUS{% endcomment %}
-                <td>
-                    <form method="POST">
-                        <option value="{{ order.id }}"></option>{{ form.status }}</option>
+                {% if user.userprofile.is_privileged is True %}
+                <td class='status_drop'>
+                    <form method="POST">                         
+                        {{ form.status }}
                     </form>
                 </td>
+                {% else %}
+                <td>{{order.status}}</td>
+                {% endif %}
                 <td class=""></td>
                 <tr id="notes" class="collapse" role="text">                        
                     <td colspan="10">

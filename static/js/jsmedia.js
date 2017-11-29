@@ -35,7 +35,48 @@ $(document).ready(function(){
         
         }
     });
+
+    // $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+    //     if ($(this).find('koala').length) { // if class already has 'one', un-highlight
+    //         console.log('off');
+    //         // $(this).closest('.sdd').removeClass('sdd');
+    //     } else {
+    //         console.log('on');
+    //         $(this).closest('.koala').addClass('sdd'); // Select the one clicked
+    //     }
+    // });
 })
+
+$(document).ready(function(){
+    var selectValues = new Array();
+    $('tbody.searchable').find('select').each(function() {
+        selectValues.push($(this).val());
+        print()
+    }
+
+//highlight clicked status
+$(document).ready(function(){
+    $('.status_drop').off('click').change(function(){ //Once any element with class "status" is clicked
+        if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+            $(this).closest('.sdd').removeClass('sdd');
+        } else {
+            $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
+        }
+    });
+})
+
+// //highlight clicked status
+// $(document).ready(function(){
+//     $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+//         if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+//             console.log('hi');
+//             $(this).closest('.sdd').removeClass('sdd');
+//         } else {
+//             console.log($(this).parent());
+//             $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
+//         }
+//     });
+// })
 
 //Search Function
 $(document).ready(function () { 
