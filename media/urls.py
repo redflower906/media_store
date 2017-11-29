@@ -33,8 +33,6 @@ urlpatterns = [
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.home, name='home'),
-    url(r'^login/', views.login, name='login'),
-#   url(r'^logout', 'store_views.logout'),
 #   url(r'^invalid', 'store_views.invalid_login'),
 #   url(r'^hijack/', include('hijack.urls')), #to hijack other users
 
@@ -76,5 +74,9 @@ if settings.DEBUG:
     import debug_toolbar
     urlpatterns=[
         url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]+urlpatterns
+    ] + urlpatterns
 
+#Add Django site authentication urls (for login, logout, password management)
+urlpatterns += [
+    url(r'^accounts/', include('django.contrib.auth.urls')),
+]

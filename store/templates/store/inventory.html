@@ -48,9 +48,11 @@
                     {% endif %}
                 </td>
                 {% comment %} if staff {% endcomment %}
+                {% if user.userprofile.is_privileged is True %}
                 <td class="col-xs-1" id="center_columns">
                     <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
                 </td>
+                {% endif %}
                 <tr id="notes" class="collapse" role="text">
                     <td colspan="10">
                         {% comment %} <table class ='table table-striped'>

@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.contrib.auth.models import Group, User
+from django import forms
 from django.db.models import Q
 from django.views import generic
 from django.template import context, RequestContext
@@ -8,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
-from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm
-from .models import Inventory, Order, Announcements, OrderLine, SortHeaders, Department, Vendor
+from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm, order_model_formset_factory
+from .models import *
 import MySQLdb, sys
 import json as simplejson
 import csv
@@ -23,6 +25,7 @@ def index(request):
 
 def home(request):
     post = get_object_or_404(Announcements)
+    user = request.user
     #if staff member
     if request.method == "POST":
         AForm = AnnouncementsForm(request.POST, instance=post)
@@ -36,7 +39,8 @@ def home(request):
     #return render(request, 'store/home.html', {'AForm': AForm})
     return render(request, 'store/home.html', {
         'post': post,
-        'AForm': AForm
+        'AForm': AForm,
+        'user': user,
         } 
     )
  
@@ -85,6 +89,7 @@ def inventory(request):
     InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
+    user = request.user
     return render(request, 
         'store/inventory.html', 
         {
@@ -112,6 +117,7 @@ def create_item(request):
     'store/item_form.html', {
     'formset': formset,
     'inventory': inventory,
+    'user': user,
     }, context)
     
 def update_item(request, id):
@@ -252,7 +258,7 @@ def recurring_order(request):
 
 
 
-
+@login_required
 def view_order(request):
     ORDER_LIST_HEADERS_INCOMP = (
         ('Order ID', 'order'),
@@ -295,6 +301,7 @@ def view_order(request):
     )    
 
     orders = Order.objects.preferred_order().all()
+    orders = orders.filter(submitter=request.user)
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)

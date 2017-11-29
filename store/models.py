@@ -34,10 +34,12 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-
-"""class UserProfile(models.Model):
-#   user = models.ForeignKey(User, related_name='user_profile')
-#   department = models.ForeignKey(Department, blank=True, null=True)
+"""
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, 
+    #related_name='user_profile'
+    )
+    department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True)
     employee_id = models.CharField(max_length=20, blank=True, null=True)
@@ -49,11 +51,12 @@ class Department(models.Model):
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
+    is_privileged = models.BooleanField(default=False)
+
+    def name(self):
+        return self.last_name + ", " + self.first_name
 
     skip_updates = models.BooleanField(default=False)
-
-
-    is_privileged = models.BooleanField(default=False)
 
 
     offboard_date = models.DateField(blank=True, null=True)
@@ -76,7 +79,8 @@ class Department(models.Model):
 
     def has_job_privileges(self):
         return (self.user.is_superuser or
-            (self.is_manager and self.department.number == '093098'))"""
+            (self.is_manager and self.department.number == '093098'))
+"""
 
 
 
@@ -154,8 +158,8 @@ class OrderManager(models.Manager):
 
 class Order(models.Model):
     #had to make null to migrate CHANGE LATER
-#   submitter = models.ForeignKey(User, related_name='submitter')   #submitting order
-#   requester = models.ForeignKey(User, related_name='requester')  #only use when billing other person
+    submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
+    requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
