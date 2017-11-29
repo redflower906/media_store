@@ -213,8 +213,8 @@ class OrderLine(models.Model):
     line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     def total(self):
         total = 0.00
-        if self.cost and self.qty:
-            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.cost)),2)
+        if self.line_cost and self.qty:
+            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.line_cost)),2)
         return decimal.Decimal(total)
     class Meta:
         verbose_name_plural = 'order lines'

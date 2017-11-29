@@ -76,7 +76,6 @@ INSTALLED_APPS = [
     'djangoformsetjs',
 #    'hijack',
 #    'south',
-    'debug_toolbar',
 ]
 
 MIDDLEWARE = [

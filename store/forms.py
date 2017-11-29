@@ -86,11 +86,12 @@ class OrderForm(forms.ModelForm):
     #submitter = user_choice(queryset=User.objects.only('first_name','last_name'))
     #main_requester = user_choice(queryset=requester_queryset_generator())
     #department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'style' : 'width:250'}))
-    try:
+    #inventory_type = forms.ModelChoiceField(queryset=Inventory.objects.filter(active=True), required=False)
+    '''try:
         media_choices = (('', '-----------------'),) + MEDIA_CHOICES
     except ProgrammingError as e:
         media_choices = (('', '-----------------'),)
-    media = forms.ChoiceField(required=False, choices=media_choices, widget=forms.Select(attrs={'class': 'chosen-select line-inventory'}))
+    media = forms.ChoiceField(required=False, choices=media_choices, widget=forms.Select(attrs={'class': 'chosen-select line-inventory'}))'''
     date_complete = forms.DateField(widget=DateInput)
 
     def clean_date_complete(self):
@@ -102,22 +103,34 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('date_complete', 'special_instructions', 'date_billed')#'department', 'inventory_type' 'requester','submitter'
+        fields = ('date_complete', 'special_instructions', 'date_billed')#'inventory_type',department', 'inventory_type' 'requester','submitter'
 
-def order_inline_formset_factory():
-    return inlineformset_factory(Order, OrderLine,
-        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'cost', 'inventory_text', 'media_type'),#category, 'inventory_type'
+
+def order_inline_formset_factory(extra):
+    return inlineformset_factory(Order, OrderLine, 
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory'),#category, 'inventory_type'
         widgets = {
-            'media_type' : forms.Select(attrs={'class': 'chosen-select line-media_type'}),
             'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
             'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
             'inventory': HiddenInput(),
-            'inventory_text': forms.Select(attrs={'class': 'chosen-select line-inventory_text'}),
             'description': forms.TextInput(attrs={'class': 'form-text'}),
             'unit': forms.TextInput(attrs={'class': 'line unit'})
         },
-        can_delete=True
+        extra=extra, can_delete=True
         )
+
+'''def inventory_inline_formset_factory():
+    return inlineformset_factory(Inventory,
+        fields=('inventory_text', 'media_type', 'cost', 'qty', 'unit'),
+        widgets={
+            'inventory_text': forms.Select(attrs={'class': 'chosen-select line-inventory_text'}),
+            'media_type': forms.Select(attrs={'class': 'chosen-select line-media_type'}),
+            'cost': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_cost'}),
+            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
+            'unit': forms.TextInput(attrs={'class': 'line-unit'})
+        },
+        can_delete=True
+        )'''
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:
