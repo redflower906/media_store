@@ -48,16 +48,36 @@ $(document).ready(function(){
 })
 
 $(document).ready(function(){
-    $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+    $("select option:selected").each(function() {
+        var str='';   
+        str = $(this).text();
+        console.log(str);
+    });
+})
+
+//highlight clicked status
+$(document).ready(function(){
+    $('.status_drop').off('click').change(function(){ //Once any element with class "status" is clicked
         if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
-            console.log('hi');
             $(this).closest('.sdd').removeClass('sdd');
         } else {
-            console.log($(this).parent());
             $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
         }
     });
 })
+
+// //highlight clicked status
+// $(document).ready(function(){
+//     $('.status_drop').off('click').click(function(){ //Once any element with class "status" is clicked
+//         if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+//             console.log('hi');
+//             $(this).closest('.sdd').removeClass('sdd');
+//         } else {
+//             console.log($(this).parent());
+//             $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
+//         }
+//     });
+// })
 
 //Search Function
 $(document).ready(function(){ 
@@ -79,3 +99,4 @@ $(document).ready(function(){
             });
         }(jQuery));
     });
+

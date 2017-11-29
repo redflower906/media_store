@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
-from .forms import Item_Model_Form, item_model_formset_factory, AnnouncementsForm, OrderForm, order_inline_formset_factory, OrderLineForm, OrderStatusForm, order_model_formset_factory
+from .forms import *
 from .models import *
 import MySQLdb, sys
 import json as simplejson
@@ -318,14 +318,11 @@ def view_order(request):
         ('Location', 'location'),
         ('Status', 'status'),
     )    
-
-    orders = Order.objects.preferred_order().all()
-    orders = orders.filter(submitter=request.user)
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
-    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete')
+    
     # how to associate "orders" in html (either incomp, CNB, CB) to also associate with paginator
     # page = request.GET.get('page', 1)
     # paginator = Paginator(orders, 2)
@@ -335,9 +332,6 @@ def view_order(request):
     #     pages = paginator.page(1)
     # except EmptyPage:
     #     pages = paginator.page(paginator.num_pages)
-    recur = orders.filter(is_recurring=True).exclude(status__icontains='Complete')
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete')
-    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed')
 
     # selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
     # if request.method == 'POST':
@@ -350,8 +344,18 @@ def view_order(request):
     # orderFormset=order_model_formset_factory
     # formset=orderFormset(queryset=recur)
     # init_status = Order.objects.values('status')
-    form_class = OrderStatusForm()
     user = request.user
+
+    if user.userprofile.is_privileged is False:
+        orders = Order.objects.preferred_order().filter(submitter=request.user)
+    else:
+        orders = Order.objects.preferred_order().all()    
+
+    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete')    
+    recur = orders.filter(is_recurring=True).exclude(status__icontains='Complete')
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete')
+    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed')
+    form_class = OrderStatusForm()
 
     return render(request, 
         'store/order_view2.html',{
@@ -365,9 +369,6 @@ def view_order(request):
         'recur': recur,
         'form': form_class,
         'user':user,
-        # 'init_status': init_status,
-        # 'formset': formset,
-        # 'selected_order': selected_order,
         # 'pages': pages,
         })
 

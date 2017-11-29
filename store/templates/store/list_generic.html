@@ -32,7 +32,6 @@
                 {% endif %}                
                 <td class="">{{order.location}}</td>
                 {% if user.userprofile.is_privileged is True %}
-                {% comment %}IF STAFF VIEW THEN ALLOW FOR EDITING OF STATUS{% endcomment %}
                 <td class='status_drop'>
                     <form method="POST">                         
                         {{ form.status }}
@@ -41,7 +40,6 @@
                 {% else %}
                 <td>{{order.status}}</td>
                 {% endif %}
-                {% comment %}IF STAFF VIEW{% endcomment %}
                 <td class=""></td>
                 <tr id="notes" class="collapse" role="text">                        
                     <td colspan="10">
