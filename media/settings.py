@@ -11,9 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-#import ldap
+# import ldap
 import django_auth_ldap.config
-#import LDAPSearch, GroupOfNamesType
 from .databasesettings import DATABASES
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
@@ -166,7 +165,7 @@ HIJACK_NOTIFY_ADMIN = True
 
 AUTHENTICATION_BACKENDS = (
     #'TimeMatrix.backend.LDAPBackend',
-    'django_auth_ldap.backend.LDAPBackend',
+    #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"

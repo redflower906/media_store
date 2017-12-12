@@ -5,7 +5,7 @@
 {% block content %}
 
 <hr/>
-{% comment %} {% if user.userprofile.is_privileged is True %} {% endcomment %}
+{% if user.userprofile.is_privileged is True %}
 <form method="POST" action="" class="form-group">
     <div class="panel panel-danger">
         <div class="panel-heading" style="text-align: center">Announcements</div>
@@ -16,7 +16,7 @@
         </div>
     </div>
 </form> 
-{% comment %} {% else %} {% endcomment %}
+{% else %}
     {% if post.show %}
         <div class="panel panel-danger">
             <div class="panel-heading" style="text-align: center">Announcements</div>
@@ -26,7 +26,7 @@
             </div>
         </div>
     {% endif %}
-{% comment %} {% endif %} {% endcomment %}
+{% endif %}
 <p>&nbsp;</p>
 
 

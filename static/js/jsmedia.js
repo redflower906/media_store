@@ -47,12 +47,34 @@ $(document).ready(function(){
     // });
 })
 
+// $(document).ready(function(){
+//     var array1 = 
+//         $("select option:selected").map(function (i, el) { return $(el).val(); }).get();
+//     console.log(arrayOfValues);
+// });
+
+
+
 $(document).ready(function(){
-    var selectValues = new Array();
-    $('tbody.searchable').find('select').each(function() {
-        selectValues.push($(this).val());
-        print()
-    }
+    var array1 = new Array();
+    $('select option:selected').each(function() {
+        array1.push($(this).val());
+    });
+    $('select').on('change', function(){
+        var array2 = new Array();
+        $('select option:selected').each(function() {
+            array2.push($(this).val());
+        });
+        console.log(array2);
+        console.log(array1);
+        function diff(array1, array2) {
+            return array1.concat(array2).filter(function(val, index, arr){
+              return arr.indexOf(val) === arr.lastIndexOf(val);
+            });
+          }
+    });
+});
+
 
 //highlight clicked status
 $(document).ready(function(){

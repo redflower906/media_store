@@ -147,16 +147,6 @@ def get_item(request, id):
     'SingleItem': SingleItem,
     })
 
-# def delete_item(request, id):
-#     SingleItem = get_object_or_404(Inventory, pk=id)
-
-#     #can't delete an item that's associated with an order
-
-#     if item.order_set.count() > 0:
-#         return HttpResponseBadRequest(simplejson.dumps({'failed': 'This item is still associated with existing orders and cant be deleted. Please mark it as inactive instead'}), content_type="application/json")
-#     item.delete()
-#     return HttpResponse(simplejson.dumps({'deleted': id}), content_type="application/json")
-
 def single_item(request, id):
     if request.method == "POST":
         return update_item(request, id)
@@ -317,7 +307,6 @@ def view_order(request):
 
     # if request.method == 'POST':
     #     selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
-    #   # get the user you want (connect for example) in the var "user"
     #     if selected_order.is_valid():
     #         selected_order.save()
     #         messages.success(request, 
@@ -353,24 +342,3 @@ def view_order(request):
         'user':user,
         # 'pages': pages,
         })
-
-
-def _orders_view_page(request, filters, page_arg):
-    # for user view
-    # user = request.user
-    # order_list = _workorder_list(user, filters=filters)
-
-    order_list = Order.objects.all
-
-    paginator = Paginator(order_list, 30)
-
-    try:
-        orders = paginator.page(request.GET.get(page_arg))
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        orders = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        orders = paginator.page(paginator.num_pages)
-
-    return orders

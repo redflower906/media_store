@@ -6,7 +6,7 @@ import logging
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import TextInput, HiddenInput, NumberInput
-from .models import Inventory, Vendor, Announcements, Order, OrderLine, MEDIA_CHOICES, Department#, UserProfile
+from .models import Inventory, Vendor, Announcements, Order, OrderLine, MEDIA_CHOICES, Department, UserProfile
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
@@ -150,3 +150,10 @@ class OrderStatusForm(forms.ModelForm):
         model = Order
         fields = ('status',)
         widgets = {'status': forms.Select(),}
+
+class OSF(forms.Form):
+    status = forms.ChoiceField()
+
+    def __init__(self, *args, **kwargs):
+        super(OSF,self).__init__(*args, **kwargs)
+        self.fields['status'].choices = [(x.status) for x in get_group_choices()]

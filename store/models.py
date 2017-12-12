@@ -4,6 +4,7 @@ All data models for Media Store
 
 from django.db import models
 #from django.contrib.admin.models import LogEntry
+from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -34,7 +35,7 @@ class Department(models.Model):
 
     class Meta:
         ordering = ('number',)
-"""
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
     #related_name='user_profile'
@@ -56,10 +57,10 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-    skip_updates = models.BooleanField(default=False)
+    #skip_updates = models.BooleanField(default=False)
 
 
-    offboard_date = models.DateField(blank=True, null=True)
+    #offboard_date = models.DateField(blank=True, null=True)
 
     def __unicode__(self):
         return str(self.user)
@@ -80,7 +81,6 @@ class UserProfile(models.Model):
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
-"""
 
 
 
