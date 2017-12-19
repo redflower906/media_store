@@ -156,4 +156,4 @@ class OSF(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super(OSF,self).__init__(*args, **kwargs)
-        self.fields['status'].choices = [(x.status) for x in get_group_choices()]
+        self.fields['status'].choices = [(x.status) for x in something]

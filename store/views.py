@@ -5,13 +5,14 @@ from django.db.models import Q
 from django.views import generic
 from django.template import context, RequestContext
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
 from .forms import *
 from .models import *
+from .resources import *
 import MySQLdb, sys
 import json as simplejson
 import csv
@@ -322,13 +323,14 @@ def view_order(request):
     else:
         orders = Order.objects.preferred_order().all()    
 
-    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete')    
-    recur = orders.filter(is_recurring=True).exclude(status__icontains='Complete')
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete')
-    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed')
+    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
+    recur = orders.filter(is_recurring=True).exclude(status__icontains='Complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     form_class = OrderStatusForm()
 
-    return render(request, 
+
+    return render(request,
         'store/order_view2.html',{
         'compNotBill': compNotBill,
         'incomp': incomp,
@@ -342,3 +344,29 @@ def view_order(request):
         'user':user,
         # 'pages': pages,
         })
+
+def export_orders(request):
+    orders = Order.objects.all()    
+    # order_resource = OrderResource()
+    # compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set')
+    # for c in compNotBill:
+    #     print(c.orderline_set.all().values())
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="orders.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['order num', 'dept num', 'product', 'qty', 'unit', 'line cost', 'requester'])
+
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','department__number', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__unit', 'orderline__line_cost', 'requester__username')
+    for thing in compNotBill:
+        writer.writerow(thing)
+
+    return 
+
+@login_required
+def current_sign_outs (request):
+    orders = OrderLine.objects.all()
+    cornmeal = orders.filter(inventory__product__icontains='cornmeal')
+    print(orders.values())
+
+    return

@@ -23,6 +23,15 @@ new goal: set up staff view order page
     work on javascript on inventory page, maybe searches
     create error/404 pages
 
+cornmeal sign-out:
+    new staff view in website for staff input of bottles/trays made and to view current sign-out info
+    for customer: lab name drop down, then bottles or vials choice, then tray or individual
+    close-out at 5 pm on 25th, anything signed out after would be put in next billing cycle
+    do people sign out plates on third floor??? Also, can plates be specifically requested AND signed out??
+    have to have "add line" button in case they want to sign out different containers
+    warning on staff view beginning 4 days before billing to wait to put in new inventory until the 26th
+    what to do with visitors? if select visitor for department, then select their name in dropdown?
+
 ALEX HELP:
 sorting headers on order view page
 getting status dropdown to default to actual status

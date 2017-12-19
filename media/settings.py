@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'djangoformsetjs',
 #    'hijack',
 #    'south',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -269,3 +270,5 @@ try:
 except ImportError:
     pass"""
 '''
+
+IMPORT_EXPORT_USE_TRANSACTIONS = True
