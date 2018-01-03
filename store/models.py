@@ -162,6 +162,16 @@ class OrderManager(models.Manager):
 
 
 class Order(models.Model):
+    #model field choices, extracted for easy reference
+    STATUS_CHOICES = (
+        ('Submitted', 'Submitted'),
+        ('In Progress', 'In Progress'),
+        ('Complete', 'Complete'),
+        ('Canceled', 'Canceled'),
+        ('Problem', 'Problem'),
+        ('Auto', 'Auto'),
+        ('Billed', 'Billed')
+    )
     #had to make null to migrate CHANGE LATER
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
@@ -184,22 +194,10 @@ class Order(models.Model):
         )
     )
     status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
-        choices=(
-            ('Submitted', 'Submitted'),
-            ('In Progress', 'In Progress'),
-            ('Complete', 'Complete'),
-            ('Canceled', 'Canceled'),
-            ('Problem', 'Problem'),
-            ('Auto', 'Auto'),
-            ('Billed', 'Billed')
-        )
+        choices=STATUS_CHOICES
     )
     objects = OrderManager()
 
-    # def clean(self):
-    #     clean_date = self.cleaned_data['date_billed']
-    #     return self.clean_date
-    
     def already_billed(self):
         if self.date_billed:
             return True

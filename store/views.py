@@ -316,21 +316,33 @@ def view_order(request):
     #     pages = paginator.page(paginator.num_pages)
 
 
-    # if request.method == 'POST':
-    #     selected_order = get_object_or_404(Order, pk=request.POST.get('order_id'))
-    #     if selected_order.is_valid():
-    #         selected_order.save()
-    #         messages.success(request, 
-    #         'Order status was successfully changed.')
-    #         return HttpResponseRedirect('/order/view/')
-    # orderFormset=order_model_formset_factory
-    # formset=orderFormset(queryset=recur)
-    # init_status = Order.objects.values('status')
+    if request.method == 'POST':
+        # for each order category, check to see if the form had been updated and save
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(
+            request.POST, prefix='recur')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(
+            request.POST, prefix='compNotBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(
+            request.POST, prefix='compBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
     user = request.user
 
     if user.userprofile.is_privileged is False:
         orders = Order.objects.preferred_order().filter(submitter=request.user)
     else:
+<<<<<<< 0bf1e17344598671c24235c4e97654c2a0ae1e43
         orders = Order.objects.preferred_order().all()
 
     today = date.today()
@@ -356,6 +368,30 @@ def view_order(request):
     compBill = orders.filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     form_class = OrderStatusForm()
 
+=======
+        orders = Order.objects.preferred_order().all()    
+
+    incomp = OrderStatusFormSet(
+        queryset=orders.filter(is_recurring=False).exclude(status__icontains='complete').prefetch_related(
+            'orderline_set').exclude(orderline__inventory__id='686'),
+        prefix='incomp'
+    )
+    recur = OrderStatusFormSet(
+        queryset=orders.filter(is_recurring=True).exclude(status__icontains='Complete').prefetch_related(
+            'orderline_set').exclude(orderline__inventory__id='686'),
+        prefix='recur'
+    )
+    compNotBill = OrderStatusFormSet(
+        queryset=orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by(
+            'date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686'),
+        prefix='compNotBill'
+    )
+    compBill = OrderStatusFormSet(
+        queryset=orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by(
+            'date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686'),
+        prefix='compBill'
+    )
+>>>>>>> change status on the order/view page
 
     return render(request,
         'store/order_view2.html',{
@@ -367,7 +403,6 @@ def view_order(request):
         'headers4': list(sort_headers4.headers()),
         'compBill': compBill,
         'recur': recur,
-        'form': form_class,
         'user':user,
         # 'pages': pages,
         })
