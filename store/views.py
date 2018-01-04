@@ -262,8 +262,8 @@ def recurring_order(request):
 @login_required
 def view_order(request):
     ORDER_LIST_HEADERS_INCOMP = (
-        ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
         ('Date Submitted', 'date_submitted'),
         ('Location', 'location'),
@@ -271,8 +271,8 @@ def view_order(request):
     )
 
     ORDER_LIST_HEADERS_RECUR = (
-        ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
         ('Date Submitted', 'date_submitted'),
         ('Start Date', 'date_recurring_start'),
@@ -282,8 +282,8 @@ def view_order(request):
     )
 
     ORDER_LIST_HEADERS_CNB = (
-        ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
         ('Date Submitted', 'date_submitted'),
         ('Date Complete', 'date_complete'),
@@ -292,8 +292,8 @@ def view_order(request):
     )        
 
     ORDER_LIST_HEADERS_CB = (
-        ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
         ('Date Submitted', 'date_submitted'),
         ('Date Billed', 'date_billed'),
@@ -342,7 +342,6 @@ def view_order(request):
     if user.userprofile.is_privileged is False:
         orders = Order.objects.preferred_order().filter(submitter=request.user)
     else:
-<<<<<<< 0bf1e17344598671c24235c4e97654c2a0ae1e43
         orders = Order.objects.preferred_order().all()
 
     today = date.today()
@@ -362,36 +361,15 @@ def view_order(request):
     # if item < lastbill:
     #     print('hi!')
     # print(type(item))
-    incomp = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
-    recur = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compBill = orders.filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    form_class = OrderStatusForm()
+    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
+    recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
 
-=======
-        orders = Order.objects.preferred_order().all()    
-
-    incomp = OrderStatusFormSet(
-        queryset=orders.filter(is_recurring=False).exclude(status__icontains='complete').prefetch_related(
-            'orderline_set').exclude(orderline__inventory__id='686'),
-        prefix='incomp'
-    )
-    recur = OrderStatusFormSet(
-        queryset=orders.filter(is_recurring=True).exclude(status__icontains='Complete').prefetch_related(
-            'orderline_set').exclude(orderline__inventory__id='686'),
-        prefix='recur'
-    )
-    compNotBill = OrderStatusFormSet(
-        queryset=orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by(
-            'date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686'),
-        prefix='compNotBill'
-    )
-    compBill = OrderStatusFormSet(
-        queryset=orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by(
-            'date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686'),
-        prefix='compBill'
-    )
->>>>>>> change status on the order/view page
+    incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
 
     return render(request,
         'store/order_view2.html',{
@@ -449,22 +427,4 @@ def current_sign_outs (request):
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
-    if today >= nextbill:
-        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-
-    print(today)
-    print(nextbill)
-    print(lastbill)
-    print((nextbill - today).days)
-    days = (nextbill - today).days
-
-    return render(request,
-        'store/sign_out_view.html',{
-        'cornmeal': cornmeal,
-        'corn_b': corn_b,
-        'headers1': list(sort_headers1.headers()),
-        'headers2': list(sort_headers2.headers()),
-        'days': days,
-        # 'user':user,
-        })
+    return

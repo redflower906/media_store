@@ -19,7 +19,7 @@
                     <td class="toggle_notes">
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
-                     {% if orders == cornmeal %}
+                    {% if orders == cornmeal %}
                     <td class="">
                         <a href="#">{{order.id}}</a>
                     </td>
@@ -38,6 +38,7 @@
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.requester.userprofile.name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>
+                    {% endif %}
                     {% if orderforms == recur %}
                     <td class="">{{order.instance.date_recurring_start|default:'N/A'}}</td>
                     <td class="">{{order.instance.date_recurring_stop|default:'N/A'}}</td>
@@ -89,7 +90,6 @@
                 </tr>
                 {% endfor %}
             </tbody>
-        </form>
         {% else %}
             <div><p>There are no orders at this time.</p></div>        
         {% endif %}
