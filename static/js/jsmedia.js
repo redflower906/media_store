@@ -12,7 +12,7 @@
 //   $('#add_item_line').on('click', add_item_line);
 
 //Properly Highlight Navbar Links
-$(document).ready(function() {
+$(function() {
     $.each($('#navbar').find('li'), function() {
         $(this).toggleClass('active', 
             window.location.pathname.indexOf($(this).find('a').attr('href')) > -1);
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 //hide / expand table children. had to change toggle_notes from id to class for click event to
 //occur with all records
-$(document).ready(function(){
+$(function(){
     $(".toggle_notes").off("click").click(function(e){
         // figure out the next line items class and show / hide it
 
@@ -53,39 +53,84 @@ $(document).ready(function(){
 //     console.log(arrayOfValues);
 // });
 
+var isEqual = function (value, other) {
+    //Get value type
+    var type = Object.prototype.toString.call(value);
+    // Get length
+    var valueLen = type ==='[object Array]' ? value.length : Object.keys(value).length;
+    //compare two items
+    var compare = function (item1, item2) {
+        //Get the object type
+        var itemType = Object.prototype.toString.call(item1);
+        //If an object or array, compare recursively
+        if (['[object Array]'], '[object Object]'.indexof(itemType) >= 0) {
+            if (!isEqual(item1, item2)) return false;
+        }
+        //Otherwise do a simple comparison
+        else {
+            if(item1 !== item2) return false;
+        }
+    };
+    // Compare properties
+    if(type === '[object Array]') {
+        for (var i = 0; i < valueLen; i++) {
+            if (compare(value[i], other[i]) === false) return false;
+        }
+    } else {
+        for (var key in value) {
+            if(value.hasOwnProperty(key)) {
+                if(compare (value[key], other[key]) === false) return false;
+            }
+        }
+    }
+    return true;
+};
 
+// $(function(){
+//     var array1 = new Array();
+//     // console.log(this);
+//     $('select option:selected').each(function() {
+//         array1.push($(this).val());
+//     });
+//     $('select').on('change', function(){
+//         var array2 = new Array();
+//         $('select option:selected').each(function() {
+//             array2.push($(this).val());
+//         });
+//         console.log(array2);
+//         console.log(array1);
 
-$(document).ready(function(){
-    var array1 = new Array();
-    $('select option:selected').each(function() {
-        array1.push($(this).val());
-    });
-    $('select').on('change', function(){
-        var array2 = new Array();
-        $('select option:selected').each(function() {
-            array2.push($(this).val());
-        });
-        console.log(array2);
-        console.log(array1);
-        function diff(array1, array2) {
-            return array1.concat(array2).filter(function(val, index, arr){
-              return arr.indexOf(val) === arr.lastIndexOf(val);
-            });
-          }
-    });
-});
+//             for (var i = 0; i < array1.length; i++) {
+//                 if (array1[i] != array2[i]) {
+//                     console.log('not equal!');
+//                     console.log(i, array1[i]);
+//                     console.log(i, array2[i]);
+//                     console.log(this);
+//                     $(this).closest('koala').addClass('sdd');
+//                 } else {
+//                     console.log('equal!')
+//                     // this is only referring to the current select. so if there is are any indices that match, it'll take off the .sdd of this,
+//                     //regardless of whether the current index is the one that matches or not.
+//                     //should I have it only check the current index of the array?
+//                     if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+//                         $(this).closest('.sdd').removeClass('sdd');
+//                     }
+//                 }
+//             }
+//     });
+// });
 
 
 //highlight clicked status
-$(document).ready(function(){
-    $('.status_drop').off('click').change(function(){ //Once any element with class "status" is clicked
-        if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
-            $(this).closest('.sdd').removeClass('sdd');
-        } else {
-            $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
-        }
-    });
-})
+// $(function(){
+//     $('.status_drop').off('click').change(function(){ //Once any element with class "status" is clicked
+//         if ($(this).parent('.sdd').length) { // if class already has 'one', un-highlight
+//             $(this).closest('.sdd').removeClass('sdd');
+//         } else {
+//             $(this).closest('tr.koala').addClass('sdd'); // Select the one clicked
+//         }
+//     });
+// })
 
 // //highlight clicked status
 // $(document).ready(function(){
@@ -101,7 +146,7 @@ $(document).ready(function(){
 // })
 
 //Search Function
-$(document).ready(function () { 
+$(function () { 
         (function ($) {
             //As you type in id=filter, it searches each character
             $('#filter').keyup(function () {

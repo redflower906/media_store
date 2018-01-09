@@ -1,19 +1,19 @@
-{% extends "store/base.html" %}
-{% block navbar %}
-{% include "store/navbar.html" %}
-{% endblock %}
+{% extends "store/base.html" %} 
+{% block navbar %} 
+{% include "store/navbar.html" %} 
+{% endblock %} 
 {% block content %}
 <hr/>
 <ul class="nav nav-tabs">
-        <li class="active">
-          <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
-        </li>
+    <li class="active">
+        <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
+    </li>
 
 </ul>
 <div class="tab-content">
@@ -22,7 +22,7 @@
             <div class="col-xs-12">
                 <h3>Submitted/In-Progress Orders</h3>
             </div>
-        </div>    
+        </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
                 {%include "store/list_generic.html" with orders=incomp headers=headers1%}
@@ -32,7 +32,7 @@
             <div class="col-xs-12">
                 <h3>Recurring Orders</h3>
             </div>
-        </div>  
+        </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
                 {%include "store/list_generic.html" with orders=recur headers=headers2%}
@@ -50,7 +50,7 @@
                 {%include "store/list_generic.html" with orders=compNotBill headers=headers3%}
             </div>
         </div>
-    </div>    
+    </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_billed">
         <div class="row">
             <div class="col-xs-12">
@@ -61,8 +61,30 @@
             <div class="col-xs-12 workorder_list">
                 {%include "store/list_generic.html" with orders=compBill headers=headers4%}
             </div>
-        </div>    
+        </div>
     </div>
 </div>
+<script>
+    $(function(){
+        // INITIAL <select class="{form.selectedOption} unchanged"/>
+        //if(e.target.hasClass(e.target.value)) { e.removeClass()}
+        $('select').on('change', function(e){
+                $(e.target).removeClass();
+                $(e.target).addClass(e.target.value);
+                console.log(e.target.value);
+                if($(this).closest('.koala').hasClass(e.target.value)){
+                    console.log('equal');
+                    if($(this).closest('.koala').hasClass('sdd')){
+                        $(this).closest('.koala').removeClass('sdd');
+                        console.log('removed!');
+                    }
+                }else{
+                    $(this).closest('.koala').addClass('sdd');
+                    console.log('added!');
+                }
+        });
+    });
+
+</script>
 <a href="{% url 'export_orders' %}" class="btn btn-primary">Button!</a>
-{% endblock %} 
+{% endblock %}

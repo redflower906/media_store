@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
+from dateutil import relativedelta
 from .forms import *
 from .models import *
 from .resources import *
@@ -17,6 +18,7 @@ import MySQLdb, sys
 import json as simplejson
 import csv
 import time
+from datetime import datetime, date
 
 
 
@@ -244,11 +246,6 @@ def recurring_order(request):
     return render(request, 'store/order_list.html')
 
 
-
-
-
-
-
 @login_required
 def view_order(request):
     ORDER_LIST_HEADERS_INCOMP = (
@@ -321,12 +318,29 @@ def view_order(request):
     if user.userprofile.is_privileged is False:
         orders = Order.objects.preferred_order().filter(submitter=request.user)
     else:
-        orders = Order.objects.preferred_order().all()    
+        orders = Order.objects.preferred_order().all()
 
-    incomp = orders.filter(is_recurring=False).exclude(status__icontains='complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
-    recur = orders.filter(is_recurring=True).exclude(status__icontains='Complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    today = date.today()
+    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+    if today >= nextbill:
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+
+    print(today)
+    print(nextbill)
+    print(lastbill)
+
+    item = Order.objects.values('date_billed').get(pk=1)
+    # print(item.clean())
+    # if item < lastbill:
+    #     print('hi!')
+    print(type(item))
+    incomp = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
+    recur = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compBill = orders.filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     form_class = OrderStatusForm()
 
 
@@ -347,26 +361,47 @@ def view_order(request):
 
 def export_orders(request):
     orders = Order.objects.all()    
-    # order_resource = OrderResource()
-    # compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set')
-    # for c in compNotBill:
-    #     print(c.orderline_set.all().values())
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="orders.csv"'
-
+    p = UserFullName.objects.all()
+    print(p)
     writer = csv.writer(response)
-    writer.writerow(['order num', 'dept num', 'product', 'qty', 'unit', 'line cost', 'requester'])
+    writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
 
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','department__number', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__unit', 'orderline__line_cost', 'requester__username')
-    for thing in compNotBill:
-        writer.writerow(thing)
-
-    return 
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','requester__userprofile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
+    
+    for record in compNotBill:
+        writer.writerow(record)
+    return response
 
 @login_required
 def current_sign_outs (request):
-    orders = OrderLine.objects.all()
-    cornmeal = orders.filter(inventory__product__icontains='cornmeal')
-    print(orders.values())
+    ORDER_LIST_HEADERS_CORN = (
+        ('Order ID', 'order'),
+        ('Department to Bill', 'department_name'),
+        ('Date Submitted', 'date_submitted'),
+        ('Location', 'location'),
+    )
 
-    return
+    ORDER_LIST_HEADERS_CORN_B = (
+        ('Order ID', 'order'),
+        ('Department to Bill', 'department_name'),
+        ('Date Submitted', 'date_submitted'),
+        ('Date Billed', 'date_billed'),
+        ('Location', 'location'),
+    )
+
+    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
+    sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
+    orders = OrderLine.objects.all()
+    cornmeal = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=False)
+    corn_b = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=True)
+
+    return render(request,
+        'store/sign_out_view.html',{
+        'cornmeal': cornmeal,
+        'corn_b': corn_b,
+        'headers1': list(sort_headers1.headers()),
+        'headers2': list(sort_headers2.headers()),
+        # 'user':user,
+        })

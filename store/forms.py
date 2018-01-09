@@ -149,7 +149,7 @@ class OrderStatusForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ('status',)
-        widgets = {'status': forms.Select(),}
+        widgets = {'status': forms.Select()}
 
 class OSF(forms.Form):
     status = forms.ChoiceField()

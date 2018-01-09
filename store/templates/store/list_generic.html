@@ -13,10 +13,21 @@
         </thead>
         <tbody class="searchable">
             {% for order in orders %}
-            <tr class="order_{{order.id}} koala">
+            <tr class="order_{{order.id}} koala {{order.status}} unchanged">
                 <td class="toggle_notes">
                     <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                 </td>
+                {% if orders == cornmeal %}
+                <td class=""><a href="#">{{order.id}}</a></td>                
+                <td class="">{{order.order.department.department_name}}</td>
+                <td class="">{{order.order.date_submitted}}</td>
+                <td class="">{{order.order.location}}</td>                
+                {% elif orders == corn_b %}
+                <td class=""><a href="#">{{order.id}}</a></td>                
+                <td class="">{{order.department.department_name}}</td>
+                <td class="">{{order.date_submitted}}</td>
+                <td class="">{{order.date_billed}}</td>
+                {% else %}
                 <td class=""><a href="#">{{order.id}}</a></td>                
                 <td class="">{{order.department.department_name}}</td>
                 <td class="">{{order.requester.userprofile.name}}</td>
@@ -29,6 +40,7 @@
                 {% elif orders == incomp %}     
                 {% else %}
                 <td class="">{{order.date_billed}}</td>
+                {% endif %}
                 {% endif %}                
                 <td class="">{{order.location}}</td>
                 {% if user.userprofile.is_privileged is True %}

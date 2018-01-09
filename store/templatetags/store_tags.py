@@ -17,3 +17,7 @@ def currency(amount):
     if (amount):
         value = locale.currency(amount, grouping=True)
     return value
+
+@register.filter(name='addcss')
+def addcss(field, css):
+       return field.as_widget(attrs={"class":css})

@@ -1,0 +1,43 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+<hr/>
+<ul class="nav nav-tabs">
+        <li class="active">
+          <a class="nav-link" data-toggle="tab" href="#current_corn">Current</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" href="#billed_corn">Last Billing Cycle</a>
+        </li>
+
+</ul>
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade-in active" id="current_corn">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Current Sign-Outs</h3>
+            </div>
+        </div>    
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orders=cornmeal headers=headers1%}
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="billed_corn">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Sign-Outs from Previous Billing Cycle</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orders=corn_b headers=headers2%}
+            </div>
+        </div>
+    </div>    
+</div>
+<a href="{% url 'export_orders' %}" class="btn btn-primary">Button!</a>
+{% endblock %} 

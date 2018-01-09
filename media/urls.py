@@ -19,7 +19,6 @@ from django.conf import settings
 from django.views.generic import ListView
 from store.models import Order
 from store import views #as store_views  #can add more here with, 
-# from store.views import update_item
 
 app_name = 'store'
 

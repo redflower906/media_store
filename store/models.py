@@ -25,9 +25,9 @@ class Department(models.Model):
 
 #   objects = ActiveDepartmentManager()
 #   all_objects = models.Manager()
-
-    def __unicode__(self):
-        return self.number + " " + self.department_name
+# I don't think unicode works in python 3? it's always __str__
+    # def __unicode__(self):
+    #     return self.number + " " + self.department_name
 #	category = models.CharField(max_length=30,blank=True,null=True,choices = CATEGORY_CHOICES)
 #note sure category choices should be the same but not sure if RM requires it to be the same?
     def __str__(self):
@@ -57,21 +57,21 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
+    # def __str__(self):
+    #     return '%s %s' % (self.last_name, self.first_name)
+
     #skip_updates = models.BooleanField(default=False)
 
 
     #offboard_date = models.DateField(blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return str(self.user)
 
     def department_id_list(self):
         deparment_ids = [dept.id for dept in self.alt_departments.all()]
         deparment_ids.append(self.department_id)
         return deparment_ids
-
-    def name(self):
-        return self.last_name + ", " + self.first_name
 
     def manager_name(self):
         if self.manager:
@@ -82,7 +82,12 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
-
+class UserFullName(User):
+    class Meta:
+        proxy = True
+    
+    def __str__(self):
+        return self.get_full_name()
 
 class Vendor(models.Model):
     email_address = models.CharField(max_length=225, blank=True, null=True)
@@ -184,10 +189,16 @@ class Order(models.Model):
             ('In Progress', 'In Progress'),
             ('Complete', 'Complete'),
             ('Canceled', 'Canceled'),
-            ('Problem', 'Problem')
+            ('Problem', 'Problem'),
+            ('Auto', 'Auto'),
+            ('Billed', 'Billed')
         )
     )
     objects = OrderManager()
+
+    # def clean(self):
+    #     clean_date = self.cleaned_data['date_billed']
+    #     return self.clean_date
     
     def already_billed(self):
         if self.date_billed:
