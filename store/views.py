@@ -331,7 +331,7 @@ def view_order(request):
     print(today)
     print(nextbill)
     print(lastbill)
-
+    print((nextbill - today).days)
     item = Order.objects.values('date_billed').get(pk=1)
     # print(item.clean())
     # if item < lastbill:
@@ -397,11 +397,26 @@ def current_sign_outs (request):
     cornmeal = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=False)
     corn_b = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=True)
 
+    today = date.today()
+    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+    if today >= nextbill:
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+
+    print(today)
+    print(nextbill)
+    print(lastbill)
+    print((nextbill - today).days)
+    days = (nextbill - today).days
+
     return render(request,
         'store/sign_out_view.html',{
         'cornmeal': cornmeal,
         'corn_b': corn_b,
         'headers1': list(sort_headers1.headers()),
         'headers2': list(sort_headers2.headers()),
+        'days': days,
         # 'user':user,
         })
