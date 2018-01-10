@@ -218,6 +218,81 @@ class Order(models.Model):
     def is_closed(self):
         return self.status.name == 'Complete'
 
+    # def send_new_order_notification(self, only_assignee=True):
+    #     requester_display_name = get_user_display_name(self.user)
+
+    #     order_summary_url = settings.BASE_URL + '/order/%s/' % self.id
+
+    #     if settings.EMAIL_NEW_ORDERS:
+    #         message = """\
+    #         Greetings,<br><br>
+
+    #         A new order has been submitted by %s.<br><br>
+
+    #         It has been auto-assigned to %s.<br><br>
+
+    #         You can view a summary of this order:<br>
+    #         <a href="%s">%s</a><br><br>
+
+    #         Sincerely,<br><br>
+
+    #         The Fly Store
+    #         """ % (requester_display_name, assigned, fill_main_url, fill_main_url, order_summary_url,
+    #         order_summary_url)
+    #         subject = 'A new staff order has been entered' if self.user.is_staff else 'A New CUSTOMER Order Has Arrived'
+    #         from_email = 'harrisons1@janelia.hhmi.org' #CHANGE WHEN ON SERVER
+    #         text_content = re.sub(r'<[^>]+>','',message)
+    #         html_content = message
+    #         msg = EmailMultiAlternatives(subject, text_content, from_email, to)
+    #         msg.attach_alternative(html_content, "text/html")
+    #         msg.send()
+
+    # def gen_filled_info_mailto(self, only_url=True, link_text="Want to send an email about it?"):
+    #     """Create a mailto link URL to the requestor about this order."""
+    #     def format_queue_name():
+    #         if self.queue_name:
+    #             return "'%s', " % self.queue_name
+    #         else:
+    #             return ""
+    #     def gen_subject():
+    #         if self.order_type()=='queue':
+    #             return 'Lines from Fly Facility %s Have Been Filled' % self.short_name().title()
+    #         else:
+    #             return 'Fly Facility %s Has Been Filled' % self.short_name().title()
+
+    #     template = """\
+    #     Dear %s
+
+    #     Lines from your %s (%snumber %s, submitted on %s) have been filled.
+
+    #     For more information about this order (or to resubmit unfilled stocks) visit:
+    #     %s/order/%s/
+
+    #     Please pick up your order from the Stock Inbox cart.  It is located outside of Todd Laverty's office (2E.210).
+
+    #     %s
+
+    #     Please contact us with any questions.
+
+    #     Sincerely,
+
+    #     The Fly Core
+    #     Ext. 1180
+    #     Room 2E.210
+    #             """
+    #     lines_not_filled = self.orderline_set.filter(filled=False, void=False).order_by('date_created')
+    #     if lines_not_filled:
+    #         not_filled = "The following stocks were not filled:\n" + '\n'.join(
+    #             [str(line) for line in lines_not_filled])
+    #     else:
+    #         not_filled = ''
+    #     body = template % (get_user_display_name(self.user), self.order_type(), format_queue_name(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
+    #         settings.BASE_URL,self.id,not_filled)
+    #     return make_mailto_link(RECIPIENTS=self.user.email, CC='flyfacility@janelia.hhmi.org',
+    #         BCC='', SUBJECT=gen_subject(), MESSAGE=body,
+    #         LINK_TEXT=link_text, only_url=only_url)
+
+
 
 class OrderLine(models.Model):
     order = models.ForeignKey(Order)

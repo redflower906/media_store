@@ -53,6 +53,10 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['*']
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+SERVER_EMAIL = 'harrisons1@janelia.hhmi.org'
+EMAIL_HOST = '10.42.5.23'
+
 
 COMPRESS_OFFLINE=True
 COMPRESS_ENABLED=True

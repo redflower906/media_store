@@ -1,16 +1,18 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
-from django.contrib.auth.models import Group, User
 from django import forms
+from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
+from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.contrib import messages
+from django.contrib.auth.models import Group, User
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
 from django.template import context, RequestContext
-from django.contrib import messages
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
+from django.core.mail import send_mail
 from dateutil import relativedelta
+from datetime import datetime, date
 from .forms import *
 from .models import *
 from .resources import *
@@ -18,7 +20,6 @@ import MySQLdb, sys
 import json as simplejson
 import csv
 import time
-from datetime import datetime, date
 
 
 
@@ -101,8 +102,9 @@ def inventory(request):
         'InventoryItemsAll': InventoryItemsAll,
         },)
 
-#@login_required(login_url='login')
+@login_required(login_url='login')
 def create_item(request):
+    user = request.user
     ItemModelFormset = item_model_formset_factory(extra=1)
     inventory = Inventory()
 
@@ -110,9 +112,18 @@ def create_item(request):
         formset = ItemModelFormset(request.POST)
         # create item
         if formset.is_valid():
-            formset.save()
+            newItem = formset.save()
             messages.success(request, 
             'Product was successfully created.')
+            print(newItem[0].pk)
+            # put this in order create!
+            send_mail(
+                'New ',
+                'Congrats, you created an item that is called {0}!'.format(newItem[0].inventory_text),
+                'harrisons1@janelia.hhmi.com',
+                ['coffmansr906@gmail.com'],
+                fail_silently=False,
+            )
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
@@ -122,8 +133,10 @@ def create_item(request):
     'inventory': inventory,
     'user': user,
     }, context)
-    
+
+@login_required(login_url='login')
 def update_item(request, id):
+    user = request.user
     SingleItem = get_object_or_404(Inventory, pk=id)
     Item_form = Item_Model_Form()
     if request.method == "POST":
@@ -336,7 +349,7 @@ def view_order(request):
     # print(item.clean())
     # if item < lastbill:
     #     print('hi!')
-    print(type(item))
+    # print(type(item))
     incomp = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
     recur = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 

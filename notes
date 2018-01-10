@@ -32,6 +32,9 @@ cornmeal sign-out:
     warning on staff view beginning 4 days before billing to wait to put in new inventory until the 26th
     what to do with visitors? if select visitor for department, then select their name in dropdown?
 
+media questions:
+    what is more important: batch close-out of orders or reviewing the details of each order/easy email editing?
+
 ALEX HELP:
 sorting headers on order view page
 getting status dropdown to default to actual status
