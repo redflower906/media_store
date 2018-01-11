@@ -49,7 +49,7 @@
                     <td class="">{{orderform.instance.date_billed}}</td>
                     {% endif %}                
                     <td class="">{{orderform.instance.location}}</td>
-                    {% if user.user_profile.is_privileged is True %}
+                    {% if user.userprofile.is_privileged is True %}
                         {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 

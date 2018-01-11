@@ -38,7 +38,7 @@ class Department(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
-    #related_name='user_profile'
+    related_name='userprofile'
     )
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
