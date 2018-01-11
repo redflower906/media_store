@@ -145,15 +145,11 @@ class AnnouncementsForm(forms.ModelForm):
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
 
-class OrderStatusForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ('status',)
-        widgets = {'status': forms.Select()}
 
-class OSF(forms.Form):
-    status = forms.ChoiceField()
+OrderStatusFormSet = modelformset_factory(
+    Order, 
+    fields=('status',),
+    widgets={'status': forms.Select(choices=Order.STATUS_CHOICES)},
+    extra=0
+)
 
-    def __init__(self, *args, **kwargs):
-        super(OSF,self).__init__(*args, **kwargs)
-        self.fields['status'].choices = [(x.status) for x in something]

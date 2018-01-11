@@ -4,83 +4,92 @@
 <hr/>
 
     <table class="table table-hover" id="order_table">
-        {% if orders %}
-        <thead>
-            <tr id="table_header">
-                <th></th>
-                {% table_header headers %}
-            </tr>
-        </thead>
-        <tbody class="searchable">
-            {% for order in orders %}
-            <tr class="order_{{order.id}} koala {{order.status}}">
-                <td class="toggle_notes">
-                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
-                </td>
-                {% if orders == cornmeal %}
-                <td class=""><a href="#">{{order.id}}</a></td>                
-                <td class="">{{order.order.department.department_name}}</td>
-                <td class="">{{order.order.date_submitted}}</td>
-                <td class="">{{order.order.location}}</td>                
-                {% elif orders == corn_b %}
-                <td class=""><a href="#">{{order.id}}</a></td>                
-                <td class="">{{order.department.department_name}}</td>
-                <td class="">{{order.date_submitted}}</td>
-                <td class="">{{order.date_billed}}</td>
-                {% else %}
-                <td class=""><a href="#">{{order.id}}</a></td>                
-                <td class="">{{order.department.department_name}}</td>
-                <td class="">{{order.requester.userprofile.name}}</td>
-                <td class="">{{order.date_submitted}}</td>
-                {% if orders == recur %}
-                <td class="">{{order.date_recurring_start|default:'N/A'}}</td>
-                <td class="">{{order.date_recurring_stop|default:'N/A'}}</td>
-                {% elif orders == compNotBill %}
-                <td class="">{{order.date_complete}}</td>
-                {% elif orders == incomp %}     
-                {% else %}
-                <td class="">{{order.date_billed}}</td>
-                {% endif %}
-                {% endif %}                
-                <td class="">{{order.location}}</td>
-                {% if user.userprofile.is_privileged is True %}
-                <td class='status_drop'>
-                    <form method="POST">                         
-                        {{ form.status }}
-                    </form>
-                </td>
-                {% else %}
-                <td>{{order.status}}</td>
-                {% endif %}
-                <td class=""></td>
-                <tr id="notes" class="collapse" role="text">                        
-                    <td colspan="10">
-                        <table class ='table'>
-                            {% if order.orderline_set.all %}
-                            <thead>
-                                <tr id="table_header">
-                                    <th>Description</th>
-                                    <th>id</th>
-                                    <th>order id</th>
-                                </tr>
-                            {% for line in order.orderline_set.all %}                                
-{% comment %} have to call from "order" variable for each line to know which order it's getting info from {% endcomment %}
-                            </thead>
-                            <tr>
-                                <td>{{line.description}}</td>
-                                <td>{{line.id}}</td>
-                                <td>{{line.order_id}}</td>
-                            {% endfor %}
-                            {% else %}
-                                <div><p>There are no order details for this order.</p></div>
-                                </tr>
-                            {% endif %}
-                        </table>                            
-                    </td>                              
+        {{ orderforms.management_form }}
+        
+        {% if orderforms|length is not 0 %}
+            <thead>
+                <tr id="table_header">
+                    <th></th>
+                    {% table_header headers %}
                 </tr>
-            </tr>
-            {% endfor %}
-        </tbody>
+            </thead>
+            <tbody class="searchable">
+                {% for orderform in orderforms %}
+                <tr class="order_{{order.instance.id}} koala {{order.status}}">
+                    <td class="toggle_notes">
+                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    </td>
+                    {% if orders == cornmeal %}
+                    <td class="">
+                        <a href="#">{{order.id}}</a>
+                    </td>
+                    <td class="">{{orderform.instance.department.department_name}}</td>
+                    <td class="">{{orderform.instance.date_submitted}}</td>
+                    <td class="">{{orderform.instance.location}}</td>
+                    {% elif orders == corn_b %}
+                    <td class="">
+                        <a href="#">{{order.id}}</a>
+                    </td>
+                    <td class="">{{orderform.instance.department.department_name}}</td>
+                    <td class="">{{orderform.instance.date_submitted}}</td>
+                    <td class="">{{orderform.instance.date_billed}}</td>
+                    {% else %}
+                    <td class=""><a href="#">{{orderform.instance.id}}</a></td>                
+                    <td class="">{{orderform.instance.department.department_name}}</td>
+                    <td class="">{{orderform.instance.requester.userprofile.name}}</td>
+                    <td class="">{{orderform.instance.date_submitted}}</td>
+                    {% endif %}
+                    {% if orderforms == recur %}
+                    <td class="">{{order.instance.date_recurring_start|default:'N/A'}}</td>
+                    <td class="">{{order.instance.date_recurring_stop|default:'N/A'}}</td>
+                    {% elif orderforms == compNotBill %}
+                    <td class="">{{orderform.instance.date_complete}}</td>
+                    {% elif orderforms == incomp %}     
+                    {% else %}
+                    <td class="">{{orderform.instance.date_billed}}</td>
+                    {% endif %}                
+                    <td class="">{{orderform.instance.location}}</td>
+                    {% if user.userprofile.is_privileged is True %}
+                        {% for hidden_field in orderform.hidden_fields %} 
+                            {{ hidden_field.errors }} 
+                            {{ hidden_field }} 
+                        {% endfor %}
+                        <td>
+                            {{orderform.status.errors}}
+                            {{orderform.status}}
+                        </td>
+                    {% else %}
+                    <td>{{orderform.instance.status}}</td>
+                    {% endif %}
+                    <td class=""></td>
+                    <tr id="notes" class="collapse" role="text">                        
+                        <td colspan="10">
+                            <table class ='table'>
+                                {% if orderform.instance.orderline_set.all %}
+                                <thead>
+                                    <tr id="table_header">
+                                        <th>Description</th>
+                                        <th>id</th>
+                                        <th>order id</th>
+                                    </tr>
+                                {% for line in orderform.instance.orderline_set.all %}                                
+    {% comment %} have to call from "order" variable for each line to know which order it's getting info from {% endcomment %}
+                                </thead>
+                                <tr>
+                                    <td>{{line.description}}</td>
+                                    <td>{{line.id}}</td>
+                                    <td>{{line.order_id}}</td>
+                                {% endfor %}
+                                {% else %}
+                                    <div><p>There are no order details for this order.</p></div>
+                                    </tr>
+                                {% endif %}
+                            </table>                            
+                        </td>                              
+                    </tr>
+                </tr>
+                {% endfor %}
+            </tbody>
         {% else %}
             <div><p>There are no orders at this time.</p></div>        
         {% endif %}

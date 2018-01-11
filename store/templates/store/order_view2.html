@@ -24,6 +24,9 @@
     </li>
 
 </ul>
+
+<form method="post" action="" id="orderstatusform">
+{% csrf_token %}
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
         <div class="row">
@@ -33,7 +36,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=incomp headers=headers1%}
+                {%include "store/list_generic.html" with orderforms=incomp headers=headers1%}
             </div>
         </div>
         <div class="row">
@@ -43,7 +46,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=recur headers=headers2%}
+                {%include "store/list_generic.html" with orderforms=recur headers=headers2%}
             </div>
         </div>
     </div>
@@ -55,7 +58,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=compNotBill headers=headers3%}
+                {%include "store/list_generic.html" with orderforms=compNotBill headers=headers3%}
             </div>
         </div>
     </div>
@@ -67,11 +70,13 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=compBill headers=headers4%}
+                {%include "store/list_generic.html" with orderforms=compBill headers=headers4%}
             </div>
         </div>
     </div>
 </div>
+<button type="submit" class="btn btn-primary pull-right">Submit</button>
+</form>
 <script>
     $(function(){
         // INITIAL <select class="{form.selectedOption} unchanged"/>
