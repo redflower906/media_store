@@ -15,20 +15,20 @@
             </thead>
             <tbody class="searchable">
                 {% for orderform in orderforms %}
-                <tr class="order_{{order.instance.id}} koala {{order.status}}">
+                <tr class="order_{{orderform.instance.id}} koala {{orderform.instance.status}}">
                     <td class="toggle_notes">
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
-                    {% if orders == cornmeal %}
+                    {% if orderforms == cornmeal %}
                     <td class="">
-                        <a href="#">{{order.id}}</a>
+                        <a href="#">{{orderform.instance.id}}</a>
                     </td>
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>
                     <td class="">{{orderform.instance.location}}</td>
-                    {% elif orders == corn_b %}
+                    {% elif orderforms == corn_b %}
                     <td class="">
-                        <a href="#">{{order.id}}</a>
+                        <a href="#">{{orderform.instance.id}}</a>
                     </td>
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>
@@ -40,8 +40,8 @@
                     <td class="">{{orderform.instance.date_submitted}}</td>
                     {% endif %}
                     {% if orderforms == recur %}
-                    <td class="">{{order.instance.date_recurring_start|default:'N/A'}}</td>
-                    <td class="">{{order.instance.date_recurring_stop|default:'N/A'}}</td>
+                    <td class="">{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
+                    <td class="">{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     {% elif orderforms == compNotBill %}
                     <td class="">{{orderform.instance.date_complete}}</td>
                     {% elif orderforms == incomp %}     
