@@ -149,8 +149,7 @@ class AnnouncementsForm(forms.ModelForm):
 OrderStatusFormSet = modelformset_factory(
     Order, 
     fields=('status',),
-    widgets={'status': forms.Select(choices=Order.STATUS_CHOICES,
-                                    attrs={'onchange': 'orderstatusform.submit();'})},
+    widgets={'status': forms.Select(choices=Order.STATUS_CHOICES)},
     extra=0
 )
 
