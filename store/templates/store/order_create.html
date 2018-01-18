@@ -5,7 +5,12 @@
 {% block content %}
 {% load formset_tags %}
 {% load store_tags %}
+{% load static %}
 
+<script src="{% static 'js/order_edit.js' %}"></script>
+<script type="text/javascript">
+    var inventory_groups = {{ inventory_lists | safe}};
+</script>
 <hr/>
 <p>&nbsp;</p>
 
@@ -21,17 +26,27 @@
 
 <form id='order_form' method="post" action="" class="post-form form-horizontal">
     {% csrf_token %}
-    {% for hidden in formset.hidden_fields %}
-        {{ hidden }}
+    {{ order_form.non_field_errors }}
+    {% for hidden_field in order_form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
     {% endfor %}
 
     <fieldset>
         <legend>Who is creating this order?</legend>
+        {{ order_form.submitter.errors }}
+        {{ order_form.submitter }}
+        {{ order_form.department.errors }}
+        {{ order_form.department }}
+        
     </fieldset>
     <p>&nbsp;</p>
 
     <fieldset>
         <legend>Who is paying?</legend>
+         {{ order_form.requester.errors }}
+         {{ order_form.requester }}
+        
     <p>&nbsp;</p>
     </fieldset>
 
@@ -53,7 +68,11 @@
 
     <fieldset>
         <legend>What would you like to order?</legend>
-
+        {{ formset.non_form_errors }} 
+        {% for hidden_field in formset.hidden_fields %} 
+            {{ hidden_field.errors }} 
+            {{ hidden_field }} 
+        {% endfor %}
         <div class='row'>
             <div class='col-xs-12'>
                 <table id='form_holder'>
@@ -69,33 +88,53 @@
                                 <th>Container</th>
                                 <th>Notes</th>
                                 <th>Qty</th>
-                                <th>Unit</th>
                                 <th>Cost</th>
-                                <th>Delete?<input type='checkbox' class='delete-all' /></th>
-                                <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for form in formset %}
+                                {% if form.non_field_errors %}
                                 <tr>
-                                    {% for hidden in formset.hidden_fields %}
-                                    {{ hidden }}
-                                    {% endfor %}
-
-                                    {% for field in formset.visible_fields %}
-                                <td>
-                                    {{field}}
-                                </td>
-                                    {% endfor %}
-                                <!--<td class='line_total'>{{form.instance.total | currency}}</td>-->
-                                </tr>
-                                {% if form.errors %}
-                                <tr>
-                                    {% for field in formset.visible_fields %}
-                                    <td>{{field.errors}}</td>
-                                    {% endfor %}
+                                    <td colspan="6">
+                                        {{ form.non_field_errors }}
+                                    </td>
                                 </tr>
                                 {% endif %}
+                                <tr>
+                                 {% for hidden_field in form.hidden_fields %} 
+                                    {{ hidden_field.errors }} 
+                                    {{ hidden_field }}
+                                    {% endfor %}
+
+                                <td>
+                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype'>
+                                        <option value=""> --------- </option>
+                                        {% for media_type, media_type_desc in media_types %}
+                                            <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
+                                                {{media_type_desc}}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    {{ form.inventory.errors }}
+                                    {{ form.inventory }}
+                                </td>
+                                <td class="inv_container">
+                                    <p> --------- </p>
+                                </td>
+                                <td class="inv_notes">
+                                    <p> --------- </p>
+                                </td>
+                                <td>
+                                    {{ form.qty.errors }}
+                                    {{ form.qty }}
+                                </td>
+                                <td>
+                                    {{ form.line_cost.errors }}
+                                    {{ form.line_cost }}
+                                </td>
+                                </tr>
                                 {% endfor %}
                             </tbody>
                             </table>
@@ -106,9 +145,10 @@
         </div>
             <div class='row'>
                 <div class = 'col-xs-3'>
-                    <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" />
+                    <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
                 </div>
-                <div class='col-xs-offset-7 col-xs-2 text-right'>
+                <div class='col-xs-offset-6 col-xs-2 text-right'>
+                    <p><strong>Total</strong></p>
                     <p class="aggregate_total">
                     {{order_form.instance.total | currency}}</p>
                 </div>
@@ -124,7 +164,23 @@
                 <a href='/' class="btn btn-danger">Cancel</a>
             </div>
         </div>
+        
 </form>
-
+<script type="text/javascript">
+    $(function () {
+        $('#order_table tbody tr').formset({
+            prefix:'{{ formset.prefix }}',
+            addText:'Add Item',
+            removeText: 'Delete',
+            addCssClass:'btn btn-default',
+            deleteCssClass:'btn btn-xs btn-danger',
+            added: register_row,
+            removed: deregister_row
+        });
+        $('#order_table tbody tr.dynamic-form').map(function (index, row){
+            register_row($(row))
+        })
+    })
+</script>
 <p>&nbsp;</p>
 {% endblock %}

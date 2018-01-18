@@ -18,6 +18,12 @@ def currency(amount):
         value = locale.currency(amount, grouping=True)
     return value
 
-@register.filter(name='addcss')
-def addcss(field, css):
-       return field.as_widget(attrs={"class":css})
+@register.filter
+def msgbootstrapconvert(tag):
+    bootstrap_context_map = {
+        'success': 'success',
+        'error': 'danger'
+    }
+    return bootstrap_context_map[tag]
+
+

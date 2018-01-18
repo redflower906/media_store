@@ -140,6 +140,9 @@ class Inventory(models.Model):
     def __unicode__(self):
         return self.inventory_text
 
+    def __str__(self):
+        return self.inventory_text
+
     def list_media_type(self):
         return self.media_type
 
@@ -296,18 +299,27 @@ class OrderLine(models.Model):
     order = models.ForeignKey(Order)
     description = models.TextField(blank=True)
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
-    qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    qty = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=False, null=False)
     unit = models.CharField(max_length=30, blank=True, null=True)
-    line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    line_cost = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)
+
     def total(self):
         total = 0.00
         if self.line_cost and self.qty:
             total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.line_cost)),2)
         return decimal.Decimal(total)
+
     class Meta:
         verbose_name_plural = 'order lines'
+
     def __unicode__(self):
         return u'%s' % self.pk
+
+    def clean(self):
+        # Don't allow draft entries to have a pub_date.
+        if self.total() <= decimal.Decimal(0):
+            raise ValidationError('Order line must have quantity and cost > 0')
     
 
 class Announcements(models.Model):

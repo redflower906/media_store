@@ -170,33 +170,6 @@ def single_item(request, id):
         return delete_item(request, id)
     else:
         return get_item(request, id)
-        
-def check_total_is_not_zero(formset, request, message):
-    total=0
-    for form in formset:
-        if form.is_valid():
-            qty = form.cleaned_data.get('qty')
-            cost = form.cleaned_data.get('cost')
-            if qty and cost:
-                total += qty * cost
-    if total == 0:
-        messages.error(request, message)
-        return flag
-
-    return True
-
-def have_minimum(formset, count, request, message):
-    line_count = 0
-    for form in formset:
-        if form.is_valid():
-            deleted = form.cleaned_data.get('DELETE')
-            if deleted == False:
-                line_count = 1
-    if line_count < 1:
-        messages.error(request, message)
-        return False
-
-    return True
 
 '''def create_order(request, order_id):
     order = Order.objects.get(pk=order_id)
@@ -204,47 +177,68 @@ def have_minimum(formset, count, request, message):
     InventoryInlineFormset = inlineformset_factory(Order)'''
 
 
+def __build_inventory_groups():
+   # build inventory lists grouped by mediatype. This data is used
+    # on the front-end to build mediatype and inventory dropdowns
+    inventory_lists = {}
+    for type_val, display in MEDIA_CHOICES:
+        inventory_choices = [{
+            'id': inv.id,
+            'desc': inv.inventory_text,
+            'container': inv.container,
+            'notes': inv.notes,
+            'cost': str(inv.cost)
+        } for inv
+            in Inventory.objects.filter(media_type=type_val)]
+        inventory_lists[type_val] = inventory_choices
+    return simplejson.dumps(inventory_lists)
+
+@login_required(login_url='login')
 def create_order(request, copy_id=None):
 
-    OrderInlineFormset = order_inline_formset_factory(1)
-
-    initial ={
-#        'submitter': user.id,
-        'date_complete': time.strftime('%Y-%m-%d'),
-#        'department': department.id,
-#        'logged-in': user_profile,
-    }
+    order = Order()
+    initial_emptyorderline = {'inventory': None, 'id': None, 'DELETE': False, 'order': order}
 
     if request.method == "POST":
-            order = Order()
-            order_form = OrderForm(request.POST, instance=order, initial=initial)
-            formset = OrderInlineFormset(request.POST, instance=order, prefix='orderlines')
-            total_message = 'The total billed is $0. Please review.'
-            if all([have_minimum(formset, 1, request), order_form.is_valid(), formset.is_valid(), check_total_is_not_zero(orderline_form,request, total_message)  ]):
-                order_form.save()
-                formset.save()
-                message.success(request,
-                    'Order {0} was successfully created.'.format(order_form.instance.id))
-                if request.POST.get('order_submit') == 'Save':
-                    return HttpResponseRedirect('/')
-                else :
-                    return HttpResponseRedirect('/order_list.html')
-            elif not orderline_form.is_valid():
-                messages.error(request, 'There was a problem with one of the order lines. Please review.')
-    else :
-        if copy_id : 
-            order_form, formset, = copy_order_form(copy_id, request, alternative, initial)
+        
+        order_form = OrderForm(request.POST, prefix='order', instance=order)
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order)
+
+        if order_form.is_valid() and orderlineformset.is_valid():
+            # TODO for Scarlett and Amanda: decide desired behavior for date_submitted.
+            #   Some options: 
+            #       only set on create (but this is the same as date_created...)--handle in model
+            #       update on edit or create only set on create--handle in model
+
+            # TODO 2 for Scarlett and Amanda: descide if you want to copy Inventory.notes and save to Orderline.description
+            # or just access orderline->inventory->notes to display in templates
+            order = order_form.save()
+            orderlineformset.save()
+            messages.success(request,
+                'Order {0} was successfully created.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/order/view')
         else:
-            order_form = OrderForm(initial=initial)
-            formset = OrderInlineFormset(prefix='orderlines')
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+
+        if copy_id:
+            # TODO: implement
+            pass
+            # order_form, orderlineformset, = copy_order_form(
+            #     copy_id, request, alternative, initial)
+        else:
+            order_form = OrderForm(prefix='order')
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines')
 
     return render(request, 'store/order_create.html', {
         'copy_id' : copy_id,
         'order_form' : order_form,
-        'formset' : formset,
+        'formset': orderlineformset,
+        'inventory_lists': __build_inventory_groups(),
+        'media_types': MEDIA_CHOICES
     })
-
-
 
 def past_order(request):
     context = {}
