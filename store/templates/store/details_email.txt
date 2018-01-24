@@ -1,0 +1,11 @@
+Greetings,
+This email is concerning media store order #{{order_id}}.
+
+You can view a summary of this order:
+{{order_info.instance.id}}
+
+{{form_content}}
+
+Sincerely,
+
+{{sender}}

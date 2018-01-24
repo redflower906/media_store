@@ -38,7 +38,7 @@ urlpatterns = [
 
 
 #user views
-##services
+##Inventory
     url(r'^inventory/$', views.inventory, name='inventory'),
 #    $ allows you to build on the URL while using different views
     url(r'^inventory/new', views.create_item, name='new_item'),
@@ -56,6 +56,9 @@ urlpatterns = [
     url(r'^order/view', views.view_order, name='view_order'),
     url(r'^order/(?P<copy_id>[0-9]*)/copy$', views.create_order, name = 'copy_order'),
     url(r'^export/xls/$', views.export_orders, name='export_orders'),
+
+##email
+    url(r'^(?P<id>[0-9]*)/email$', views.email_form, name='email'),
 
 ##sign-out
     url(r'^signout', views.current_sign_outs, name='signout'),

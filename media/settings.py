@@ -53,7 +53,8 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['*']
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 SERVER_EMAIL = 'harrisons1@janelia.hhmi.org'
 EMAIL_HOST = '10.42.5.23'
 
@@ -100,7 +101,7 @@ ROOT_URLCONF = 'media.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'store/templates/store/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

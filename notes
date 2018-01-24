@@ -22,18 +22,23 @@ new goal: set up staff view order page
         to leave, type exit.
     work on javascript on inventory page, maybe searches
     create error/404 pages
+    add cost center to order details expand and total cost to main order row
 
 cornmeal sign-out:
     new staff view in website for staff input of bottles/trays made and to view current sign-out info
     for customer: lab name drop down, then bottles or vials choice, then tray or individual
     close-out at 5 pm on 25th, anything signed out after would be put in next billing cycle
-    do people sign out plates on third floor??? Also, can plates be specifically requested AND signed out??
+    do people sign out plates on third floor??? - YES Also, can plates be specifically requested AND signed out?? - YES
     have to have "add line" button in case they want to sign out different containers
     warning on staff view beginning 4 days before billing to wait to put in new inventory until the 26th
     what to do with visitors? if select visitor for department, then select their name in dropdown?
+    drop off locations for room temp media, can we get a dedicated area? we don't want people to take advantage of a use input box
+    could also place things regularly put in RT in a cold room anyways
+        rubin cabinet in 3rd floor
 
 media questions:
-    what is more important: batch close-out of orders or reviewing the details of each order/easy email editing?
+    what is more important: batch close-out of orders or reviewing the details of each order/easy email editing? batch + mailto link
+    in order details
 
 ALEX HELP:
 sorting headers on order view page

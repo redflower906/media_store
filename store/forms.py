@@ -40,6 +40,68 @@ class Item_Model_Form(forms.ModelForm):
             'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
+
+# class Email_Form(forms.ModelForm):
+#     class Meta:
+#         model = Order
+#         exclude = (''),
+    
+#     # To = forms.EmailField(required=True)
+#     # From = forms.EmailField(required=True)
+#     # text = forms.Textarea()
+
+#     # def __init__(self, *args, **kwargs):
+#     #     super(Email_Form, self).__init__(*args, **kwargs)
+#     #     user = self.instance.user
+#     #     if user.userprofile.is_privileged is True:
+#     #         self.fields['To'] = forms.EmailField(
+#     #             required=True,
+#     #             initial = Order.requester__UserProfile.email_address,
+#     #         )
+#     #         self.fields['From'] = forms.EmailField(
+#     #             required = True,
+#     #             initial = 'mediafacility@janelia.hhmi.org'
+#     #         )
+#     #     else:
+#     #         self.fields['To'] = forms.EmailField(
+#     #             required = True,
+#     #             initial = 'mediafacility@janelia.hhmi.org',
+#     #         )
+#     #         self.fields['From'] = forms.EmailField(
+#     #             required = True,
+#     #             initial = user,
+#     #         )
+#     #     self.fields['Text'] = forms.Textarea(
+#     #         initial = 'Greetings',
+#     #     )
+
+#     To = forms.EmailField(
+#         label='To:',
+#     )
+#     From = forms.EmailField(
+#         label = 'From:',
+#     )
+#     Text = forms.Textarea()
+        
+class Email_Form(forms.Form):
+    To = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'email-form-text'}),
+        label='To:',
+    )
+    From = forms.EmailField(
+        required=True,
+        widget=forms.TextInput(attrs={'class': 'email-form-text'}),
+        label = 'From:',
+    )
+    Text = forms.CharField(
+        required=True,
+        widget=forms.Textarea,
+        label = 'Content:',
+        )        
+    
+        
+
 def item_model_formset_factory(extra):
     return modelformset_factory(Inventory,
     fields = ('inventory_text','product','media_type','cost','container','volume','active','notes'),
@@ -149,7 +211,8 @@ class AnnouncementsForm(forms.ModelForm):
 OrderStatusFormSet = modelformset_factory(
     Order, 
     fields=('status',),
-    widgets={'status': forms.Select(choices=Order.STATUS_CHOICES)},
+    widgets={
+        'status': forms.Select(choices=Order.STATUS_CHOICES)
+        },
     extra=0
 )
-

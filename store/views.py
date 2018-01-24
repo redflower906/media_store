@@ -1,16 +1,17 @@
 from django import forms
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
-from django.template import context, RequestContext
+from django.template import Context, RequestContext
+from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from dateutil import relativedelta
 from datetime import datetime, date
 from .forms import *
@@ -117,13 +118,13 @@ def create_item(request):
             'Product was successfully created.')
             print(newItem[0].pk)
             # put this in order create!
-            send_mail(
-                'New ',
-                'Congrats, you created an item that is called {0}!'.format(newItem[0].inventory_text),
-                'harrisons1@janelia.hhmi.com',
-                ['coffmansr906@gmail.com'],
-                fail_silently=False,
-            )
+            # send_mail(
+            #     'New ',
+            #     'Congrats, you created an item that is called {0}!'.format(newItem[0].inventory_text),
+            #     'harrisons1@janelia.hhmi.com',
+            #     ['coffmansr906@gmail.com'],
+            #     fail_silently=False,
+            # )
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
@@ -132,7 +133,7 @@ def create_item(request):
     'formset': formset,
     'inventory': inventory,
     'user': user,
-    }, context)
+    })
 
 @login_required(login_url='login')
 def update_item(request, id):
@@ -154,7 +155,7 @@ def update_item(request, id):
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
-    }, context)
+    })
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
@@ -322,18 +323,15 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(
-            request.POST, prefix='recur')
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(
-            request.POST, prefix='compNotBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(
-            request.POST, prefix='compBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
@@ -400,6 +398,55 @@ def export_orders(request):
         writer.writerow(record)
     return response
 
+@login_required(login_url='login')
+def email_form(request, id):
+
+    user = request.user
+    order_info = get_object_or_404(Order, pk=id)
+    domain = request.build_absolute_uri()
+
+    if user.userprofile.is_privileged is True:
+        Email_form = Email_Form(initial={'To': order_info.requester.userprofile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
+        Sender = 'The Media Facility'
+    else:
+        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.userprofile.email_address})
+        Sender = order_info.requester.get_full_name()
+
+    if request.method == "POST":
+        Email = Email_Form(request.POST)
+        if Email.is_valid():
+            form_to = Email.cleaned_data['To']
+            form_from = Email.cleaned_data['From']
+            form_content = Email.cleaned_data['Text']
+            ctx = Context({
+                'form_to': form_to,
+                'form_from': form_from,
+                'form_content': form_content,
+                'order_id':order_info.id,
+                'sender': Sender,
+                'domain': domain,
+            })
+            subject = 'Message regarding Media Store Order {0}'.format(order_info.id)
+            msg_plain = render_to_string('details_email.txt', ctx.flatten())
+            msg_html = render_to_string('details_email.html', ctx.flatten())
+            send_mail(
+                subject, 
+                msg_plain, 
+                form_from, 
+               [form_to],
+               html_message=msg_html,
+                )
+            messages.success(request, 
+            'Email was successfully sent')
+            return HttpResponseRedirect('/order/view/')
+    # else:
+    #     Email = Email_form
+    return render(request,
+    'store/email_form.html',{
+        'Email_form': Email_form,
+        'order_info': order_info,
+    })
+
 @login_required
 def current_sign_outs (request):
     ORDER_LIST_HEADERS_CORN = (
@@ -427,4 +474,10 @@ def current_sign_outs (request):
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
-    return
+    return render(request,
+        'store/sign_out_view.html',{
+        'headers1':list(sort_headers1.headers()),
+        'headers2':list(sort_headers2.headers()),
+        'cornmeal': cornmeal,
+        'corn_b': corn_b,
+        })

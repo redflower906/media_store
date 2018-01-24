@@ -6,8 +6,13 @@ from django.db import models
 #from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
+from django.template import Context
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from django.template.loader import render_to_string
 import decimal
 from datetime import datetime
 
@@ -245,18 +250,40 @@ class Order(models.Model):
     #         msg.attach_alternative(html_content, "text/html")
     #         msg.send()
 
+    def gen_filled_info_mailto(self, only_url=True, link_text="Want to send an email about it?"):
+        """Create a mailto link URL to the requester about this order."""
+        def gen_subject():
+                return 'Media Store Order %s' % self.id
+
+        template = """\
+        Dear %s
+
+        Lines from your %s (%snumber %s, submitted on %s) have been filled.
+
+        For more information about this order (or to resubmit unfilled stocks) visit:
+        %s/order/%s/
+
+        Please pick up your order from the Stock Inbox cart.  It is located outside of Todd Laverty's office (2E.210).
+
+
+        Please contact us with any questions.
+
+        Sincerely,
+
+        The Fly Core
+        Ext. 1180
+        Room 2E.210
+                """
+        body = template % (get_user_display_name(self.user), self.order_type(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
+            settings.BASE_URL,self.id)
+        return make_mailto_link(RECIPIENTS=self.user.email, CC='mediafacility@janelia.hhmi.org',
+            BCC='', SUBJECT=gen_subject(), MESSAGE=body,
+            LINK_TEXT=link_text, only_url=only_url)
+
     # def gen_filled_info_mailto(self, only_url=True, link_text="Want to send an email about it?"):
-    #     """Create a mailto link URL to the requestor about this order."""
-    #     def format_queue_name():
-    #         if self.queue_name:
-    #             return "'%s', " % self.queue_name
-    #         else:
-    #             return ""
+    #     """Create a mailto link URL to the requester about this order."""
     #     def gen_subject():
-    #         if self.order_type()=='queue':
-    #             return 'Lines from Fly Facility %s Have Been Filled' % self.short_name().title()
-    #         else:
-    #             return 'Fly Facility %s Has Been Filled' % self.short_name().title()
+    #             return 'Media Store Order %s Has Been Filled' % self.short_name().title()
 
     #     template = """\
     #     Dear %s
@@ -268,7 +295,6 @@ class Order(models.Model):
 
     #     Please pick up your order from the Stock Inbox cart.  It is located outside of Todd Laverty's office (2E.210).
 
-    #     %s
 
     #     Please contact us with any questions.
 
@@ -278,15 +304,9 @@ class Order(models.Model):
     #     Ext. 1180
     #     Room 2E.210
     #             """
-    #     lines_not_filled = self.orderline_set.filter(filled=False, void=False).order_by('date_created')
-    #     if lines_not_filled:
-    #         not_filled = "The following stocks were not filled:\n" + '\n'.join(
-    #             [str(line) for line in lines_not_filled])
-    #     else:
-    #         not_filled = ''
-    #     body = template % (get_user_display_name(self.user), self.order_type(), format_queue_name(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
-    #         settings.BASE_URL,self.id,not_filled)
-    #     return make_mailto_link(RECIPIENTS=self.user.email, CC='flyfacility@janelia.hhmi.org',
+    #     body = template % (get_user_display_name(self.user), self.order_type(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
+    #         settings.BASE_URL,self.id)
+    #     return make_mailto_link(RECIPIENTS=self.user.email, CC='mediafacility@janelia.hhmi.org',
     #         BCC='', SUBJECT=gen_subject(), MESSAGE=body,
     #         LINK_TEXT=link_text, only_url=only_url)
 
@@ -297,7 +317,7 @@ class OrderLine(models.Model):
     description = models.TextField(blank=True)
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
     qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    unit = models.CharField(max_length=30, blank=True, null=True)
+    unit = models.CharField(max_length=30, blank=True, null=True) #DO WE NEED THIS??
     line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     def total(self):
         total = 0.00
@@ -422,3 +442,26 @@ class SortHeaders:
             self.order_type == 'desc' and '-' or '',
             self.header_defs[self.order_field][1],
         )
+
+@receiver(pre_save, sender=Order)
+def status_email(sender, instance, *args, **kwargs):
+    if instance.status == 'Complete':
+        context = Context({
+            'id': instance.id,
+            'location': instance.location,
+        })        
+        m_plain = render_to_string('complete_email.txt', context.flatten())
+        m_html = render_to_string('details_email.html', context.flatten())
+
+        send_mail(
+            'Order #{0} Complete'.format(instance.id),
+            m_plain,
+            'mediafacility@janelia.hhmi.org',
+            [instance.requester.userprofile.email_address],
+            fail_silently=False,
+            html_message=m_html,
+        )
+    ##elif instance.status == 'Canceled':
+        ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE?
+    else:
+        print(instance.requester.userprofile.email_address)

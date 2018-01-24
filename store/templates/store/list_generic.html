@@ -20,35 +20,35 @@
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
                     {% if orderforms == cornmeal %}
-                    <td class="">
+                    <td>
                         <a href="#">{{orderform.instance.id}}</a>
                     </td>
-                    <td class="">{{orderform.instance.department.department_name}}</td>
-                    <td class="">{{orderform.instance.date_submitted}}</td>
-                    <td class="">{{orderform.instance.location}}</td>
+                    <td>{{orderform.instance.department.department_name}}</td>
+                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.location}}</td>
                     {% elif orderforms == corn_b %}
-                    <td class="">
+                    <td>
                         <a href="#">{{orderform.instance.id}}</a>
                     </td>
-                    <td class="">{{orderform.instance.department.department_name}}</td>
-                    <td class="">{{orderform.instance.date_submitted}}</td>
-                    <td class="">{{orderform.instance.date_billed}}</td>
+                    <td>{{orderform.instance.department.department_name}}</td>
+                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
-                    <td class=""><a href="#">{{orderform.instance.id}}</a></td>                
-                    <td class="">{{orderform.instance.department.department_name}}</td>
-                    <td class="">{{orderform.instance.requester.userprofile.name}}</td>
-                    <td class="">{{orderform.instance.date_submitted}}</td>
+                    <td><a href="#">{{orderform.instance.id}}</a></td>                
+                    <td>{{orderform.instance.department.department_name}}</td>
+                    <td>{{orderform.instance.requester.userprofile.name}}</td>
+                    <td>{{orderform.instance.date_submitted}}</td>
                     {% endif %}
                     {% if orderforms == recur %}
-                    <td class="">{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
-                    <td class="">{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
+                    <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
+                    <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     {% elif orderforms == compNotBill %}
-                    <td class="">{{orderform.instance.date_complete}}</td>
+                    <td>{{orderform.instance.date_complete}}</td>
                     {% elif orderforms == incomp %}     
                     {% else %}
-                    <td class="">{{orderform.instance.date_billed}}</td>
+                    <td>{{orderform.instance.date_billed}}</td>
                     {% endif %}                
-                    <td class="">{{orderform.instance.location}}</td>
+                    <td>{{orderform.instance.location}}</td>
                     {% if user.userprofile.is_privileged is True %}
                         {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
@@ -61,7 +61,10 @@
                     {% else %}
                     <td>{{orderform.instance.status}}</td>
                     {% endif %}
-                    <td class=""></td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'email' orderform.instance.id %}" class="btn btn-primary">Email</a>
+                    </td>
+                    <td></td>
                     <tr id="notes" class="collapse" role="text">                        
                         <td colspan="10">
                             <table class ='table'>
@@ -69,16 +72,21 @@
                                 <thead>
                                     <tr id="table_header">
                                         <th>Description</th>
-                                        <th>id</th>
-                                        <th>order id</th>
+                                        <th>Quantity</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                        <th>Email</th>
                                     </tr>
                                 {% for line in orderform.instance.orderline_set.all %}                                
-    {% comment %} have to call from "order" variable for each line to know which order it's getting info from {% endcomment %}
+    {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
                                 </thead>
                                 <tr>
                                     <td>{{line.description}}</td>
-                                    <td>{{line.id}}</td>
-                                    <td>{{line.order_id}}</td>
+                                    <td>{{line.qty}}</td>
+                                    <td>{{line.line_cost}}</td>
+                    <td>{{orderform.instance.special_instructions}}</td>
+                    <td>
+                        <a href="mailto:{{orderform.instance.requester.userprofile.email_address}}">{{orderform.instance.requester.userprofile.email_address}}</a></td>
                                 {% endfor %}
                                 {% else %}
                                     <div><p>There are no order details for this order.</p></div>

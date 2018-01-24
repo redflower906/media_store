@@ -76,6 +76,10 @@ h1 {
 .form-text {
   width: 300px;
 }
+
+.email-form-text {
+  width: 250px;
+}
  
 h1 {
   color:#333;
