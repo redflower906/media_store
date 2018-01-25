@@ -208,107 +208,19 @@ class Order(models.Model):
             return True
         return False
 
-    # def total(self):
-    #     total = 0
-    #     list = self.orderline_set.all()
-    #     for line in list:
-    #         total += line.total()
-    #     return total
+    def order_total(self):
+        total = 0
+        list = self.orderline_set.all()
+        for line in list:
+            total += line.total()
+        return total
 
     def __unicode__(self):
         return 'Order for %s on %s (%s)' % (self.user, self.date_complete or self.date_submitted or self.date_created, self.status)
 
     def is_closed(self):
         return self.status.name == 'Complete'
-
-    # def send_new_order_notification(self, only_assignee=True):
-    #     requester_display_name = get_user_display_name(self.user)
-
-    #     order_summary_url = settings.BASE_URL + '/order/%s/' % self.id
-
-    #     if settings.EMAIL_NEW_ORDERS:
-    #         message = """\
-    #         Greetings,<br><br>
-
-    #         A new order has been submitted by %s.<br><br>
-
-    #         It has been auto-assigned to %s.<br><br>
-
-    #         You can view a summary of this order:<br>
-    #         <a href="%s">%s</a><br><br>
-
-    #         Sincerely,<br><br>
-
-    #         The Fly Store
-    #         """ % (requester_display_name, assigned, fill_main_url, fill_main_url, order_summary_url,
-    #         order_summary_url)
-    #         subject = 'A new staff order has been entered' if self.user.is_staff else 'A New CUSTOMER Order Has Arrived'
-    #         from_email = 'harrisons1@janelia.hhmi.org' #CHANGE WHEN ON SERVER
-    #         text_content = re.sub(r'<[^>]+>','',message)
-    #         html_content = message
-    #         msg = EmailMultiAlternatives(subject, text_content, from_email, to)
-    #         msg.attach_alternative(html_content, "text/html")
-    #         msg.send()
-
-    def gen_filled_info_mailto(self, only_url=True, link_text="Want to send an email about it?"):
-        """Create a mailto link URL to the requester about this order."""
-        def gen_subject():
-                return 'Media Store Order %s' % self.id
-
-        template = """\
-        Dear %s
-
-        Lines from your %s (%snumber %s, submitted on %s) have been filled.
-
-        For more information about this order (or to resubmit unfilled stocks) visit:
-        %s/order/%s/
-
-        Please pick up your order from the Stock Inbox cart.  It is located outside of Todd Laverty's office (2E.210).
-
-
-        Please contact us with any questions.
-
-        Sincerely,
-
-        The Fly Core
-        Ext. 1180
-        Room 2E.210
-                """
-        body = template % (get_user_display_name(self.user), self.order_type(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
-            settings.BASE_URL,self.id)
-        return make_mailto_link(RECIPIENTS=self.user.email, CC='mediafacility@janelia.hhmi.org',
-            BCC='', SUBJECT=gen_subject(), MESSAGE=body,
-            LINK_TEXT=link_text, only_url=only_url)
-
-    # def gen_filled_info_mailto(self, only_url=True, link_text="Want to send an email about it?"):
-    #     """Create a mailto link URL to the requester about this order."""
-    #     def gen_subject():
-    #             return 'Media Store Order %s Has Been Filled' % self.short_name().title()
-
-    #     template = """\
-    #     Dear %s
-
-    #     Lines from your %s (%snumber %s, submitted on %s) have been filled.
-
-    #     For more information about this order (or to resubmit unfilled stocks) visit:
-    #     %s/order/%s/
-
-    #     Please pick up your order from the Stock Inbox cart.  It is located outside of Todd Laverty's office (2E.210).
-
-
-    #     Please contact us with any questions.
-
-    #     Sincerely,
-
-    #     The Fly Core
-    #     Ext. 1180
-    #     Room 2E.210
-    #             """
-    #     body = template % (get_user_display_name(self.user), self.order_type(), self.id, self.date_submitted.strftime('%B %d, %Y at %H:%m'),
-    #         settings.BASE_URL,self.id)
-    #     return make_mailto_link(RECIPIENTS=self.user.email, CC='mediafacility@janelia.hhmi.org',
-    #         BCC='', SUBJECT=gen_subject(), MESSAGE=body,
-    #         LINK_TEXT=link_text, only_url=only_url)
+        ##DO WE NEED THIS?? 
 
 
 
@@ -318,11 +230,11 @@ class OrderLine(models.Model):
     inventory = models.ForeignKey(Inventory, blank=True, null=True)
     qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     unit = models.CharField(max_length=30, blank=True, null=True) #DO WE NEED THIS??
-    line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0) #shouldn't this be the same as Inventory cost? do we need it?
     def total(self):
         total = 0.00
-        if self.line_cost and self.qty:
-            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.line_cost)),2)
+        if self.inventory.cost and self.qty:
+            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.inventory.cost)),2)
         return decimal.Decimal(total)
     class Meta:
         verbose_name_plural = 'order lines'

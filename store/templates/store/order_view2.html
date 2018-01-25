@@ -4,7 +4,8 @@
 {% endblock %} 
 {% block content %}
 <hr/>
-{% if days <= 4 %}
+
+{% if user.userprofile.is_privileged is True and days <= 4 %}
 <div class="panel panel-danger">
     <div class="panel-heading" style="text-align: center">Warning</div>
     <div class="panel-body" style="text-align: center">
@@ -49,6 +50,9 @@
                 {%include "store/list_generic.html" with orderforms=recur headers=headers2%}
             </div>
         </div>
+        {% if user.userprofile.is_privileged is True %}
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
         <div class="row">
@@ -61,6 +65,10 @@
                 {%include "store/list_generic.html" with orderforms=compNotBill headers=headers3%}
             </div>
         </div>
+        {% if user.userprofile.is_privileged is True %}
+        <a href="{% url 'export_orders' %}" class="btn btn-info">data dump!</a>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_billed">
         <div class="row">
@@ -75,7 +83,6 @@
         </div>
     </div>
 </div>
-<button type="submit" class="btn btn-primary pull-right">Submit</button>
 </form>
 <script>
     $(function(){
@@ -95,5 +102,4 @@
         });
     });
 </script>
-<a href="{% url 'export_orders' %}" class="btn btn-primary">data dump!</a>
 {% endblock %}

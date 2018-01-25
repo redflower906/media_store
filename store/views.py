@@ -266,40 +266,44 @@ def view_order(request):
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
-        ('Date Submitted', 'date_submitted'),
+        ('Submitted', 'date_submitted'),
         ('Location', 'location'),
         ('Status', 'status'),
+        ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_RECUR = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
-        ('Date Submitted', 'date_submitted'),
+        ('Submitted', 'date_submitted'),
         ('Start Date', 'date_recurring_start'),
         ('End Date', 'date_recurring_stop'),
         ('Location', 'location'),
         ('Status', 'status'),
+        ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CNB = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
-        ('Date Submitted', 'date_submitted'),
+        ('Submitted', 'date_submitted'),
         ('Date Complete', 'date_complete'),
         ('Location', 'location'),
         ('Status', 'status'),
+        ('Order Total', 'order_total')
     )        
 
     ORDER_LIST_HEADERS_CB = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
         ('Requester', 'requester'),
-        ('Date Submitted', 'date_submitted'),
+        ('Submitted', 'date_submitted'),
         ('Date Billed', 'date_billed'),
         ('Location', 'location'),
         ('Status', 'status'),
+        ('Order Total', 'order_total')
     )    
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
@@ -350,15 +354,13 @@ def view_order(request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
 
-    print(today)
-    print(nextbill)
-    print(lastbill)
     print((nextbill - today).days)
     item = Order.objects.values('date_billed').get(pk=1)
     # print(item.clean())
     # if item < lastbill:
     #     print('hi!')
     # print(type(item))
+
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
     recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
