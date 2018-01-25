@@ -135,6 +135,14 @@ class OrderLineInlineFormSet(
             return False
         return True
 
+    def copy_orderline_data(self, order):
+        """ build initial formset data given the order to be copied
+        """
+        orderlines = order.orderline_set.all()
+        data = [{'qty': ol.qty, 'line_cost': ol.line_cost,
+                 'inventory': ol.inventory.id} for ol in orderlines]
+        self.extra = len(orderlines)
+        self.initial = data
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:

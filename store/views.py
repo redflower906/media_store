@@ -178,8 +178,10 @@ def single_item(request, id):
 
 
 def __build_inventory_groups():
-   # build inventory lists grouped by mediatype. This data is used
-    # on the front-end to build mediatype and inventory dropdowns
+    """ build inventory lists grouped by mediatype. 
+    
+        This data is used on the front-end to build mediatype and inventory dropdowns
+    """
     inventory_lists = {}
     for type_val, display in MEDIA_CHOICES:
         inventory_choices = [{
@@ -187,17 +189,18 @@ def __build_inventory_groups():
             'desc': inv.inventory_text,
             'container': inv.container,
             'notes': inv.notes,
-            'cost': str(inv.cost)
+            'cost': str(inv.cost),
+            'media_code': type_val
         } for inv
             in Inventory.objects.filter(media_type=type_val)]
         inventory_lists[type_val] = inventory_choices
     return simplejson.dumps(inventory_lists)
 
+
 @login_required(login_url='login')
 def create_order(request, copy_id=None):
 
     order = Order()
-    initial_emptyorderline = {'inventory': None, 'id': None, 'DELETE': False, 'order': order}
 
     if request.method == "POST":
         
@@ -211,7 +214,7 @@ def create_order(request, copy_id=None):
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
 
-            # TODO 2 for Scarlett and Amanda: descide if you want to copy Inventory.notes and save to Orderline.description
+            # TODO 2 for Scarlett and Amanda: decide if you want to copy Inventory.notes and save to Orderline.description
             # or just access orderline->inventory->notes to display in templates
             order = order_form.save()
             orderlineformset.save()
@@ -223,14 +226,21 @@ def create_order(request, copy_id=None):
     else:
 
         if copy_id:
-            # TODO: implement
-            pass
-            # order_form, orderlineformset, = copy_order_form(
-            #     copy_id, request, alternative, initial)
+            try:
+                order = Order.objects.get(pk=copy_id)
+            except Order.DoesNotExist: 
+                messages.error(
+                    request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
+                return HttpResponseRedirect('/order/view')
+            order_form = OrderForm(prefix='order', instance=order)
+            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+            orderlineformset.copy_orderline_data(order)
+            order.pk = None
+
         else:
-            order_form = OrderForm(prefix='order')
+            order_form = OrderForm(prefix='order', instance=order)
             orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines')
+                prefix='orderlines', instance=order)
 
     return render(request, 'store/order_create.html', {
         'copy_id' : copy_id,
@@ -240,13 +250,47 @@ def create_order(request, copy_id=None):
         'media_types': MEDIA_CHOICES
     })
 
+@login_required(login_url='login')
+def edit_order(request, id):
+    #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
+    # new order/view/{id} view and template, and redirect the user there if they are allowed to view
+    # but not edt
+    try:
+        order = Order.objects.get(pk=id)
+    except Order.DoesNotExist:  # expression as identifier:
+        messages.error(
+            request, 'Could not edit order #{}. Order does not exist.'.format(id))
+        return HttpResponseRedirect('/order/view')
+
+    if request.method == "POST":
+        
+        order_form = OrderForm(request.POST, prefix='order', instance=order)
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order)
+
+        if order_form.is_valid() and orderlineformset.is_valid():
+            order = order_form.save()
+            orderlineformset.save()
+            messages.success(request,
+                'Order {0} was successfully updated.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/order/view')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+        order_form = OrderForm(prefix='order', instance=order)
+        orderlineformset = OrderLineInlineFormSet(
+            prefix='orderlines', instance=order)
+
+    return render(request, 'store/order_create.html', {
+        'order_form': order_form,
+        'formset': orderlineformset,
+        'inventory_lists': __build_inventory_groups(),
+        'media_types': MEDIA_CHOICES
+    })
+
 def past_order(request):
     context = {}
     return render(request, 'store/order_past.html')
-
-def edit_past_order(request):
-    context = {}
-    return render(request, 'store/order_edit.html')
 
 def recurring_order(request):
     context = {}

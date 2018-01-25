@@ -19,22 +19,18 @@
                     <td class="toggle_notes">
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
-                    {% if orderforms == cornmeal %}
                     <td class="">
-                        <a href="#">{{orderform.instance.id}}</a>
+                        <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
                     </td>
+                    {% if orderforms == cornmeal %}
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>
                     <td class="">{{orderform.instance.location}}</td>
                     {% elif orderforms == corn_b %}
-                    <td class="">
-                        <a href="#">{{orderform.instance.id}}</a>
-                    </td>
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>
                     <td class="">{{orderform.instance.date_billed}}</td>
                     {% else %}
-                    <td class=""><a href="#">{{orderform.instance.id}}</a></td>                
                     <td class="">{{orderform.instance.department.department_name}}</td>
                     <td class="">{{orderform.instance.requester.userprofile.name}}</td>
                     <td class="">{{orderform.instance.date_submitted}}</td>

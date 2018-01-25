@@ -1,6 +1,12 @@
 from django import template
 import locale
-locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+
+try:
+    locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+except locale.Error as e:
+    # handle missing local on some platforms
+    locale.setlocale(locale.LC_ALL, 'en_US')
+
 register = template.Library()
 
 def table_header(context, headers):

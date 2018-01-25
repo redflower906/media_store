@@ -26,6 +26,8 @@ function register_row(row){
     inventory_select.append("<option value=''> ---------- </option>");
     inventory_select.attr('disabled', 1)
     if (selected_inventory){
+        media_code = find_invdetails(selected_inventory).media_code
+        media_select.val(media_code)
         populate_inventory({ target: media_select[0]})
         inventory_select.val(selected_inventory)
         populate_notes_and_containers({target: inventory_select[0]})
