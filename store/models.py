@@ -230,7 +230,7 @@ class Order(models.Model):
 class OrderLine(models.Model):
     order = models.ForeignKey(Order)
     description = models.TextField(blank=True)
-    inventory = models.ForeignKey(Inventory, blank=True, null=True)
+    inventory = models.ForeignKey(Inventory, blank=False, null=False)
     qty = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)
     unit = models.CharField(max_length=30, blank=True,
@@ -253,6 +253,11 @@ class OrderLine(models.Model):
 
     def clean(self):
         # Don't allow draft entries to have a pub_date.
+        try:
+            self.inventory
+        except Inventory.DoesNotExist:
+            raise ValidationError(
+                {'inventory': ('Please select an inventory item.')})
         if self.total() <= decimal.Decimal(0):
             raise ValidationError('Order line must have quantity and cost > 0')
     
