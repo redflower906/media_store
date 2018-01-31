@@ -14,7 +14,7 @@ from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 import decimal
-from datetime import datetime
+from datetime import datetime, date
 
 
 
@@ -183,7 +183,7 @@ class Order(models.Model):
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
-    date_modified = models.DateField(blank=True, null=True)
+    date_modified = models.DateField(auto_now=True, blank=True, null=True)
     date_submitted = models.DateField(blank=True, null=True)
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
@@ -373,7 +373,6 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
+        instance.date_complete = date.today()
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE?
-    else:
-        print(instance.requester.userprofile.email_address)

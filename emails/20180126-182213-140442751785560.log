@@ -1,0 +1,42 @@
+Content-Type: multipart/alternative;
+ boundary="===============7295212080731761605=="
+MIME-Version: 1.0
+Subject: Order #8 Complete
+From: mediafacility@janelia.hhmi.org
+To: guillermo@janelia.hhmi.org
+Date: Fri, 26 Jan 2018 23:22:13 -0000
+Message-ID: <20180126232213.11837.78828@coffmans-ThinkPad-X1-Carbon-4th>
+
+--===============7295212080731761605==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+Your media store order #8 has been completed. 
+Please remember to pick up your order from your preferred pick-up location:Two.
+
+You can view a summary of this order:
+8
+
+Sincerely,
+
+The Media Facility
+--===============7295212080731761605==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+This email is concerning media store order .<br><br>
+
+You can view a summary of this order:<br>
+<a href="/order/view">Order #</a><br><br>
+
+Sincerely,<br><br>
+
+
+--===============7295212080731761605==--
+
+-------------------------------------------------------------------------------

@@ -265,6 +265,7 @@ def view_order(request):
     ORDER_LIST_HEADERS_INCOMP = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Location', 'location'),
@@ -275,6 +276,7 @@ def view_order(request):
     ORDER_LIST_HEADERS_RECUR = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Start Date', 'date_recurring_start'),
@@ -287,6 +289,7 @@ def view_order(request):
     ORDER_LIST_HEADERS_CNB = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Date Complete', 'date_complete'),
@@ -298,6 +301,7 @@ def view_order(request):
     ORDER_LIST_HEADERS_CB = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Date Billed', 'date_billed'),
@@ -319,8 +323,8 @@ def view_order(request):
     #     pages = paginator.page(1)
     # except EmptyPage:
     #     pages = paginator.page(paginator.num_pages)
-
-
+    # x = OrderStatusFormSet()
+    # print(x.cleaned_data['status'])
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
@@ -339,10 +343,18 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
+        # if 'data' in request.POST:
+        #     print(Order)
+        
+        # billed_date_form = OrderForm(request.POST, prefix=billdate)
+        # for x in billed_date_form:
+        #     if x.cleaned_data['status'] == 'Complete' and billed_date_form.is_valid():
+                
+
     user = request.user
 
     if user.userprofile.is_privileged is False:
-        orders = Order.objects.preferred_order().filter(submitter=request.user)
+        orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
     else:
         orders = Order.objects.preferred_order().all()
 
@@ -363,8 +375,8 @@ def view_order(request):
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
     recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
@@ -386,11 +398,10 @@ def view_order(request):
         })
 
 def export_orders(request):
+    
     orders = Order.objects.all()    
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="orders.csv"'
-    p = UserFullName.objects.all()
-    print(p)
     writer = csv.writer(response)
     writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
 
@@ -441,8 +452,6 @@ def email_form(request, id):
             messages.success(request, 
             'Email was successfully sent')
             return HttpResponseRedirect('/order/view/')
-    # else:
-    #     Email = Email_form
     return render(request,
     'store/email_form.html',{
         'Email_form': Email_form,

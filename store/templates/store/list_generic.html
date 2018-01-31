@@ -16,7 +16,7 @@
             <tbody class="searchable">
                 {% for orderform in orderforms %}
                 <tr class="order_{{orderform.instance.id}} koala {{orderform.instance.status}}">
-                    <td class="toggle_notes">
+                    <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
                     <td><a href="#">{{orderform.instance.id}}</a></td>
@@ -28,6 +28,7 @@
                     <td>{{orderform.instance.date_submitted}}</td>
                     <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
+                    <td>{{orderform.instance.department.number}}</td>
                     <td>{{orderform.instance.requester.userprofile.name}}</td>
                     <td>{{orderform.instance.date_submitted}}</td>
                     {% endif %}
@@ -65,6 +66,10 @@
                                 <thead>
                                     <tr id="table_header">
                                         <th>Description</th>
+                                        {% if orderforms == recur %}
+                                            <th>Last Complete Date</th>
+                                            <th>Last Billed Date</th>
+                                        {% endif %}
                                         <th>Quantity</th>
                                         <th>Cost</th>
                                         <th>Notes</th>
@@ -74,6 +79,10 @@
                                 </thead>
                                 <tr>
                                     <td>{{line.description}}</td>
+                                    {% if orderforms == recur %}
+                                        <td>{{orderform.instance.date_complete}}</td>
+                                        <td>{{orderform.instance.date_billed}}</td>
+                                    {% endif %}
                                     <td>{{line.qty}}</td>
                                     <td>${{line.total}}</td>
                     <td>{{orderform.instance.special_instructions}}</td>
