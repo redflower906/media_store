@@ -145,6 +145,9 @@ class Inventory(models.Model):
     def __unicode__(self):
         return self.inventory_text
 
+    def __str__(self):
+        return self.inventory_text
+
     def list_media_type(self):
         return self.media_type
 
@@ -227,19 +230,36 @@ class Order(models.Model):
 class OrderLine(models.Model):
     order = models.ForeignKey(Order)
     description = models.TextField(blank=True)
-    inventory = models.ForeignKey(Inventory, blank=True, null=True)
-    qty = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    unit = models.CharField(max_length=30, blank=True, null=True) #DO WE NEED THIS??
-    line_cost = models.DecimalField(max_digits=10, decimal_places=2, default=0) #shouldn't this be the same as Inventory cost? do we need it?
+    inventory = models.ForeignKey(Inventory, blank=False, null=False)
+    qty = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=False, null=False)
+    unit = models.CharField(max_length=30, blank=True,
+                            null=True)  # DO WE NEED THIS??
+    # shouldn't this be the same as Inventory cost? do we need it?
+    line_cost = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=False, null=False)
+
     def total(self):
         total = 0.00
         if self.inventory.cost and self.qty:
             total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.inventory.cost)),2)
         return decimal.Decimal(total)
+
     class Meta:
         verbose_name_plural = 'order lines'
+
     def __unicode__(self):
         return u'%s' % self.pk
+
+    def clean(self):
+        # Don't allow draft entries to have a pub_date.
+        try:
+            self.inventory
+        except Inventory.DoesNotExist:
+            raise ValidationError(
+                {'inventory': ('Please select an inventory item.')})
+        if self.total() <= decimal.Decimal(0):
+            raise ValidationError('Order line must have quantity and cost > 0')
     
 
 class Announcements(models.Model):

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
+{% load store_tags %}
 
 <html lang="en">
   <head>
@@ -29,21 +30,23 @@
     {% block navbar %}
     {% endblock %}
     {% if messages %}
-      <div class="messages alert alert-success">
-        {% for message in messages %}
-          <div class="{{ message.tags }}"><strong>{{ message }}</strong></div>
-        {% endfor %}
-      </div>
+
+        {% for message in messages %} 
+        <div class="messages alert alert-{{ message.tags|msgbootstrapconvert }}">
+            <strong>{{ message }}</strong>
+        </div>
+         {% endfor %}
     {% endif %}
-      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-      <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
-      <!-- media-specific javascript -->
-      <script src="{% static 'js/jsmedia.js' %}"></script>
-      <script scr="{% static 'js/media_store.js' %}"></script>
-      <!-- Include all compiled plugins (below), or include individual files as needed -->
-      <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
-      <script scr="{% static 'handlebars.js' %}"></script>
-      <script scr="{% static 'js/are-you-sure.js' %}"></script>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+        <!-- media-specific javascript -->
+        <script src="{% static 'js/jsmedia.js' %}"></script>
+        <!-- <script src="{% static 'js/media_store.js' %}"></script> -->
+        <script src="{% static 'js/jquery.formset.js' %}"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{% static 'bootstrap-3.3.7/js/bootstrap.min.js' %}"></script>
+        <!-- <script src="{% static 'handlebars.js' %}"></script> -->
+        <!-- <script src="{% static 'js/are-you-sure.js' %}"></script> -->
       {% block content %}
       {% endblock %}
     </div>

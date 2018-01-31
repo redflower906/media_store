@@ -64,6 +64,12 @@ color:red;
   position: relative;
 }
 
+.errorlist{
+  color: red;
+  list-style: none;
+  padding: 0px;
+}
+
 h1 {
     color:#333;
     text-decoration:none;
