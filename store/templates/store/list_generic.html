@@ -19,7 +19,9 @@
                     <td class="toggle_notes">
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
-                    <td><a href="#">{{orderform.instance.id}}</a></td>
+                    <td>
+                        <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
+                    </td>
                     <td>{{orderform.instance.department.department_name}}</td>                    
                     {% if orderforms == cornmeal %}
                     <td>{{orderform.instance.date_submitted}}</td>
@@ -30,6 +32,7 @@
                     {% else %}
                     <td>{{orderform.instance.requester.userprofile.name}}</td>
                     <td>{{orderform.instance.date_submitted}}</td>
+
                     {% endif %}
                     {% if orderforms == recur %}
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>

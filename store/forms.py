@@ -139,60 +139,72 @@ def item_model_formset_factory(extra):
 class DateInput(TextInput):
     input_type='date'
 
-class OrderLineForm(forms.ModelForm):
-    class Meta:
-        model = OrderLine
-        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory')#category)
-
+    
 class OrderForm(forms.ModelForm):
-    #submitter = user_choice(queryset=User.objects.only('first_name','last_name'))
-    #main_requester = user_choice(queryset=requester_queryset_generator())
-    #department = forms.ModelChoiceField(queryset=Department.objects.all(), widget=forms.Select(attrs={'style' : 'width:250'}))
-    #inventory_type = forms.ModelChoiceField(queryset=Inventory.objects.filter(active=True), required=False)
-    '''try:
-        media_choices = (('', '-----------------'),) + MEDIA_CHOICES
-    except ProgrammingError as e:
-        media_choices = (('', '-----------------'),)
-    media = forms.ChoiceField(required=False, choices=media_choices, widget=forms.Select(attrs={'class': 'chosen-select line-inventory'}))'''
-    date_complete = forms.DateField(widget=DateInput)
-
-    def clean_date_complete(self):
-        data = self.cleaned_data['date_complete']
-        last_billed = Order.objects.last_billed()
-        if last_billed > data:
-            raise forms.ValidationError(u'{0} is before the last billed date {1}'.format(data,last_billed))
-        return data
 
     class Meta:
         model = Order
-        fields = ('date_complete', 'special_instructions', 'date_billed')#'inventory_type',department', 'inventory_type' 'requester','submitter'
+        fields = ('department', 'requester', 'submitter')
 
 
-def order_inline_formset_factory(extra):
-    return inlineformset_factory(Order, OrderLine, 
-        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory'),#category, 'inventory_type'
-        widgets = {
-            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
-            'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
-            'inventory': HiddenInput(),
-            'description': forms.TextInput(attrs={'class': 'form-text'}),
-            'unit': forms.TextInput(attrs={'class': 'line unit'})
-        },
-        extra=extra, can_delete=True
-        )
+# inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
+class OrderLineInlineFormSet(
+        inlineformset_factory(Order, OrderLine,
+                              fields=('qty', 'line_cost', 'inventory'),
+                              widgets={
+                                  'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'line_calc line_qty'}),
+                                  'line_cost': NumInput(attrs={'step': 'any', 'class': 'line_calc line_cost', 'readonly': '1'}),
+                                  'inventory': forms.Select(),
+                              },
+                              extra=1, can_delete=True
+                              )):
+    def clean(self):
+        """ Additional form validation
+        """
+        super(OrderLineInlineFormSet, self).clean()
 
-'''def inventory_inline_formset_factory():
-    return inlineformset_factory(Inventory,
-        fields=('inventory_text', 'media_type', 'cost', 'qty', 'unit'),
-        widgets={
-            'inventory_text': forms.Select(attrs={'class': 'chosen-select line-inventory_text'}),
-            'media_type': forms.Select(attrs={'class': 'chosen-select line-media_type'}),
-            'cost': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_cost'}),
-            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
-            'unit': forms.TextInput(attrs={'class': 'line-unit'})
-        },
-        can_delete=True
-        )'''
+        if any(self.errors):
+            # Don't bother validating the formset unless each form is valid on its own
+            return
+
+        if not self.have_minimum():
+            raise forms.ValidationError(
+                "Please include at least one Order Line.")
+
+        if not self.total_is_positive_nonzero():
+            raise forms.ValidationError(
+                "Total cost must be greater than zero")
+
+    def have_minimum(self):
+        line_count = 0
+        for form in self:
+            if form.is_valid():
+                deleted = form.cleaned_data.get('DELETE')
+                if deleted == False:
+                    line_count = 1
+        if line_count < 1:
+            return False
+        return True
+
+    def total_is_positive_nonzero(self):
+        total = 0
+        for form in self:
+            qty = form.cleaned_data.get('qty')
+            cost = form.cleaned_data.get('line_cost')
+            if qty and cost:
+                total += qty * cost
+        if total <= 0:
+            return False
+        return True
+
+    def copy_orderline_data(self, order):
+        """ build initial formset data given the order to be copied
+        """
+        orderlines = order.orderline_set.all()
+        data = [{'qty': ol.qty, 'line_cost': ol.line_cost,
+                 'inventory': ol.inventory.id} for ol in orderlines]
+        self.extra = len(orderlines)
+        self.initial = data
 
 class AnnouncementsForm(forms.ModelForm):
     class Meta:
