@@ -11,7 +11,7 @@ from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from dateutil import relativedelta
 from datetime import datetime, date
 from .forms import *
@@ -219,8 +219,26 @@ def create_order(request, copy_id=None):
             # or just access orderline->inventory->notes to display in templates
             order = order_form.save()
             orderlineformset.save()
+
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.userprofile.email_address
+            context = Context({
+                'id': order_form.instance.id,
+                'location': order_form.instance.location,
+                'c_or_e': 'created'
+            })        
+            m_plain = render_to_string('create_email.txt', context.flatten())
+            m_html = render_to_string('create_email.html', context.flatten())
+            email =EmailMultiAlternatives(
+               subject,
+               m_plain, 
+               from_email, 
+               [to], 
+               cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
+            )
+            email.attach_alternative(m_html, "text/html")
+            email.send()            
             messages.success(request,
-                'Order {0} was successfully created.'.format(order_form.instance.id))
+            'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
@@ -255,7 +273,7 @@ def create_order(request, copy_id=None):
 def edit_order(request, id):
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
-    # but not edt
+    # but not edit
     try:
         order = Order.objects.get(pk=id)
     except Order.DoesNotExist:  # expression as identifier:
@@ -272,6 +290,23 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.userprofile.email_address
+            context = Context({
+                'id': order_form.instance.id,
+                'location': order_form.instance.location,
+                'c_or_e': 'edited'
+            })        
+            m_plain = render_to_string('create_email.txt', context.flatten())
+            m_html = render_to_string('create_email.html', context.flatten())
+            email =EmailMultiAlternatives(
+               subject,
+               m_plain, 
+               from_email, 
+               [to], 
+               cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
+            )
+            email.attach_alternative(m_html, "text/html")
+            email.send() 
             messages.success(request,
                 'Order {0} was successfully updated.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')

@@ -81,7 +81,7 @@
     {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
                                 </thead>
                                 <tr>
-                                    <td>{{line.description}}</td>
+                                    <td>{{line.inventory.inventory_text}}</td>
                                     {% if orderforms == recur %}
                                         <td>{{orderform.instance.date_complete}}</td>
                                         <td>{{orderform.instance.date_billed}}</td>

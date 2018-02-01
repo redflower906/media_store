@@ -383,7 +383,7 @@ def status_email(sender, instance, *args, **kwargs):
             'location': instance.location,
         })        
         m_plain = render_to_string('complete_email.txt', context.flatten())
-        m_html = render_to_string('details_email.html', context.flatten())
+        m_html = render_to_string('complete_email.html', context.flatten())
 
         send_mail(
             'Order #{0} Complete'.format(instance.id),
