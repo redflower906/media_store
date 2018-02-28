@@ -7,10 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
+from django.views.generic.edit import DeleteView
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from dateutil import relativedelta
 from datetime import datetime, date
@@ -202,10 +204,11 @@ def __build_inventory_groups():
 def create_order(request, copy_id=None):
 
     order = Order()
+    user = request.user
 
     if request.method == "POST":
         
-        order_form = OrderForm(request.POST, prefix='order', instance=order)
+        order_form = OrderForm(request.POST, prefix='order', instance=order, initial={'submitter': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -214,9 +217,6 @@ def create_order(request, copy_id=None):
             #   Some options: 
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
-
-            # TODO 2 for Scarlett and Amanda: decide if you want to copy Inventory.notes and save to Orderline.description
-            # or just access orderline->inventory->notes to display in templates
             order = order_form.save()
             orderlineformset.save()
 
@@ -257,16 +257,19 @@ def create_order(request, copy_id=None):
             order.pk = None
 
         else:
-            order_form = OrderForm(prefix='order', instance=order)
+            order_form = OrderForm(prefix='order', instance=order, initial={'submitter': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
+    
+
 
     return render(request, 'store/order_create.html', {
         'copy_id' : copy_id,
         'order_form' : order_form,
         'formset': orderlineformset,
         'inventory_lists': __build_inventory_groups(),
-        'media_types': MEDIA_CHOICES
+        'media_types': MEDIA_CHOICES,
+        'user': user,
     })
 
 @login_required(login_url='login')
@@ -324,17 +327,32 @@ def edit_order(request, id):
         'media_types': MEDIA_CHOICES
     })
 
-def past_order(request):
-    context = {}
-    return render(request, 'store/order_past.html')
+def delete_order(request, id):
+    order = get_object_or_404(Order, pk=id)
+    order.delete()
+    messages.success(request,
+        'Order {0} was successfully deleted.'.format(order.id))
+    return HttpResponseRedirect('/order/view')
 
-def recurring_order(request):
-    context = {}
-    return render(request, 'store/order_list.html')
+# class DeleteOrder(DeleteView):
+#     model = Order
+#     success_url = reverse_lazy('view_order')
+#     template_name = 'delete.html'
+
+
+#needed????
+# def past_order(request):
+#     context = {}
+#     return render(request, 'store/order_past.html')
+
+# def recurring_order(request):
+#     context = {}
+#     return render(request, 'store/order_list.html')
 
 
 @login_required
-def view_order(request):
+def view_order(request):    
+
     ORDER_LIST_HEADERS_INCOMP = (
         ('Order ID', 'id'),
         ('Department to Bill', 'department__department_name'),
@@ -397,7 +415,9 @@ def view_order(request):
     # except EmptyPage:
     #     pages = paginator.page(paginator.num_pages)
     # x = OrderStatusFormSet()
-    # print(x.cleaned_data['status'])
+    # print(x[14].values())
+
+
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
@@ -439,17 +459,23 @@ def view_order(request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
 
-    print((nextbill - today).days)
-    item = Order.objects.values('date_billed').get(pk=1)
-    # print(item.clean())
+    dates = Order.objects.all()
+    for x in dates:
+        dc = x.date_created
+        days_to_delete = (today-dc).days
+        if x.status == 'Canceled' and days_to_delete > 31:
+            x.delete()
+    # print((nextbill - today).days)
+    # item = Order.objects.values('date_billed').get(pk=1)
+    # # print(item.clean())
     # if item < lastbill:
     #     print('hi!')
     # print(type(item))
 
-    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
-    recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
+    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
+    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(status__icontains='Canceled').exclude(orderline__inventory__id='686') 
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
@@ -467,6 +493,7 @@ def view_order(request):
         'compBill': compBill,
         'recur': recur,
         'user':user,
+        'orders':orders,
         # 'pages': pages,
         })
 

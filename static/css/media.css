@@ -40,6 +40,14 @@ color:red;
   right: 0;
 }
 
+#id_order-is_recurring {
+  list-style: none;
+}
+
+#datepicker {
+  display: none;
+}
+
 #add_inv_btn {
   float: right;
   margin-left: 20px;
@@ -231,4 +239,25 @@ tbody {
 }
 .sdd {
   background-color: lightcyan;
+}
+
+#img {
+  visibility: hidden;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+}
+
+@media print {
+  body {
+    visibility: hidden;
+  }
+ #img {
+    visibility: visible;
+    top: 0px;
+    left: 0px;    
+    overflow:visible; 
+    position:absolute !important; 
+
+  }
 }

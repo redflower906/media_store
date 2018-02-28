@@ -6,11 +6,12 @@
 {% load formset_tags %}
 {% load store_tags %}
 {% load static %}
-
-<script src="{% static 'js/order_edit.js' %}"></script>
+<script src="{% static 'js/order_edit.js' %}"></script> 
 <script type="text/javascript">
     var inventory_groups = {{ inventory_lists | safe}};
+    window.onload = recurringAlert;
 </script>
+
 <hr/>
 <p>&nbsp;</p>
 
@@ -28,7 +29,9 @@
 <hr/>
 <p>&nbsp;</p>
 
-
+<div id="mapPrint">    
+    <img id="img" src="/static/images/2E.png">
+</div>
 
 <form id='order_form' method="post" action="" class="post-form form-horizontal">
     {% csrf_token %}
@@ -40,35 +43,44 @@
 
     <fieldset>
         <legend>Who is creating this order?</legend>
-        {{ order_form.submitter.errors }}
-        {{ order_form.submitter }}
-        {{ order_form.department.errors }}
-        {{ order_form.department }}
-        
+        <p>{{ order_form.submitter.errors}} 
+            {{ order_form.submitter }}</p>
+    
     </fieldset>
     <p>&nbsp;</p>
 
     <fieldset>
         <legend>Who is paying?</legend>
          {{ order_form.requester.errors }}
-         {{ order_form.requester }}
-        
+         {{ order_form.requester }}:
+         {{ order_form.department.errors }}
+         {{ order_form.department }}
     <p>&nbsp;</p>
     </fieldset>
 
 
     <fieldset>
         <legend>Is this a recurring order?</legend>
-        <section id='first' class = 'section'>
-            <div class = 'container'>
-                <input type="radio" name="group1" id='radio_1'>
-                <label for = 'radio_1'><span class="radio">Yes</span></label>
+        <div class='row'>
+            <div class='col-xs-2'>
+            {{ order_form.is_recurring.errors }}
+            {{ order_form.is_recurring }}
             </div>
-            <div class="container">
-                <input type="radio" name="group1" id="radio_2">
-                <label for = 'radio_2'><span class="='radio">No</span></label>
+            <div class='col-xs-10' id='datepicker'>
+                <div class='col-xs-1'>
+                    <p><b>From:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_start }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>To:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_stop }}
+                </div>
             </div>
-        </section>
+        </div>
     </fieldset>
     <p>&nbsp;</p>
 
@@ -94,6 +106,29 @@
                                 <th>Container</th>
                                 <th>Notes</th>
                                 <th>Qty</th>
+                                <th>Location
+                                <a data-toggle="modal" href="#mapmodal">?</a>              
+                                <!-- Modal -->
+                                <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="mapmodalTitle"><b>Drop Off Locations</b></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="img-responsive" id="img_map" src="/static/images/2E.png">
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary print" onClick="window.print();return false">Print</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </th>
                                 <th>Cost</th>
                                 </tr>
                             </thead>
@@ -128,6 +163,7 @@
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
+
                                 <td class="inv_container">
                                     <p> --------- </p>
                                 </td>
@@ -138,6 +174,11 @@
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
+                                <td>
+                                    {{ order_form.location.errors }}
+                                    {{order_form.location}}
+
+                                </td>                                
                                 <td>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
@@ -190,5 +231,6 @@
         })
     })
 </script>
+
 <p>&nbsp;</p>
 {% endblock %}

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-# import ldap
+import ldap
 import django_auth_ldap.config
 from .databasesettings import DATABASES
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType

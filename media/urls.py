@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 from store.models import Order
 from store import views #as store_views  #can add more here with, 
 
@@ -49,13 +49,14 @@ urlpatterns = [
 
 ##orders
     url(r'^order/new', views.create_order, name='create_order'),
-    url(r'^order/past', views.past_order, name='past_order'),
-    url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
+    # url(r'^order/past', views.past_order, name='past_order'),
+    # url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
     url(r'^order/edit/(?P<id>[0-9]*)$', views.edit_order, name='edit_order'),
-    url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
+    # url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
     url(r'^order/view', views.view_order, name='view_order'),
     url(r'^order/(?P<copy_id>[0-9]*)/copy$', views.create_order, name = 'copy_order'),
     url(r'^export/xls/$', views.export_orders, name='export_orders'),
+    url(r'^delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
 
 ##email
     url(r'^(?P<id>[0-9]*)/email$', views.email_form, name='email'),

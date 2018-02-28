@@ -180,6 +180,28 @@ class Order(models.Model):
         ('Auto', 'Auto'),
         ('Billed', 'Billed')
     )
+    LOCATION_CHOICES =(
+        ('2W.225', '2W.225 (4C)'),
+        ('2W.227', '2W.227 (4C)'),
+        ('2W.263', '2W.263 (4C)'),
+        ('2W.265', '2W.265 (4C)'),
+        ('2C.225', '2C.225 (4C)'),
+        ('2C.227', '2C.227 (4C)'),
+        ('2C.267', '2C.267 (4C)'),
+        ('2C.277', '2C.277 (4C)'),
+        ('2E.231', '2E.231 (4C)'),
+        ('2E.233', '2E.233 (18C)'),
+        ('2E.267', '2E.267 (4C)'),
+        ('3W.228', '3W.228 (4C)'),
+        ('3W.266', '3W.266 (4C)'),
+        ('3C.226', '3C.226 (4C)'),
+        ('3C.229', '3C.229 (18C)'),
+        ('3C.265', '3C.265 (4C)'),
+        ('3C.267', '3C.267 (4C)'),
+        ('3E.265', '3E.265 (18C)'),
+        ('3E.267', '3E.267 (4C)'),
+    )
+    BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     #had to make null to migrate CHANGE LATER
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
@@ -187,7 +209,7 @@ class Order(models.Model):
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_modified = models.DateField(auto_now=True, blank=True, null=True)
-    date_submitted = models.DateField(blank=True, null=True)
+    date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created?
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
     is_recurring = models.BooleanField(default=False)
@@ -195,13 +217,10 @@ class Order(models.Model):
     #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
-    location = models.CharField(max_length=30, blank=False, null=False, default='One',
-        choices=(
-            ('One', 'One'),
-            ('Two', 'Two'),
-        )
+    location = models.CharField(max_length=30, blank=False, null=False,
+        choices=LOCATION_CHOICES
     )
-    status = models.CharField(max_length=30, blank=False, null=False, default='Problem',
+    status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
         choices=STATUS_CHOICES
     )
     objects = OrderManager()
@@ -228,7 +247,7 @@ class Order(models.Model):
 
 
 class OrderLine(models.Model):
-    order = models.ForeignKey(Order)
+    order = models.ForeignKey(Order, blank=False, null=False)
     description = models.TextField(blank=True)
     inventory = models.ForeignKey(Inventory, blank=False, null=False)
     qty = models.DecimalField(

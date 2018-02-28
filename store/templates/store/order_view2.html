@@ -86,8 +86,6 @@
 </form>
 <script>
     $(function(){
-        // INITIAL <select class="{form.selectedOption} unchanged"/>
-        //if(e.target.hasClass(e.target.value)) { e.removeClass()}
         $('select').on('change', function(e){
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value);

@@ -40,48 +40,6 @@ class Item_Model_Form(forms.ModelForm):
             'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
-
-# class Email_Form(forms.ModelForm):
-#     class Meta:
-#         model = Order
-#         exclude = (''),
-    
-#     # To = forms.EmailField(required=True)
-#     # From = forms.EmailField(required=True)
-#     # text = forms.Textarea()
-
-#     # def __init__(self, *args, **kwargs):
-#     #     super(Email_Form, self).__init__(*args, **kwargs)
-#     #     user = self.instance.user
-#     #     if user.userprofile.is_privileged is True:
-#     #         self.fields['To'] = forms.EmailField(
-#     #             required=True,
-#     #             initial = Order.requester__UserProfile.email_address,
-#     #         )
-#     #         self.fields['From'] = forms.EmailField(
-#     #             required = True,
-#     #             initial = 'mediafacility@janelia.hhmi.org'
-#     #         )
-#     #     else:
-#     #         self.fields['To'] = forms.EmailField(
-#     #             required = True,
-#     #             initial = 'mediafacility@janelia.hhmi.org',
-#     #         )
-#     #         self.fields['From'] = forms.EmailField(
-#     #             required = True,
-#     #             initial = user,
-#     #         )
-#     #     self.fields['Text'] = forms.Textarea(
-#     #         initial = 'Greetings',
-#     #     )
-
-#     To = forms.EmailField(
-#         label='To:',
-#     )
-#     From = forms.EmailField(
-#         label = 'From:',
-#     )
-#     Text = forms.Textarea()
         
 class Email_Form(forms.Form):
     To = forms.EmailField(
@@ -144,8 +102,25 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-        fields = ('department', 'requester', 'submitter')
+        fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop')
+        widgets={
+        'is_recurring': forms.RadioSelect(choices=[
+            (True, 'Yes'),
+            (False, 'No')             
+        ]),
+        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={}),
+        'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
+        'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
+        }
 
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['department'].empty_label = "Select a department"
+        # following line needed to refresh widget copy of choice list
+        self.fields['department'].widget.choices = self.fields['department'].choices
+        self.fields['requester'].empty_label = "Select a requester"
+        # following line needed to refresh widget copy of choice list
+        self.fields['requester'].widget.choices = self.fields['requester'].choices
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
