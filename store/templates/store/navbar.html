@@ -1,0 +1,53 @@
+{% block navbar %}
+<nav class="navbar navbar-default nav-justified">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="/store">Home</a>
+            </li>            
+            <li>
+              <a href="/services">Services</a>
+            </li>
+            <li>
+              <a href="/inventory">Inventory</a>
+            </li>
+            {% if user.userprofile.is_privileged is True %}            
+            <li class="dropdown">
+              <a href="/signout" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign-Out <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">New Food Input</a></li>
+                <li><a href="/signout">Current Sign-Outs</a></li>
+              </ul>
+            </li>
+            {% endif %}
+            <li class="dropdown">
+              <a href="/order" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Orders <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/order/new">Create</a></li>
+                <li><a href="/order/view">View Orders</a></li>
+              </ul>
+            </li>
+          </ul>
+      <ul class="nav navbar-nav navbar-right" margin-right: 10>
+      {% if user.is_authenticated %}
+        <li class='navbar-text'>Welcome, {{ user.first_name }}!</li>
+        <li><a href="{% url 'logout'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>   
+        <li><a href="/cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
+      {% else %}
+        <li><a href="{% url 'login'%}?next={{request.path}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>   
+      {% endif %}
+        <li><span>&nbsp;&nbsp;&nbsp;</span></li> <!--not elegant (fix later?)-->
+      </ul>
+      </div><!--/.nav-collapse -->
+      </div>
+</nav>
+{% endblock %}

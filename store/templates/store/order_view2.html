@@ -1,0 +1,103 @@
+{% extends "store/base.html" %} 
+{% block navbar %} 
+{% include "store/navbar.html" %} 
+{% endblock %} 
+{% block content %}
+<hr/>
+
+{% if user.userprofile.is_privileged is True and days <= 4 %}
+<div class="panel panel-danger">
+    <div class="panel-heading" style="text-align: center">Warning</div>
+    <div class="panel-body" style="text-align: center">
+        <p>There are {{days}} until the next billing cycle.</p>
+    </div>
+</div>
+{% endif %}
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
+    </li>
+
+</ul>
+
+<form method="post" action="" id="orderstatusform">
+{% csrf_token %}
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Submitted/In-Progress Orders</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=incomp headers=headers1%}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Recurring Orders</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=recur headers=headers2%}
+            </div>
+        </div>
+        {% if user.userprofile.is_privileged is True %}
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Complete, Not Billed</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=compNotBill headers=headers3%}
+            </div>
+        </div>
+        {% if user.userprofile.is_privileged is True %}
+        <a href="{% url 'export_orders' %}" name='data' class="btn btn-info">data dump!</a>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="complete_billed">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Complete and Billed</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=compBill headers=headers4%}
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+<script>
+    $(function(){
+        $('select').on('change', function(e){
+            $(e.target).removeClass();
+            $(e.target).addClass(e.target.value);
+            console.log(e.target.value);
+            if($(this).closest('.koala').hasClass(e.target.value)){
+                if($(this).closest('.koala').hasClass('sdd')){
+                    $(this).closest('.koala').removeClass('sdd');
+                }
+            }else{
+                $(this).closest('.koala').addClass('sdd');
+            }
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+    <div class="col-xs-6">
+        <h2 data-srvid="{{SingleItem.id}}">Product: {{SingleItem.inventory_text}}</h2>
+    </div>
+    <div class="col-xs-6 text-right action-buttons">
+        {% csrf_token %}
+        <a href="{% url 'edit_single_item' SingleItem.id %}" class="btn btn-primary">Edit</a>
+    </div>
+</div>
+<hr/>
+
+
+<div class="row">
+    <div class="col-xs-12 text-right">
+        <p>{% if SingleItem.active %}
+           <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span> Active
+           {% else %}
+           <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span> Not Active
+           {% endif %}
+        </p>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th id="center_columns">Product Name</th>
+                    <th id="center_columns">Media Type</th>
+                    <th id="center_columns">Cost</th>
+                    <th id="center_columns">Container</th>
+                    <th id="center_columns">Volume</th>
+                    <th id="center_columns">Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="center_columns">
+                    <td>{{SingleItem.product}}</td>
+                    <td>{{SingleItem.media_type}}</td>
+                    <td>{{SingleItem.cost}}</td>
+                    <td>{{SingleItem.container|default:'N/A'}}</td>
+                    <td>{{SingleItem.volume|default:'N/A'}}</td>
+                    <td class="col-xs-4">{{SingleItem.notes}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% comment %} <div class="modal fade" id="serviceDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="confirmDeleteLabel">Delete this product? </h4>
+      </div>
+      <div class="modal-body">
+        You are about to delete this product. Are you sure?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="deleteServiceConf" class="btn btn-primary">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+</div> 
+This will work once there are customer orders...presumably.
+{% endcomment %}
+{% endblock %}

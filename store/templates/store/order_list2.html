@@ -1,0 +1,84 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include 'store/navbar.html' %}
+{% endblock %}
+{% block content %}
+{% load store_tags %}
+<hr/>
+{% comment %} if staff {% endcomment %}
+
+{% comment %} {% if olineAll.count == 0 %}
+<p>There are no oline at this time.</p>
+
+{% else %} {% endcomment %}
+    
+<table class="table table-hover" id="inventory_table">
+        <thead>
+            <tr id="table_header">
+                <th></th>
+                {% table_header headers1 %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="searchable">
+            {% for thing in thing %}
+            <tr class="order_{{oline.id}} koala">
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
+                <td class=""><a href="#">{{thing.id}}</a></td>                
+                <td class="">{{thing.department.department_name}}</td>
+                {% comment %}<td class="">requester</td>
+                <td class="">{{oline.order.date_submitted}}</td>
+                <td class="">{{oline.order.date_recurring_start|default:'N/A'}}</td>
+                <td class="">{{oline.order.date_recurring_stop|default:'N/A'}}</td>
+                <td class="">{{oline.order.location}}</td>
+                <td class="">{{oline.order.status}}</td>
+                <tr id="notes" class="collapse" role="text">
+                        <td colspan="10">
+                            <table class ='table table-striped'>
+                                <thead>
+                                    <th>Product</th>
+                                    <th>Submitter</th>
+                                    <th>Quantity</th>
+                                    <th>Unit</th>
+                                    <th>Cost</th>
+                                </thead>
+                                <tbody class="searchable">
+                                    <td class="">{{oline.inventory.inventory_text}}</td>
+                                    <td class="">Submitter</td>
+                                    <td class="">{{oline.qty}}</td>
+                                    <td class="">{{oline.unit}}</td>                                    
+                                    <td class="">{{oline.cost}}</td>
+                                </tbody>    
+                            </table>
+                        </td>              
+                    </tr> {% endcomment %}
+                
+                </tr>
+            {% endfor %}                                            
+                {% comment %} <td class="" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
+                <td class=""id="center_columns">
+                    {% if InventoryItem.active %}
+                    <span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="1"></div>
+                    {% else %}
+                    <span class="glyphicon glyphicon-remove disabled-icon" aria-hidden="true"></span>
+                    <div style="display:hidden" data-sort="0"></div>
+                    {% endif %}
+                </td>
+                if staff 
+                <td class="col-xs-1" id="center_columns">
+                    <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
+                </td>
+                <tr id="notes" class="collapse" role="text">
+                    <td colspan="10">
+                        <div><p>{{InventoryItem.notes}}</p></div>
+                    </td>              
+                </tr> {% endcomment %}
+            
+            </tr>
+    </table>
+    {% comment %} {% endif %} {% endcomment %}
+
+{% endblock %}

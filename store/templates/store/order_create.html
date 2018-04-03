@@ -1,0 +1,247 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+{% load formset_tags %}
+{% load store_tags %}
+{% load static %}
+<script src="{% static 'js/order_edit.js' %}"></script> 
+<script type="text/javascript">
+    var inventory_groups = {{ inventory_lists | safe}};
+    window.onload = recurringAlert;
+</script>
+
+<hr/>
+<p>&nbsp;</p>
+
+<div class='row'>
+    <div class='col-xs-12'>
+    {% if order_form.instance.id %}
+    <h2>Edit order {{order_form.instance.id}}</h2>        
+    {% elif copy_id %}
+    <h2>Create a new order based on order {{copy_id}}</h2>
+    {% else %}
+    <h2>Create a new order</h2>
+    {% endif %}
+    </div>
+</div>
+<hr/>
+<p>&nbsp;</p>
+
+<div id="mapPrint">    
+    <img id="img" src="/static/images/2E.png">
+</div>
+
+<form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ order_form.non_field_errors }}
+    {% for hidden_field in order_form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+
+    <fieldset>
+        <legend>Who is creating this order?</legend>
+        <p>{{ order_form.submitter.errors}} 
+            {{ order_form.submitter }}</p>
+    
+    </fieldset>
+    <p>&nbsp;</p>
+
+    <fieldset>
+        <legend>Who is paying?</legend>
+         {{ order_form.requester.errors }}
+         {{ order_form.requester }}:
+         {{ order_form.department.errors }}
+         {{ order_form.department }}
+    <p>&nbsp;</p>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Is this a recurring order?</legend>
+        <div class='row'>
+            <div class='col-xs-2'>
+            {{ order_form.is_recurring.errors }}
+            {{ order_form.is_recurring }}
+            </div>
+            <div class='col-xs-10' id='datepicker'>
+                <div class='col-xs-1'>
+                    <p><b>From:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_start }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>To:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_stop }}
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <p>&nbsp;</p>
+<!-->NEED TO SET UP STAFF DOWNLOAD, I DON'T THINK IT CAN BE DONE CORRECTLY UNTIL WE HAVE THE SERVER RUNNING<-->
+    <fieldset>
+        <legend>Recipe Upload</legend>
+        <div class='row'>
+            <div class='col-xs-2'>
+            {{ order_form.doc.errors }}
+            {{ order_form.doc}}
+            </div>
+        </div>
+    </fieldset>
+    <p>&nbsp;</p>
+
+    <fieldset>
+        <legend>What would you like to order?</legend>
+        {{ formset.non_form_errors }} 
+        {% for hidden_field in formset.hidden_fields %} 
+            {{ hidden_field.errors }} 
+            {{ hidden_field }} 
+        {% endfor %}
+        <div class='row'>
+            <div class='col-xs-12'>
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="OrderLines">
+                            {{formset.management_form}}
+                            {{formset.media}}
+                            <table id='order_table'>
+                            <thead>
+                                <tr>
+                                <th>Media Type</th>
+                                <th>Item</th>
+                                <th>Container</th>
+                                <th>Notes</th>
+                                <th>Qty</th>
+                                <th>Location
+                                <a data-toggle="modal" href="#mapmodal">?</a>              
+                                <!-- Modal -->
+                                <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                        <h5 class="modal-title" id="mapmodalTitle"><b>Drop Off Locations</b></h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <img class="img-responsive" id="img_map" src="/static/images/2E.png">
+                                        </div>
+                                        <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary print" onClick="window.print();return false">Print</button>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                                </th>
+                                <th>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in formset %}
+                                {% if form.non_field_errors %}
+                                <tr>
+                                    <td colspan="6">
+                                        {{ form.non_field_errors }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                 {% for hidden_field in form.hidden_fields %} 
+                                    {{ hidden_field.errors }} 
+                                    {{ hidden_field }}
+                                    {% endfor %}
+
+                                <td>
+                                    <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
+                                     {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype'>
+                                        <option value=""> --------- </option>
+                                        {% for media_type, media_type_desc in media_types %}
+                                            <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
+                                                {{media_type_desc}}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td>
+                                    {{ form.inventory.errors }}
+                                    {{ form.inventory }}
+                                </td>
+
+                                <td class="inv_container">
+                                    <p> --------- </p>
+                                </td>
+                                <td class="inv_notes">
+                                    <p> --------- </p>
+                                </td>
+                                <td>
+                                    {{ form.qty.errors }}
+                                    {{ form.qty }}
+                                </td>
+                                <td>
+                                    {{ order_form.location.errors }}
+                                    {{order_form.location}}
+
+                                </td>                                
+                                <td>
+                                    {{ form.line_cost.errors }}
+                                    {{ form.line_cost }}
+                                </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+            <div class='row'>
+                <div class = 'col-xs-3'>
+                    <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
+                </div>
+                <div class='col-xs-offset-6 col-xs-2 text-right'>
+                    <p><strong>Total</strong></p>
+                    <p class="aggregate_total">
+                    {{order_form.instance.total | currency}}</p>
+                </div>
+            </div>
+        </fieldset>
+        <div class='row'>
+        <hr/>
+            <p></p>
+            <div class='col-xs-11'>
+                <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
+            </div>
+            <div class="col-xs-1">
+                <a href='/' class="btn btn-danger">Cancel</a>
+            </div>
+        </div>
+        
+</form>
+<script type="text/javascript">
+    $(function () {
+        $('#order_table tbody tr').formset({
+            prefix:'{{ formset.prefix }}',
+            addText:'Add Item',
+            removeText: 'Delete',
+            addCssClass:'btn btn-default',
+            deleteCssClass:'btn btn-xs btn-danger',
+            added: register_row,
+            removed: deregister_row
+        });
+        $('#order_table tbody tr.dynamic-form').map(function (index, row){
+            register_row($(row))
+        })
+    })
+</script>
+
+<p>&nbsp;</p>
+{% endblock %}

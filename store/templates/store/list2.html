@@ -1,0 +1,31 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+<hr/> 
+<table class="table table-hover" id="inventory_table">
+        <thead>
+            <tr id="table_header">
+                <th></th>
+                {% table_header headers %}
+                <th></th>
+            </tr>
+        </thead>
+        <tbody class="searchable">
+            {% for C_not_B in C_not_B %}
+            <tr class="item_{{C_not_B.id}} koala">
+                <td class="toggle_notes">
+                    <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                </td>
+                <td class="col-xs-2"><a href="#">{{C_not_B.id}}</a></td>                
+                <td class="col-xs-2">{{C_not_B.department.department_name}}</td>
+                <td class="col-xs-2">requester</td>
+                <td class="col-xs-2">{{C_not_B.date_submitted}}</td>
+                <td class="col-xs-2">{{C_not_B.date_recurring_start|default:'N/A'}}</td>
+                <td class="col-xs-2">{{C_not_B.date_recurring_stop|default:'N/A'}}</td>
+                <td class="col-xs-2">{{C_not_B.location}}</td>
+                <td class="col-xs-2">{{C_not_B.status}}</td>
+            {% endfor %} 
+            </tr>
+            </tbody>
+            </table>
+{% endblock %}

@@ -1,0 +1,43 @@
+Content-Type: multipart/alternative;
+ boundary="===============1769435918373633196=="
+MIME-Version: 1.0
+Subject: Message regarding Media Store Order
+From: mediafacility@janelia.hhmi.org
+To: guillermo@janelia.hhmi.org
+Date: Wed, 24 Jan 2018 15:34:45 -0000
+Message-ID: <20180124153445.9446.3626@coffmans-ThinkPad-X1-Carbon-4th>
+
+--===============1769435918373633196==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+This email is concerning media store order #14.
+
+You can view a summary of this order:
+
+
+test
+
+Sincerely,
+
+The Media Facility
+--===============1769435918373633196==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+This email is concerning media store order 14.<br><br>
+
+You can view a summary of this order:<br>
+<a href="/order/view">Order #14</a><br><br>
+
+Sincerely,<br><br>
+
+The Media Facility
+--===============1769435918373633196==--
+
+-------------------------------------------------------------------------------

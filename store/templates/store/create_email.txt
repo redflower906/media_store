@@ -1,0 +1,9 @@
+Greetings,
+Your media store order #{{id}} has been {{c_or_e}}. 
+
+You can view a summary of this order here:
+{{id}}
+
+Sincerely,
+
+The Media Facility

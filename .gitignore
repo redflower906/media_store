@@ -1,0 +1,13 @@
+*.pyc
+
+db.sqlite3
+
+databasesettings.py
+
+local_settings.py
+
+package-lock.json
+
+node_modules
+
+venv

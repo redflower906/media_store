@@ -1,0 +1,21 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+<div class="post form">
+    <div class='row'>
+    <form method="POST" action="" class="post-form form-vertical">
+        {% csrf_token %}
+        <div>
+            <table>
+            {{Email_form.as_table}}
+            </table>
+            <div class='text-right', id='email-form-buttons'>
+                <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+                <a href="/order/view/" class="btn btn-default pull-right">Cancel</a>
+        </div>
+    </form>    
+    </div>
+</div>
+{% endblock %}
