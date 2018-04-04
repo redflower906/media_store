@@ -1,4 +1,5 @@
 var plan = require('flightplan');
+var os = require('os');
 var user = os.userInfo('USERNAME');
 
 var config = {
