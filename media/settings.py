@@ -66,7 +66,6 @@ COMPRESS_ENABLED=True
 # Application definition
 
 INSTALLED_APPS = [
-    'debug_toolbar',
     'store.apps.StoreConfig' ,
     'django.contrib.admin',
     'django.contrib.auth',
@@ -80,6 +79,8 @@ INSTALLED_APPS = [
 #    'hijack',
 #    'south',
     'import_export',
+    'debug_toolbar',
+
 ]
 
 MIDDLEWARE = [
