@@ -1,0 +1,26 @@
+{
+  "name": "media_v1",
+  "version": "1.0.0",
+  "description": "media_v1 npm package.json",
+  "main": "flightplan.js",
+  "dependencies": {
+    "flightplan": "^0.6.17"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/amandacav/media_v1.git"
+  },
+  "keywords": [
+    "media_v1"
+  ],
+  "author": "Harrison, Scarlett Cavallaro, Amanda\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D; \u001b[2~Cavallaro, Amanda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/amandacav/media_v1/issues"
+  },
+  "homepage": "https://github.com/amandacav/media_v1#readme"
+}
