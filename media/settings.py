@@ -174,16 +174,17 @@ AUTHENTICATION_BACKENDS = (
     #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
-'''
+AUTH_LDAP_SERVER_URI = "ldap://ldap.int.janelia.org"
+
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
 
-"""class CustomGroupOfNamesType(GroupOfNamesType):
-    """"""
+class CustomGroupOfNamesType(GroupOfNamesType):
+
+"""
     An LDAPGroupType subclass that handles groups of class groupOfNames.
 
     The purpose of this whole class is to remove the begining string (base_dn)
@@ -201,7 +202,7 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
         The base implementation returns the value of the cn attribute, or
         whichever attribute was given to __init__ in the name_attr
         parameter.
-        """"""
+        """
         try:
             name = group_info[0].replace(self.base_dn,'')
         except (KeyError, IndexError):
