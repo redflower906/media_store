@@ -1,0 +1,96 @@
+my goal: set up inventory page!
+add container and volume columns to database and display on inventory page?
+    media wants pics on item detail page
+    staff notes vs customer description (have both?)
+    quantity of plates in sleeve, vials in tray, etc in customer view description
+    add unit price for items in batches (bottle, vial, plate, etc)
+
+new goal: set up staff view order page
+    what are tabs?
+        submitted/in-Progress/recurring (separated within same tab)
+        complete, not billed (non-recurring and recurring separated within same tab)
+        complete, last billing cycle (non-recurring and recurring separated within same tab)
+            top headers: order ID, Department, requestor, date submitted, start date, end date, location,
+            status change (checkbox depending on what current status to next status is)
+                expanded headers: item, submitter, qty, unit, cost
+        sort orders via status then end date (for recurring)
+    keep a requester field in case submitter and requester are different
+    set up virtual env within server, install git and other things, then install 
+    requirements.txt
+        ssh harrisons@(IP address)
+        cd up to top, cd into opt.
+        to leave, type exit.
+    work on javascript on inventory page, maybe searches
+    create error/404 pages
+    add cost center to order details expand and total cost to main order row
+
+cornmeal sign-out:
+    new staff view in website for staff input of bottles/trays made and to view current sign-out info
+    for customer: lab name drop down, then bottles or vials choice, then tray or individual
+    close-out at 5 pm on 25th, anything signed out after would be put in next billing cycle
+    do people sign out plates on third floor??? - YES Also, can plates be specifically requested AND signed out?? - YES
+    have to have "add line" button in case they want to sign out different containers
+    warning on staff view beginning 4 days before billing to wait to put in new inventory until the 26th
+    what to do with visitors? if select visitor for department, then select their name in dropdown?
+    drop off locations for room temp media, can we get a dedicated area? we don't want people to take advantage of a use input box
+    could also place things regularly put in RT in a cold room anyways
+        rubin cabinet in 3rd floor
+
+media questions:
+    what is more important: batch close-out of orders or reviewing the details of each order/easy email editing? batch + mailto link
+    in order details
+
+ALEX HELP:
+sorting headers on order view page
+getting status dropdown to default to actual status
+highlighting javascript?
+
+
+Real Time Progress
+
+Goal 6/9 : 2 weeks to fill out inventory page with items
+    Accomplished ahead of schedule
+
+Goal 6/23 : 3 weeks to LDAP; create/edit inventory items; Todd fix container/price/amt inventory stuff
+    _Reached? Kind of - started ssh on Ubuntu VM to test LDAP, need to install and figure out DM to test on the internet.
+
+Goal 7/14 : AC gone 1 week
+    COMPLETED::SC - Continue Create/Edit inventory items (pages created and displaying corrently already, will add functionality to these pages), fix display of update items and work on functionality
+    AC - continue LDAP and ssh configuration of ubuntu VM (installation, etc)
+    
+Goal 8/11: 
+    SC - work on staff/user views of created orders
+
+Goal 9/13:
+    SC - work on staff/user views of created orders
+
+Goal 9/20:
+    SC - finished replacing datatables with customized sort and expand features
+---------------------------------------
+
+Long Term Goals (Set 6/9/17)
+
+6-9 months to have Media Store up and running for basic functions
+    Basic functions include
+        -Ability to bill to Resource Matrix
+        -Ability for orders from customers
+        -Ability to close orders from App with email confirmation
+
+9-18 months to add on tablet functionality and improve staff side
+    Basic functions include
+        -Ability to sign out items at sign out locations
+        -Removing paper from these areas to integrate billing with sign out
+        -Simple customer app to allow Jcard scan or something simple
+        -Integrate calendar or other tools that would make things easier to plan for staff
+
+18-24 months to add reporting (I assume this will be done way before this or in tandem with other requirements but unsure since we still need to learn what goes into this. Data is there so it should be relatively simple set of saved searches)
+    Basic functions include
+        -Ability to get custom reports
+
+18-24 months to upgrade Fly Store
+    Basic functions include
+        -Taking over Fly Store modifications (as long as we are able to update the code since it is old)
+        -Hopefully learning about the server and being able to troubleshoot server errors and be able to go in and fix them
+            -If we are able to do this then Fly and Media Store will most likely come under our management at that time
+
+script for auto-bill once integrated into RM

@@ -1,0 +1,828 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+{% load formset_tags %}
+{% load store_tags %}
+
+<div class="row">
+    <div class="col-xs-12">
+        {% if order_form.instance.id %}
+        <h3>Editing order : {{order_form.instance.id}}</h3>
+        {% elif copy_id %}
+        <h3>Create a new order based on {{copy_id}}</h3>
+        {% else %}
+        <h3>Create a new order</h3>
+        {% endif %}
+    </div>
+</div>
+
+{% if not copy_id and order_form.instance.date_billed %}
+<div class="row">
+  <div class="col-xs-offset-2 col-xs-8 alert alert-danger text-center">
+    <b>This order has already been billed. No changes will be saved!</b>
+    <p> Please contact the Media Store administrator if you believe changes need to be made.</p>
+  </div>
+</div>
+{% endif %}
+
+<hr/>
+
+<!--{{ form.non_field_errors }}-->
+
+<div>
+<form method="post" action="" id="order_form-h" class="form-horizontal">
+    {% csrf_token %}
+    {% for hidden in order_form.hidden_fields %}
+    {{ hidden }}
+    {% endfor %}
+
+    <fieldset>
+        <legend>Who is creating this Order?</legend>
+    </fieldset>
+
+
+    <fieldset>
+        <legend>Who is paying?</legend>
+    </fieldset>
+
+    <fieldset>
+        <legend>Is this a Recurring Order?</legend>
+        <section id='first' class = 'section'>
+            <div class = 'container'>
+                <input type="radio" name="group1" id='radio_1'>
+                <label for = 'radio_1'><span class="radio">Yes</span></label>
+            </div>
+            <div class="container">
+                <input type="radio" name="group1" id="radio_2">
+                <label for = 'radio_2'><span class="='radio">No</span></label>
+            </div>
+        </section>
+    </fieldset>
+
+    <fieldset>
+        <legend>What would you like to order?</legend>
+        <!--{% if radio_1 or radio_2 %}-->
+            <div class="row">
+                <div class="form-group {% if order_form.inventory.errors %}has-error{% endif %}">
+                    <div class="col-xs-2 text-right">
+                        <label class="control-label" for="{{order_form.inventory.id_for_label}}">Item:</label>
+                    </div>
+                </div>
+            </div>
+            <hr/>
+
+            <div class='row'>
+                <div class="col-xs-12">
+                    <table id='form_holder'>
+                        <tr>
+                            <td style='padding:0' class="order_lines">
+                            {{ line_formset.management_form }}
+                                <table id = 'order_create'>
+                                <thead>
+                                    <th>Item</th>
+                                    <th>Container</th>
+                                    <th>Notes</th>
+                                    <th>Qty</th>
+                                    <th>Unit</th>
+                                    <th>Cost</th>
+                                    <th>Delete?<input type="checkbox" class="delete-all" /></th>
+                                    <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in line_formset %} <!--item or form in order_form-->
+                                    <tr>
+                                    {% for hidden in form.hidden_fields %}
+                                    {{hidden}}
+                                    {% endfor %}
+                                    <td>
+                                    {{line_formset}}
+                                    </td>
+                                    <td class='line_total'>
+                                    {{form.instance.total | currency}}</td>
+                                    </tr>
+                                    {% if form.errors %}
+                                    <tr>
+                                        {% for field in form.visible_fields %}
+                                        <td>{{field.errors}}</td>
+                                        {% endfor %}
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            {% if radio_1 %}
+            <div class='row'>
+                <div class='col-xs-3'>
+                    <input type="add_order_line" class='btn-default' type='button' value="Add another order line" />
+                </div>
+                <div class="col-xs-offset-7 col-xs-2 text-right">
+                    <p class="aggregate_total">{{line_formset.instance.total | currency}}</p>
+                </div>
+            </div>
+            {% endif %}
+            <div class ='row'>
+                <p>This is a test.</p>
+            </div>
+    </fieldset>
+<hr/>
+</form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+<!--                <div class="col-xs-3">
+                    <select id='inventory_id' name='inventory' class="chosen-select" style="display: none;"></select>
+
+                <div class="col-xs-3">{{order_form.inventory}}</div>
+                <div class="col-xs-4">
+                    <span class="help-block">{{order_form.inventory.errors}}</span>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-xs-12">
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="order_lines">
+                            {{ line_formset.management_form }}
+                            {{ line_formset.media }}
+                            <table id="order_table">
+
+                            <tbody>
+                                {% for form in line_formset %}
+                                <tr>
+                                {% for hidden in form.hidden_fields %}
+                                    {{hidden}}
+                                {% endfor %}
+                                {% for field in form.visible_fields %}
+                                <td>{% if field.name == 'cost' %}${% endif %}{{field}}</td>
+                                {% endfor %}
+                                </tr>
+                                {% if form.errors %}
+                                <tr>
+                                    {% for field in form.visible_fields %}
+                                    <td>{{field.errors}}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3">
+            <tr>
+                <td><input id="add_order_line" class="btn btn-default" type="button" value="Add another service" /></td>
+                <td><input id='clear_all' class="btn clear" type='button' value="Delete All"></td>
+            </tr>
+        </div>
+        <hr/>-->
+
+
+def order(request):
+    context = {}
+    OrderTotal = Order.objects.all()
+    # MC = Inventory(media_choices)
+    # print(MC)
+    History = OrderTotal.order_by('date_created')
+    # render them in a list.
+    return render(request, 
+        'store/order_list.html', 
+        {
+        'OrderTotal' : OrderTotal,
+        }, context)
+
+def create_order(request,id=1, copy_id=None): #MUST CHANGE id=1 to id
+#ADD LOGIC FOR RADIO BUTTON FOR RECURRING ORDERS TO SHOW OR HIDE LINE ITEMS
+    context = {}
+    return render(request, 'store/order_create.html')
+    #user = request.user
+    #user_profile = UserProfile.objects.get(user=user.id)
+    #department = Department.objects.get(number=user_profile.department.number)
+    #billed_date = Order.objects.already_billed()
+
+    #order_list = order_list(user, filters={'limit'=10})#need to add this!!!
+
+    '''initial={
+    'submitter'= user.id,
+    'date_complete'= time.strftime("%Y-%m-%d"), #not sure strftime!!!
+    'department'= department.id,
+    'logged_in'= user_profile,
+    }'''
+
+    OrderLineFormSet = order_inline_formset_factory(1)
+
+    if request.method=='POST':
+        order = Order()
+        order_form = OrderForm(request.POST, instance=order, initial=initial)
+        line_formset = OrderLineFormSet(request.POST, instance=order, prefix='orderlines')
+        line_message = 'There must be at least one valid line associated with the order. Check inventory'
+        total_message = 'The total billed for this workorder is $0. That seems wrong.'
+
+        if all([have_minimum(line_formset,1, request, line_message), order_form.is_valid(), line_formset.is_valid(), check_total_is_not_zero(line_formset, request, total_message) ]):
+            order_form.save()
+            line_formset.save()
+            messages.success(request, 'order {0} was successfully created.'.format(order_form.instance.id))
+            if request.POST.get('order_submit') == 'Save':
+                return HttpResponseRedirect('/')
+            else:
+                return HttpResponseRedirect('/home')
+        elif not line_formset.is_valid():
+            messages.error(request, 'There was a problem with one of the order lines. Please see below.')
+    else:
+        if copy_id:
+            order_form, line_formset = _copy_order_form(copy_id, request, alternative, initial)
+        else:
+            order_form = OrderForm(initial=initial)
+            line_formset = OrderLineFormSet(prefix='orderlines')
+#MUST ADD ALL DEPARTMENT INFO IN IF STATEMENTS!!!!!!!!!!!!!!!!!!
+    return render(request, 'media/order_create.html', {
+        'copy_id' : copy_id,
+        'order_form' : order_form,
+        'line_formset' : line_formset,
+        'order_list' : order_list,
+        'date_billed' : date_billed
+    }, context_instance=RequestContext(request))
+
+def _copy_order_form(id, request, alternative, initial):
+    original = Order.objects.get(id=id)
+    original_lines = OrderLine.objects.filter(order_id=original.id).order_by('id')
+#MUST ADD DEPARTMENT INFO HERE!!!!!!!!!!!
+    
+    if alternative:
+        fields = Order._meta.get_all_field_names()
+        new_order = Order()
+        ignored = ('main_requester', 'bill_to', 'order', 'orderline')
+        for field in fields:
+            if field in ignored:
+                continue
+            setattr(new_order, field, getattr(original, field))
+    else:
+        new_order = original
+
+    new_order.pk = None
+
+    if new_order.department_id != initial['department']:
+        user_profile = UserProfile.objects.get(user=initial['submitter'])
+        if new_order.department in user_profile.alt_departments.all():
+            initial['department'] = new_order.department_id
+
+    OrderInLineFormSet = order_inline_formset_factory(extra=len(original_lines))
+
+    if alternative:
+        dept_count = 1
+    else:
+        dept_count = len(original_depts)
+
+    order_form = OrderForm(
+        instance=new_order,
+        initial=initial,
+        )
+
+    formset = OrderInLineFormSet(instance=new_order, prefix='orderlines')
+
+    ignored_lines = ('qty')
+
+    for form, data in zip(formset.forms, original_lines):
+        fields = form.base_fields.keys()
+        form.initial = {}
+        for field in fields:
+            if alternative and field in ignored_lines:
+                continue
+            form.initial[field] = getattr(data, field)
+
+
+
+
+def past_order(request):
+    context = {}
+    return render(request, 'store/order_past.html')
+
+def edit_past_order(request):
+    context = {}
+    return render(request, 'store/order_edit.html')
+
+def recurring_order(request):
+    context = {}
+    return render(request, 'store/order_list.html')
+
+
+
+    {% verbatim %}
+<script id="item-line-form" type="text/x-handlebars-template">
+    <tr>
+        <input id="id_SingleItem_set-{{id}}-id" name="SingleItem_set-{{id}}-id" type="hidden">
+        <td><input id="id_SingleItem_set-{{id}}-SingleItem_text" maxlength="100" name="SingleItem_set-{{id}}-SingleItem_text" type="text"></td>
+        <td>
+
+<select id="id_SingleItem_set-{{id}}-media_type" class="chosen-select line-media_type" name="SingleItem_set-{{id}}-media">
+        {% endverbatim %}
+        <option value="">------</option>
+        {% for option in Item_form.forms.0.instance.MEDIA_CHOICES %}
+        <option value="{{option.0}}">{{option.1}}</option>
+        {% endfor %} 
+        {% verbatim %}
+    </select>
+        </td>
+        <td><input class="line_cost" id="id_SingleItem_set-{{id}}-cost" maxlength="5" name="SingleItem_set-{{id}}-cost" type="text"></td>
+        <td><input class="line-container" id="id_SingleItem_set-{{id}}-container" maxlength="30" name="SingleItem_set-{{id}}-container" type="text"></td>
+        <td><input class="line-volume" id="id_SingleItem_set-{{id}}-volume" maxlength="30" name="SingleItem_set-{{id}}-volume" type="text"></td>
+        <td><input class="line-notes" id="id_SingleItem_set-{{id}}-notes" maxlength="500" name="SingleItem_set-{{id}}-notes" type="text"></td>
+        <td><input id="id_SingleItem_set-{{id}}-DELETE" name="SingleItem_set-{{id}}-DELETE" type="checkbox"></td>
+    </tr>
+</script>
+{% endverbatim %}
+
+
+
+
+
+
+
+
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+                                    <td>{{ OrderForm }}</td>
+                                </tr>
+                                {% if order_form.errors %}
+                                <tr>
+                                {% for field in order_form.visible_fields %}
+                                    <td>{{field.errors}}</td>
+                                {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+
+
+
+
+
+
+
+
+
+
+                                    <div class="row">
+            <div class="col-xs-2 text-right">
+                <label class='media-label' for='{{order_form.media.id_for_label}}'>Select Type:</label>
+            </div>
+            <div class='col-xs-3'>{{order_form.media}}</div>
+
+
+
+
+
+
+
+
+
+def order_inline_formset_factory():
+    return inlineformset_factory(Order, OrderLine,
+        fields = ('description', 'qty', 'unit', 'line_cost', 'inventory', 'cost', 'inventory_text', 'media_type'),#category, 'inventory_type'
+        widgets = {
+            'media_type' : forms.Select(attrs={'class' : 'form-text'}),
+            'qty': NumInput(attrs={'min':'0', 'step': 'any', 'class': 'line_calc line_qty'}),
+            'line_cost': NumInput(attrs={'step':'any', 'class': 'line_calc line_cost'}),
+            'inventory': HiddenInput(),
+            'inventory_text': forms.Select(attrs={'class': 'form-text'}),
+            'description': forms.TextInput(attrs={'class': 'form-text'}),
+            'unit': forms.TextInput(attrs={'class': 'line unit'})
+        },
+        can_delete=True
+        )
+
+
+
+
+
+
+
+var row_count = 0; //global to set number of order lines to 0 in formset
+
+function orderline_add(){
+    $('#id_inventory').on('change', function(){
+        var optionSelected = $(this).find('option:selected');
+        var valueSelected = optionSelected.val();
+        var inventory = optionSelected.text();
+        var qty = $('#service_qty').val();
+        var num_qty = parseInt(qty);
+        var service_id = document.getElementById('services');
+        var data = {'id':valueSelected, 'name': service_name};
+        $.ajax({
+            url:'/home',
+            data:data,
+            success: function(response){
+                var line_type = response[0]['line_type'];
+                var qty = response[0]['qty'];
+                var unit = response[0]['unit'];
+                var cost = response[0]['cost'];
+                var category = response[0] ['category'];
+
+                $('#order_table tbody tr').each(function() {
+                    var empty = true;
+                    $(this).find(':input').not(':checkbox').each(function() {
+                        if($(this).val() !== '' && $(this).val() !== '0') {
+                            empty=false;
+                        }
+                    });
+                    if(empty) {
+                        $(this).remove();
+                    }
+                });
+                for(var i =0; i < line_type.length; i++){
+                    add_row({'line_type': line_type[i], 'qty':qty[i], 'unit': unit[i], 'cost': cost[i], 'service': valueSelected});
+                    $('order_table.chosen-select:last').val(category[i])
+                    $('order_table.chosen-select:last').chosen({'disable_search_threshold': 10, 'enable_split_word_search': false, 'search_contains': true});
+                }
+                updateTotals();
+            },
+            error: function() {
+                console.log('failure');
+            }
+        });
+    });
+}
+orderline_add();
+
+$('#add_order_line').css('display', 'none');
+
+$('#add_qty').click(function(){
+    $('#add_order_line').toggle();
+    var add_css = $('#add_order_line').css('display', 'block');
+});
+
+$('#hide').click(function(){
+    $('#order_list_div').toggle();
+    if($(this).val() == 'hide all orders'){
+        $(this).val()('show all orders');
+    } else {
+        $(this).val('hide all orders');
+    }
+});
+
+$('body').on('click', 'delete_wo', function(e){
+    e.preventDefault();
+    $(this).closest('.order_container').find('.confirmDeleteID').text(wo_id);
+    $(this).closest('.order_container').find('.confirmDelete').modal('show');
+});
+
+$('body').on('click', '#deleteConfirmed', function(){
+    var wo_id = $(this).closest('modal-content').find('confirmDeleteID').text();
+    var csrftoken = getCookie('csrftoken');
+    var data = {'wo_id':wo_id, 'csrfmiddlewaretoken':csrftoken};
+
+    $.post('/order_delete', data, function(){
+        $('.wo_'+ wo_id).next().remove().end().remove();
+        var count = $('.order').size();
+        $('#wo_count').html(count);
+    }).error(function(xhr, status, error){
+        var message = 'Server error. Unable to delete order ' + wo_id;
+        if(xhr.responseJSON.message){
+            message = 'Unable to delete order ' + wo_id + ': ' + xhr.responseJSON.message;
+        }
+        $('.messages').append('<div class = "alert alert-danger" role= "alert">' + message + '</div>');
+    }).always(function(){
+        $('confirmDelete').modal('hide');
+    });
+});
+
+$("[name='order_edit']").on('submit', function(event){
+    wo_id_value = $(this).attr('id');
+    data = {'id': wo_id_value};
+    $.ajax({
+        url:'edit',
+        data:data,
+    });
+});
+
+$('#update_qty').click(function(){
+    var optionSelected = $('#id_service_type').find('option:selected');
+    var valueSelected = optionSelected.val();
+    var service_name = optionSelected.text();
+    var toggle_value = $('#add_qty').is(':hidden');
+    if(toggle_value === false){
+        var qty = $('#service_qty').val();
+        var qty_int = parseInt(qty);
+        var optionSelected = $('id_service_type').find('option:selected');
+        var valueSelected = optionSelected.val();
+        var service_name = optionSelected.text();
+        var qty = $('#service_qty').val();
+        var num_qty = parseInt(qty);
+        service_id = document.getElementById('services');
+        for(var i = 0; i<qty_int; i++){
+            row_count +=1;
+            data = {'id':valueSelected, 'name': service_name};
+            $.ajax({
+                url:'get_service_info',
+                data:data,
+                success: function(response){
+                    line_type = response[0]['line_type'];
+                    qty = response[0]['qty'];
+                    unit = response[0]['unit'];
+                    cost = response[0]['cost'];
+                    var row_index = 0;
+                    var table = document.getElementById('order_table');
+                    var row_length = table.rows.length;
+                    var check_null = document.forms['form']['id_orderline_set-0-line_type'].value;
+                    if(check_null == ''){
+                        var last_row = 0;
+                    } else {
+                        var last_row = row_length-1;
+                    }
+                    row_index = last_row;
+                    for(var i =0; i<line_type.length; i++){
+                        if(i>=1){
+                            var previous_index = row_index-1;
+                            if(previous_index<0){
+                                row_index +=Math.abs(previous_index);
+                            } else{
+                                var previous_row = document.forms['form']['id_orderline_set-'+previous_index+'-line_type'].value;
+                                if(previous_row == '' || previous_row == null){
+                                    row_index -=1;
+                                } else{
+                                    row_index +=1;
+                                }
+                            }
+                            add_row({'line_type': line_type[i], 'qty':qty[i], 'unit':unit[i], 'cost':cost[i]});
+                        } else {
+                            var previous_index = parseInt(row_index-1);
+                            if(previous_index<0){
+                                row_index += Math.abs(previous_index);
+                            } else{
+                                previous_index += 0;
+                                var previous_row = document.forms['form']['id_orderline_set'+previous_index+'-line_type'].value;
+                            }
+                            if(previous_row == '' || previous_row == null){
+                                row_index -= 1;
+                            } else{
+                                row_index += 1;
+                            }
+                            add_row({'line_type': line_type[i], 'qty': qty[i], 'unit': unit[i], 'cost': cost[i]});
+                        }
+                        updateTotals();
+                    }
+                },
+                error: function(){
+                    console.log('failure');
+                }
+            });
+        }
+    } else{
+        service_add();
+    }
+});
+
+
+
+
+
+
+function add_row(data, table_id, template_id, mngmt_total_id, form_id){
+
+  if (!table_id){
+    table_id='order_table';
+    template_id = 'order-line-form';
+    mngmt_total_id = 'id_orderlines-TOTAL_FORMS';
+    form_id = 'order_form';
+  }
+
+  var count =  $('#' + table_id +' tbody').children().length;
+  var template = $('#' + template_id +'').html();
+  var compiled = Handlebars.compile(template);
+  data['id'] = count;
+  var html = compiled(data);
+  $('#' + table_id +' tbody').append(html);
+  $('#' + mngmt_total_id).attr('value', count + 1);
+  $('#' + form_id).trigger('rescan.areYouSure');
+  return count;//return the row id
+}
+
+$('#add_order_line').on('click', function() {
+    add_row([])
+    $("#order_table .chosen-select:last").chosen({'disable_search_threshold': 10, 'enable_split_word_search': false, 'search_contains': true });
+});
+
+//make sure the checkboxes that are present on initial page load also get the hide functionality
+$('#order_table').on('change', 'tbody input[type=checkbox]', function() {
+  //TODO: possibly replace with undo link.
+  if ($(this).prop('checked')) {
+    $(this).parent().parent().addClass('deleted');
+  } else {
+    $(this).parent().parent().removeClass('deleted');
+  }
+});
+
+$('#order_table, #dept_cost_assign').on('change', 'thead input[type=checkbox]', function() {
+  //TODO: possibly replace with undo link.
+  if ($(this).prop('checked')) {
+    $('#order_table, #dept_cost_assign').find('input[name$="DELETE"]').prop('checked', true).trigger('change')
+  } else {
+    $('#order_table, #dept_cost_assign').find('input[name$="DELETE"]').prop('checked', false).trigger('change')
+  }
+});
+
+function getCookie(name){
+    var cookieValue = null;
+    if(document.cookie && document.cookie != ''){
+        var cookies = document.cookie.split(';');
+        for(var i = 0; i<cookies.length; i++){
+            var cookie = jQuery.trim(cookies[i]);
+            if(cookie.substring(0, name.length +1) == (name + '=')){
+                cookieValue = decodeURIComponent(cookie.substring(name.length+1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+var updateTotals = function() {
+    var total = 0;
+    var lines = $('#order_table tbody tr');
+
+    lines.each(function(line) {
+        if (!$(this).find('input[type=checkbox]').prop('checked')) {
+            var qty = parseFloat($(this).find('line_qty').val());
+            var cost = parseFloat($(this).find('line_cost').val());
+            var line_total = 0;
+            if (fixed) {
+                line_total = fixed;
+            } else if (cost && qty) {
+                line_total = cost * qty;
+            }
+            total += line_total;
+            var as_currency = line_total.toLocaleString('en_US', {style: 'currency', currency: 'USD' });
+            $(this).find('.line_total').text(as_currency);
+        }
+    });
+    $('.aggregate_total').text(total.toLocaleString('en_US', {style: 'currency', currency: 'USD' });
+});
+
+
+
+                                {% for form in formset %}
+                                <tr>
+                                {% for hidden in form.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+
+                                {% for field in form.visible_fields %}
+                                <td>{% if field.name == 'cost' %}${% endif %}{{field}}</td>
+                                {% endfor %}
+
+                                <td class='total'>
+                                {{form.instance.total | currency}}</td>
+                                </tr>
+                                {% if form.errors %}
+                                <tr>
+                                {% for field in form.visible_fields %}
+                                    <td>{{field.errors}}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+
+            <div class='col-xs-12'>
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="OrderLines">
+                            {{ formset.management_form }}
+                            {{ formset.media }}
+
+
+
+FROM ORDER_CREATE.HTML
+MOST RECENT 
+
+    <fieldset>
+        <legend>What would you like to order?</legend>
+
+        <div class='row'>
+            <div class='col-xs-12'>
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="OrderLines">
+                            {{formset.management_form}}
+                            {{formset.media}}
+                            <table id='order_table'>
+                            <thead>
+                                <tr>
+                                <th>Media Type</th>
+                                <th>Item</th>
+                                <th>Container</th>
+                                <th>Notes</th>
+                                <th>Qty</th>
+                                <th>Unit</th>
+                                <th>Cost</th>
+                                <th>Delete?<input type='checkbox' class='delete-all' /></th>
+                                <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for form in formset %}
+                                <tr>
+                                {% for hidden in formset.hidden_fields %}
+                                    {{ hidden }}
+                                {% endfor %}
+
+                                {% for field in formset.visible_fields %}
+                                <td>
+                                {% if field.name == 'cost' %}${% endif %}
+                                {{field}}
+                                </td>
+                                {% endfor %}
+                                <!--<td class='line_total'>{{form.instance.total | currency}}</td>-->
+                                </tr>
+                                {% if form.errors %}
+                                <tr>
+                                    {% for field in formset.visible_fields %}
+                                    <td>{{field.errors}}</td>
+                                    {% endfor %}
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+            <div class='row'>
+                <div class = 'col-xs-3'>
+                    <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" />
+                </div>
+                <div class='col-xs-offset-7 col-xs-2 text-right'>
+                    <p class="aggregate_total">
+                    {{order_form.instance.total | currency}}</p>
+                </div>
+            </div>
+        </fieldset>
+
+
+
+{% verbatim %}
+<!-- <script id='order-line-form' type='text/x-handlebars-template'>
+ -->    <tr class='highlight'>
+        <input id='id_orderlines-{{id}}-id' name='orderlines-{{id}}-id' type='hidden'>
+        <input id='id_orderlines-{{id}}-order' name='orderlines-{{id}}-order' type='hidden'>
+        <input id='id_orderlines-{{id}}-inventory' name='orderlines-{{id}}-inventory' type='hidden' value='{{inventory}}'>
+        <td>
+            <select id = 'id_orderlines-{{id}}-media_type' class='chosen-select line-media_type' name = 'orderlines-{{id}}-media_type'>
+            {% endverbatim %}
+            <option value=''>-----------</option>
+            {% for option in formset.forms.0.instance.media_type %}
+            <option value='{{option.0}}'>{{option.1}}</option>
+            {% endfor %}
+            {% verbatim %}
+            </select>
+        </td>
+        <td>
+            <select id = 'id_orderlines-{{id}}-inventory_text' class="chosen-select line-inventory_text" name='orderlines-{{id}}-inventory_text'>
+            {% endverbatim %}
+            <option value=''>----------</option>
+            {% for option in formset.forms.0.instance.inventory_text %}
+            <option value='{{option.0}}'>{{option.1}}</option>
+            {% endfor %}
+            {% verbatim %}
+            </select>
+        </td>
+        <td><input class='line-container' id='id_orderlines-{{id}}-container' name='orderlines-{{id}}-container' type ='text' value={{container}}></td>
+        <td><textarea cols='40' id='id_orderlines-{{id}}-description' name='orderlines-{{id}}-notes' rows='10'></textarea>}
+        {{description}}</td>
+        <td><input class="line_calc line_qty" id='id_orderlines-{{id}}-qty' name='orderlines-{{id}}-qty' step='any' type='number' value='{{qty}}'></td>
+        <td><input class='line-unit' id='id_orderlines-{{id}}-unit' maxlength='30' name='orderlines-{{id}}-unit' type='text' value='{{unit}}'></td>
+        <td><input class="line_calc line_cost" id='id_orderlines-{{id}}-cost' name='orderlines-{{id}}-cost' step='any' type='number' value='{{cost}}'></td>
+        <td><input id='id_orderlines-{{id}}-DELETE' name='orderlines-{{id}}-DELETE' type='checkbox'></td>
+        <td class='line_total'>$0.00</td>
+
+    </tr>
+<!-- </script>
+ -->{% endverbatim %}
+{% endblock %}

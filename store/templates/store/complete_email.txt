@@ -1,0 +1,10 @@
+Greetings,
+Your media store order #{{id}} has been completed. 
+Please remember to pick up your order from your preferred pick-up location:{{location}}.
+
+You can view a summary of this order:
+{{id}}
+
+Sincerely,
+
+The Media Facility

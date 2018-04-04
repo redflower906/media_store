@@ -1,0 +1,45 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html"%}
+{% endblock %}
+{% block content %}
+<div class="post form">
+    <div class='row', id='inv-h'>
+        <div class="col-md-8">
+            {% if SingleItem.id %}
+            <h2>Update product: {{ SingleItem.inventory_text }}</h2>
+            {% else %}
+            <h2>Create a new product</h2>
+            {% endif %}
+        </div>
+
+    </div>
+    <hr/>
+    <div class='row'>
+    <form method="POST" action="" class="post-form form-vertical">
+        {% csrf_token %}
+        {% if SingleItem.id %}
+        <div class='col-md-6'>
+            <table>
+                {{ Item_form.as_table }} 
+            </table>
+        </div>
+        {% else %}
+        <div>
+            <table>
+            {{formset.as_table}}
+            </table>
+        </div>
+        {% endif %}
+    <div class='text-right', id='inventory-buttons'>
+        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+        {% if SingleItem.id %}
+        <a href="{% url 'single_item' SingleItem.id %}" class="btn btn-default pull-right">Cancel</a>
+        {% else %}
+        <a href="/inventory" class="btn btn-default pull-right">Cancel</a>
+        {% endif %}
+    </div>
+    </form>    
+    </div>
+</div>
+{% endblock %}

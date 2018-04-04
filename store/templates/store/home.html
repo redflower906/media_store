@@ -1,0 +1,283 @@
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+
+<hr/>
+{% if user.userprofile.is_privileged is True %}
+<form method="POST" action="" class="form-group">
+    <div class="panel panel-danger">
+        <div class="panel-heading" style="text-align: center">Announcements</div>
+        <div class="panel-body" style="text-align: center">
+            {% csrf_token %}                  
+            {{ AForm }} 
+        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button> 
+        </div>
+    </div>
+</form> 
+{% else %}
+    {% if post.show %}
+        <div class="panel panel-danger">
+            <div class="panel-heading" style="text-align: center">Announcements</div>
+            <div class="panel-body" style="text-align: center">
+                {% csrf_token %}                  
+                {{ post.text }} 
+            </div>
+        </div>
+    {% endif %}
+{% endif %}
+<p>&nbsp;</p>
+
+
+<div class="row">
+    <h2><span>Fly Food Schedule</span></h2>
+    </div>
+<div class='row'>
+    <h4>(Today is {% now 'l' %})</h4>
+</div>
+<hr/>
+    <p>&nbsp;</p>
+
+<table class="table table-striped" style="width: 100%" class="foodcal">
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Monday</th>
+            <th>Tuesday</th>
+            <th>Wednesday</th>
+            <th>Thursday</th>
+            <th>Friday</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Standard Molasses</td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Power</td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Retinal</td>
+            <td></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Dextrose</td>
+            <td></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Wurzburg</td>
+            <td></td>
+            <td></td>
+            <td><span class="glyphicon glyphicon-ok active-icon" aria-hidden="true"></span></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<p>&nbsp;&nbsp;</p>
+
+<div class = "container" style = "padding-top:10px">
+</div>
+
+<div class="row">
+    <div class="col-xs-12, col-md-12">
+        <h2 class="capped-element-wrapper">
+            <span class="capped_headlinehightlight-color">What We Do</span>
+        </h2>
+        <hr/>
+    <div class="summary1">
+        <p>&nbsp;</p>
+        <p>
+        The Media Prep Facility feeds Janelia research. Experienced staff provide a consistent supply of quality-assured media and reagents, and a wide variety  of fly food products, to support laboratories and team projects. We customize formulations and protocols to precisely fit the needs of Janelia research.
+        </p>
+        <p>&nbsp;</p>
+        <p></p>
+    </div>
+    </div>
+</div>
+
+<div class="item1">
+    <p>
+    A majority of the Facility's work involves fly food but we also provide bacterial and worm plates and other media products to all of Janelia. The Facility fulfills and delivers orders to the labs quickly. Because commercially-available media products are available in the Janelia stockroom, the Media Facility has flexibility to produce individualized products that are not commercially available.
+    </p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+
+<div class="row">
+    <div class="col-xs-12, col-md-12">
+        <h2 class="capped-element-wrapper">
+            <span class="capped_headlinehightlight-color">Media Drop-off Locations</span>
+        </h2>
+        <hr/>
+    <div class="DO">
+        <p></p>
+        <p>
+            <li> <a data-toggle="modal" href="#2floor">2nd Floor</a></li>                
+                <div class="modal fade" id="2floor" tabindex="-1" role="dialog" aria-labelledby="2floorTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Second Floor Drop Off Locations</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <img class="img-responsive" src="/static/images/2E.png">
+                            <p>&nbsp;</p>
+                            <img class="img-responsive" src="/static/images/2C.png">
+                            <p>&nbsp;</p>
+                            <img class="img-responsive" src="/static/images/2W.png">
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            <li> <a data-toggle="modal" href="#3floor">3rd Floor</a></li>                
+                <div class="modal fade" id="3floor" tabindex="-1" role="dialog" aria-labelledby="3floorTitle" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="3floorTitle">Third Floor Drop Off Locations</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                            <img class="img-responsive" src="/static/images/3E.png">
+                            <p>&nbsp;</p>
+                            <img class="img-responsive" src="/static/images/3C.png">
+                            <p>&nbsp;</p>
+                            <img class="img-responsive" src="/static/images/3W.png">
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+        </p>
+        <p></p>
+    </div>
+    </div>
+</div>
+
+<h2 class="capped-element-wrapper">
+        <span class="capped_headlinehightlight-color">Meet the Team</span>
+</h2>
+<hr/>
+<p>&nbsp;</p>
+<div class='container'>
+<div class="team">
+    <div class="flex-row row">
+    <div class="col-xs-2, col-md-2">
+        <div class="thumbnail">
+         <img src="/static/images/staff/brian.jpg" class="img-rounded">
+         <div class="caption">
+            <h4><a href="mailto:rebhornb@janelia.hhmi.org">Brian Rebhorn</a></h4>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-2, col-md-2">
+        <div class="thumbnail">
+        <img src="/static/images/staff/hina.png" class="img-rounded">
+        <div class="caption">
+            <h4><a href="mailto:nazh@janelia.hhmi.org">Hina Naz</a></h4>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-2, col-md-2">
+        <div class="thumbnail">
+        <img src="/static/images/staff/rodney.jpg" class="img-rounded">
+        <div class="caption">
+            <h4><a href="mailto:simmonsr@janelia.hhmi.org">Rodney Simmons</a></h4>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+<p>&nbsp;</p>
+<div class="container">
+<div class="team2">
+    <div class="flex-row row">
+    <div class="col-xs-2, col-md-2">
+        <div class="thumbnail">
+        <img src="/static/images/staff/todd.jpg" class="img-rounded">
+         <div class="caption">
+            <h4><a href="mailto:lavertyt@janelia.hhmi.org">Todd Laverty</a></h4>
+            <h5>
+            Manager of Media Prep
+            </h5>
+        </div>
+        </div>
+    </div>
+    <div class="col-xs-2, col-md-2">
+        <div class="thumbnail">
+        <img src="/static/images/staff/jim.jpg" class="img-rounded">
+         <div class="caption">
+            <h4><a href="mailto:coxj@janelia.hhmi.org">Jim Cox</a></h4>
+            <h5>
+            Director of Animal and Biological Services
+            </h5>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<p>&nbsp;&nbsp;</p>
+
+<div class = "container" style = "padding-top:10px">
+</div>
+
+<div class="row">
+    <div class="col-xs-12, col-md-12">
+        <h2 class="capped-element-wrapper">
+            <span class="capped_headlinehightlight-color">Contact Us</span>
+        </h2>
+        <hr/>
+    <div class="location">
+        <p></p>
+        <p>
+        The Media Facility is located 1E.390
+        </p>
+        <p></p>
+    </div>
+    </div>
+</div>
+
+<div class="email">
+    <p><a href="mailto:mediafacility@janelia.hhmi.org">Email</a> us with any questions or comments
+    </p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+</div>
+
+
+
+{% endblock %}
+</html>

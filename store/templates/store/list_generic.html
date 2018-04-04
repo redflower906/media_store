@@ -1,0 +1,113 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+
+    <table class="table table-hover" id="order_table">
+        {{ orderforms.management_form }}
+        
+        {% if orderforms|length is not 0 %}
+            <thead>
+                <tr id="table_header">
+                    <th></th>
+                    {% table_header headers %}
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="searchable">
+                {% for orderform in orderforms %}
+                <tr class="order_{{orderform.instance.id}} koala {{orderform.instance.status}}">
+                    <td class="toggle_notes" >
+                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    </td>
+                    {% if user.userprofile.is_privileged is False and orderform.instance.status == 'Submitted' or user.userprofile.is_privileged is True %}
+                    <td>
+                        <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
+                    </td>
+                    {% else %}
+                    <td>
+                        {{orderform.instance.id}}
+                    </td>
+                    {% endif %}
+                    <td>{{orderform.instance.department.department_name}}</td>                    
+                    {% if orderforms == cornmeal %}
+                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.location}}</td>
+                    {% elif orderforms == corn_b %}
+                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.date_billed}}</td>
+                    {% else %}
+                    <td>{{orderform.instance.department.number}}</td>
+                    <td>{{orderform.instance.requester.userprofile.name}}</td>
+                    <td>{{orderform.instance.date_submitted}}</td>
+
+                    {% endif %}
+                    {% if orderforms == recur %}
+                    <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
+                    <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
+                    {% elif orderforms == compNotBill %}
+                    <td>{{orderform.instance.date_complete}}</td>
+                    {% elif orderforms == incomp %}     
+                    {% else %}
+                    <td>{{orderform.instance.date_billed}}</td>
+                    {% endif %}                
+                    <td>{{orderform.instance.location}}</td>
+                    {% if user.userprofile.is_privileged is True %}
+                        {% for hidden_field in orderform.hidden_fields %} 
+                            {{ hidden_field.errors }} 
+                            {{ hidden_field }} 
+                        {% endfor %}
+                        <td>
+                            {{orderform.status.errors}}
+                            {{orderform.status}}
+                        </td>
+                    {% else %}
+                    <td>{{orderform.instance.status}}</td>
+                    {% endif %}
+                    <td>${{orderform.instance.order_total}}</td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
+                    </td>
+                    <td></td>
+                    <tr id="notes" class="collapse" role="text">                        
+                        <td colspan="10">
+                            <table class ='table'>
+                                {% if orderform.instance.orderline_set.all %}
+                                <thead>
+                                    <tr id="table_header">
+                                        <th>Description</th>
+                                        {% if orderforms == recur %}
+                                            <th>Last Complete Date</th>
+                                            <th>Last Billed Date</th>
+                                        {% endif %}
+                                        <th>Quantity</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                {% for line in orderform.instance.orderline_set.all %}                                
+    {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
+                                </thead>
+                                <tr>
+                                    <td>{{line.inventory.inventory_text}}</td>
+                                    {% if orderforms == recur %}
+                                        <td>{{orderform.instance.date_complete}}</td>
+                                        <td>{{orderform.instance.date_billed}}</td>
+                                    {% endif %}
+                                    <td>{{line.qty}}</td>
+                                    <td>${{line.total}}</td>
+                    <td>{{orderform.instance.special_instructions}}</td>
+                                {% endfor %}
+                                {% else %}
+                                    <div><p>There are no order details for this order.</p></div>
+                                    </tr>
+                                {% endif %}
+                            </table>                            
+                        </td>                              
+                    </tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% else %}
+            <div><p>There are no orders at this time.</p></div>        
+        {% endif %}
+    </table>
+{% endblock %} 
