@@ -20,7 +20,7 @@ var config = {
 
 plan.target('production', {
   host: '10.37.6.50', // vm650
-  username: os.userInfo(), //process.env.USER,
+  username: os.userInfo, //process.env.USER,
   agent: process.env.SSH_AUTH_SOCK,
 },
 {
