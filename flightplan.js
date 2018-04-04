@@ -1,6 +1,4 @@
 var plan = require('flightplan');
-var os = require('os');
-var user = os.userInfo('USERNAME');
 
 var config = {
   projectDir: '/opt/media_v2/',
@@ -22,7 +20,7 @@ var config = {
 
 plan.target('production', {
   host: '10.37.6.50', // vm650
-  username: user, //process.env.USER,
+  username: process.env.USERNAME,
   agent: process.env.SSH_AUTH_SOCK,
 },
 {
