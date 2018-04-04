@@ -1,7 +1,7 @@
 var plan = require('flightplan');
 
 var config = {
-  projectDir: '/opt/media_v1/',
+  projectDir: '/opt/media_v2/',
   keepReleases: 3
 };
 
@@ -63,8 +63,8 @@ plan.local('deploy', function (local) {
 
 plan.remote('deploy', function(remote) {
   remote.log('Setup necessary symbolic links');
-  remote.exec('ln -s /opt/media_v1/media/local_settings.py ' + config.deployTo + '/local_settings.py');
-  remote.exec('ln -s /opt/media_v1/media/databasesettings.py ' + config.deployTo + '/databasesettings.py');
+  remote.exec('ln -s /opt/media_v2/local_settings.py ' + config.deployTo + '/local_settings.py');
+  remote.exec('ln -s /opt/media_v2/databasesettings.py ' + config.deployTo + '/databasesettings.py');
 });
 
 // plan.remote('deploy', function(remote) {
