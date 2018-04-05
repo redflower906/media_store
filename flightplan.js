@@ -21,7 +21,7 @@ var config = {
 plan.target('production', {
   host: '10.37.6.50', // vm650
   username: process.env.USERNAME,
-  privateKey: '.ssh/id_rsa',
+  privateKey: '/u/.ssh/id_rsa',
   agent: process.env.SSH_AUTH_SOCK,
 },
 {
