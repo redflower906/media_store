@@ -94,3 +94,14 @@ Long Term Goals (Set 6/9/17)
             -If we are able to do this then Fly and Media Store will most likely come under our management at that time
 
 script for auto-bill once integrated into RM
+
+if nnothing is running:
+    sudo systemctl start gunicorn.service
+    sudo systemctl start nginx
+
+check if it's running by doing:
+    sudo systemctl status gunicorn.service
+    sudo systemctl status nginx
+
+to change, must restart
+    change "start" to "restart" (if changed staticfiles, must restart both, otherwise only restart gunicorn)
