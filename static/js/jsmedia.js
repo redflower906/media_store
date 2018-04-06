@@ -139,11 +139,7 @@ $(function(){
 function recurringAlert(){
     var recur = $('input:checked').attr('id');
     if (recur == 'id_order-is_recurring_0') {
-<<<<<<< HEAD
-        alert('Be aware that any changes may not be implemented until the following week. Please email media facility with any questions.')
-=======
         alert('Be aware that, if this order has been edited, any changes may not be implemented until the following week. Please email media facility with any questions.')
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     }
 }
 

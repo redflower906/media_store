@@ -33,11 +33,7 @@
     <img id="img" src="/static/images/2E.png">
 </div>
 
-<<<<<<< HEAD
-<form id='order_form' method="post" action="" class="post-form form-horizontal">
-=======
 <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     {% csrf_token %}
     {{ order_form.non_field_errors }}
     {% for hidden_field in order_form.hidden_fields %}
@@ -87,8 +83,6 @@
         </div>
     </fieldset>
     <p>&nbsp;</p>
-<<<<<<< HEAD
-=======
 <!-->NEED TO SET UP STAFF DOWNLOAD, I DON'T THINK IT CAN BE DONE CORRECTLY UNTIL WE HAVE THE SERVER RUNNING<-->
     <fieldset>
         <legend>Recipe Upload</legend>
@@ -100,7 +94,6 @@
         </div>
     </fieldset>
     <p>&nbsp;</p>
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 
     <fieldset>
         <legend>What would you like to order?</legend>

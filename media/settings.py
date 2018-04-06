@@ -11,18 +11,11 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-<<<<<<< HEAD
-#import ldap
-#import django_auth_ldap.config
-from .databasesettings import DATABASES
-#from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
-=======
 import ldap
 import django_auth_ldap.config
 from .databasesettings import DATABASES
 from .local_settings import DEBUG, SECRET_KEY
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -30,15 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
-<<<<<<< HEAD
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*1d5m!lnpp(yp4a13vr%b9vanjf)euhr7_a*o)$en&esim0jm-'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-=======
-# SECURITY WARNING: don't run with debug turned on in production!
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1', 'localhost',)
@@ -81,10 +66,7 @@ COMPRESS_ENABLED=True
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-=======
     'debug_toolbar',
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     'store.apps.StoreConfig' ,
     'django.contrib.admin',
     'django.contrib.auth',
@@ -93,21 +75,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 #    'django_extensions',
-<<<<<<< HEAD
-#    'hijack',
-#    'south',
-    'debug_toolbar',
-    'jquery',
-    'djangoformsetjs',
-    'import_export',
-
-=======
     'jquery',
     'djangoformsetjs',
 #    'hijack',
 #    'south',
     'import_export',
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 ]
 
 MIDDLEWARE = [
@@ -202,44 +174,28 @@ AUTHENTICATION_BACKENDS = (
     #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-<<<<<<< HEAD
-AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
-'''
-=======
 AUTH_LDAP_SERVER_URI = "ldap://ldap.int.janelia.org"
 
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
 
-<<<<<<< HEAD
-"""class CustomGroupOfNamesType(GroupOfNamesType):
-    """"""
-=======
 class CustomGroupOfNamesType(GroupOfNamesType):
     """
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     An LDAPGroupType subclass that handles groups of class groupOfNames.
 
     The purpose of this whole class is to remove the begining string (base_dn)
     from the group name since it is way too long.
-<<<<<<< HEAD
-=======
     """
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
     
     def group_name:
-<<<<<<< HEAD
-=======
         """
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
         the Django group. This may return None to indicate that a particular
         LDAP group has no corresponding Django group.
@@ -247,11 +203,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
         The base implementation returns the value of the cn attribute, or
         whichever attribute was given to __init__ in the name_attr
         parameter.
-<<<<<<< HEAD
-        """"""
-=======
         """
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
         try:
             name = group_info[0].replace(self.base_dn,'')
         except (KeyError, IndexError):
@@ -323,12 +275,6 @@ LOGGING = {
 try:
     from local_settings import *
 except ImportError:
-<<<<<<< HEAD
-    pass"""
-'''
-
-IMPORT_EXPORT_USE_TRANSACTIONS = True
-=======
     pass
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
@@ -337,4 +283,3 @@ try:
     from local_settings import *
 except ImportError:
     pass
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3

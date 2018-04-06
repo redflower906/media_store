@@ -102,11 +102,7 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
-<<<<<<< HEAD
-        fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop')
-=======
         fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
         widgets={
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),

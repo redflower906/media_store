@@ -201,13 +201,10 @@ class Order(models.Model):
         ('3E.265', '3E.265 (18C)'),
         ('3E.267', '3E.267 (4C)'),
     )
-<<<<<<< HEAD
-=======
     def user_directory_path(instance, filename):
         # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
         return 'user_{0}/{1}'.format(instance.user.UserFullName, filename)
 
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     #had to make null to migrate CHANGE LATER
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
@@ -230,10 +227,7 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
         choices=STATUS_CHOICES
     )
-<<<<<<< HEAD
-=======
     doc = models.FileField(upload_to='documents/', null=True, blank=True)
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
     objects = OrderManager()
 
     def already_billed(self):
