@@ -11,10 +11,10 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import ldap
-import django_auth_ldap.config
+#import ldap
+#import django_auth_ldap.config
 from .databasesettings import DATABASES
-from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
+#from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,7 +69,6 @@ COMPRESS_ENABLED=True
 # Application definition
 
 INSTALLED_APPS = [
-    'debug_toolbar',
     'store.apps.StoreConfig' ,
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,11 +77,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 #    'django_extensions',
-    'jquery',
-    'djangoformsetjs',
 #    'hijack',
 #    'south',
+    'debug_toolbar',
+    'jquery',
+    'djangoformsetjs',
     'import_export',
+
 ]
 
 MIDDLEWARE = [
