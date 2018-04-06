@@ -58,6 +58,12 @@ urlpatterns = [
     url(r'^export/xls/$', views.export_orders, name='export_orders'),
     url(r'^delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
 
+<<<<<<< HEAD
+=======
+##Search
+    # url(r'^order/search', SearchListView.as_view(), name='Search'),
+
+>>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 ##email
     url(r'^(?P<id>[0-9]*)/email$', views.email_form, name='email'),
 

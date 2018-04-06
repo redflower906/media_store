@@ -2,7 +2,11 @@ from django import template
 import locale
 
 try:
+<<<<<<< HEAD
     locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+=======
+    locale.setlocale(locale.LC_ALL, '')
+>>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
 except locale.Error as e:
     # handle missing local on some platforms
     locale.setlocale(locale.LC_ALL, 'en_US')

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
-from django.views.generic.edit import DeleteView
+from django.views.generic.edit import DeleteView, ListView
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
@@ -174,12 +174,6 @@ def single_item(request, id):
     else:
         return get_item(request, id)
 
-'''def create_order(request, order_id):
-    order = Order.objects.get(pk=order_id)
-    OrderLineInlineFormset = inlineformset_factory(Order, OrderLine, )
-    InventoryInlineFormset = inlineformset_factory(Order)'''
-
-
 def __build_inventory_groups():
     """ build inventory lists grouped by mediatype. 
     
@@ -208,7 +202,7 @@ def create_order(request, copy_id=None):
 
     if request.method == "POST":
         
-        order_form = OrderForm(request.POST, prefix='order', instance=order, initial={'submitter': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -286,7 +280,7 @@ def edit_order(request, id):
 
     if request.method == "POST":
         
-        order_form = OrderForm(request.POST, prefix='order', instance=order)
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order)
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -592,3 +586,26 @@ def current_sign_outs (request):
         'cornmeal': cornmeal,
         'corn_b': corn_b,
         })
+
+# class SearchListView(ListView):
+#     """
+#     Display a Blog List page filtered by the search query.
+#     """
+#     model = Order
+#     paginate_by = 10
+#     user = self.request.user
+
+#     def get_queryset(self):
+#         if user.userprofile.is_privileged is False:
+#             qs = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
+#         else:
+#             qs = Order.objects.all()
+
+#         keywords = self.request.GET.get('q')
+#         if keywords:
+#             query = SearchQuery(keywords)
+#             vector = SearchVector('submitter', 'requester', 'department__department_name', 'date_create', 'date_billed', 'orderline__inventory__inventory_text' )
+#             qs = qs.annotate(search=vector).filter(search=query)
+#             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+
+#         return qs test
