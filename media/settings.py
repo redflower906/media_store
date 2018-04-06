@@ -175,25 +175,27 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org"
-'''
+
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
 
-"""class CustomGroupOfNamesType(GroupOfNamesType):
-    """"""
+class CustomGroupOfNamesType(GroupOfNamesType):
+    """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
 
     The purpose of this whole class is to remove the begining string (base_dn)
     from the group name since it is way too long.
+    """
     
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
     
     def group_name:
+        """
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
         the Django group. This may return None to indicate that a particular
         LDAP group has no corresponding Django group.
@@ -201,7 +203,7 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
         The base implementation returns the value of the cn attribute, or
         whichever attribute was given to __init__ in the name_attr
         parameter.
-        """"""
+        """
         try:
             name = group_info[0].replace(self.base_dn,'')
         except (KeyError, IndexError):
@@ -273,8 +275,7 @@ LOGGING = {
 try:
     from local_settings import *
 except ImportError:
-    pass"""
-'''
+    pass
 
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 
