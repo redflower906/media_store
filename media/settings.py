@@ -182,6 +182,7 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
 
+'''
 class CustomGroupOfNamesType(GroupOfNamesType):
     """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
