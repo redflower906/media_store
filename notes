@@ -105,3 +105,11 @@ check if it's running by doing:
 
 to change, must restart
     change "start" to "restart" (if changed staticfiles, must restart both, otherwise only restart gunicorn)
+
+to get rsync:
+    download msys2
+    pacman -Syu
+    pacman -Su
+    pacman -S git
+    pacman -S rsync
+    use mingw64 console to be able to use node 
