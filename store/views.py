@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
-from django.views.generic import DeleteView, ListView
+from django.views.generic.edit import DeleteView, ListView
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
@@ -608,4 +608,4 @@ def current_sign_outs (request):
 #             qs = qs.annotate(search=vector).filter(search=query)
 #             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
-#         return qs
+#         return qs test
