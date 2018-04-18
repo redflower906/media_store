@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
-from django.views.generic.edit import DeleteView, ListView
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
