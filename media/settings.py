@@ -175,14 +175,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_SERVER_URI = "ldap://ldap.int.janelia.org"
+AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #resource matrix has vip1, flystore doesn't. 
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
-'''
+
 class CustomGroupOfNamesType(GroupOfNamesType):
     """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
@@ -193,8 +193,8 @@ class CustomGroupOfNamesType(GroupOfNamesType):
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
-    
-    def group_name:
+        
+        def group_name_from_info(self, group_info):
         """
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
         the Django group. This may return None to indicate that a particular
@@ -245,9 +245,11 @@ AUTH_LDAP_FIND_GROUP_PERMS = True #Not sure what this does
 AUTH_LDAP_MIRROR_GROUPS = False #Pulls in LDAP groups, overwrites custom groups :-(
 
 # Optional Cache group memberships for an hour to minimize LDAP traffic
-AUTH_LDAP_CACHE_GROUPS = False 
+AUTH_LDAP_CACHE_GROUPS = False #!! set to True for production
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
+'''
+#THIS IS FROM RESOURCE MATRIX, IDK IF WE NEED IT? ~FIX~
 #customize app log
 LOGGING = {
     'version': 1,
@@ -284,3 +286,5 @@ try:
 except ImportError:
     pass
 '''
+
+
