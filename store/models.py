@@ -419,4 +419,4 @@ def status_email(sender, instance, *args, **kwargs):
         )
         instance.date_complete = date.today()
     ##elif instance.status == 'Canceled':
-        ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE?
+        ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~

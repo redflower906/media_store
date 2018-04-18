@@ -19,6 +19,7 @@
                     <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
                     </td>
+                    <!-- not staff -->
                     {% if user.userprofile.is_privileged is False and orderform.instance.status == 'Submitted' or user.userprofile.is_privileged is True %}
                     <td>
                         <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
@@ -28,10 +29,12 @@
                         {{orderform.instance.id}}
                     </td>
                     {% endif %}
-                    <td>{{orderform.instance.department.department_name}}</td>                    
+                    <td>{{orderform.instance.department.department_name}}</td>    
+                    <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
                     <td>{{orderform.instance.date_submitted}}</td>
                     <td>{{orderform.instance.location}}</td>
+                    <!-- coldroom signout billed -->
                     {% elif orderforms == corn_b %}
                     <td>{{orderform.instance.date_submitted}}</td>
                     <td>{{orderform.instance.date_billed}}</td>
@@ -41,16 +44,20 @@
                     <td>{{orderform.instance.date_submitted}}</td>
 
                     {% endif %}
+                    <!-- recurring -->
                     {% if orderforms == recur %}
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
+                    <!-- completed not billed -->
                     {% elif orderforms == compNotBill %}
                     <td>{{orderform.instance.date_complete}}</td>
+                    <!-- why??? -->
                     {% elif orderforms == incomp %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
+                    <!-- staff user -->
                     {% if user.userprofile.is_privileged is True %}
                         {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
@@ -61,6 +68,7 @@
                             {{orderform.status}}
                         </td>
                     {% else %}
+                    {% comment %} customer: can't change status {% endcomment %}
                     <td>{{orderform.instance.status}}</td>
                     {% endif %}
                     <td>${{orderform.instance.order_total}}</td>
@@ -84,7 +92,7 @@
                                         <th>Notes</th>
                                     </tr>
                                 {% for line in orderform.instance.orderline_set.all %}                                
-    {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
+                                {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
                                 </thead>
                                 <tr>
                                     <td>{{line.inventory.inventory_text}}</td>

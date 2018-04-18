@@ -6,7 +6,9 @@
   "dependencies": {
     "flightplan": "^0.6.17"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "flightplan": "^0.6.17"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
