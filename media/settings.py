@@ -194,7 +194,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
         
-        def group_name_from_info(self, group_info):
+    def group_name_from_info(self, group_info):
         """
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
         the Django group. This may return None to indicate that a particular
