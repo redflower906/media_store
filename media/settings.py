@@ -170,12 +170,11 @@ HIJACK_NOTIFY_ADMIN = True
 #Setting up LDAP Authentication:
 
 AUTHENTICATION_BACKENDS = (
-    #'TimeMatrix.backend.LDAPBackend',
-    #'django_auth_ldap.backend.LDAPBackend',
+    'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #resource matrix has vip1, flystore doesn't. 
+AUTH_LDAP_SERVER_URI = "ldap://external-ldap1.int.janelia.org" #from ConstructRequests settings.py
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
