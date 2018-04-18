@@ -182,7 +182,7 @@ AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
-
+'''
 class CustomGroupOfNamesType(GroupOfNamesType):
     """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
@@ -193,7 +193,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
-    '''
+    
     def group_name:
         """
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
@@ -210,7 +210,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
             name = None
         
         return name
-    '''
+
 # More secure
 #AUTH_LDAP_START_TLS = True
 
@@ -283,3 +283,4 @@ try:
     from local_settings import *
 except ImportError:
     pass
+'''
