@@ -193,7 +193,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
     def __init__(self, base_dn):
         self.base_dn = base_dn
         super(CustomGroupOfNamesType, self).__init__('dn')
-    
+    '''
     def group_name:
         """
         Given the (DN, attrs) 2-tuple of an LDAP group, this returns the name of
@@ -210,7 +210,7 @@ class CustomGroupOfNamesType(GroupOfNamesType):
             name = None
         
         return name
-
+    '''
 # More secure
 #AUTH_LDAP_START_TLS = True
 
