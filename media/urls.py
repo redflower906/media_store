@@ -17,7 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import ListView, DeleteView
+from django.views.generic.edit import DeleteView
+from django.views.generic.list import ListView
 from store.models import Order
 from store import views #as store_views  #can add more here with, 
 

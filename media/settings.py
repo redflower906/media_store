@@ -174,6 +174,7 @@ AUTHENTICATION_BACKENDS = (
     #'django_auth_ldap.backend.LDAPBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
+
 AUTH_LDAP_SERVER_URI = "ldap://ldap.int.janelia.org"
 
 AUTH_LDAP_BIND_DN = ""
@@ -181,11 +182,10 @@ AUTH_LDAP_BIND_PASSWORD = ""
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
     ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
-'''
+
 class CustomGroupOfNamesType(GroupOfNamesType):
     """
     An LDAPGroupType subclass that handles groups of class groupOfNames.
-
     The purpose of this whole class is to remove the begining string (base_dn)
     from the group name since it is way too long.
     """
@@ -283,4 +283,3 @@ try:
     from local_settings import *
 except ImportError:
     pass
-'''

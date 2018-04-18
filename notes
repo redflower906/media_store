@@ -94,3 +94,25 @@ Long Term Goals (Set 6/9/17)
             -If we are able to do this then Fly and Media Store will most likely come under our management at that time
 
 script for auto-bill once integrated into RM
+
+BEFORE GOING LIVE, DO A FIND FOR "FIX" IN CODE
+
+NOTES FOR GUNICORN AND NGINX
+if nothing is running:
+    sudo systemctl start gunicorn.service
+    sudo systemctl start nginx
+
+check if it's running by doing:
+    sudo systemctl status gunicorn.service
+    sudo systemctl status nginx
+
+to change, must restart
+    change "start" to "restart" (if changed staticfiles, must restart both, otherwise only restart gunicorn)
+
+to get rsync:
+    download msys2
+    pacman -Syu
+    pacman -Su
+    pacman -S git
+    pacman -S rsync
+    use mingw64 console to be able to use node 
