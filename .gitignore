@@ -4,8 +4,6 @@ db.sqlite3
 
 databasesettings.py
 
-<<<<<<< HEAD
-=======
 local_settings.py
 
 package-lock.json
@@ -13,4 +11,9 @@ package-lock.json
 node_modules
 
 venv
->>>>>>> 32b63bc4b43d89e6323b60a49868e7d4f5fec9b3
+
+svenv
+
+flystoresettings.py
+
+resourcematrixsettings.py
