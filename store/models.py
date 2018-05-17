@@ -10,7 +10,7 @@ from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.template import Context
-from django.db.models.signals import pre_save
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 import decimal
