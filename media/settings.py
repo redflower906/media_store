@@ -50,6 +50,7 @@ if DEBUG:
 
 ALLOWED_HOSTS = ['*']
 
+#Ask Emily or Jody about sending email ~FIX~
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 SERVER_EMAIL = 'harrisons1@janelia.hhmi.org'
@@ -174,7 +175,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_SERVER_URI = "ldap://external-ldap1.int.janelia.org" #from ConstructRequests settings.py
+AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #from Jody
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
