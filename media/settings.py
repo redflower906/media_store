@@ -174,7 +174,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_SERVER_URI = "ldap://external-ldap1.int.janelia.org" #from ConstructRequests settings.py
+AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #from ConstructRequests settings.py
 
 AUTH_LDAP_BIND_DN = ""
 AUTH_LDAP_BIND_PASSWORD = ""
