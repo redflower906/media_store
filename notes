@@ -109,6 +109,9 @@ check if it's running by doing:
 to change, must restart
     change "start" to "restart" (if changed staticfiles, must restart both, otherwise only restart gunicorn)
 
+to stop: sudo systemctl status gunicorn.service AND sudo systemctl status gunicorn.socket
+gunicorn error log location: /opt/log/mediastore
+
 to get rsync:
     download msys2
     pacman -Syu
@@ -116,3 +119,5 @@ to get rsync:
     pacman -S git
     pacman -S rsync
     use mingw64 console to be able to use node 
+
+flystore order_auto_assignees and staff_group under groups at bottom of user page
