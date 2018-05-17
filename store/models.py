@@ -62,11 +62,7 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-#Make sure a user profile gets created if a user doesn't have one
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-post_save.connect(create_user_profile, sender=User)
+
 
     # def __str__(self):
     #     return '%s %s' % (self.last_name, self.first_name)
@@ -92,6 +88,12 @@ post_save.connect(create_user_profile, sender=User)
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
+
+#Make sure a user profile gets created if a user doesn't have one
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+post_save.connect(create_user_profile, sender=User)
 
 class UserFullName(User):
     class Meta:
