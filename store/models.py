@@ -62,10 +62,11 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-    def create_user_profile(sender, instance, created, **kwargs):
-        if created:
+#Make sure a user profile gets created if a user doesn't have one
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
         UserProfile.objects.create(user=instance)
-        post_save.connect(create_user_profile, sender=User)
+post_save.connect(create_user_profile, sender=User)
 
     # def __str__(self):
     #     return '%s %s' % (self.last_name, self.first_name)
