@@ -5,25 +5,25 @@ Make sure everyone in LDAP is included in the users table.
 Call this with manage.py e.g.,
 python manage.py update_users
 
-The basic strategy here is to always have all employees at Janelia sitting in the 
-users table (inactivated).  Then Staff can go in and activate them, and 
+The basic strategy here is to always have all employees at Janelia sitting in the
+users table (inactivated).  Then Staff can go in and activate them, and
 assign groups.  Active staff users can then log in with ldap.
 """
 
 import sys
-sys.path.append('/SlackerTracker') #assumes we're running from DjangoProjects/VisitorProjectTracker
 import uuid
 import re
-import requests
 import json
+from datetime import datetime
+
+import requests
+import ftfy
 
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
-from datetime import datetime
 
-
-from django.core.management.base import BaseCommand, CommandError
-from django.contrib.auth.models import Group,User
+from django.core.management.base import BaseCommand
+from django.contrib.auth.models import User
 from django.utils import timezone
 from django.db import transaction
 from django.db.utils import IntegrityError
@@ -31,8 +31,9 @@ from django.utils.termcolors import colorize
 from django.db.models import Q
 
 from update_LDAP import get_all_users
-from store.models import UserProfile, Department, Order
-from VisitorProjectTracker.models import VisitingScientist
+from store.models import UserProfile, Department
+from visitor_project_tracker.models import VisitingScientist
+
 
 VERBOSITY = 0
 
@@ -44,6 +45,7 @@ def message(message, mtype):
         'error': 'red',
         'warning': 'yellow',
         'success': 'green',
+        'info': 'blue',
     }
 
     color = colors[mtype]
@@ -64,7 +66,7 @@ def user_debug(user_profile):
     if(user_profile.is_visitor):
         #try to print out project status, start_date, end_date, and department
         try:
-            visitor = VisitingScientist.objects.using('vstar').get( 
+            visitor = VisitingScientist.objects.using('vstar').get(
                 (Q(last_name=user.last_name) & Q(first_name=user.first_name)) | Q(contact_email= user.email)
             )
             projects = visitor.projects.filter(Q(active=True) | (Q(date_end__gte=THIRTY_DAYS_AGO) & ~Q(status='AWAITINGREVIEW'))).order_by('date_end').reverse()
@@ -125,7 +127,7 @@ def gen_pw():
 
 def get_active_employees(emp_id=None):
     # use the requests library to fetch the json data from the workday API.
-    url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails/'
+    url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails?includeTeams=false'
     if emp_id:
         url += str(emp_id)
 
@@ -146,7 +148,7 @@ def determine_username(emp):
     uname = email.lower()[:30]
 
     # if janelia email address
-    if re.search('@janelia.hhmi.org$', email):
+    if re.search('janelia.hhmi.org$', email):
         # try to find the matching ldap account first by employee id
         if emp['EMPLOYEEID'] in LDAP_USERS:
             # if found try to get username
@@ -158,7 +160,7 @@ def determine_username(emp):
             return ldap_account['uid'][0]
 
         emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
-        emp_name_dept = emp_name + '_' + emp['LEGACYDEPTID']
+        emp_name_dept = emp_name + '_' + emp['COSTCENTER']
         # then by name_department
         if emp_name_dept in LDAP_USERS:
             ldap_account = LDAP_USERS[emp_name_dept]
@@ -170,14 +172,32 @@ def determine_username(emp):
 
         message("Couldn't find LDAP account for {FIRSTNAME} {LASTNAME} ({EMPLOYEEID})\n".format(**emp), 'warning')
 
-    else:
-        # cant use part before @ of email address because lots of people are "unknown@hhmi.org"
-        # add first letter of first name to end of last name and lowercase.
-        if not re.search('\w+', uname):
-            uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
-            uname = re.sub("[^a-zA-Z0-9]","", uname)
-    return uname.lower()[:30]
+    elif re.search('hhmi.org$', email):
+        # try to find the matching ldap account first by employee id
+        if emp['EMPLOYEEID'] in LDAP_USERS:
+            # if found try to get username
+            ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
+            return ldap_account['uid'][0]
+        # then by email address
+        if emp['EMAILADDRESS'] in LDAP_USERS:
+            ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
+            return ldap_account['uid'][0]
 
+        emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
+        emp_name_dept = emp_name + '_' + emp['COSTCENTER']
+        # then by name_department
+        if emp_name_dept in LDAP_USERS:
+            ldap_account = LDAP_USERS[emp_name_dept]
+            return ldap_account['uid'][0]
+        # Don't bother trying just a name as there are too many people with the
+        # same name. eg: Jose Rodriguez
+
+    # cant use part before @ of email address because lots of people are "unknown@hhmi.org"
+    # add first letter of first name to end of last name and lowercase.
+    if not re.search('\w+', uname):
+        uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
+        uname = re.sub("[^a-zA-Z0-9]","", uname)
+    return uname.lower()[:30]
 
 def get_manager(manager_id):
     try:
@@ -196,13 +216,13 @@ def get_department(deptid):
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
 
-    # make sure we are billing the correct department for Gerry
-    if dept.number == '093001':
+    #make sure we are billing the correct department for Gerry
+    if dept.number == 'CC51050':
         try:
-            dept = Department.all_objects.get(number='093205')
+            dept = Department.all_objects.get(number='CC50040')
         except:
             dept = Department()
-            dept.number = '093205'
+            dept.number = 'CC50040'
             dept.save()
             message("Created department with id {0}\n".format(deptid),'warning')
 
@@ -258,7 +278,7 @@ def add_employee(emp, **kwargs):
 
     try:
         user.save()
-        message("Updated user {0} {1}\n".format(user.first_name, user.last_name), 'success')
+        message("Updated user {0} {1} ({2})\n".format(user.first_name, user.last_name, emp['EMPLOYEEID']), 'success')
     except IntegrityError as e:
         message("Couldn't save user {0} {1} ({2}): {3} \n".format(user.first_name, user.last_name, emp['EMPLOYEEID'], e), 'error')
         return
@@ -274,7 +294,7 @@ def add_employee(emp, **kwargs):
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
-        profile.department    = get_department(emp['LEGACYDEPTID'])
+        profile.department    = get_department(emp['COSTCENTER'])
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
@@ -294,7 +314,7 @@ def add_employee(emp, **kwargs):
         else:
             profile.offboard_date = None
 
-    if re.search('@janelia.hhmi.org$', user.email):
+    if emp['DEPARTMENTCITY'] == 'Ashburn':
         profile.is_janelia = True
 
     try:
@@ -309,20 +329,21 @@ def get_visitor_billing_department(project):
     if hosts:
         # use the first host in the list.
         host = hosts[0]
-        host_profile = UserProfile.objects.get(email_address=host.email)
-        return host_profile.department.number, project.code
+        try:
+            host_profile = UserProfile.objects.get(email_address=host.email)
+            return host_profile.department.number, project.code
+        except:
+            message("Unable to locate host profile based on email address ({0}) from vstar\n".format(host.email), 'error')
 
     elif project.team_host:
         # then team_host
-        return project.team_host.department_code, project.team_host.code
+        return project.team_host.department_code, project.team_host.code.strip()
 
-    else:
-        message("Couldn't find a department for project {0}. VStar is missing a host or team host for this project.\n".format(project.id), 'error')
-
-        # then other_host
+    message("Couldn't find a department for project {0}. VStar is missing a host or team host for this project.\n".format(project.id), 'error')
     return None, project.code
 
 def get_visitor_details(emp):
+    message("Looking up visitor {0.first_name} {0.last_name} in vstar\n".format(emp), 'info')
     department_code = None
     project_code = None
     # here is where we have the crazy logic to figure out who is going to get billed.
@@ -342,7 +363,7 @@ def get_visitor_details(emp):
     if not len(projects) == 1:
         message("There were more than one active projects for {0.first_name} {0.last_name} in vstar. Using the one with the furthest end date\n".format(emp), 'warning')
 
-    project_code = project.code
+    project_code = project.code.strip()
     # if it is JVS000100 then grab the host lab and bill them by changing the department
     if project_code == 'JVS000100':
         department_code, project_code = get_visitor_billing_department(project)
@@ -351,28 +372,36 @@ def get_visitor_details(emp):
         if not project.active:
             if project.date_end > THIRTY_DAYS_AGO.date():
                 department_code, project_code = get_visitor_billing_department(project)
+    dept = None
 
-    dept = Department.objects.get(number=department_code)
+    try:
+        dept = Department.objects.get(legacy_number=department_code)
+    except:
+        try:
+            dept = Department.objects.get(number=department_code)
+        except:
+            message("Can't find department code {1} in resourcematrix for user {0.first_name} {0.last_name} in vstar\n".format(emp, department_code), 'error')
     return dept, project_code
 
 def add_visitor(emp, in_workday):
-    dept, project = get_visitor_details(emp)
     # always ensure strings are always utf-8 encoded.
-    emp.first_name = emp.first_name.encode('utf-8') 
+    emp.first_name = emp.first_name.encode('utf-8')
     emp.last_name = emp.last_name.encode('utf-8')
+
+    dept, project = get_visitor_details(emp)
     profile = None
     user = None
 
     try:
         # check if we have an active user
         user = User.objects.get(first_name=emp.first_name, last_name=emp.last_name, is_active=True)
-        user.first_name = user.first_name.encode('utf-8') 
+        user.first_name = user.first_name.encode('utf-8')
         user.last_name = user.last_name.encode('utf-8')
     except:
         try:
             # check if we have an inactive user
             user = User.objects.get(first_name=emp.first_name, last_name=emp.last_name)
-            user.first_name = user.first_name.encode('utf-8') 
+            user.first_name = user.first_name.encode('utf-8')
             user.last_name = user.last_name.encode('utf-8')
 
             if user:
@@ -400,9 +429,22 @@ def add_visitor(emp, in_workday):
 
     try:
         user.save()
-        message(u"Updated user {0} {1}\n".format(user.first_name.decode('utf-8'), user.last_name.decode('utf-8')), 'success')
+        try:
+            first_name = user.first_name
+            if isinstance(first_name, str):
+                first_name = ftfy.guess_bytes(first_name)[0]
+            first_name = ftfy.fix_text(first_name)
+
+            last_name = user.last_name
+            if isinstance(last_name, str):
+                last_name = ftfy.guess_bytes(last_name)[0]
+            last_name = ftfy.fix_text(last_name)
+
+            message(u"Updated visitor {0} {1}\n".format(first_name, last_name), 'success')
+        except UnicodeDecodeError as e:
+            message(u"Encountered error printing username for user {0}\n".format(user.id), 'error')
     except IntegrityError as e:
-        message(u"Couldn't save visitor user {0} {1}: {2} \n".format(user.first_name.decode('utf-8'), user.last_name.decode('utf-8'), e), 'error')
+        message(u"Couldn't save visitor user {0} {1}: {2} \n".format(user.first_name, user.last_name, e), 'error')
         return
 
     # now we have a user object set up the profile
@@ -438,22 +480,22 @@ def add_visitor(emp, in_workday):
 
     return
 
-def cleanup_missing_user_profiles():
-    # get all the user objects.
-    users = User.objects.all().prefetch_related('user_profile')
-    # loop over them and figure out which ones don't have a matching profile
-    for user in users:
-        if len(user.user_profile.all()) < 1:
-            wo_count = WorkOrder.objects.filter(Q(submitter=user) | Q(main_requestor=user)).count()
+# def cleanup_missing_user_profiles():
+#     # get all the user objects.
+#     users = User.objects.all().prefetch_related('user_profile')
+#     # loop over them and figure out which ones don't have a matching profile
+#     for user in users:
+#         if len(user.user_profile.all()) < 1:
+#             wo_count = WorkOrder.objects.filter(Q(submitter=user) | Q(main_requestor=user)).count()
 
-            if wo_count < 1:
-                # delete that user if they don't have associated workorders
-                message("Removed user: {0} with no profile.\n".format(user.username), 'warning')
-                user.delete()
-            else:
-                message("Can't remove {0} with no profile, because they are associated with {1} workorders.\n".format(user.username, wo_count), 'error')
+#             if wo_count < 1:
+#                 # delete that user if they don't have associated workorders
+#                 message("Removed user: {0} with no profile.\n".format(user.username), 'warning')
+#                 user.delete()
+#             else:
+#                 message("Can't remove {0} with no profile, because they are associated with {1} workorders.\n".format(user.username, wo_count), 'error')
 
-    return
+#     return
 
 def deactivate_users_missing_from_workday(all_employees, in_workday):
 
@@ -462,18 +504,19 @@ def deactivate_users_missing_from_workday(all_employees, in_workday):
 
     for profile in user_profiles:
         if profile.employee_id and not profile.employee_id in in_workday:
-            if profile.is_active == True or profile.user.is_active == True :
+            if profile.is_active is True or profile.user.is_active is True:
                 profile.is_active = False
                 profile.save()
                 profile.user.is_active = False
                 profile.user.save()
-                message("Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
+                message(u"Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
                 user_debug(profile)
-    return in_workday;
+    return in_workday
 
 
 
 class Command(BaseCommand):
+    """Grab all employees from workday API and update user profiles"""
     args = '<employeeid>'
     help = 'Grab all employees from workday API and update user profiles'
 
@@ -483,11 +526,12 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        if len(args) > 0:
+        if args:
             emp_id = args[0]
 
         # get an array of dicts each containing the following details
-        #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME', 'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'}
+        #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
+        #'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'}
         all_employees = get_active_employees(emp_id=emp_id)
         # build a lookup dict of the users in workday that should be active in ResourceMatrix
         in_workday = {}
@@ -496,9 +540,10 @@ class Command(BaseCommand):
 
         if not emp_id:
             deactivate_users_missing_from_workday(all_employees, in_workday)
-            cleanup_missing_user_profiles()
+            # cleanup_missing_user_profiles()
 
-        managers = {};
+        managers = {}
+
 
         for emp in all_employees:
             if emp['MGRID']:
@@ -506,7 +551,7 @@ class Command(BaseCommand):
 
         for emp in all_employees:
             if emp['EMPLOYEEID'] in managers:
-                add_employee(emp, manager=True);
+                add_employee(emp, manager=True)
 
         for emp in all_employees:
             if emp['EMPLOYEEID'] not in managers:
@@ -521,4 +566,3 @@ class Command(BaseCommand):
                 add_visitor(emp, in_workday)
 
         return
-
