@@ -121,3 +121,6 @@ to get rsync:
     use mingw64 console to be able to use node 
 
 flystore order_auto_assignees and staff_group under groups at bottom of user page
+
+resourcematrix/timematrix/management/commands/
+

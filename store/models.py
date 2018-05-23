@@ -13,6 +13,7 @@ from django.template import Context
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
+from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 
@@ -41,19 +42,25 @@ class Department(models.Model):
     class Meta:
         ordering = ('number',)
 
+#Make sure a user profile gets created if a user doesn't have one
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
+post_save.connect(create_user_profile, sender=User)
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, 
     related_name='userprofile'
     )
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
-    hhmi_project_id = models.CharField(max_length=30, blank=True, null=True)
+    hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #do we need?
     employee_id = models.CharField(max_length=20, blank=True, null=True)
     email_address = models.CharField(max_length=255, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
 #   manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL)
-    is_manager = models.BooleanField(default=False)
+    # is_manager = models.BooleanField(default=False) #do we need?
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
@@ -88,12 +95,6 @@ class UserProfile(models.Model):
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
-
-#Make sure a user profile gets created if a user doesn't have one
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-post_save.connect(create_user_profile, sender=User)
 
 class UserFullName(User):
     class Meta:
