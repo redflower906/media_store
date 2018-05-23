@@ -14,7 +14,7 @@ sys.path.append('/SlackerTracker') #assumes we're running from DjangoProjects/Vi
 import datetime
 import uuid
 
-from update_LDAP import get_all_users
+from ldap
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Group,User
@@ -34,6 +34,24 @@ def map_attrs_to_user(u, dattrs):
     u.email = dattrs.get('mail',[''])[0]
     u.set_password(gen_pw())
     u.save() #save so a profile gets created if it doesn't already exist
+
+def get_all_users():         
+     """Given an ldap connection, return all users.  Each user is a dictionary                                             
+     with the following keys: 
+     ['telephoneNumber', 'departmentNumber', 'loginShell', 'cn', 'uid', 'title',                                           
+     'objectClass', 'uidNumber', 'description', 'jpegPhoto', 'roomNumber', 'gidNumber', 
+     'gecos', 'sn', 'homeDirectory', 'mail', 'givenName', 'displayName', 'employeeNumber']                                 
+     """
+     ld_conn = ldap.initialize('ldap://ldap-vip1.int.janelia.org')
+     ld_conn.simple_bind_s()  
+     basedn = "ou=people,dc=hhmi,dc=org"                                                                                   
+     ldap_filter = "(|(uid=*))"
+     results = ld_conn.search_s(basedn, ldap.SCOPE_SUBTREE, ldap_filter)
+     #dn is a string like: 'cn=pinerog,ou=People,dc=janelia,dc=org'
+     retlist = [entry for _, entry in results]
+     ld_conn.unbind_s()       
+     retlist.sort(key=lambda x: x['uid'])
+     return retlist
 
 class Command(BaseCommand):
     args = ''

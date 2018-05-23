@@ -54,13 +54,13 @@ class UserProfile(models.Model):
     )
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
-    hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #do we need?
+    hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #needed for visitor projects
     employee_id = models.CharField(max_length=20, blank=True, null=True)
     email_address = models.CharField(max_length=255, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
-#   manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL)
-    # is_manager = models.BooleanField(default=False) #do we need?
+#   manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL) ~FIX~
+    # is_manager = models.BooleanField(default=False) #do we need? ~FIX~
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
