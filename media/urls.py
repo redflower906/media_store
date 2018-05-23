@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from store.models import Order
-from store import views #as store_views  #can add more here with, 
+from store import views 
 
 app_name = 'store'
 

@@ -289,13 +289,13 @@ def add_employee(emp, **kwargs):
     profile.user          = user
     profile.email_address = user.email
     profile.employee_id   = emp['EMPLOYEEID']
-    profile.is_manager    = is_manager
+    #profile.is_manager    = is_manager
 
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
         profile.department    = get_department(emp['COSTCENTER'])
-        profile.manager       = get_manager(emp['MGRID'])
+        #profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
     else:
