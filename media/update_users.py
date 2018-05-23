@@ -10,11 +10,10 @@ assign groups.  Active staff users can then log in with ldap.
 """
 
 import sys
-sys.path.append('/SlackerTracker') #assumes we're running from DjangoProjects/VisitorProjectTracker
 import datetime
 import uuid
 
-from ldap
+import ldap
 
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.auth.models import Group,User
