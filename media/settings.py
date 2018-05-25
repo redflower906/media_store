@@ -67,6 +67,8 @@ COMPRESS_ENABLED=True
 # Application definition
 
 INSTALLED_APPS = [
+    'store',
+    'visitor_project_tracker',
     'debug_toolbar',
     'store.apps.StoreConfig' ,
     'django.contrib.admin',
