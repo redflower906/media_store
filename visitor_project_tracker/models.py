@@ -19,7 +19,7 @@ from django.db import models
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
-from django.utils.encoding import smart_unicode, force_unicode
+from django.utils.encoding import smart_text, force_unicode
 #We use templates to generate shipping forms for requests
 from django.template.loader import get_template
 from django.template import Context, RequestContext
