@@ -61,10 +61,6 @@ class VisitorProgramTitle(models.Model):
 class VisitingScientist(models.Model):
     """Stores all scientist information.  FYI: More than 1 scientist can be on a project
     and 1 scientist can have multiple projects. """
-    class Meta:
-        db_table = 'tracker_visitingscientist'
-        managed = False
-        ordering = ['last_name','first_name']
     last_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100, blank=True)
     title = models.CharField(max_length=50, blank=True,
@@ -98,6 +94,10 @@ class VisitingScientist(models.Model):
     emergency_contact_phone = models.CharField(max_length=100, blank=True)
     CV = models.FileField(blank=True, upload_to='uploads')
     notes = models.TextField(blank=True)
+    class Meta:
+        db_table = 'tracker_visitingscientist'
+        managed = False
+        ordering = ['last_name','first_name']
 
     def hhmi_designation(self):
         if self.visitor_program_title and self.visitor_program_title.name.upper().startswith('HHMI/JRC'):
@@ -146,10 +146,6 @@ class Project(models.Model):
     def default_deadline():
         return datetime.date.today() + datetime.timedelta(days=7)
 
-    class Meta:
-        db_table = 'tracker_project'
-        managed = False
-        ordering = ['code','id',]
 
     #Admin
     code = models.CharField("Project Code", max_length=20, blank=True) #ideally this would be unique unless blank, but can't do it in django?
@@ -236,6 +232,11 @@ class Project(models.Model):
     work_done_at_janelia = models.TextField("Description of work done at Janelia", blank=True, help_text="for renewals")
     work_done_at_vistitors_institution = models.TextField("Description of work done at the visitor's institution(s)", blank=True, help_text="for renewals")
     scope = models.TextField(blank=True, help_text="for renewals")
+    
+    class Meta:
+        db_table = 'tracker_project'
+        managed = False
+        ordering = ['code','id',]
 
     def __unicode__(self):
         str_code = '(%s) - ' % self.code if self.code else ''
