@@ -124,7 +124,7 @@ def create_ldap_lookup():
 
         # can use firstname_lastname_department as that should be unique
         if 'givenName' in user and 'sn' in user and 'departmentNumber' in user:
-            lookup[user['givenName'][0].decode('utf-8') + '_' + user['sn'][0] + '_' + user['departmentNumber'][0].decode('utf-8')] = user
+            lookup[user['givenName'][0].decode('utf-8') + '_' + user['sn'][0].decode('utf-8') + '_' + user['departmentNumber'][0].decode('utf-8')] = user
 
         # can use firstname_lastname as a last_resort
         if 'givenName' in user and 'sn' in user:
