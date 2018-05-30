@@ -128,7 +128,7 @@ def create_ldap_lookup():
 
         # can use firstname_lastname as a last_resort
         if 'givenName' in user and 'sn' in user:
-            lookup[user['givenName'][0] + '_' + user['sn'][0]] = user
+            lookup[user['givenName'][0] + '_' + user['sn'][0]] = user.encode()
 
     return lookup
 
