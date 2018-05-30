@@ -33,12 +33,12 @@ class User(models.Model):
     class Meta:
         db_table = 'auth_user'
     email = models.CharField("Email Address", max_length=255, blank=True)
-    id = models.IntegerField()
+    J_id = models.IntegerField()
 
 
 class TeamProject(models.Model):
     class Meta:
-        ordering = ('name',)
+        #ordering = ('name',)
         db_table = 'tracker_teamproject'
         managed = False
     code = models.CharField("Project Code", max_length=20, blank=True)
@@ -49,13 +49,13 @@ class TeamProject(models.Model):
 class OtherHost(models.Model):
     """Used for adding hosts that are not at Janelia"""
     class Meta:
-        ordering = ('name',)
+        #ordering = ('name',)
         db_table = 'tracker_otherhost'
         managed = False
 
 class VisitorProgramTitle(models.Model):
     class Meta:
-        ordering = ('name',)
+        #ordering = ('name',)
         managed = False
 
 class VisitingScientist(models.Model):
@@ -232,7 +232,7 @@ class Project(models.Model):
     work_done_at_janelia = models.TextField("Description of work done at Janelia", blank=True, help_text="for renewals")
     work_done_at_vistitors_institution = models.TextField("Description of work done at the visitor's institution(s)", blank=True, help_text="for renewals")
     scope = models.TextField(blank=True, help_text="for renewals")
-    
+
     class Meta:
         db_table = 'tracker_project'
         managed = False
