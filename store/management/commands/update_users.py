@@ -150,8 +150,8 @@ def get_active_employees(emp_id=None):
         url += str(emp_id)
 
     res = requests.get(url)
+    print type(res)
     employees = json.loads(res.content)
-    employees = employees.decode('utf-8')
     #filter out employees that have termination dates previous to 30 days ago
     def should_be_active(emp):
         if not emp['TERMINATIONDATE']:
