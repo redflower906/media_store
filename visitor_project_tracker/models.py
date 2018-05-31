@@ -116,7 +116,7 @@ class VisitingScientist(models.Model):
     def short_name(self):
         ret_str = self.first_name + ' ' + self.last_name
         ret_str = latin1_to_ascii(ret_str)
-        return force_unicode(ret_str)
+        return force_text(ret_str)
 
     def __unicode__(self):
         str_inst = ' (%s)' % self.institute if self.institute else ''
@@ -128,7 +128,7 @@ class VisitingScientist(models.Model):
         #If you upgrade Django you can try running without this. The umlaut is
         #a good test case
         ret_str = latin1_to_ascii(ret_str)
-        return force_unicode(ret_str)
+        return force_text(ret_str)
 
     def str_w_cv(self):
         """Conditionally hyperlink name is CV is available"""
@@ -242,7 +242,7 @@ class Project(models.Model):
         str_code = '(%s) - ' % self.code if self.code else ''
         ret_str = str_code + self.proposed_title
         ret_str = latin1_to_ascii(ret_str)
-        return force_unicode(ret_str)
+        return force_text(ret_str)
 
     def export_in_word_url(self):
         if self.id:
