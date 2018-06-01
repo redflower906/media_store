@@ -450,14 +450,14 @@ def add_visitor(emp, in_workday):
         user.save()
         try:
             first_name = user.first_name
-            if isinstance(first_name, str):
-                first_name = ftfy.guess_bytes(first_name)[0]
-            first_name = ftfy.fix_text(first_name)
+            # if isinstance(first_name, str):
+            #     first_name = ftfy.guess_bytes(first_name)[0]
+            # first_name = ftfy.fix_text(first_name)
 
             last_name = user.last_name
-            if isinstance(last_name, str):
-                last_name = ftfy.guess_bytes(last_name)[0]
-            last_name = ftfy.fix_text(last_name)
+            # if isinstance(last_name, str):
+            #     last_name = ftfy.guess_bytes(last_name)[0]
+            # last_name = ftfy.fix_text(last_name)
 
             message(u"Updated visitor {0} {1}\n".format(first_name, last_name), 'success')
         except UnicodeDecodeError as e:
