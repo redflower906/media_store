@@ -33,7 +33,7 @@ class User(models.Model):
     class Meta:
         db_table = 'auth_user'
     email = models.CharField("Email Address", max_length=255, blank=True)
-    J_id = models.IntegerField()
+    id = models.IntegerField()
 
 
 class TeamProject(models.Model):
