@@ -538,8 +538,8 @@ class Command(BaseCommand):
     """Grab all employees from workday API and update user profiles"""
 #    help = 'Grab all employees from workday API and update user profiles'
     def add_arguments (self, parser):
-        parser.add_argument('employeeid', nargs='+', type=int)
-        
+        parser.add_argument('employeeid', nargs='*', type=int)
+
     def handle(self, *args, **options):
         global VERBOSITY
         VERBOSITY = int(options['verbosity'])
