@@ -549,8 +549,8 @@ class Command(BaseCommand):
         emp_id = None
 
         if options['EMPLOYEEID']:
-            for eid in options['EMPLOYEEID']
-                emp_id = 'EMPLOYEEID'[0]
+            args = parser.parse_args()
+                emp_id = args.EMPLOYEEID
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
