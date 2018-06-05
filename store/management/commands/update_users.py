@@ -549,8 +549,8 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        # if options['EMPLOYEEID']:
-        #     emp_id = args.EMPLOYEEID
+        if options['EMPLOYEEID']:
+            print ('it recognizes that there is an arg!')
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
