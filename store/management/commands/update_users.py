@@ -551,6 +551,7 @@ class Command(BaseCommand):
 
         if options['EMPLOYEEID']:
             emp_id = str(options['EMPLOYEEID'])[0]
+            print (emp_id)
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
