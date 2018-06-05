@@ -550,7 +550,7 @@ class Command(BaseCommand):
         emp_id = None
 
         if options['EMPLOYEEID']:
-            print (options['EMPLOYEEID'])
+            emp_id = options['EMPLOYEEID']
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
