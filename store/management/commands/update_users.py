@@ -550,7 +550,7 @@ class Command(BaseCommand):
 
         if options['EMPLOYEEID']:
             args = parser.parse_args()
-                emp_id = args.EMPLOYEEID
+            emp_id = args.EMPLOYEEID
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
