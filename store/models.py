@@ -43,13 +43,13 @@ class Department(models.Model):
         ordering = ('number',)
 
 # #Make sure a user profile gets created if a user doesn't have one
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
-post_save.connect(create_user_profile, sender=User)
+# def create_user_profile(sender, instance, created, **kwargs):
+#     if created:
+#         UserProfile.objects.create(user=instance)
+# post_save.connect(create_user_profile, sender=User)
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, related_name='userprofile')
+    user = models.ForeignKey(User, related_name='userprofile')
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #needed for visitor projects
