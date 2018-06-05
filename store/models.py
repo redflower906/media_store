@@ -58,7 +58,7 @@ class UserProfile(models.Model):
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
 #   manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL) ~FIX~
-    # is_manager = models.BooleanField(default=False) #do we need? ~FIX~
+    is_manager = models.BooleanField(default=False) #do we need? ~FIX~
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)

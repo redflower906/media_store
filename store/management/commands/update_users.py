@@ -219,13 +219,13 @@ def determine_username(emp):
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
 
-# def get_manager(manager_id):
-#     try:
-#         manager_profile = UserProfile.objects.get(employee_id=manager_id)
-#         manager = manager_profile.user
-#     except:
-#         manager = None
-#     return manager
+def get_manager(manager_id):
+    try:
+        manager_profile = UserProfile.objects.get(employee_id=manager_id)
+        manager = manager_profile.user
+    except:
+        manager = None
+    return manager
 #NEEDED? ~FIX~
 
 def get_department(deptid):
@@ -255,7 +255,7 @@ def get_department(deptid):
 def add_employee(emp, **kwargs):
     #fields available in the emp dict:
     # 'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME', 'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'
-    #is_manager = kwargs.get('manager', False)
+    is_manager = kwargs.get('manager', False)
     profile = None
     user    = None
 
@@ -310,13 +310,13 @@ def add_employee(emp, **kwargs):
     profile.user          = user
     profile.email_address = user.email
     profile.employee_id   = emp['EMPLOYEEID']
-    #profile.is_manager    = is_manager
+    profile.is_manager    = is_manager
 
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
         profile.department    = get_department(emp['COSTCENTER'])
-        #profile.manager       = get_manager(emp['MGRID'])
+        profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
     else:
