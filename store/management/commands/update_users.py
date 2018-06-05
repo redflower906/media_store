@@ -540,8 +540,6 @@ class Command(BaseCommand):
     """Grab all employees from workday API and update user profiles"""
 #    help = 'Grab all employees from workday API and update user profiles'
 
-    parser = argparse.ArgumentParser()
-
     def add_arguments (self, parser):
         parser.add_argument('EMPLOYEEID', nargs='?', type=int)
 
@@ -551,9 +549,8 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        if options['EMPLOYEEID']:
-            args = parser.parse_args()
-            emp_id = args.EMPLOYEEID
+        # if options['EMPLOYEEID']:
+        #     emp_id = args.EMPLOYEEID
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
