@@ -218,7 +218,7 @@ def determine_username(emp):
         uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
-    print(uname)
+    print (uname)
 
 # def get_manager(manager_id):
 #     try:
