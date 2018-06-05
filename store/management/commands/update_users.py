@@ -164,7 +164,7 @@ def get_active_employees(emp_id=None):
 
 def determine_username(emp):
     email = emp['EMAILADDRESS']
-    print (email)
+    print (json.dumps(email, indent=4))
     uname = email.lower()[:30]
 
     # if janelia email address
