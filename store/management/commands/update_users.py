@@ -166,7 +166,6 @@ def determine_username(emp):
     email = emp['EMAILADDRESS']
 
     uname = email.lower()[:30]
-    print (uname)
 
     # if janelia email address
     if re.search('janelia.hhmi.org$', email):
@@ -281,13 +280,14 @@ def add_employee(emp, **kwargs):
                 profile = UserProfile()
 
     if not user and not profile:
-        message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
+        message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].decode('utf-8'), emp['PREFERREDLASTNAME'].decode('utf-8')), 'warning')
         user = User()
         profile = UserProfile()
+        #changed 4 surrounding decodes from encodes
 
     # update user details
-    user.first_name = emp['PREFERREDFIRSTNAME'].encode('utf-8')
-    user.last_name  = emp['PREFERREDLASTNAME'].encode('utf-8')
+    user.first_name = emp['PREFERREDFIRSTNAME'].decode('utf-8')
+    user.last_name  = emp['PREFERREDLASTNAME'].decode('utf-8')
     user.email      = emp['EMAILADDRESS']
     user.username   = determine_username(emp)
     user.set_password(gen_pw())
