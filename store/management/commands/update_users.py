@@ -164,7 +164,6 @@ def get_active_employees(emp_id=None):
 
 def determine_username(emp):
     email = emp['EMAILADDRESS']
-    print (json.dumps(email, indent=4))
     uname = email.lower()[:30]
 
     # if janelia email address
@@ -540,7 +539,7 @@ class Command(BaseCommand):
     """Grab all employees from workday API and update user profiles"""
 #    help = 'Grab all employees from workday API and update user profiles'
     def add_arguments (self, parser):
-        parser.add_argument('employeeid', nargs='*', type=int)
+        parser.add_argument('EMPLOYEEID', nargs='?', type=int)
 
     def handle(self, *args, **options):
         global VERBOSITY
@@ -548,8 +547,8 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        if args:
-            emp_id = args[0]
+        if employeeid:
+            emp_id = employeeid[0]
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
