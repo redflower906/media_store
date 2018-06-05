@@ -64,6 +64,14 @@ class UserProfile(models.Model):
     is_visitor = models.BooleanField(default=False)
     is_privileged = models.BooleanField(default=False)
 
+# this is used to prevent updates from workday overriding the values that have
+# been altered in ResourceMatrix. We need to do this for people who are in the
+# wrong department for billing. eg: Pat Rivlin is in "093417 Fly Brain Imaging EM"
+# but she should be billed to "093093 Electron Microscopy". This could be dangerous
+# and we should probably limit which fields are ignored to department.
+    skip_updates = models.BooleanField(default=False)
+    offboard_date = models.DateField(blank=True, null=True)
+
     def name(self):
         return self.last_name + ", " + self.first_name
 
@@ -72,7 +80,6 @@ class UserProfile(models.Model):
     # def __str__(self):
     #     return '%s %s' % (self.last_name, self.first_name)
 
-    #skip_updates = models.BooleanField(default=False)
 
 
     #offboard_date = models.DateField(blank=True, null=True)
