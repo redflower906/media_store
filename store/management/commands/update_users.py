@@ -152,7 +152,7 @@ def get_active_employees(emp_id=None):
     res = requests.get(url)
     #employees = json.loads(res.content)
     employees = res.json()
-    print (json.dumps(employees, indent=4))
+    # print (json.dumps(employees, indent=4)) seems like all employees are found, not just visitors
     #filter out employees that have termination dates previous to 30 days ago
     def should_be_active(emp):
         if not emp['TERMINATIONDATE']:
@@ -218,14 +218,16 @@ def determine_username(emp):
         uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
+    print(uname)
 
-def get_manager(manager_id):
-    try:
-        manager_profile = UserProfile.objects.get(employee_id=manager_id)
-        manager = manager_profile.user
-    except:
-        manager = None
-    return manager
+# def get_manager(manager_id):
+#     try:
+#         manager_profile = UserProfile.objects.get(employee_id=manager_id)
+#         manager = manager_profile.user
+#     except:
+#         manager = None
+#     return manager
+#NEEDED? ~FIX~
 
 def get_department(deptid):
     try:
