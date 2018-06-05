@@ -21,7 +21,7 @@ import requests
 import ftfy
 import ldap
 
-# from dateutil import parser
+from dateutil import parser
 from dateutil.relativedelta import relativedelta
 
 from django.core.management.base import BaseCommand
@@ -539,6 +539,9 @@ def deactivate_users_missing_from_workday(all_employees, in_workday):
 class Command(BaseCommand):
     """Grab all employees from workday API and update user profiles"""
 #    help = 'Grab all employees from workday API and update user profiles'
+
+    parser = argparse.ArgumentParser()
+
     def add_arguments (self, parser):
         parser.add_argument('EMPLOYEEID', nargs='?', type=int)
 
