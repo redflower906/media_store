@@ -14,6 +14,7 @@ import sys
 import uuid
 import re
 import json
+import argparse
 from datetime import datetime
 
 import requests
@@ -548,7 +549,8 @@ class Command(BaseCommand):
         emp_id = None
 
         if options['EMPLOYEEID']:
-            emp_id = EMPLOYEEID[0]
+            for eid in options['EMPLOYEEID']
+                emp_id = 'EMPLOYEEID'[0]
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
