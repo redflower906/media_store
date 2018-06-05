@@ -166,6 +166,7 @@ def determine_username(emp):
     email = emp['EMAILADDRESS']
 
     uname = email.lower()[:30]
+    print (uname)
 
     # if janelia email address
     if re.search('janelia.hhmi.org$', email):
@@ -218,7 +219,6 @@ def determine_username(emp):
         uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
-    print (uname)
 
 # def get_manager(manager_id):
 #     try:
