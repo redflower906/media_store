@@ -253,7 +253,7 @@ def get_department(deptid):
 def add_employee(emp, **kwargs):
     #fields available in the emp dict:
     # 'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME', 'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'
-    is_manager = kwargs.get('manager', False)
+    #is_manager = kwargs.get('manager', False)
     profile = None
     user    = None
 
@@ -320,8 +320,8 @@ def add_employee(emp, **kwargs):
     else:
         message("Skipping profile updates for {0} {1}, skip_updates flag set on user profile.\n".format(user.first_name, user.last_name), 'warning')
 
-    if is_manager:
-        profile.is_privileged = True
+    # if is_manager:
+    #     profile.is_privileged = True
 
 
     if emp['ACTIVEFLAG'] == 'Y':
@@ -479,7 +479,7 @@ def add_visitor(emp, in_workday):
         profile = UserProfile(
              user = user,
              email_address = user.email,
-             is_manager = False
+             #is_manager = False
         )
 
     if not profile.skip_updates:
