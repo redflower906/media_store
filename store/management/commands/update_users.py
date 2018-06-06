@@ -161,6 +161,7 @@ def get_active_employees(emp_id=None):
         term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
         return term_date.date() >= THIRTY_DAYS_AGO.date()
 
+    print (filter(should_be_active, employees))
     return filter(should_be_active, employees)
 
 def determine_username(emp):
