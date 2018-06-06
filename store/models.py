@@ -30,7 +30,7 @@ class Department(models.Model):
     active = models.BooleanField(default=True)
 
 #   objects = ActiveDepartmentManager()
-#   all_objects = models.Manager()
+    # all_objects = models.Manager()
 # I don't think unicode works in python 3? it's always __str__
     # def __unicode__(self):
     #     return self.number + " " + self.department_name
