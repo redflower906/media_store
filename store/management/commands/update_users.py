@@ -148,7 +148,8 @@ def get_active_employees(emp_id=None):
     # use the requests library to fetch the json data from the workday API.
     url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails'
     if emp_id:
-        url += ('/'+ str(emp_id)) 
+        url += '/'+ str(emp_id)
+        print (url)
     else:
         url += '?includeTeams=false'
 
@@ -162,8 +163,6 @@ def get_active_employees(emp_id=None):
             return True
         term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
         return term_date.date() >= THIRTY_DAYS_AGO.date()
-
-    print (filter(should_be_active, employees))
     return filter(should_be_active, employees)
 
 def determine_username(emp):
