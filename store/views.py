@@ -200,7 +200,8 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    username = user.userprofile.name()
+    userid = request.user.id
+    username = user.userprofile.get(userid).name()
     print(request.user.userprofile.name)
     if request.method == "POST":
         
