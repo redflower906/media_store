@@ -238,7 +238,7 @@ def get_department(deptid, deptname):
         dept.department_name = deptname
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
-
+    print (deptname)
     #make sure we are billing the correct department for Gerry
     if dept.number == 'CC51050':
         try:
