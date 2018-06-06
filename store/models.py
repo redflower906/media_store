@@ -24,7 +24,7 @@ from datetime import datetime, date
 
 class Department(models.Model):
     department_name = models.CharField(max_length=100)
-    number = models.CharField(unique=True, max_length=6)
+    number = models.CharField(unique=True, max_length=10)
     account_code = models.IntegerField(null=True, blank=True)
     is_shared_resource = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
