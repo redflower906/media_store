@@ -1,96 +1,96 @@
-id,inventory_text,cost,date_created,notes,vendor_id,date_modified,deposit,minimum_amt,part_num,withdrawal,active,container,media_type,product,volume
-607,4% agar: 100 mm (sleeve),13.85,7/10/2017,,0,09:44.0,0,0,,0,1,Sleeve : 100mm clear petri dish,Agar,4% agar,
-608,4% agar: 150 mm (sleeve),32.00,7/10/2017,,0,09:44.0,0,0,,0,1,Sleeve : 150mm clear petri dish,Agar,4% agar,
-609,4% agar: reused tray (plate),3.30,7/10/2017,,0,09:44.0,0,0,,0,1,Plate: Bioassay tray - USED,Agar,4% agar,
-610,Charcoal: 60mm (sleeve),14.50,7/10/2017,,0,09:44.0,0,0,,0,1,Sleeve : 60mm clear petri dish,Agar,Charcoal,
-611,Charcoal: reused tray (plate),3.30,7/10/2017,,0,09:44.0,0,0,,0,0,Plate: Bioassay tray - USED,Agar,Charcoal,
-612,Grape juice plates: 100mm (sleeve),27.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 100mm clear petri dish,Agar,Grape juice plates,
-613,Grape Juice plates: 35mm (sleeve),14.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 35mm Falcon clear petri,Agar,Grape juice plates,
-614,Grape juice plates: 60mm (sleeve),11.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 60mm clear petri dish,Agar,Grape juice plates,
-615,Starvation: vials (tray),25.61,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Agar,Starvation,
-616,Antibiotic bioassay tray (plate),11.00,7/10/2017,,0,09:44.0,0,0,,0,0,Plate : Bioassay tray,Antibiotics,Antibiotic bioassay tray,
-617,Antibiotic plates w. x-gal & IPTG: 100mm (sleeve),85.04,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates w. x-gal & IPTG,
-618,Antibiotic plates: 100mm (sleeve),24.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates,
-619,Antibiotic plates: 150mm (sleeve),31.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates,
-620,Culture tubes: 1 rack,25.00,7/10/2017,,0,09:44.0,0,0,,0,0,rack,Antibiotics,Culture tubes,
-621,Deep well blocks: 2L aliquoted  ,38.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Antibiotics,Deep well blocks- aliquoted,2L
-622,Q-trays (plate),11.00,7/10/2017,,0,09:44.0,0,0,,0,0,Plate: bioassay tray,Antibiotics,Q-trays,
-623,Stab tubes (100),50.00,7/10/2017,,0,09:44.0,0,0,,0,0,100 tubes,Antibiotics,Stab tubes,
-624,Dextrose: vials (tray),24.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Dextrose Food,Dextrose,
-625,Trikinetic tubes (100),47.50,7/10/2017,,0,09:44.0,0,0,,0,0,100 tubes,Dextrose Food,Trikinetic tubes,
-626,1X PBS: 10L,52.25,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,1X PBS,10L
-627,2xYT: 1L,11.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,2xYT,1L
-628,2-YT: 1L,5.75,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,2-YT,1L
-629,2-YT: 500ml,2.88,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,2-YT,500 mL
-630,CRAP: 1L,10.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,CRAP,1L
-631,LB: 100 ml,1.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Antibiotics,LB,100 mL
-632,LB: 1L,9.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Antibiotics,LB,1L
-633,YPAD: 1L,9.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,YPAD,1L
-634,YPM: 1L,9.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,YPM,1L
-635,ZY: 1L,9.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Liquid Media,ZY,1L
-636,Eppendorf tubes: 0.5 ml safety (jar),17.69,7/10/2017,,0,09:44.0,0,0,,0,0,Jar,Miscellaneous,Eppendorf tubes safety,0.5 mL
-637,Eppendorf tubes: 1.5 ml flex (bag),8.65,7/10/2017,,0,09:44.0,0,0,,0,0,Bag,Miscellaneous,Eppendorf tubes flex,1.5 mL
-638,Eppendorf tubes: 1.5 ml flex (jar),6.87,7/10/2017,,0,09:44.0,0,0,,0,0,Jar,Miscellaneous,Eppendorf tubes flex,1.5 mL
-639,Eppendorf tubes: 1.5 ml safe (jar),8.72,7/10/2017,,0,09:44.0,0,0,,0,0,Jar,Miscellaneous,Eppendorf tubes safety,1.5 mL
-640,Eppendorf tubes: 2.0 ml safe (bag),12.22,7/10/2017,,0,09:44.0,0,0,,0,0,Bag,Miscellaneous,Eppendorf tubes safety,2.0 mL
-641,Eppendorf tubes: 2.0 ml safe (jar),7.51,7/10/2017,,0,09:44.0,0,0,,0,0,Jar,Miscellaneous,Eppendorf tubes safety,2.0 mL
-642,Fish water: 2L filtered,8.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Miscellaneous,Fish water- filtered,2L
-643,Bottles (tray),26.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Power Food,Power Food,
-644,Bulk: 1L,14.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Power Food,Bulk,1L
-645,Hotel (0.5ml),18.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Power Food,Hotel,0.5 mL
-646,Hotel (1.0ml),19.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Power Food,Hotel,1.0mL
-647,Large vials (tray),40.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : large vials,Power Food,Power Food,
-648,Racks,22.50,7/10/2017,,0,09:44.0,0,0,,0,0,racks,Power Food,Power Food,
-649,Retinal 1:1000: vials (tray),61.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Power Food,Retinal 1:1000,
-650,Retinal 1:250: bottles (tray),70.75,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Power Food,Retinal 1:250,
-651,Retinal 1:250: hotel (0.5ml),20.75,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Power Food,Retinal 1:250,
-652,Retinal 1:250: hotel (1.0ml),21.50,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Power Food,Retinal 1:250,
-653,Retinal 1:250: vials (tray),74.89,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Power Food,Retinal 1:250,
-654,Retinal 1:500 half volume: vials (tray),61.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Power Food,Retinal 1:500,half vo
-655,Retinal 1:500: bottles (tray),57.98,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Power Food,Retinal 1:500,
-656,Retinal 1:500: hotel (0.5ml),20.50,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Power Food,Retinal 1:500,0.5 mL
-657,Retinal 1:500: hotel (1.0ml),21.00,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Power Food,Retinal 1:500,1.0mL
-658,Retinal 1:500: used hotel (0.5ml),13.00,7/10/2017,,0,09:44.0,0,0,,0,0,Hotel - USED,Power Food,Retinal 1:500,0.5 mL
-659,Retinal 1:500: vials (tray),66.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Power Food,Retinal 1:500,
-660,Vials (tray),36.55,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Power Food,Power Food,
-661,2X HBS: 1L,44.75,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,2X HBS,1L
-662,50X5052: 1L,36.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,50X5052,1L
-663,50XM: 1L,22.90,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,50XM,1L
-664,Cortex Buffer: 1L aliquoted,100.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,Cortex Buffer- aliquoted,1L
-665,External Solution for Zebra fish (2L),85.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,External Solution for Zebra fish,2L
-666,Imaging Buffer: 10L,290.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,Imaging Buffer,10L
-667,Ringers Solution: 1L,21.50,7/10/2017,,0,09:44.0,0,0,,0,0,,Solutions & Buffers,Ringers Solution,1 L
-668,Bottles (tray),14.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Cornmeal Food,Cornmeal Food,
-669,Bulk: 1L,7.00,7/10/2017,,0,09:44.0,0,0,,0,0,,Cornmeal Food,Bulk,1 L
-670,Large vials (tray),31.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : large vials,Cornmeal Food,Cornmeal Food,
-671,Phosphoric acid: vials (tray),24.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Phosphoric acid- vials (tray),
-672,Racks,20.00,7/10/2017,,0,09:44.0,0,0,,0,0,racks,Cornmeal Food,Cornmeal Food,
-673,Retinal 1:200: 60mm plates (sleeve),17.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 60mm plates,Cornmeal Food,Retinal 1:200,
-674,Retinal 1:200: bottles (tray),39.75,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Cornmeal Food,Retinal 1:200,
-675,Retinal 1:200: vials (tray),144.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Retinal 1:200,
-676,Retinal 1:250 full volume: vials (tray),72.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Retinal 1:250,
-677,Retinal 1:250 half volume: vials (tray),63.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Retinal 1:250,half vo
-678,Retinal 1:250: bottles (tray),35.75,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Cornmeal Food,Retinal 1:250,
-679,Retinal 1:250: hotel,20.25,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Cornmeal Food,Retinal 1:250,
-680,Retinal 1:250: racks,28.00,7/10/2017,,0,09:44.0,0,0,,0,0,racks,Cornmeal Food,Retinal 1:250,
-681,Retinal 1:500 half volume: vials (tray),58.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Retinal 1:500,half vo
-682,Retinal 1:500: bottles (tray),53.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Cornmeal Food,Retinal 1:500,
-683,Retinal 1:500: hotel,20.00,7/10/2017,,0,09:44.0,0,0,,0,0,hotel,Cornmeal Food,Retinal 1:500,
-684,Retinal 1:500: vials (tray),63.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Retinal 1:500,
-685,Standard food plates (sleeve),7.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : plates,Cornmeal Food,Cornmeal Food,
-686,Vials (tray),24.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Cornmeal Food,Cornmeal Food,
-687,Sylgard 100mm plates (sleeve),26.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 100 mm plates,Sylgard,Sylgard,
-688,Sylgard black glass plates (sleeve),96.25,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : black glass plates ,Sylgard,Sylgard,
-689,Sylgard clear plates (sleeve),16.50,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : clear plates ,Sylgard,Sylgard ,
-690,Sylgard clear plates w/out plate cost (sleeve),9.20,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : clear plates w/out plate cost ,Sylgard,Sylgard ,
-691,Sylgard corning plates (sleeve),21.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : corning plates ,Sylgard,Sylgard ,
-692,Sylgard well plates (sleeve),20.50,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : well plates ,Sylgard,Sylgard ,
-693,Bottles (tray),20.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Wurzburg Food,Wurzburg Food,
-694,Large vials (vial),1.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : large vials,Wurzburg Food,Wurzburg Food,
-695,Retinal 1:250: bottles (tray),38.50,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Wurzburg Food,Retinal 1:250,
-696,Retinal 1:250: vials (tray),55.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Wurzburg Food,Retinal 1:250,
-697,Retinal 1:500: bottles (tray) ,31.25,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : bottles,Wurzburg Food,Retinal 1:500,
-698,Retinal 1:500: vials (tray) ,50.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Wurzburg Food,Retinal 1:500,
-699,Vials (tray),35.00,7/10/2017,,0,09:44.0,0,0,,0,0,Tray : vials,Wurzburg Food,Wurzburg Food,
-700,Grape juice: 35mm lids (sleeve),11.00,7/10/2017,,0,09:44.0,0,0,,0,0,Sleeve : 35mm Falcon clear petri,Agar,Grape juice,
-701,Grape Juice: trays (45 trays),100.00,7/10/2017,,0,09:44.0,0,0,,0,0,Trays,Agar,Grape juice,
+id,inventory_text,cost,date_created,notes,vendor_id,date_modified,deposit,minimum_amt,withdrawal,active,container,media_type,product,volume
+607,4% agar: 100 mm (sleeve),13.85,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100mm clear petri dish,Agar,4% agar,
+608,4% agar: 150 mm (sleeve),32,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 150mm clear petri dish,Agar,4% agar,
+609,4% agar: reused tray (plate),3.3,7/10/2017,,0,09:44.0,0,0,0,1,Plate: Bioassay tray - USED,Agar,4% agar,
+610,Charcoal: 60mm (sleeve),14.5,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 60mm clear petri dish,Agar,Charcoal,
+611,Charcoal: reused tray (plate),3.3,7/10/2017,,0,09:44.0,0,0,0,1,Plate: Bioassay tray - USED,Agar,Charcoal,
+612,Grape juice plates: 100mm (sleeve),27,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100mm clear petri dish,Agar,Grape juice plates,
+613,Grape Juice plates: 35mm (sleeve),14,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 35mm Falcon clear petri,Agar,Grape juice plates,
+614,Grape juice plates: 60mm (sleeve),11,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 60mm clear petri dish,Agar,Grape juice plates,
+615,Starvation: vials (tray),25.61,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Agar,Starvation,
+616,Antibiotic bioassay tray (plate),11,7/10/2017,,0,09:44.0,0,0,0,1,Plate : Bioassay tray,Antibiotics,Antibiotic bioassay tray,
+617,Antibiotic plates w. x-gal & IPTG: 100mm (sleeve),85.04,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates w. x-gal & IPTG,
+618,Antibiotic plates: 100mm (sleeve),24,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates,
+619,Antibiotic plates: 150mm (sleeve),31,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100mm clear petri dish,Antibiotics,Antibiotic plates,
+620,Culture tubes: 1 rack,25,7/10/2017,,0,09:44.0,0,0,0,1,rack,Antibiotics,Culture tubes,
+621,Deep well blocks: 2L aliquoted  ,38.5,7/10/2017,,0,09:44.0,0,0,0,1,,Antibiotics,Deep well blocks- aliquoted,2L
+622,Q-trays (plate),11,7/10/2017,,0,09:44.0,0,0,0,1,Plate: bioassay tray,Antibiotics,Q-trays,
+623,Stab tubes (100),50,7/10/2017,,0,09:44.0,0,0,0,1,100 tubes,Antibiotics,Stab tubes,
+624,Dextrose: vials (tray),24,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Dextrose Food,Dextrose,
+625,Trikinetic tubes (100),47.5,7/10/2017,,0,09:44.0,0,0,0,1,100 tubes,Dextrose Food,Trikinetic tubes,
+626,1X PBS: 10L,52.25,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,1X PBS,10L
+627,2xYT: 1L,11.5,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,2xYT,1L
+628,2-YT: 1L,5.75,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,2-YT,1L
+629,2-YT: 500ml,2.88,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,2-YT,500 mL
+630,CRAP: 1L,10,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,CRAP,1L
+631,LB: 100 ml,1,7/10/2017,,0,09:44.0,0,0,0,1,,Antibiotics,LB,100 mL
+632,LB: 1L,9,7/10/2017,,0,09:44.0,0,0,0,1,,Antibiotics,LB,1L
+633,YPAD: 1L,9,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,YPAD,1L
+634,YPM: 1L,9,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,YPM,1L
+635,ZY: 1L,9,7/10/2017,,0,09:44.0,0,0,0,1,,Liquid Media,ZY,1L
+636,Eppendorf tubes: 0.5 ml safety (jar),17.69,7/10/2017,,0,09:44.0,0,0,0,1,Jar,Miscellaneous,Eppendorf tubes safety,0.5 mL
+637,Eppendorf tubes: 1.5 ml flex (bag),8.65,7/10/2017,,0,09:44.0,0,0,0,1,Bag,Miscellaneous,Eppendorf tubes flex,1.5 mL
+638,Eppendorf tubes: 1.5 ml flex (jar),6.87,7/10/2017,,0,09:44.0,0,0,0,1,Jar,Miscellaneous,Eppendorf tubes flex,1.5 mL
+639,Eppendorf tubes: 1.5 ml safe (jar),8.72,7/10/2017,,0,09:44.0,0,0,0,1,Jar,Miscellaneous,Eppendorf tubes safety,1.5 mL
+640,Eppendorf tubes: 2.0 ml safe (bag),12.22,7/10/2017,,0,09:44.0,0,0,0,1,Bag,Miscellaneous,Eppendorf tubes safety,2.0 mL
+641,Eppendorf tubes: 2.0 ml safe (jar),7.51,7/10/2017,,0,09:44.0,0,0,0,1,Jar,Miscellaneous,Eppendorf tubes safety,2.0 mL
+642,Fish water: 2L filtered,8,7/10/2017,,0,09:44.0,0,0,0,1,,Miscellaneous,Fish water- filtered,2L
+643,Bottles (tray),26,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Power Food,Power Food,
+644,Bulk: 1L,14.5,7/10/2017,,0,09:44.0,0,0,0,1,,Power Food,Bulk,1L
+645,Hotel (0.5ml),18.5,7/10/2017,,0,09:44.0,0,0,0,1,,Power Food,Hotel,0.5 mL
+646,Hotel (1.0ml),19.5,7/10/2017,,0,09:44.0,0,0,0,1,,Power Food,Hotel,1.0mL
+647,Large vials (tray),40,7/10/2017,,0,09:44.0,0,0,0,1,Tray : large vials,Power Food,Power Food,
+648,Racks,22.5,7/10/2017,,0,09:44.0,0,0,0,1,racks,Power Food,Power Food,
+649,Retinal 1:1000: vials (tray),61,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Power Food,Retinal 1:1000,
+650,Retinal 1:250: bottles (tray),70.75,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Power Food,Retinal 1:250,
+651,Retinal 1:250: hotel (0.5ml),20.75,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Power Food,Retinal 1:250,
+652,Retinal 1:250: hotel (1.0ml),21.5,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Power Food,Retinal 1:250,
+653,Retinal 1:250: vials (tray),74.89,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Power Food,Retinal 1:250,
+654,Retinal 1:500 half volume: vials (tray),61,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Power Food,Retinal 1:500,half vo
+655,Retinal 1:500: bottles (tray),57.98,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Power Food,Retinal 1:500,
+656,Retinal 1:500: hotel (0.5ml),20.5,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Power Food,Retinal 1:500,0.5 mL
+657,Retinal 1:500: hotel (1.0ml),21,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Power Food,Retinal 1:500,1.0mL
+658,Retinal 1:500: used hotel (0.5ml),13,7/10/2017,,0,09:44.0,0,0,0,1,Hotel - USED,Power Food,Retinal 1:500,0.5 mL
+659,Retinal 1:500: vials (tray),66,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Power Food,Retinal 1:500,
+660,Vials (tray),36.55,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Power Food,Power Food,
+661,2X HBS: 1L,44.75,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,2X HBS,1L
+662,50X5052: 1L,36.5,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,50X5052,1L
+663,50XM: 1L,22.9,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,50XM,1L
+664,Cortex Buffer: 1L aliquoted,100,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,Cortex Buffer- aliquoted,1L
+665,External Solution for Zebra fish (2L),85,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,External Solution for Zebra fish,2L
+666,Imaging Buffer: 10L,290,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,Imaging Buffer,10L
+667,Ringers Solution: 1L,21.5,7/10/2017,,0,09:44.0,0,0,0,1,,Solutions & Buffers,Ringers Solution,1 L
+668,Bottles (tray),14,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Cornmeal Food,Cornmeal Food,
+669,Bulk: 1L,7,7/10/2017,,0,09:44.0,0,0,0,1,,Cornmeal Food,Bulk,1 L
+670,Large vials (tray),31,7/10/2017,,0,09:44.0,0,0,0,1,Tray : large vials,Cornmeal Food,Cornmeal Food,
+671,Phosphoric acid: vials (tray),24,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Phosphoric acid- vials (tray),
+672,Racks,20,7/10/2017,,0,09:44.0,0,0,0,1,racks,Cornmeal Food,Cornmeal Food,
+673,Retinal 1:200: 60mm plates (sleeve),17,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 60mm plates,Cornmeal Food,Retinal 1:200,
+674,Retinal 1:200: bottles (tray),39.75,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Cornmeal Food,Retinal 1:200,
+675,Retinal 1:200: vials (tray),144,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Retinal 1:200,
+676,Retinal 1:250 full volume: vials (tray),72,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Retinal 1:250,
+677,Retinal 1:250 half volume: vials (tray),63,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Retinal 1:250,half vo
+678,Retinal 1:250: bottles (tray),35.75,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Cornmeal Food,Retinal 1:250,
+679,Retinal 1:250: hotel,20.25,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Cornmeal Food,Retinal 1:250,
+680,Retinal 1:250: racks,28,7/10/2017,,0,09:44.0,0,0,0,1,racks,Cornmeal Food,Retinal 1:250,
+681,Retinal 1:500 half volume: vials (tray),58,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Retinal 1:500,half vo
+682,Retinal 1:500: bottles (tray),53,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Cornmeal Food,Retinal 1:500,
+683,Retinal 1:500: hotel,20,7/10/2017,,0,09:44.0,0,0,0,1,hotel,Cornmeal Food,Retinal 1:500,
+684,Retinal 1:500: vials (tray),63,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Retinal 1:500,
+685,Standard food plates (sleeve),7,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : plates,Cornmeal Food,Cornmeal Food,
+686,Vials (tray),24,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Cornmeal Food,Cornmeal Food,
+687,Sylgard 100mm plates (sleeve),26,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 100 mm plates,Sylgard,Sylgard,
+688,Sylgard black glass plates (sleeve),96.25,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : black glass plates ,Sylgard,Sylgard,
+689,Sylgard clear plates (sleeve),16.5,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : clear plates ,Sylgard,Sylgard ,
+690,Sylgard clear plates w/out plate cost (sleeve),9.2,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : clear plates w/out plate cost ,Sylgard,Sylgard ,
+691,Sylgard corning plates (sleeve),21,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : corning plates ,Sylgard,Sylgard ,
+692,Sylgard well plates (sleeve),20.5,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : well plates ,Sylgard,Sylgard ,
+693,Bottles (tray),20,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Wurzburg Food,Wurzburg Food,
+694,Large vials (vial),1,7/10/2017,,0,09:44.0,0,0,0,1,Tray : large vials,Wurzburg Food,Wurzburg Food,
+695,Retinal 1:250: bottles (tray),38.5,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Wurzburg Food,Retinal 1:250,
+696,Retinal 1:250: vials (tray),55,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Wurzburg Food,Retinal 1:250,
+697,Retinal 1:500: bottles (tray) ,31.25,7/10/2017,,0,09:44.0,0,0,0,1,Tray : bottles,Wurzburg Food,Retinal 1:500,
+698,Retinal 1:500: vials (tray) ,50,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Wurzburg Food,Retinal 1:500,
+699,Vials (tray),35,7/10/2017,,0,09:44.0,0,0,0,1,Tray : vials,Wurzburg Food,Wurzburg Food,
+700,Grape juice: 35mm lids (sleeve),11,7/10/2017,,0,09:44.0,0,0,0,1,Sleeve : 35mm Falcon clear petri,Agar,Grape juice,
+701,Grape Juice: trays (45 trays),100,7/10/2017,,0,09:44.0,0,0,0,1,Trays,Agar,Grape juice,

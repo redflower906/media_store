@@ -29,29 +29,19 @@ class Department(models.Model):
     is_shared_resource = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
 
-#   objects = ActiveDepartmentManager()
+    #objects = ActiveDepartmentManager() #~FIX~ RM has this but I don't think MS needs it 
     # all_objects = models.Manager()
-# I don't think unicode works in python 3? it's always __str__
-    # def __unicode__(self):
-    #     return self.number + " " + self.department_name
-#	category = models.CharField(max_length=30,blank=True,null=True,choices = CATEGORY_CHOICES)
-#note sure category choices should be the same but not sure if RM requires it to be the same?
+
     def __str__(self):
-        return self.department_name
+        return self.number + " " + self.department_name
 
     class Meta:
         ordering = ('number',)
 
-# #Make sure a user profile gets created if a user doesn't have one
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         UserProfile.objects.create(user=instance)
-# post_save.connect(create_user_profile, sender=User)
-
 class UserProfile(models.Model):
     user = models.ForeignKey(User, related_name='userprofile')
     department = models.ForeignKey(Department, blank=True, null=True)
-#   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True)
+#   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True) #Jody said we probably don't need ~FIX~
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #needed for visitor projects
     employee_id = models.CharField(max_length=20, blank=True, null=True)
     email_address = models.CharField(max_length=255, blank=True, null=True)
@@ -75,14 +65,6 @@ class UserProfile(models.Model):
     def name(self):
         return self.last_name + ", " + self.first_name
 
-
-
-    # def __str__(self):
-    #     return '%s %s' % (self.last_name, self.first_name)
-
-
-
-    #offboard_date = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return str(self.user)
@@ -147,10 +129,9 @@ class Inventory(models.Model):
     date_created = models.DateField(auto_now_add=True)
     notes = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
-    date_modified = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateField(auto_now_add=True)
     deposit = models.IntegerField(default=0, blank=True,null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
-    part_num = models.CharField(max_length=20, blank=True, null=True)
     withdrawal = models.IntegerField(default=0, blank=True, null=True)
 #    current_amt = deposit - withdrawal
     active = models.BooleanField(default=True, choices=BOOL_CHOICES)
@@ -261,7 +242,7 @@ class Order(models.Model):
 
     def is_closed(self):
         return self.status.name == 'Complete'
-        ##DO WE NEED THIS?? 
+        ##DO WE NEED THIS?? ~FIX~
 
 
 
