@@ -200,7 +200,7 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    username = user.userprofile.name
+    username = request.user.userprofile.name
     if request.method == "POST":
         
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user})
@@ -441,7 +441,7 @@ def view_order(request):
 
     user = request.user
 
-    if user.userprofile.is_privileged is False:
+    if user.userprofile.get().is_privileged is False:
         orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
     else:
         orders = Order.objects.preferred_order().all()
