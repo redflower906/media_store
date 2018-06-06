@@ -238,7 +238,6 @@ def get_department(deptid, deptname):
         dept.department_name = deptname
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
-    print (deptname)
     #make sure we are billing the correct department for Gerry
     if dept.number == 'CC51050':
         try:
@@ -558,7 +557,6 @@ class Command(BaseCommand):
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
         #'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'}
         all_employees = get_active_employees(emp_id=emp_id)
-        print (all_employees)
         # build a lookup dict of the users in workday that should be active in ResourceMatrix
         in_workday = {}
         for emp in all_employees:
