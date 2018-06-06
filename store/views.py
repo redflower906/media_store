@@ -201,8 +201,7 @@ def create_order(request, copy_id=None):
     order = Order()
     user = request.user
     userid = request.user.id
-    username = user.userprofile.get(userid).name()
-    print(request.user.userprofile.name)
+    username = str(user.userprofile.get(userid).name())
     if request.method == "POST":
         
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
