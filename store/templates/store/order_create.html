@@ -43,9 +43,8 @@
 
     <fieldset>
         <legend>Who is creating this order?</legend>
-        <p>{{username}}</p>
-        <!-- <p>{{ order_form.submitter.errors}} 
-            {{ order_form.submitter }}</p> ~FIX~ i don't think it needs to be a form, just display--> 
+        <p>{{ order_form.submitter.errors}} 
+            {{ order_form.instance.submitter }}</p>
     
     </fieldset>
     <p>&nbsp;</p>
