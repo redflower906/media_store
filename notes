@@ -122,5 +122,9 @@ to get rsync:
 
 flystore order_auto_assignees and staff_group under groups at bottom of user page
 
+user special instructions as database field not email
+
+
+
 resourcematrix/timematrix/management/commands/
 

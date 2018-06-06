@@ -550,13 +550,13 @@ class Command(BaseCommand):
         emp_id = None
 
         if options['EMPLOYEEID']:
-            emp_id = str(options['EMPLOYEEID'])[0]
-            print (emp_id)
+            emp_id = options['EMPLOYEEID']
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
         #'EMAILADDRESS', 'COSTCENTER', 'MGRFIRSTNAME', 'MGRID'}
         all_employees = get_active_employees(emp_id=emp_id)
+        print (emp_id)
         # build a lookup dict of the users in workday that should be active in ResourceMatrix
         in_workday = {}
         for emp in all_employees:
