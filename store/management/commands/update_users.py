@@ -146,9 +146,11 @@ def gen_pw():
 
 def get_active_employees(emp_id=None):
     # use the requests library to fetch the json data from the workday API.
-    url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails?includeTeams=false'
+    url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails'
     if emp_id:
-        url += str(emp_id)
+        url += ('/'+ str(emp_id)) 
+    else:
+        url += '?includeTeams=false'
 
     res = requests.get(url)
     #employees = json.loads(res.content)
