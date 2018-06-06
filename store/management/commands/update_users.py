@@ -155,7 +155,7 @@ def get_active_employees(emp_id=None):
     res = requests.get(url)
     #employees = json.loads(res.content)
     employees = res.json()
-    print (json.dumps(employees, indent=4)) seems like all employees are found, not just visitors
+    print (json.dumps(employees, indent=4)) #seems like all employees are found, not just visitors
     #filter out employees that have termination dates previous to 30 days ago
     def should_be_active(emp):
         if not emp['TERMINATIONDATE']:
