@@ -253,7 +253,7 @@ def create_order(request, copy_id=None):
             order.pk = None
 
         else:
-            order_form = OrderForm(prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
+            order_form = OrderForm(prefix='order', instance=order, initial={'submitter': username, 'requester': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
     
@@ -266,7 +266,7 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
-        'username':username,
+        'username': username,
     })
 
 @login_required(login_url='login')
