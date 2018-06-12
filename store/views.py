@@ -200,9 +200,7 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    user_id = user.id
-    username = UserProfile.objects.get(pk=user_id).values('last_name','first_name')
-    print(username)
+    print(user)
 
     if request.method == "POST":
         
