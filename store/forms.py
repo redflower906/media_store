@@ -115,7 +115,7 @@ class OrderForm(forms.ModelForm):
 
     def __init__(self, user, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.fields['submitter'] = Order.objects.get().user.username
+        self.fields['submitter'] = Order.objects.get(user=user).user.username
         self.fields['department'].empty_label = "Select a department"
         # following line needed to refresh widget copy of choice list
         self.fields['department'].widget.choices = self.fields['department'].choices
