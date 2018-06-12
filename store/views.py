@@ -255,7 +255,7 @@ def create_order(request, copy_id=None):
             order.pk = None
 
         else:
-            order_form = OrderForm(request.user, prefix='order', instance=order, initial={'submitter': request.user, requester': request.user})
+            order_form = OrderForm(request.user, prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
     
