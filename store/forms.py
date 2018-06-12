@@ -113,14 +113,15 @@ class OrderForm(forms.ModelForm):
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, user, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['submitter'].queryset = UserProfile.objects.filter(user=user)
         self.fields['department'].empty_label = "Select a department"
         # following line needed to refresh widget copy of choice list
         self.fields['department'].widget.choices = self.fields['department'].choices
         self.fields['requester'].empty_label = "Select a requester"
         # following line needed to refresh widget copy of choice list
-        self.fields['requester'].widget.choices = self.fields['requester'].choices
+        self.fields['requester'].widget.choices = User.objects.get_full_name()
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
