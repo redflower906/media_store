@@ -200,9 +200,9 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    username = user.userprofile.get()
-    username.name()
-    print(username.name())
+    # username = user.userprofile.get()
+    # username.name()
+    # print(username.name())
     
     if request.method == "POST":
         
@@ -268,7 +268,7 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
-        'username': username,
+        # 'username': username,
     })
 
 @login_required(login_url='login')
