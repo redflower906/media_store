@@ -200,11 +200,12 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    userid = request.user.id
-    username = str(user.userprofile.get(userid).name())
+    username = UserProfile.objects.filter(user=user_id).values('last_name','first_name')
+    print(username)
+
     if request.method == "POST":
         
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': username, 'requester': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
