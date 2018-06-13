@@ -206,7 +206,7 @@ def create_order(request, copy_id=None):
     
     if request.method == "POST":
         
-        order_form = OrderForm(request.user, request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter':request.user, 'requester': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -249,13 +249,13 @@ def create_order(request, copy_id=None):
                 messages.error(
                     request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
                 return HttpResponseRedirect('/order/view')
-            order_form = OrderForm(request.user, prefix='order', instance=order)
+            order_form = OrderForm(prefix='order', instance=order)
             orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
             orderlineformset.copy_orderline_data(order)
             order.pk = None
 
         else:
-            order_form = OrderForm(request.user, prefix='order', instance=order, initial={'requester': request.user})
+            order_form = OrderForm(prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
     

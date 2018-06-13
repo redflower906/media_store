@@ -113,9 +113,8 @@ class OrderForm(forms.ModelForm):
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         }
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        self.fields['submitter'] = Order.objects.get(user=user).submitter
         self.fields['department'].empty_label = "Select a department"
         # following line needed to refresh widget copy of choice list
         self.fields['department'].widget.choices = self.fields['department'].choices
