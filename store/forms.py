@@ -88,9 +88,9 @@ class OrderForm(forms.ModelForm):
 
     class Meta:
         model = Order
+        requester: forms.ModelChoiceField(queryset=UserFullName.objects.all())    
         fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
         widgets={
-        'requester': forms.ModelChoiceField(queryset=UserFullName.objects.all()),    
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
