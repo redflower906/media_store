@@ -229,7 +229,7 @@ def create_order(request, copy_id=None):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
