@@ -39,7 +39,7 @@ def home(request):
         AForm = AnnouncementsForm(request.POST, instance=post)
         if AForm.is_valid():
             AForm.save()
-            messages.success(request, 
+            messages.success(request,
             'Annoucements have been updated')
             return HttpResponseRedirect('/store/')
     else:
@@ -49,9 +49,9 @@ def home(request):
         'post': post,
         'AForm': AForm,
         'user': user,
-        } 
+        }
     )
- 
+
 def login(request):
     username = request.POST['username']
     password = request.POST['password']
@@ -97,8 +97,8 @@ def inventory(request):
     InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
-    return render(request, 
-        'store/inventory.html', 
+    return render(request,
+        'store/inventory.html',
         {
         'InventoryItems' : InventoryItems,
         'headers': list(sort_headers.headers()),
@@ -116,7 +116,7 @@ def create_item(request):
         # create item
         if formset.is_valid():
             newItem = formset.save()
-            messages.success(request, 
+            messages.success(request,
             'Product was successfully created.')
             print(newItem[0].pk)
             # put this in order create!
@@ -130,7 +130,7 @@ def create_item(request):
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
-    return render(request, 
+    return render(request,
     'store/item_form.html', {
     'formset': formset,
     'inventory': inventory,
@@ -147,13 +147,13 @@ def update_item(request, id):
         # create item
         if Item_form.is_valid():
             Item_form.save()
-            messages.success(request, 
+            messages.success(request,
             '{0} was successfully updated.'.format(SingleItem.inventory_text))
             return HttpResponseRedirect('/inventory/')
     else:
          Item_form = Item_Model_Form(instance=SingleItem)
     # just show the form
-    return render(request, 
+    return render(request,
     'store/item_form.html', {
     'Item_form': Item_form,
     'SingleItem': SingleItem,
@@ -161,7 +161,7 @@ def update_item(request, id):
 
 def get_item(request, id):
     SingleItem = get_object_or_404(Inventory, pk=id)
-    return render(request, 
+    return render(request,
     'store/item_details.html', {
     'SingleItem': SingleItem,
     })
@@ -175,8 +175,8 @@ def single_item(request, id):
         return get_item(request, id)
 
 def __build_inventory_groups():
-    """ build inventory lists grouped by mediatype. 
-    
+    """ build inventory lists grouped by mediatype.
+
         This data is used on the front-end to build mediatype and inventory dropdowns
     """
     inventory_lists = {}
@@ -201,14 +201,14 @@ def create_order(request, copy_id=None):
     user = request.user
 
     if request.method == "POST":
-        
+
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
         if order_form.is_valid() and orderlineformset.is_valid():
             # TODO for Scarlett and Amanda: decide desired behavior for date_submitted.
-            #   Some options: 
+            #   Some options:
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
             order = order_form.save(commit=False)
@@ -216,23 +216,23 @@ def create_order(request, copy_id=None):
             order.save()
             orderlineformset.save()
 
-            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', user.email#, order_form.instance.requester
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
                 'c_or_e': 'created'
-            })        
+            })
             m_plain = render_to_string('create_email.txt', context.flatten())
             m_html = render_to_string('create_email.html', context.flatten())
             email =EmailMultiAlternatives(
                subject,
-               m_plain, 
-               from_email, 
-               [to], 
-            #    cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
+               m_plain,
+               from_email,
+               [to],
+               cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
-            email.send()            
+            email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')
@@ -243,7 +243,7 @@ def create_order(request, copy_id=None):
         if copy_id:
             try:
                 order = Order.objects.get(pk=copy_id)
-            except Order.DoesNotExist: 
+            except Order.DoesNotExist:
                 messages.error(
                     request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
                 return HttpResponseRedirect('/order/view')
@@ -256,7 +256,7 @@ def create_order(request, copy_id=None):
             order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
-    
+
 
 
     return render(request, 'store/order_create.html', {
@@ -281,7 +281,7 @@ def edit_order(request, id):
         return HttpResponseRedirect('/order/view')
 
     if request.method == "POST":
-        
+
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order)
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
@@ -294,18 +294,18 @@ def edit_order(request, id):
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
                 'c_or_e': 'edited'
-            })        
+            })
             m_plain = render_to_string('create_email.txt', context.flatten())
             m_html = render_to_string('create_email.html', context.flatten())
             email =EmailMultiAlternatives(
                subject,
-               m_plain, 
-               from_email, 
-               [to], 
+               m_plain,
+               from_email,
+               [to],
                cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
-            email.send() 
+            email.send()
             messages.success(request,
                 'Order {0} was successfully updated.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')
@@ -347,7 +347,7 @@ def delete_order(request, id):
 
 
 @login_required
-def view_order(request):    
+def view_order(request):
 
     ORDER_LIST_HEADERS_INCOMP = (
         ('Order ID', 'id'),
@@ -383,7 +383,7 @@ def view_order(request):
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
-    )        
+    )
 
     ORDER_LIST_HEADERS_CB = (
         ('Order ID', 'id'),
@@ -395,12 +395,12 @@ def view_order(request):
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
-    )    
+    )
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
-    
+
     # how to associate "orders" in html (either incomp, CNB, CB) to also associate with paginator
     # page = request.GET.get('page', 1)
     # paginator = Paginator(orders, 2)
@@ -434,11 +434,11 @@ def view_order(request):
 
         # if 'data' in request.POST:
         #     print(Order)
-        
+
         # billed_date_form = OrderForm(request.POST, prefix=billdate)
         # for x in billed_date_form:
         #     if x.cleaned_data['status'] == 'Complete' and billed_date_form.is_valid():
-                
+
 
     user = request.user
 
@@ -468,10 +468,14 @@ def view_order(request):
     #     print('hi!')
     # print(type(item))
 
-    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')    
-    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686') 
-    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(status__icontains='Canceled').exclude(orderline__inventory__id='686') 
+    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
+    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(
+    orderline__inventory__id='686')
+    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(status__icontains='Canceled').exclude(
+    date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related(
+    'orderline_set').exclude(status__icontains='Canceled').exclude(orderline__inventory__id='686')
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
@@ -494,15 +498,15 @@ def view_order(request):
         })
 
 def export_orders(request):
-    
-    orders = Order.objects.all()    
+
+    orders = Order.objects.all()
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="orders.csv"'
     writer = csv.writer(response)
     writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
 
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
-    
+
     for record in compNotBill:
         writer.writerow(record)
     return response
@@ -539,13 +543,13 @@ def email_form(request, id):
             msg_plain = render_to_string('details_email.txt', ctx.flatten())
             msg_html = render_to_string('details_email.html', ctx.flatten())
             send_mail(
-                subject, 
-                msg_plain, 
-                form_from, 
+                subject,
+                msg_plain,
+                form_from,
                [form_to],
                html_message=msg_html,
                 )
-            messages.success(request, 
+            messages.success(request,
             'Email was successfully sent')
             return HttpResponseRedirect('/order/view/')
     return render(request,
