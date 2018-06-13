@@ -200,6 +200,7 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
+    user2 = request.userfullname
     # username = user.userprofile.get()
     # username.name()
     # print(username.name())
@@ -268,6 +269,7 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
+        'user2': user2,
     })
 
 @login_required(login_url='login')
