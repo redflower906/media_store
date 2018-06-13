@@ -85,10 +85,10 @@ class DateInput(TextInput):
 
     
 class OrderForm(forms.ModelForm):
-
+        
+    requester: forms.ModelChoiceField(queryset=UserFullName.objects.all())
     class Meta:
         model = Order
-        requester: forms.ModelChoiceField(queryset=UserFullName.objects.all())    
         fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
         widgets={
         'is_recurring': forms.RadioSelect(choices=[
