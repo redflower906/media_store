@@ -39,7 +39,7 @@ class Department(models.Model):
         ordering = ('number',)
 
 class UserProfile(models.Model):
-    user = models.ForeignKey(User, related_name='user_profile')
+    user = models.OneToOneField(User, related_name='user_profile')
     department = models.ForeignKey(Department, blank=True, null=True)
 #   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True) #Jody said we probably don't need ~FIX~
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #needed for visitor projects
