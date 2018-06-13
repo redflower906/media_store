@@ -440,7 +440,7 @@ def view_order(request):
 
     user = request.user
 
-    if user.get().is_staff is False:
+    if user.is_staff is False:
         orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
     else:
         orders = Order.objects.preferred_order().all()
