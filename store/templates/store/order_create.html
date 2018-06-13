@@ -44,14 +44,13 @@
     <fieldset>
         <legend>Who is creating this order?</legend>
         <p>{{ user.get_full_name }}</p>
-    
     </fieldset>
     <p>&nbsp;</p>
 
     <fieldset>
         <legend>Who is paying?</legend>
-         {{ order_form.requester__userprofile.last_name.errors }}
-         {{ order_form.requester__userprofile.last_name }}:
+         {{ order_form.requester.errors }}
+         {{ order_form.requester }}:
          {{ order_form.department.errors }}
          {{ order_form.department }}
     <p>&nbsp;</p>
