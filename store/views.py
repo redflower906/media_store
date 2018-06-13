@@ -92,12 +92,11 @@ def inventory(request):
     user_profile = UserProfile.objects.get(user=user.id)
     department_id = user_profile.department.id
     department_ids = [dept.id for dept in user_profile.alt_departments.all()]
-    department_ids.append(department_id)
+    department_ids.append(department_id) ~FIX~
 """
     InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
-    user = request.user
     return render(request, 
         'store/inventory.html', 
         {
@@ -200,10 +199,6 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    user2 = UserFullName.objects.get(id=user.id)
-    # username = user.userprofile.get()
-    # username.name()
-    # print(username.name())
     
     if request.method == "POST":
         
@@ -269,7 +264,6 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
-        'user2': user2,
     })
 
 @login_required(login_url='login')
@@ -446,7 +440,7 @@ def view_order(request):
 
     user = request.user
 
-    if user.userprofile.get().is_privileged is False:
+    if user.get().is_staff is False:
         orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
     else:
         orders = Order.objects.preferred_order().all()
