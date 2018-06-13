@@ -203,7 +203,7 @@ class Order(models.Model):
     BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     #had to make null to migrate CHANGE LATER
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
-    requester = models.ForeignKey(UserFullName, related_name='requester', null=True)  #only use when billing other person
+    requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
