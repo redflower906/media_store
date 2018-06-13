@@ -93,6 +93,7 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
         widgets={
+        'submitter': forms.Select(attrs={'disabled':'disabled'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
