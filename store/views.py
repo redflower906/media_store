@@ -214,7 +214,7 @@ def create_order(request, copy_id=None):
             order = order_form.save()
             orderlineformset.save()
 
-            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.userprofile.email_address
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', user.userprofile.email_address, order_form.instance.requester
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
