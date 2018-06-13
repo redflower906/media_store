@@ -79,20 +79,6 @@ def item_model_formset_factory(extra):
     },
     extra=extra, can_delete=False,
     )
-'''
-    def __init__(self, *args, **kwargs):()
-        super(ServiceModelForm, self).__init__(*args, **kwargs)
-        if 'department' in self.initial and self.initial['department']:
-            if 'privileged' in self.initial and self.initial['privileged']:
-                self.fields['department'].queryset = Department.objects.filter(Q(id=self.initial['department']) | Q(id__in=self.initial['alt_depts']))
-            else:
-                self.fields['department'].queryset = Department.objects.filter(id=self.initial['department'])
-'''
-
-'''class OrderLineForm(ModelForm):
-    class Meta:
-        model = OrderLine
-        fields = ('inventory_text', 'container', 'notes', 'qty', 'unit', 'cost', 'inventory')'''
 
 class DateInput(TextInput):
     input_type='date'
