@@ -200,7 +200,7 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    user2 = UserFullName.objects.get(user=user)
+    user2 = UserFullName.objects.get(id=user.id)
     # username = user.userprofile.get()
     # username.name()
     # print(username.name())
