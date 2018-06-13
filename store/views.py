@@ -202,7 +202,7 @@ def create_order(request, copy_id=None):
     
     if request.method == "POST":
         
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter':request.user, 'requester': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -211,10 +211,12 @@ def create_order(request, copy_id=None):
             #   Some options: 
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
-            order = order_form.save()
+            order = order_form.save(commit=False)
+            order.submitter = user
+            order.save()
             orderlineformset.save()
 
-            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', user.email, order_form.instance.requester
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', user.email#, order_form.instance.requester
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -251,7 +253,7 @@ def create_order(request, copy_id=None):
             order.pk = None
 
         else:
-            order_form = OrderForm(prefix='order', instance=order, initial={'submitter': request.user, 'requester': request.user})
+            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
     
