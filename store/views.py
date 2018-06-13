@@ -199,7 +199,7 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    
+
     if request.method == "POST":
         
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user})
@@ -289,7 +289,7 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
-            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.userprofile.email_address
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -302,7 +302,7 @@ def edit_order(request, id):
                m_plain, 
                from_email, 
                [to], 
-               cc=[order_form.instance.submitter.userprofile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send() 
@@ -501,7 +501,7 @@ def export_orders(request):
     writer = csv.writer(response)
     writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
 
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','requester__userprofile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
     
     for record in compNotBill:
         writer.writerow(record)
@@ -514,11 +514,11 @@ def email_form(request, id):
     order_info = get_object_or_404(Order, pk=id)
     domain = request.build_absolute_uri()
 
-    if user.userprofile.is_privileged is True:
-        Email_form = Email_Form(initial={'To': order_info.requester.userprofile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
+    if user.user_profile.is_privileged is True:
+        Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
         Sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.userprofile.email_address})
+        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.user_profile.email_address})
         Sender = order_info.requester.get_full_name()
 
     if request.method == "POST":

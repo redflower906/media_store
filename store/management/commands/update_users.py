@@ -73,16 +73,16 @@ def message(message, mtype):
         sys.stderr.write(colorize(message,fg=color))
     return
 
-def user_debug(userprofile):
+def user_debug(user_profile):
     """ log available user info
     user_profile: TimeMatrix.UserProfile object
 
     Needed for debugging recurring error notifications, which are quite common
     """
-    user = userprofile.user
+    user = user_profile.user
     debug_str = '\tDebug info: \n'
-    debug_str += '\t User active: {0}, Userprofile active:{1}'.format(userprofile.user.is_active, userprofile.is_active)
-    if(userprofile.is_visitor):
+    debug_str += '\t User active: {0}, User_profile active:{1}'.format(user_profile.user.is_active, user_profile.is_active)
+    if(user_profile.is_visitor):
         #try to print out project status, start_date, end_date, and department
         try:
             visitor = VisitingScientist.objects.using('vstar').get(
@@ -96,9 +96,9 @@ def user_debug(userprofile):
         except:
             debug_str += "Unable to find visitor information in vstar\n"
 
-    if(userprofile.employee_id):
+    if(user_profile.employee_id):
         try:
-            url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails/' + str(userprofile.employee_id)
+            url = 'http://services.hhmi.org/IT/WD-hcm/wdworkerdetails/' + str(user_profile.employee_id)
             res = requests.get(url)
             workday_data = json.loads(res.content)[0]
 
@@ -276,7 +276,7 @@ def add_employee(emp, **kwargs):
 
         if user:
             try:
-                profile = user.userprofile.all()[0]
+                profile = user.user_profile.all()[0]
             except:
                 profile = UserProfile()
 
@@ -470,7 +470,7 @@ def add_visitor(emp, in_workday):
         return
 
     # now we have a user object set up the profile
-    profile = user.userprofile.first()
+    profile = user.user_profile.first()
 
     # if they have an employeeid, make sure they are in the pool of users from workday that
     # are active or were terminated in the last 30 days
