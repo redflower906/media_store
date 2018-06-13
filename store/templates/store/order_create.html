@@ -50,7 +50,7 @@
 
     <fieldset>
         <legend>Who is paying?</legend>
-         {{ order_form.requester.userprofile.last_name.errors }}
+         {% comment %} {{ order_form.requester.userprofile.last_name.errors }} {% endcomment %}
          {{ order_form.requester.userprofile.last_name }}:
          {{ order_form.department.errors }}
          {{ order_form.department }}
