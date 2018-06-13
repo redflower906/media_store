@@ -44,6 +44,9 @@
     <fieldset>
         <legend>Who is creating this order?</legend>
         <p>{{ user.get_full_name }}</p>
+        <p>{{ order_form.submitter.errors }}</p>
+        <p>{{ order_form.submitter }}</p>
+
     </fieldset>
     <p>&nbsp;</p>
 
