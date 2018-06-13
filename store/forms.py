@@ -86,7 +86,8 @@ class DateInput(TextInput):
     
 class OrderForm(forms.ModelForm):
         
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('-last_name'))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
+    department = forms.ModelChoiceField(queryset=Department.objects.all().values_list('department').order_by('department_name'))
     class Meta:
         model = Order
         fields = ('department', 'requester', 'submitter', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
