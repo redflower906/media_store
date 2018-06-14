@@ -119,8 +119,10 @@ class OrderForm(forms.ModelForm):
 
     def clean(self):
         dept = self.cleaned_data.get('department')
-        if (dept == 'Select a department'):
+        if (dept == ''):
             raise forms.ValidationError("Department cannot remain blank")
+        else:
+            print (dept)
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
