@@ -266,7 +266,7 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
-        'cd': cd,
+        # 'cd': cd,
     })
 
 @login_required(login_url='login')
