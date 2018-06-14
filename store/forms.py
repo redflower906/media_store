@@ -27,7 +27,7 @@ class Item_Model_Form(forms.ModelForm):
         model = Inventory
         fields = ('inventory_text','product','media_type','cost','container','volume','active','notes_inv')
         labels = {
-            'inventory_text': 'Descriptive name'
+            'inventory_text': 'Descriptive name',
             'notes_inv': 'Item Notes'
         }
         widgets = {
@@ -65,7 +65,7 @@ def item_model_formset_factory(extra):
     return modelformset_factory(Inventory,
     fields = ('inventory_text','product','media_type','cost','container','volume','active','notes_inv'),
     labels = {
-            'inventory_text': 'Descriptive name'
+            'inventory_text': 'Descriptive name',
             'notes_inv': 'Item Notes'
         },
     widgets = {
