@@ -95,7 +95,7 @@ class Vendor(models.Model):
     email_address = models.CharField(max_length=225, blank=True, null=True)
     company = models.CharField(max_length=50, blank=True, null=True)
     contact = models.CharField(max_length=100, blank=True, null=True)
-    notes = models.CharField(max_length=500, blank=True, null=True)
+    notes_ven = models.CharField(max_length=500, blank=True, null=True)
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -128,7 +128,7 @@ class Inventory(models.Model):
     container = models.CharField(max_length=50, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True)
-    notes = models.CharField(max_length=500, blank=True, null=True)
+    notes_inv = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
     date_modified = models.DateField(auto_now_add=True)
     deposit = models.IntegerField(default=0, blank=True,null=True)
@@ -203,6 +203,7 @@ class Order(models.Model):
 
     BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     #had to make null to migrate CHANGE LATER
+    notes_order = models.CharField(max_length=500, blank=True, null=True)
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     department = models.ForeignKey(Department, blank=True, null=True)
@@ -249,13 +250,13 @@ class Order(models.Model):
 
 class OrderLine(models.Model):
     order = models.ForeignKey(Order, blank=False, null=False)
-    description = models.TextField(blank=True)
+    # description = models.TextField(blank=True) #Where is this being used??~FIX~
     inventory = models.ForeignKey(Inventory, blank=False, null=False)
     qty = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)
-    unit = models.CharField(max_length=30, blank=True,
-                            null=True)  # DO WE NEED THIS??
-    # shouldn't this be the same as Inventory cost? do we need it?
+    # unit = models.CharField(max_length=30, blank=True,
+    #                         null=True)  # DO WE NEED THIS??
+    # shouldn't this be the same as Inventory cost? do we need it? this was considered container but we don't need that within the orderline
     line_cost = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)
 

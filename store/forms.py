@@ -25,9 +25,10 @@ class NumInput(TextInput):
 class Item_Model_Form(forms.ModelForm):
     class Meta:
         model = Inventory
-        fields = ('inventory_text','product','media_type','cost','container','volume','active','notes')
+        fields = ('inventory_text','product','media_type','cost','container','volume','active','notes_inv')
         labels = {
             'inventory_text': 'Descriptive name'
+            'notes_inv': 'Item Notes'
         }
         widgets = {
             'inventory_text': forms.TextInput(attrs={'class': 'form-text'}),
@@ -37,7 +38,7 @@ class Item_Model_Form(forms.ModelForm):
             'container': forms.TextInput(attrs={'class': 'form-text'}),
             'volume': forms.TextInput(attrs={'class': 'form-text'}),
             'active': forms.Select(attrs={'class': 'form-text'}),
-            'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
+            'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
         
@@ -62,9 +63,10 @@ class Email_Form(forms.Form):
 
 def item_model_formset_factory(extra):
     return modelformset_factory(Inventory,
-    fields = ('inventory_text','product','media_type','cost','container','volume','active','notes'),
+    fields = ('inventory_text','product','media_type','cost','container','volume','active','notes_inv'),
     labels = {
             'inventory_text': 'Descriptive name'
+            'notes_inv': 'Item Notes'
         },
     widgets = {
         'inventory_text': forms.TextInput(attrs={'class': 'form-text'}),
@@ -74,7 +76,7 @@ def item_model_formset_factory(extra):
         'container': forms.TextInput(attrs={'class': 'form-text'}),
         'volume': forms.TextInput(attrs={'class': 'form-text'}),
         'active': forms.Select(attrs={'class': 'form-text'}),
-        'notes': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),
+        'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),
         #'vendor': forms.TextInput(attrs={'class': 'line-container'})
     },
     extra=extra, can_delete=False,
@@ -91,7 +93,10 @@ class OrderForm(forms.ModelForm):
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     class Meta:
         model = Order
-        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc',)
+        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order',)
+        labels = {
+            'notes_order': 'Special Instructions'
+        }
         widgets={
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
@@ -100,6 +105,7 @@ class OrderForm(forms.ModelForm):
         'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
+        'notes_order': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}), 
         }
 
     def __init__(self, *args, **kwargs):
@@ -113,15 +119,16 @@ class OrderForm(forms.ModelForm):
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
-        inlineformset_factory(Order, OrderLine,
-                              fields=('qty', 'line_cost', 'inventory'),
-                              widgets={
-                                  'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'line_calc line_qty'}),
-                                  'line_cost': NumInput(attrs={'step': 'any', 'class': 'line_calc line_cost', 'readonly': '1'}),
-                                  'inventory': forms.Select(),
-                              },
-                              extra=1, can_delete=True
-                              )):
+    inlineformset_factory(Order, OrderLine,
+        fields=('qty', 'line_cost', 'inventory'),
+        widgets={
+        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'line_calc line_qty'}),
+        'line_cost': NumInput(attrs={'step': 'any', 'class': 'line_calc line_cost', 'readonly': '1'}),
+        'inventory': forms.Select(),
+        },
+        extra=1, can_delete=True
+        )):
+
     def clean(self):
         """ Additional form validation
         """
@@ -182,7 +189,7 @@ class AnnouncementsForm(forms.ModelForm):
             'text': forms.Textarea (attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
-        
+
 OrderStatusFormSet = modelformset_factory(
     Order, 
     fields=('status',),

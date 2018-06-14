@@ -195,6 +195,16 @@
                                 </td>
                                 </tr>
                                 {% endfor %}
+                                <p>&nbsp;</p>
+                                <fieldset>
+                                    <legend>Special Instructions</legend>
+                                    <div class='row'>
+                                        <div class='col-xs-2'>
+                                        {{ order_form.notes_order.errors }}
+                                        {{ order_form.notes_order}}
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </tbody>
                             </table>
                         </td>

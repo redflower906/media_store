@@ -93,7 +93,7 @@ class VisitingScientist(models.Model):
     emergency_contact_email = models.EmailField(blank=True)
     emergency_contact_phone = models.CharField(max_length=100, blank=True)
     CV = models.FileField(blank=True, upload_to='uploads')
-    notes = models.TextField(blank=True)
+    notes_vs = models.TextField(blank=True)
     class Meta:
         db_table = 'tracker_visitingscientist'
         managed = False

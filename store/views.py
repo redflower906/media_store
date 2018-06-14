@@ -184,7 +184,7 @@ def __build_inventory_groups():
             'id': inv.id,
             'desc': inv.inventory_text,
             'container': inv.container,
-            'notes': inv.notes,
+            'notes_inv': inv.notes,
             'cost': str(inv.cost),
             'media_code': type_val
         } for inv
