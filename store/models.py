@@ -414,7 +414,6 @@ def status_email(sender, instance, *args, **kwargs):
         )
         instance.date_complete = date.today()
     if instance.status == 'Billed':
-        instance.date_billed = date.today()
-        instance.save()
+        messages.success(request, 'instance.status = billed!')
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~

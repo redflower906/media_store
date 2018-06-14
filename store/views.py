@@ -426,13 +426,10 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            messages.success(request, 'compNotbill!')
-
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            messages.success(request, 'compbill!')
 
         # billed_date_form = OrderForm(request.POST, prefix=billdate)
         # for x in billed_date_form:
@@ -510,10 +507,6 @@ def export_orders(request):
         writer.writerow(record)            
 
     return response
-
-
-
-
 
 
 @login_required(login_url='login')
