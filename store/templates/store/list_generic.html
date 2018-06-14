@@ -25,10 +25,12 @@
                         <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
                     </td>
                     {% else %}
+                    <!-- order ID -->
                     <td>
                         {{orderform.instance.id}}
                     </td>
                     {% endif %}
+                    <!-- dept name -->
                     <td>{{orderform.instance.department.department_name}}</td>    
                     <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
@@ -40,7 +42,7 @@
                     <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
                     <td>{{orderform.instance.department.number}}</td>
-                    <td>{{orderform.instance.requester.user_profile}}</td>
+                    <td>{{orderform.instance.requester.user_profile.name}}</td>
                     <td>{{orderform.instance.date_submitted}}</td>
 
                     {% endif %}
