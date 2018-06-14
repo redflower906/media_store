@@ -394,7 +394,7 @@ class SortHeaders:
             self.header_defs[self.order_field][1],
         )
 
-@receiver(pre_save, sender=Order)
+@receiver(post_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete':
         context = Context({
@@ -413,5 +413,8 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
         instance.date_complete = date.today()
+    if instance.status == 'Billed':
+        instance.date_billed = date.today()
+        instance.save()
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
