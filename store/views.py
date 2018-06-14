@@ -233,7 +233,7 @@ def create_order(request, copy_id=None):
             email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
-            'Order {0} was successfully created.'.format(order_form.instance.id))
+            'Order {0} was successfully created. Dept is {1}'.format(order_form.instance.id, order_form.instance.cleaned_data.get('department')))
             return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
