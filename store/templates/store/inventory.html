@@ -11,7 +11,7 @@
         <h2>Inventory</h2>
     </div>
     <div class="col-xs-12, col-md-12 action-buttons">
-        {% if user.user_profile.is_staff is True %}
+        {% if user.is_staff is True %}
         <a href="/inventory/new" id="add_inv_btn" class="btn btn-default">Add inventory item</a>
         {% endif %}
                     <div class="form-group pull-right">
