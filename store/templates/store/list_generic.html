@@ -58,7 +58,7 @@
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
                     <!-- staff user -->
-                    {% if user.user_profile.is_staff is True %}
+                    {% if user.user_profile is True %}
                         {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
