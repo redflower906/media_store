@@ -124,7 +124,7 @@ class OrderForm(forms.ModelForm):
         if any(self.errors):
             # Don't bother validating the formset unless each form is valid on its own
             return
-        if self.cleaned_data['department'] == 'Select a department':
+        if department == 'Select a department':
             raise forms.ValidationError('This field cannot be blank!')
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
