@@ -1,0 +1,42 @@
+Content-Type: multipart/alternative;
+ boundary="===============3049576468396323429=="
+MIME-Version: 1.0
+Subject: Order #47 Complete
+From: mediafacility@janelia.hhmi.org
+To: coffmans@janelia.hhmi.org
+Cc: coffmans@janelia.hhmi.org, mediafacility@janelia.hhmi.org
+Date: Thu, 14 Jun 2018 19:25:25 -0000
+Message-ID: <20180614192525.3373.56970@vm650.int.janelia.org>
+
+--===============3049576468396323429==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+Your media store order #47 has been created. 
+
+You can view a summary of this order here:
+47
+
+Sincerely,
+
+The Media Facility
+--===============3049576468396323429==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+Your media store order #47 has been created. <br><br>
+
+You can view a summary of this order:<br>
+<a href="/order/view">Order #47</a><br><br>
+
+Sincerely,<br><br>
+
+The Media Facility
+--===============3049576468396323429==--
+
+-------------------------------------------------------------------------------
