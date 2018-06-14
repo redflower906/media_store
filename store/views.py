@@ -206,6 +206,7 @@ def create_order(request, copy_id=None):
             request.POST, prefix='orderlines', instance=order)
 
         if order_form.is_valid() and orderlineformset.is_valid():
+            cd = order_form.process()
             # TODO for Scarlett and Amanda: decide desired behavior for date_submitted.
             #   Some options:
             #       only set on create (but this is the same as date_created...)--handle in model
@@ -233,7 +234,7 @@ def create_order(request, copy_id=None):
             email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
-            'Order {0} was successfully created.'.format(order_form.instance.id))
+            'Order {0} was successfully created. dept is {1}'.format(order_form.instance.id, cd))
             return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
@@ -265,6 +266,7 @@ def create_order(request, copy_id=None):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
+        'cd': cd,
     })
 
 @login_required(login_url='login')
