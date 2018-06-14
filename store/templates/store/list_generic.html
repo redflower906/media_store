@@ -34,16 +34,16 @@
                     <td>{{orderform.instance.department.department_name}}</td>    
                     <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
-                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.date_created}}</td>
                     <td>{{orderform.instance.location}}</td>
                     <!-- coldroom signout billed -->
                     {% elif orderforms == corn_b %}
-                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.date_created}}</td>
                     <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
                     <td>{{orderform.instance.department.number}}</td>
                     <td>{{orderform.instance.requester.user_profile.name}}</td>
-                    <td>{{orderform.instance.date_submitted}}</td>
+                    <td>{{orderform.instance.date_created}}</td>
 
                     {% endif %}
                     <!-- recurring -->
