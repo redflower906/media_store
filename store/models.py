@@ -395,7 +395,7 @@ class SortHeaders:
             self.header_defs[self.order_field][1],
         )
 
-@receiver(post_save, sender=Order)
+@receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete':
         context = Context({
