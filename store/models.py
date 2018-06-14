@@ -208,7 +208,7 @@ class Order(models.Model):
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)
     date_modified = models.DateField(auto_now=True, blank=True, null=True)
-    date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created?
+    date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created? ~FIX~
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
     is_recurring = models.BooleanField(default=False)

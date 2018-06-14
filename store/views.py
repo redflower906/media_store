@@ -44,7 +44,6 @@ def home(request):
             return HttpResponseRedirect('/store/')
     else:
         AForm = AnnouncementsForm(instance=post)
-    #return render(request, 'store/home.html', {'AForm': AForm})
     return render(request, 'store/home.html', {
         'post': post,
         'AForm': AForm,
@@ -427,13 +426,13 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
+            messages.success(request, 'compNotbill!')
+
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-
-        # if 'data' in request.POST:
-        #     print(Order)
+            messages.success(request, 'compbill!')
 
         # billed_date_form = OrderForm(request.POST, prefix=billdate)
         # for x in billed_date_form:
@@ -498,18 +497,24 @@ def view_order(request):
         })
 
 def export_orders(request):
-
+    
     orders = Order.objects.all()
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="orders.csv"'
     writer = csv.writer(response)
     writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
-
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list('id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
+    'id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
 
     for record in compNotBill:
-        writer.writerow(record)
+        writer.writerow(record)            
+
     return response
+
+
+
+
+
 
 @login_required(login_url='login')
 def email_form(request, id):
