@@ -117,6 +117,16 @@ class OrderForm(forms.ModelForm):
         # following line needed to refresh widget copy of choice list
         self.fields['requester'].widget.choices = self.fields['requester'].choices
 
+    def clean(self):
+        
+        super(OrderForm, self).clean()
+
+        if any(self.errors):
+            # Don't bother validating the formset unless each form is valid on its own
+            return
+        if self.cleaned_data['department'].strip() == 'Select a department':
+            raise forms.ValidationError('This field cannot be blank!')
+
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
     inlineformset_factory(Order, OrderLine,
@@ -145,7 +155,7 @@ class OrderLineInlineFormSet(
         if not self.total_is_positive_nonzero():
             raise forms.ValidationError(
                 "Total cost must be greater than zero")
-
+        
     def have_minimum(self):
         line_count = 0
         for form in self:
