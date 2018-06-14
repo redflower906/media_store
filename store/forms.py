@@ -117,20 +117,10 @@ class OrderForm(forms.ModelForm):
         # following line needed to refresh widget copy of choice list
         self.fields['requester'].widget.choices = self.fields['requester'].choices
 
-    # def clean(self):
-        
-    #     super(OrderForm, self).clean()
-
-    #     if any(self.errors):
-    #         # Don't bother validating the formset unless each form is valid on its own
-    #         return
-
-    # def dep_val(self):
-    #     for form in self:
-    #         dep = form.cleaned_data.get('department')
-    #         if dep = 'Select a department'
-    #         return False
-    #     return True     
+    def clean(self):
+        dept = self.cleaned_data.get('department')
+        if (dept == 'Select a department')
+            raise forms.ValidationError("Department cannot remain blank")
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
