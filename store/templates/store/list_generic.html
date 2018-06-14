@@ -40,7 +40,7 @@
                     <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
                     <td>{{orderform.instance.department.number}}</td>
-                    <td>{{orderform.instance.requester.user_profile.name}}</td>
+                    <td>{{orderform.instance.requester.user_profile}}</td>
                     <td>{{orderform.instance.date_submitted}}</td>
 
                     {% endif %}
@@ -58,7 +58,7 @@
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
                     <!-- staff user -->
-                    {% if user.user_profile.is_staff is True %}
+                    {% if user.is_staff is True %}
                         {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
@@ -69,7 +69,7 @@
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td>{{orderform.instance.location}}</td>
+                    <td>{{orderform.instance.status}}</td>
                     {% endif %}
                     <td>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
