@@ -22,7 +22,7 @@ class DepartmentAdmin(admin.ModelAdmin):
         return qs
 
 class InventoryAdmin(admin.ModelAdmin):
-    list_display = ('inventory_text', 'cost', 'notes_iv', 'active', 'media_type')
+    list_display = ('inventory_text', 'cost', 'notes_inv', 'active', 'media_type')
     list_filter = ('inventory_text', 'media_type')
     search_fields = ['inventory_text', 'cost']
 
