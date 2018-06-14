@@ -408,7 +408,7 @@ def status_email(sender, instance, *args, **kwargs):
             'Order #{0} Complete'.format(instance.id),
             m_plain,
             'mediafacility@janelia.hhmi.org',
-            [instance.requester.userprofile.email_address],
+            [instance.requester.user_profile.email_address],
             fail_silently=False,
             html_message=m_html,
         )
