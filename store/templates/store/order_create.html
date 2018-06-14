@@ -195,24 +195,25 @@
                                 </td>
                                 </tr>
                                 {% endfor %}
-                                <p>&nbsp;</p>
-                                <fieldset>
-                                    <legend>Special Instructions</legend>
-                                    <div class='row'>
-                                        <div class='col-xs-2'>
-                                        {{ order_form.notes_order.errors }}
-                                        {{ order_form.notes_order}}
-                                        </div>
-                                    </div>
-                                </fieldset>
+
                             </tbody>
                             </table>
                         </td>
                     </tr>
                 </table>
             </div>
-        </div>
+        </fieldset>
+        <p>&nbsp;</p>
+        <fieldset>
+            <legend>Special Instructions</legend>
             <div class='row'>
+                <div class='col-xs-2'>
+                {{ order_form.notes_order.errors }}
+                {{ order_form.notes_order}}
+                </div>
+            </div>
+        </fieldset>            
+        <div class='row'>
                 <div class = 'col-xs-3'>
                     <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
                 </div>
