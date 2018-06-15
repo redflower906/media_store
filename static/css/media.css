@@ -21,7 +21,7 @@ cursor: pointer;
 
 td.recur {
   color: red;
-  font-weight: bold;
+  font-weight: bolder;
 }
 
 tr.shown td.details-control {
