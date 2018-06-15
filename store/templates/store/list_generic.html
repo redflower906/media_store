@@ -57,7 +57,7 @@
                     {% elif orderforms == incomp %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
-                    <td>{{ orderform.instance.is_recurring }}</td>
+                    <td>{{ orderform.instance.is_recurring|yesno: 'yes,no' }}</td>
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
                     <!-- staff user -->
