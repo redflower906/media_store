@@ -424,8 +424,9 @@ def status_email(sender, instance, *args, **kwargs):
         if today >= nextbill:
             nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
             lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+        lastbill2 = lastbill.replace(month=4)
 
         instance.date_billed = today
-        instance.days_since_bill = (today-lastbill).days
+        instance.days_since_bill = (today-lastbill2).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
