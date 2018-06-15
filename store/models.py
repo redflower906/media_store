@@ -166,24 +166,6 @@ class OrderManager(models.Manager):
         )
         return orders
 
-    def since_billed(self):
-        """Return days since last billing cycle"""
-        today = date.today()
-        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-
-        if today >= nextbill:
-            nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-            lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-
-        if self.date_billed:
-            for x in self.date_billed:
-                dslb = (x - lastbill).days
-
-            return super(OrderManager, self).get_queryset().filter(dslb__lte=31)
-        return
-
-
 class Order(models.Model):
     #model field choices, extracted for easy reference
     STATUS_CHOICES = (
@@ -244,8 +226,8 @@ class Order(models.Model):
         choices=STATUS_CHOICES
     )
     doc = models.FileField(upload_to='documents/', null=True, blank=True)
+    days_since_bill = models.IntegerField(blank=True, null=True)
     objects = OrderManager()
-    days_since_bill = LastBilled()
 
     def already_billed(self):
         if self.date_billed:
@@ -435,6 +417,15 @@ def status_email(sender, instance, *args, **kwargs):
         )
         instance.date_complete = date.today()
     if instance.status == 'Billed':
-        instance.date_billed = date.today()
+        today = date.today()
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+        if today >= nextbill:
+            nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+            lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+
+        instance.date_billed = today
+        instance.days_since_bill = (today-lastbill).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~

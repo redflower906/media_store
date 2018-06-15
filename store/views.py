@@ -476,9 +476,7 @@ def view_order(request):
     recur_queryset = orders.filter(is_recurring=True).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
-    # compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(
-    # orderline__inventory__id='686')
-    compBill_queryset = Order.days_since_bill.order_by('date_billed').prefetch_related('orderline_set').exclude(
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
