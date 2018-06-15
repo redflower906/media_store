@@ -166,7 +166,6 @@ class OrderManager(models.Manager):
         )
         return orders
 
-class LastBilled(models.Manager):
     def since_billed(self):
         """Return days since last billing cycle"""
         today = date.today()
@@ -181,7 +180,7 @@ class LastBilled(models.Manager):
             for x in self.date_billed:
                 dslb = (x - lastbill).days
 
-            return super(LastBilled, self).get_queryset().filter(dslb__lte=31)
+            return super(OrderManager, self).get_queryset().filter(dslb__lte=31)
         return
 
 
