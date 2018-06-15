@@ -416,7 +416,7 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
         instance.date_complete = date.today()
-    if instance.status == 'Billed':
+    # if instance.status == 'Billed':
         # today = date.today()
         # nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
         # lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
