@@ -492,6 +492,7 @@ def view_order(request):
         'recur': recur,
         'user':user,
         'orders':orders,
+        'lastbill':lastbill,
         # 'pages': pages,
         })
 
