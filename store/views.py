@@ -524,7 +524,8 @@ def email_form(request, id):
         Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
         Sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.user_profile.email_address})
+        Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
+        # Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.user_profile.email_address})
         Sender = order_info.requester.get_full_name()
 
     if request.method == "POST":
