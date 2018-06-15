@@ -442,8 +442,10 @@ def view_order(request):
 
     if user.is_staff is False:
         orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
+        orders_bill = Order.objects.since_billed().filter(Q(submitter=user)|Q(requester=user))
     else:
         orders = Order.objects.preferred_order().all()
+        orders_bill = Order.objects.since_billed().all()
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -474,7 +476,9 @@ def view_order(request):
     recur_queryset = orders.filter(is_recurring=True).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(
+    # compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(
+    # orderline__inventory__id='686')
+    compBill_queryset = Order.days_since_bill.order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
@@ -494,7 +498,6 @@ def view_order(request):
         'recur': recur,
         'user':user,
         'orders':orders,
-        'dslb':dslb,
         # 'pages': pages,
         })
 

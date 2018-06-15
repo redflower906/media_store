@@ -4,7 +4,6 @@ All data models for Media Store
 
 from django.db import models
 #from django.contrib.admin.models import LogEntry
-from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.mail import send_mail, EmailMessage
@@ -17,6 +16,7 @@ from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
+from dateutil import relativedelta
 
 
 
@@ -158,11 +158,31 @@ class OrderManager(models.Manager):
                 models.When(status='Complete', then=models.Value(2)),
                 models.When(status='Canceled', then=models.Value(3)),
                 models.When(status='Problem', then=models.Value(4)),
-                default=models.Value(5),
+                models.When(status='Problem', then=models.Value(5)),
+                models.When(status='Problem', then=models.Value(6)),
+                default=models.Value(7),
                 output_field=models.IntegerField(), )
             ).order_by('custom_order', 'date_recurring_stop'
         )
         return orders
+
+class LastBilled(models.Manager):
+    def since_billed(self):
+        """Return days since last billing cycle"""
+        today = date.today()
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+        if today >= nextbill:
+            nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+            lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+
+        if self.date_billed:
+            for x in self.date_billed:
+                dslb = (x - lastbill).days
+
+            return super(LastBilled, self).get_queryset().filter(dslb__lte=31)
+        return
 
 
 class Order(models.Model):
@@ -226,6 +246,7 @@ class Order(models.Model):
     )
     doc = models.FileField(upload_to='documents/', null=True, blank=True)
     objects = OrderManager()
+    days_since_bill = LastBilled()
 
     def already_billed(self):
         if self.date_billed:
@@ -245,7 +266,6 @@ class Order(models.Model):
     def is_closed(self):
         return self.status.name == 'Complete'
         ##DO WE NEED THIS?? ~FIX~
-
 
 
 class OrderLine(models.Model):
