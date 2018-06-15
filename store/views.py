@@ -453,6 +453,8 @@ def view_order(request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
 
+    dslb = (today-lastbill).days
+
     dates = Order.objects.all()
     for x in dates:
         dc = x.date_created
@@ -492,7 +494,7 @@ def view_order(request):
         'recur': recur,
         'user':user,
         'orders':orders,
-        'lastbill':lastbill,
+        'dslb':dslb,
         # 'pages': pages,
         })
 
