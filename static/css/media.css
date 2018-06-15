@@ -20,7 +20,8 @@ cursor: pointer;
 }
 
 td.recur {
-  background-color: palegoldenrod;
+  color: red;
+  font-weight: bold;
 }
 
 tr.shown td.details-control {
