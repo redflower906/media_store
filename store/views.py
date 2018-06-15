@@ -464,14 +464,14 @@ def view_order(request):
     #     print('hi!')
     # print(type(item))
 
+#deleting exclude(status__icontains='Canceled')
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
-    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(
-    orderline__inventory__id='686')
-    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(status__icontains='Canceled').exclude(
-    date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
-    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed=lastbill).order_by('date_billed').prefetch_related(
-    'orderline_set').exclude(status__icontains='Canceled').exclude(orderline__inventory__id='686')
+    recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    compNotBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related(
+    'orderline_set').exclude(orderline__inventory__id='686')
+    compBill_queryset = orders.filter(is_recurring=False).filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related(
+    'orderline_set').exclude(orderline__inventory__id='686')
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
