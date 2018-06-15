@@ -379,6 +379,7 @@ def view_order(request):
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Date Complete', 'date_complete'),
+        ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
@@ -391,6 +392,7 @@ def view_order(request):
         ('Requester', 'requester'),
         ('Submitted', 'date_submitted'),
         ('Date Billed', 'date_billed'),
+        ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
@@ -467,7 +469,7 @@ def view_order(request):
 #deleting exclude(status__icontains='Canceled')
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
-    recur_queryset = orders.filter(is_recurring=True).exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    recur_queryset = orders.filter(is_recurring=True).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
     compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__gte=lastbill).order_by('date_billed').prefetch_related('orderline_set').exclude(

@@ -30,7 +30,6 @@
                         {{orderform.instance.id}}
                     </td>
                     {% endif %}
-                    <!-- dept name -->
                     <td>{{orderform.instance.department.department_name}}</td>    
                     <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
@@ -53,10 +52,12 @@
                     <!-- completed not billed -->
                     {% elif orderforms == compNotBill %}
                     <td>{{orderform.instance.date_complete}}</td>
+                    <td>{{ orderform.instance.is_recurring }}</td>
                     <!-- why??? -->
                     {% elif orderforms == incomp %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
+                    <td>{{ orderform.instance.is_recurring }}</td>
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
                     <!-- staff user -->

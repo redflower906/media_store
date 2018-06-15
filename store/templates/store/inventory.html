@@ -50,7 +50,7 @@
                     {% endif %}
                 </td>
                 {% comment %} if staff {% endcomment %}
-                {% if user.user+profile.is_privileged is True %}
+                {% if user.user_profile.is_privileged is True %}
                 <td class="col-xs-1" id="center_columns">
                     <a href="{% url 'edit_single_item' InventoryItem.id %}" class="btn btn-primary">Edit</a>
                 </td>
