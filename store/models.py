@@ -213,7 +213,7 @@ class Order(models.Model):
     date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created? ~FIX~
     date_complete = models.DateField(blank=True, null=True)
     date_billed = models.DateField(blank=True, null=True)
-    is_recurring = models.BooleanField(default=False)
+    is_recurring = models.BooleanField(default=False, choices=BOOL_CHOICES)
     #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
