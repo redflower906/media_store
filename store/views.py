@@ -550,7 +550,7 @@ def email_form(request, id):
                 msg_plain,
                 form_from,
                [form_to],
-               html_message=msg_html,
+            #    html_message=msg_html,
                 )
             messages.success(request,
             'Email was successfully sent')
