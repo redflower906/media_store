@@ -61,6 +61,7 @@
                         <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
                     {% else %}
                         <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                    {% endif %}
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
                     <!-- staff user -->
