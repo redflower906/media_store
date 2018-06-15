@@ -1,16 +1,3 @@
-// function add_item_line(data){
-//     var count =  $('#item_line_table tbody').children().length;
-//     var template = $('#item-line-form').html();
-//     var compiled = Handlebars.compile(template);
-//     data['id'] = count;
-//     var html = compiled(data);
-//     $('#item_line_table tbody').append(html);
-//     $('#id_SingleItem_set-TOTAL_FORMS').attr('value', count + 1);
-//     $("#item_line_table .chosen-select:last").chosen({'disable_search_threshold': 10, 'enable_split_word_search': false, 'search_contains': true });
-//   }
-  
-//   $('#add_item_line').on('click', add_item_line);
-
 //Properly Highlight Navbar Links
 $(function() {
     $.each($('#navbar').find('li'), function() {
@@ -58,13 +45,6 @@ $(function () {
     }(jQuery));
 });
 
-    // document.getElementById("fname").onchange = function() {myFunction()};
-    
-    // function myFunction() {
-    //     var x = document.getElementById("fname");
-    //     x.value = x.value.toUpperCase();
-    // }
-
 //datepicker function and disabling days before today/after 3 months
 $(function() {
     $( "#id_order-date_recurring_start" ).datepicker({
@@ -95,16 +75,7 @@ $(function (){
     });    
 })
 
-//show corresponding map to floor location
-// $('#id_order-location').on('change', function() {
-//     console.log('hi');
-// });
-
-
-// function getVal(sel){
-//     window.x = sel.value
-// }
-
+//Change maps depending on what floor is picked
 $(function(){
     $('#id_order-location').on('change', function(e){
         var getVal = $('#id_order-location option:selected').val();
@@ -136,22 +107,10 @@ $(function(){
     });
 });
 
+
 function recurringAlert(){
     var recur = $('input:checked').attr('id');
     if (recur == 'id_order-is_recurring_0') {
         alert('Be aware that, if this order has been edited, any changes may not be implemented until the following week. Please email media facility with any questions.')
     }
 }
-
-// $(function(){
-//     // Add Print Classes for Modal
-//     $('.modal').on('shown.bs.modal',function() {
-//         $('.modal-body').addClass('toPrint');
-//         // $('body').addClass('non-print');
-//     });
-//     // Remove classes
-//     $('.modal').on('hidden.bs.modal',function() {
-//         $('.modal-body').removeClass('toPrint');
-//         // $('body').removeClass('non-print');
-//     });
-// });
