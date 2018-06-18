@@ -6,6 +6,7 @@ from django.db import models
 #from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
@@ -22,6 +23,7 @@ from dateutil import relativedelta
 
 # Create your models here.
 
+upload_storage = FileSystemStorage(location=UPLOAD_ROOT, base_url='/uploads')
 
 class Department(models.Model):
     department_name = models.CharField(max_length=100)
@@ -225,7 +227,8 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
         choices=STATUS_CHOICES
     )
-    doc = models.FileField(upload_to='documents/', null=True, blank=True)
+    doc = models.FileField(upload_to='/uploads', storage=upload_storage, null=True, blank=True)
+    # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
     days_since_bill = models.IntegerField(blank=True, null=True)
     objects = OrderManager()
 

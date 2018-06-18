@@ -219,7 +219,7 @@ def create_order(request, copy_id=None):
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
-                'c_or_e': 'created'
+                'c_or_e': 'created',
             })
             m_plain = render_to_string('create_email.txt', context.flatten())
             m_html = render_to_string('create_email.html', context.flatten())
@@ -452,8 +452,6 @@ def view_order(request):
     if today >= nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-
-    dslb = (today-lastbill).days
 
     dates = Order.objects.all()
     for x in dates:

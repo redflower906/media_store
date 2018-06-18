@@ -24,11 +24,11 @@
                     <td>
                         <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
                     </td>
-                    {% else %}
+                    {% comment %}{% else %}
                     <!-- order ID -->
                     <td>
                         {{orderform.instance.id}}
-                    </td>
+                    </td>{% endcomment %}
                     {% endif %}
                     <td>{{orderform.instance.department.department_name}}</td>    
                     <!-- coldroom sign-out -->
