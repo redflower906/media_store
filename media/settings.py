@@ -44,7 +44,7 @@ if DEBUG:
     ]
 
     DEBUG_TOOLBAR_CONFIG = {
-        'INTERCEPT_REDIRECTS': False,
+        'INTERCEPT_REDIRECTS': True,
     }
 
 
