@@ -62,6 +62,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 COMPRESS_OFFLINE=True
 COMPRESS_ENABLED=True
 
+FIL_UPLOAD_PERMISSIONS = 0o644
 
 
 # Application definition
