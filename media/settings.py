@@ -58,7 +58,6 @@ host = '10.42.5.23'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-UPLOAD_ROOT = '/groups/sciserv/home/coffmans'
 
 COMPRESS_OFFLINE=True
 COMPRESS_ENABLED=True

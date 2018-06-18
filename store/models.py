@@ -23,7 +23,7 @@ from dateutil import relativedelta
 
 # Create your models here.
 
-upload_storage = FileSystemStorage(location=UPLOAD_ROOT, base_url='/uploads')
+upload_storage = FileSystemStorage(location='/groups/sciserv/home/coffmans/uploads')
 
 class Department(models.Model):
     department_name = models.CharField(max_length=100)
@@ -227,7 +227,7 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
         choices=STATUS_CHOICES
     )
-    doc = models.FileField(upload_to='/uploads', storage=upload_storage, null=True, blank=True)
+    doc = models.FileField(storage=upload_storage, null=True, blank=True)
     # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
     days_since_bill = models.IntegerField(blank=True, null=True)
     objects = OrderManager()
