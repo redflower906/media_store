@@ -214,16 +214,15 @@ def create_order(request, copy_id=None):
             order.submitter = user
             order.save()
             orderlineformset.save()
-
             subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.email
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
-                'c_or_e': 'created',
+                'c_or_e': 'created',            
+                'upload': order_form.instance.doc,
             })
             m_plain = render_to_string('create_email.txt', context.flatten())
             m_html = render_to_string('create_email.html', context.flatten())
-            upload = request.FILES
             email =EmailMultiAlternatives(
                subject,
                m_plain,
@@ -232,7 +231,7 @@ def create_order(request, copy_id=None):
                cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             if order_form.instance.doc is True:
-                email.attach_alternative(m_html, "text/html").attach_file(upload)
+                email.attach_alternative(m_html, "text/html")
             else:
                 email.attach_alternative(m_html, "text/html")
             email.send()

@@ -3,7 +3,7 @@ Your media store order #{{id}} has been {{c_or_e}}.
 
 You can view a summary of this order here:
 {{id}}
-
+{{upload}}
 Sincerely,
 
 The Media Facility
