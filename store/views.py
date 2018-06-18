@@ -230,7 +230,10 @@ def create_order(request, copy_id=None):
                [to],
                cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
-            email.attach_alternative(m_html, "text/html")
+            if order_form.instance.doc is True:
+                email.attach_alternative(m_html, "text/html").attach_file(order_form.instance.doc)
+            else:
+                email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
