@@ -51,10 +51,10 @@ if DEBUG:
 ALLOWED_HOSTS = ['*']
 
 #Ask Emily or Jody about sending email ~FIX~
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 host = '10.42.5.23'
-port = 465
+#port = 465
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
