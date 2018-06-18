@@ -224,7 +224,7 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
         choices=STATUS_CHOICES
     )
-    doc = models.FileField(storage='/documents', null=True, blank=True)
+    doc = models.FileField(upload_to='/documents', null=True, blank=True)
     # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
     days_since_bill = models.IntegerField(blank=True, null=True)
     objects = OrderManager()
