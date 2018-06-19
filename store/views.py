@@ -118,14 +118,6 @@ def create_item(request):
             messages.success(request,
             'Product was successfully created.')
             print(newItem[0].pk)
-            # put this in order create!
-            # send_mail(
-            #     'New ',
-            #     'Congrats, you created an item that is called {0}!'.format(newItem[0].inventory_text),
-            #     'harrisons1@janelia.hhmi.com',
-            #     ['coffmansr906@gmail.com'],
-            #     fail_silently=False,
-            # )
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
@@ -138,7 +130,6 @@ def create_item(request):
 
 @login_required(login_url='login')
 def update_item(request, id):
-    user = request.user
     SingleItem = get_object_or_404(Inventory, pk=id)
     Item_form = Item_Model_Form()
     if request.method == "POST":
@@ -505,12 +496,12 @@ def view_order(request):
         'headers4': list(sort_headers4.headers()),
         'compBill': compBill,
         'recur': recur,
-        'user':user,
-        'orders':orders,
-        'pagesI':pagesI,
-        'pagesR':pagesR,
-        'pagesCNB':pagesCNB,
-        'pagesCB':pagesCB,
+        'user': user,
+        'orders': orders,
+        # 'pagesI': pagesI,
+        # 'pagesR': pagesR,
+        # 'pagesCNB': pagesCNB,
+        # 'pagesCB': pagesCB,
         })
 
 def export_orders(request):

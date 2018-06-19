@@ -293,7 +293,7 @@ class Announcements(models.Model):
 ORDER_VAR = 'o'
 ORDER_TYPE_VAR = 'ot'
 
-class SortHeaders:
+class SortHeaders(models.Model):
     """
     Handles generation of an argument for the Django ORM's
     ``order_by`` method and generation of table headers which reflect
