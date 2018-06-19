@@ -8,6 +8,7 @@ from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
+from django.contrib import messages
 from django.forms import ModelForm
 from django.template import Context
 from django.db.models.signals import pre_save, post_save
@@ -417,7 +418,7 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
-         messages.success('Order #{0} has been completed')
+        messages.success('Order #{0} has been completed')
         instance.date_complete = date.today()
     if instance.status == 'Billed':
         today = date.today()
