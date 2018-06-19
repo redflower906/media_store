@@ -54,7 +54,7 @@ ALLOWED_HOSTS = ['*']
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 EMAIL_SERVER = 'harrisons1@janelia.hhmi.org'
-EMAIL_HOST = '10.37.6.50'
+EMAIL_HOST = '10.42.5.23'
 #port = 465
 
 MEDIA_URL = '/media/'
