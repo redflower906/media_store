@@ -53,8 +53,8 @@ ALLOWED_HOSTS = ['*']
 #Ask Emily or Jody about sending email ~FIX~
 # EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
-EMAIL_SERVER = harrisons1@janelia.hhmi.org
-host = '10.37.6.50'
+EMAIL_SERVER = 'harrisons1@janelia.hhmi.org'
+EMAIL_HOST = '10.37.6.50'
 #port = 465
 
 MEDIA_URL = '/media/'
