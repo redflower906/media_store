@@ -488,7 +488,7 @@ def view_order(request):
     return render(request,
         'store/order_view2.html',{
         'compNotBill': compNotBill,
-        'incomp': incomp,
+        # 'incomp': incomp,
         'headers1': list(sort_headers1.headers()),
         'headers2': list(sort_headers2.headers()),
         'headers3': list(sort_headers3.headers()),
