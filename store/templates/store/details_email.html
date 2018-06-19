@@ -1,10 +1,11 @@
 Greetings,<br><br>
 
-This email is concerning media store order {{order_id}}.<br><br>
+This email is concerning media store order: #{{order_id}}.<br><br>
 
 You can view a summary of this order:<br>
-<a href="{{domain}}{% url 'view_order' %}">Order #{{order_id}}</a><br><br>
+<b><a href="{{domain}}{% url 'edit_order' order_id %}">Order #{{order_id}}</a></b><br><br>
+
+{{form_content}}
 
 Sincerely,<br><br>
-
 {{sender}}

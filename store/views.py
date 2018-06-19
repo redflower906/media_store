@@ -518,16 +518,15 @@ def email_form(request, id):
 
     user = request.user
     order_info = get_object_or_404(Order, pk=id)
-    domain = request.build_absolute_uri()
+    domain = request.get_host()
 
-    if user.user_profile.is_privileged is True:
+    if user.user_profile.is_staff is True:
         Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
-        Sender = 'The Media Facility'
+        sender = 'The Media Facility'
     else:
         Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
         # Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.user_profile.email_address})
-        Sender = order_info.requester.get_full_name()
-
+        sender = order_info.requester.get_full_name()
     if request.method == "POST":
         Email = Email_Form(request.POST)
         if Email.is_valid():
@@ -539,8 +538,8 @@ def email_form(request, id):
                 'form_from': form_from,
                 'form_content': form_content,
                 'order_id':order_info.id,
-                'sender': Sender,
                 'domain': domain,
+                'sender': sender,
             })
             subject = 'Message regarding Media Store Order {0}'.format(order_info.id)
             msg_plain = render_to_string('details_email.txt', ctx.flatten())
@@ -550,7 +549,7 @@ def email_form(request, id):
                 msg_plain,
                 form_from,
                [form_to],
-            #    html_message=msg_html,
+               html_message=msg_html,
                 )
             messages.success(request,
             'Email was successfully sent')
