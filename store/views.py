@@ -520,7 +520,7 @@ def email_form(request, id):
     order_info = get_object_or_404(Order, pk=id)
     domain = request.get_host()
 
-    if user.user_profile.is_staff is True:
+    if user.is_staff is True:
         Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
         sender = 'The Media Facility'
     else:
