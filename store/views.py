@@ -281,7 +281,8 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
-            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
+            #change submitter email to requester after testing ~FIX~
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -294,8 +295,9 @@ def edit_order(request, id):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
+            #order_form.instance.submitter.user_profile.email_address MOVE TO CC ~FIX~
             email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
@@ -437,7 +439,7 @@ def view_order(request):
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
-            
+
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
@@ -511,11 +513,10 @@ def email_form(request, id):
     domain = request.get_host()
 
     if user.is_staff is True:
-        Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
+        Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) #change email to requester after testing ~FIX~
         sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': order_info.requester.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'})
-        # Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.requester.user_profile.email_address})
+        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) #change email to requester after testing ~FIX~
         sender = order_info.requester.get_full_name()
     if request.method == "POST":
         Email = Email_Form(request.POST)
