@@ -214,7 +214,7 @@ def create_order(request, copy_id=None):
             order.submitter = user
             order.save()
             orderlineformset.save()
-            domain = request.build_absolute_uri()
+            domain = request.get_host()
             subject,from_email,to = 'Order #{0} Complete'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.email
             context = Context({
                 'id': order_form.instance.id,
