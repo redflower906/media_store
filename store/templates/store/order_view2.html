@@ -37,22 +37,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orderforms=incomp headers=headers1%}
-            </div>
-            <div class="pagination">
-                <span class="step-links">
-                    {% if pagesI.has_previous %}
-                        <a href="?page={{ pagesI.previous_page_number }}">previous</a>
-                    {% endif %}
-            
-                    <span class="current">
-                        Page {{ pagesI.number }} of {{ pagesI.paginator.num_pages }}.
-                    </span>
-            
-                    {% if pagesI.has_next %}
-                        <a href="?pageI={{ pages.next_page_number }}">next</a>
-                    {% endif %}
-                </span>
+                {%include "store/list_generic.html" with orderforms=incomp pages=pagesI headers=headers1%}
             </div>
         </div>
         <div class="row">

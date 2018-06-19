@@ -129,21 +129,22 @@
             </tbody>
         {% else %}
             <div><p>There are no orders at this time.</p></div>        
-        {% endif %}
-    </table>
-    <!-- <div class="pagination">
-        <span class="step-links">
-            {% if pages.has_previous %}
-                <a href="?page={{ pages.previous_page_number }}">previous</a>
-            {% endif %}
-    
-            <span class="current">
-                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+        {% endif %}    
+        <div class="pagination">
+            <span class="step-links">
+                {% if pages.has_previous %}
+                    <a href="?page={{ pages.previous_page_number }}">previous</a>
+                {% endif %}
+        
+                <span class="current">
+                    Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                </span>
+        
+                {% if pages.has_next %}
+                    <a href="?page={{ pages.next_page_number }}">next</a>
+                {% endif %}
             </span>
-    
-            {% if pages.has_next %}
-                <a href="?page={{ pages.next_page_number }}">next</a>
-            {% endif %}
-        </span>
-    </div> -->
+        </div>
+    </table>
+
 {% endblock %} 
