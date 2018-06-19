@@ -395,19 +395,6 @@ def view_order(request):
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
 
-    # how to associate "orders" in html (either incomp, CNB, CB) to also associate with paginator
-    # page = request.GET.get('page', 1)
-    # paginator = Paginator(orders, 2)
-    # try:
-    #     pages = paginator.page(page)
-    # except PageNotAnInteger:
-    #     pages = paginator.page(1)
-    # except EmptyPage:
-    #     pages = paginator.page(paginator.num_pages)
-    # x = OrderStatusFormSet()
-    # print(x[14].values())
-
-
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
@@ -465,7 +452,7 @@ def view_order(request):
 
     #pagination
     page = request.GET.get('page')
-    paginatorI = Paginator(incomp, 10)
+    paginatorI = Paginator(incomp_queryset, 10)
     paginatorR = Paginator(recur_queryset, 10)
     paginatorCNB = Paginator(compNotBill_queryset, 20)
     paginatorCB = Paginator(compBill_queryset, 30)
@@ -487,14 +474,14 @@ def view_order(request):
 
     return render(request,
         'store/order_view2.html',{
-        'compNotBill': compNotBill,
-        'incomp': incomp,
         'headers1': list(sort_headers1.headers()),
         'headers2': list(sort_headers2.headers()),
         'headers3': list(sort_headers3.headers()),
         'headers4': list(sort_headers4.headers()),
-        'compBill': compBill,
-        'recur': recur,
+        # 'compNotBill': compNotBill,
+        # 'incomp': incomp,
+        # 'compBill': compBill,
+        # 'recur': recur,
         'user': user,
         'orders': orders,
         'pagesI': pagesI,
