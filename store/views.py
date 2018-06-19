@@ -437,6 +437,7 @@ def view_order(request):
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
+            
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
@@ -478,10 +479,6 @@ def view_order(request):
         'headers2': list(sort_headers2.headers()),
         'headers3': list(sort_headers3.headers()),
         'headers4': list(sort_headers4.headers()),
-        # 'compNotBill': compNotBill,
-        # 'incomp': incomp,
-        # 'compBill': compBill,
-        # 'recur': recur,
         'user': user,
         'orders': orders,
         'pagesI': pagesI,

@@ -46,11 +46,11 @@
 
                     {% endif %}
                     <!-- recurring -->
-                    {% if orderforms == recur %}
+                    {% if orderforms == pagesR %}
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     <!-- completed not billed -->
-                    {% elif orderforms == compNotBill %}
+                    {% elif orderforms == pagesCNB %}
                     <td>{{orderform.instance.date_complete}}</td>
                     {% if orderform.instance.is_recurring %}
                         <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
@@ -58,7 +58,7 @@
                         <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
                     {% endif %}
                     <!-- why??? -->
-                    {% elif orderforms == incomp %}     
+                    {% elif orderforms == pagesI %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
                     {% if orderform.instance.is_recurring %}
@@ -95,7 +95,7 @@
                                     <tr id="table_header">
                                         <th>Submitter</th>
                                         <th>Description</th>
-                                        {% if orderforms == recur %}
+                                        {% if orderforms == pagesR %}
                                             <th>Last Complete Date</th>
                                             <th>Last Billed Date</th>
                                         {% endif %}
