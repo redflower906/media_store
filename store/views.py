@@ -464,7 +464,7 @@ def view_order(request):
     compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
 
     #pagination
-    page = request.Get.get('page')
+    page = request.GET.get('page')
     paginatorI = Paginator(incomp_queryset, 10)
     paginatorR = Paginator(recur_queryset, 10)
     paginatorCNB = Paginator(compNotBill_queryset, 20)
