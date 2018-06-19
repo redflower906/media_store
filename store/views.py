@@ -464,27 +464,27 @@ def view_order(request):
     compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
 
-    #pagination
-    # page = request.Get.get('page')
-    # paginatorI = Paginator(incomp_queryset, 10)
-    # paginatorR = Paginator(recur_queryset, 10)
-    # paginatorCNB = Paginator(compNotBill_queryset, 20)
-    # paginatorCB = Paginator(compBill_queryset, 30)
-    # try:
-    #     pagesI = paginatorI.page(page)
-    #     pagesR = paginatorR.page(page)
-    #     pagesCNB = paginatorCNB.page(page)
-    #     pagesCB = paginatorCB.page(page)
-    # except PageNotAnInteger:
-    #     pagesI = paginatorI.page(1)
-    #     pagesR = paginatorR.page(1)
-    #     pagesCNB = paginatorCNB.page(1)
-    #     pagesCB = paginatorCB.page(1)
-    # except EmptyPage:
-    #     pagesI = paginatorI.page(paginatorI.num_pages)
-    #     pagesR = paginatorR.page(paginatorR.num_pages)
-    #     pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
-    #     pagesCB = paginatorCB.page(paginatorCB.num_pages)
+    pagination
+    page = request.Get.get('page')
+    paginatorI = Paginator(incomp_queryset, 10)
+    paginatorR = Paginator(recur_queryset, 10)
+    paginatorCNB = Paginator(compNotBill_queryset, 20)
+    paginatorCB = Paginator(compBill_queryset, 30)
+    try:
+        pagesI = paginatorI.page(page)
+        pagesR = paginatorR.page(page)
+        pagesCNB = paginatorCNB.page(page)
+        pagesCB = paginatorCB.page(page)
+    except PageNotAnInteger:
+        pagesI = paginatorI.page(1)
+        pagesR = paginatorR.page(1)
+        pagesCNB = paginatorCNB.page(1)
+        pagesCB = paginatorCB.page(1)
+    except EmptyPage:
+        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesR = paginatorR.page(paginatorR.num_pages)
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+        pagesCB = paginatorCB.page(paginatorCB.num_pages)
 
     return render(request,
         'store/order_view2.html',{
@@ -498,10 +498,10 @@ def view_order(request):
         'recur': recur,
         'user': user,
         'orders': orders,
-        # 'pagesI': pagesI,
-        # 'pagesR': pagesR,
-        # 'pagesCNB': pagesCNB,
-        # 'pagesCB': pagesCB,
+        'pagesI': pagesI,
+        'pagesR': pagesR,
+        'pagesCNB': pagesCNB,
+        'pagesCB': pagesCB,
         })
 
 def export_orders(request):
