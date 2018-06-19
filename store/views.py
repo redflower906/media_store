@@ -465,22 +465,22 @@ def view_order(request):
 
     #pagination
     page = request.GET.get('page')
-    paginatorI = Paginator(incomp, 10)
+    incomp = Paginator(incomp, 10)
     paginatorR = Paginator(recur_queryset, 10)
     paginatorCNB = Paginator(compNotBill_queryset, 20)
     paginatorCB = Paginator(compBill_queryset, 30)
     try:
-        pagesI = paginatorI.page(page)
+        pagesI = incomp.page(page)
         pagesR = paginatorR.page(page)
         pagesCNB = paginatorCNB.page(page)
         pagesCB = paginatorCB.page(page)
     except PageNotAnInteger:
-        pagesI = paginatorI.page(1)
+        pagesI = incomp.page(1)
         pagesR = paginatorR.page(1)
         pagesCNB = paginatorCNB.page(1)
         pagesCB = paginatorCB.page(1)
     except EmptyPage:
-        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesI = incomp.page(incomp.num_pages)
         pagesR = paginatorR.page(paginatorR.num_pages)
         pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
         pagesCB = paginatorCB.page(paginatorCB.num_pages)
