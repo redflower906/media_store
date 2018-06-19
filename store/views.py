@@ -435,13 +435,10 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        # billed_date_form = OrderForm(request.POST, prefix=billdate)
-        # for x in billed_date_form:
-        #     if x.cleaned_data['status'] == 'Complete' and billed_date_form.is_valid():
-
 
     user = request.user
-
+    
+    # if user is not staff, only show orders where user is requester OR submitter. eventually add manager to view all department/lab orders ~FIX~
     if user.is_staff is False:
         orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
     else:
@@ -455,23 +452,17 @@ def view_order(request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
 
+    #delete canceled orders that were created over 31 days ago
     dates = Order.objects.all()
     for x in dates:
         dc = x.date_created
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
-    # print((nextbill - today).days)
-    # item = Order.objects.values('date_billed').get(pk=1)
-    # # print(item.clean())
-    # if item < lastbill:
-    #     print('hi!')
-    # print(type(item))
 
-#deleting exclude(status__icontains='Canceled')
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
-    recur_queryset = orders.filter(is_recurring=True).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
@@ -481,6 +472,28 @@ def view_order(request):
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
+
+    #pagination
+    page = request.Get.get('page')
+    paginatorI = Paginator(incomp_queryset, 10)
+    paginatorR = Paginator(recur_queryset, 10)
+    paginatorCNB = Paginator(compNotBill_queryset, 20)
+    paginatorCB = Paginator(compBill_queryset, 30)
+    try:
+        pagesI = paginatorI.page(page)
+        pagesR = paginatorR.page(page)
+        pagesCNB = paginatorCNB.page(page)
+        pagesCB = paginatorCB.page(page)
+    except PageNotAnInteger:
+        pagesI = paginatorI.page(1)
+        pagesR = paginatorR.page(1)
+        pagesCNB = paginatorCNB.page(1)
+        pagesCB = paginatorCB.page(1)
+    except EmptyPage:
+        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesR = paginatorR.page(paginatorR.num_pages)
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+        pagesCB = paginatorCB.page(paginatorCB.num_pages)
 
     return render(request,
         'store/order_view2.html',{
@@ -494,7 +507,10 @@ def view_order(request):
         'recur': recur,
         'user':user,
         'orders':orders,
-        # 'pages': pages,
+        'pagesI':pagesI,
+        'pagesR':pagesR,
+        'pagesCNB':pagesCNB,
+        'pagesCB':pagesCB,
         })
 
 def export_orders(request):

@@ -185,6 +185,7 @@ class Order(models.Model):
         ('2C.227', '2C.227 (4C)'),
         ('2C.267', '2C.267 (4C)'),
         ('2C.277', '2C.277 (4C)'),
+        ('2C ambient', 'Near 2C.243 (21C)'),
         ('2E.231', '2E.231 (4C)'),
         ('2E.233', '2E.233 (18C)'),
         ('2E.267', '2E.267 (4C)'),
@@ -194,6 +195,7 @@ class Order(models.Model):
         ('3C.229', '3C.229 (18C)'),
         ('3C.265', '3C.265 (4C)'),
         ('3C.267', '3C.267 (4C)'),
+        ('3C ambient', 'Near 3C.289 (21C)'),
         ('3E.265', '3E.265 (18C)'),
         ('3E.267', '3E.267 (4C)'),
     )
@@ -415,6 +417,7 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
+         messages.success('Order #{0} has been completed')
         instance.date_complete = date.today()
     if instance.status == 'Billed':
         today = date.today()
