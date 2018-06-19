@@ -51,9 +51,10 @@ if DEBUG:
 ALLOWED_HOSTS = ['*']
 
 #Ask Emily or Jody about sending email ~FIX~
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
-host = '10.42.5.23'
+EMAIL_SERVER = harrisons1@janelia.hhmi.org
+host = '10.37.6.50'
 #port = 465
 
 MEDIA_URL = '/media/'
@@ -62,7 +63,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 COMPRESS_OFFLINE=True
 COMPRESS_ENABLED=True
 
-FIL_UPLOAD_PERMISSIONS = 0o644
+FILE_UPLOAD_PERMISSIONS = 0o644
 
 
 # Application definition
