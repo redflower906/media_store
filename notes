@@ -120,7 +120,6 @@ to get rsync:
     pacman -S rsync
     use mingw64 console to be able to use node 
 
-in complete not billed tab, make is recurring field a form if yes OR separate recurring/not recurring orders and put checkbox by all recurring orders
 javascript to change all statuses from complete to billed via one button
 
 

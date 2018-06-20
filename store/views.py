@@ -1,6 +1,5 @@
 from django import forms
 from django.forms.models import formset_factory, modelformset_factory, inlineformset_factory, ModelForm
-from paginated_modelformset import PaginatedModelFormSet
 from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
@@ -427,6 +426,7 @@ def view_order(request):
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_recurring_stop__lte = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
@@ -464,7 +464,7 @@ def view_order(request):
     recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
-    
+
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
