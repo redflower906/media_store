@@ -463,20 +463,20 @@ def view_order(request):
     paginatorCNB = Paginator(compNotBill, 20)
     paginatorCB = Paginator(compBill, 30)
     try:
-        pagesI = paginatorI.page(page)
-        pagesR = paginatorR.page(page)
-        pagesCNB = paginatorCNB.page(page)
-        pagesCB = paginatorCB.page(page)
+        pagesI = paginatorI.page(page, prefix='incomp')
+        pagesR = paginatorR.page(page, prefix='recur')
+        pagesCNB = paginatorCNB.page(page, prefix='compNotBill')
+        pagesCB = paginatorCB.page(page, prefix='compBill')
     except PageNotAnInteger:
-        pagesI = paginatorI.page(1)
-        pagesR = paginatorR.page(1)
-        pagesCNB = paginatorCNB.page(1)
-        pagesCB = paginatorCB.page(1)
+        pagesI = paginatorI.page(1, prefix='incomp')
+        pagesR = paginatorR.page(1, prefix='recur')
+        pagesCNB = paginatorCNB.page(1, prefix='compNotBill')
+        pagesCB = paginatorCB.page(1, prefix='compBill')
     except EmptyPage:
-        pagesI = paginatorI.page(paginatorI.num_pages)
-        pagesR = paginatorR.page(paginatorR.num_pages)
-        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
-        pagesCB = paginatorCB.page(paginatorCB.num_pages)
+        pagesI = paginatorI.page(paginatorI.num_pages, prefix='incomp')
+        pagesR = paginatorR.page(paginatorR.num_pages, prefix='recur')
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages, prefix='compNotBill')
+        pagesCB = paginatorCB.page(paginatorCB.num_pages, prefix='compBill')
 
     return render(request,
         'store/order_view2.html',{
