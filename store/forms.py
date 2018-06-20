@@ -9,6 +9,7 @@ from django.forms.widgets import TextInput, HiddenInput, NumberInput
 from .models import Inventory, Vendor, Announcements, Order, OrderLine, MEDIA_CHOICES, Department, UserProfile, UserFullName
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
+from paginated_modelformset import PaginatedModelFormSet
 from django.forms.models import BaseInlineFormSet,BaseModelFormSet,BaseFormSet,BaseForm
 from django.db import connections
 from django.db.utils import ProgrammingError, OperationalError
@@ -202,5 +203,6 @@ OrderStatusFormSet = modelformset_factory(
     widgets={
         'status': forms.Select(choices=Order.STATUS_CHOICES)
         },
-    extra=0
+    extra=0,
+    formset=PaginatedModelFormSet
 )
