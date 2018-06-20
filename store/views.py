@@ -399,25 +399,6 @@ def view_order(request):
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
 
-    if request.method == 'POST':
-        # for each order category, check to see if the form had been updated and save
-        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
-
-        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
-
-        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
-
-        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
-
-
     user = request.user
     
     # if user is not staff, only show orders where user is requester OR submitter. eventually add manager to view all department/lab orders ~FIX~
@@ -452,34 +433,60 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-    incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill')
+    # incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
+    # recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
+    # compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
+    # compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill')
 
-    #pagination
-    page = request.GET.get('page')
-    paginatorI = Paginator(incomp, 10)
-    paginatorR = Paginator(recur, 10)
-    paginatorCNB = Paginator(compNotBill, 20)
-    paginatorCB = Paginator(compBill, 30)
-    try:
-        pagesI = paginatorI.page(page,)
-        pagesR = paginatorR.page(page)
-        pagesCNB = paginatorCNB.page(page)
-        pagesCB = paginatorCB.page(page)
-    except PageNotAnInteger:
-        pagesI = paginatorI.page(1)
-        pagesR = paginatorR.page(1)
-        pagesCNB = paginatorCNB.page(1)
-        pagesCB = paginatorCB.page(1)
-    except EmptyPage:
-        pagesI = paginatorI.page(paginatorI.num_pages)
-        pagesR = paginatorR.page(paginatorR.num_pages)
-        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
-        pagesCB = paginatorCB.page(paginatorCB.num_pages)
+    if request.method == 'POST':
+        # for each order category, check to see if the form had been updated and save
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
 
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
 
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+    else:
+               
+        #pagination
+        page = request.GET.get('page')
+        paginatorI = Paginator(incomp, 10)
+        paginatorR = Paginator(recur, 10)
+        paginatorCNB = Paginator(compNotBill, 20)
+        paginatorCB = Paginator(compBill, 30)
+        try:
+            pagesI = paginatorI.page(page,)
+            pagesR = paginatorR.page(page)
+            pagesCNB = paginatorCNB.page(page)
+            pagesCB = paginatorCB.page(page)
+        except PageNotAnInteger:
+            pagesI = paginatorI.page(1)
+            pagesR = paginatorR.page(1)
+            pagesCNB = paginatorCNB.page(1)
+            pagesCB = paginatorCB.page(1)
+        except EmptyPage:
+            pagesI = paginatorI.page(paginatorI.num_pages)
+            pagesR = paginatorR.page(paginatorR.num_pages)
+            pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+            pagesCB = paginatorCB.page(paginatorCB.num_pages)
+        pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
+        pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
+        pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
+        pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
+        
+        incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
+        recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
+        compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
+        compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
 
     return render(request,
         'store/order_view2.html',{
