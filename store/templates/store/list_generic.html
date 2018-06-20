@@ -132,16 +132,16 @@
     </table>
     <div class="pagination">
         <span class="step-links">
-            {% if orderforms.page.has_previous %}
-                <a href="?page={{ orderforms.page.previous_page_number }}">previous</a>
+            {% if orderforms.has_previous %}
+                <a href="?page={{ orderforms.previous_page_number }}">previous</a>
             {% endif %}
     
             <span class="current">
-                Page {{ orderforms.page.number }} of {{ orderforms.page.paginator.num_pages }}.
+                Page {{ orderforms.number }} of {{ orderforms.paginator.num_pages }}.
             </span>
     
-            {% if orderforms.page.has_next %}
-                <a href="?page={{ orderforms.page.next_page_number }}">next</a>
+            {% if orderforms.has_next %}
+                <a href="?page={{ orderforms.next_page_number }}">next</a>
             {% endif %}
         </span>
     </div>
