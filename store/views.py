@@ -433,7 +433,10 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-
+    incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill') 
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
@@ -453,10 +456,6 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
     else:
-        # incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
-        # recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
-        # compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
-        # compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill') 
 
         #pagination
         page = request.GET.get('page')
