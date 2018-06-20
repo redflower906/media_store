@@ -37,7 +37,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orderforms=incomp pages=pagesI headers=headers1%}
+                {%include "store/list_generic.html" with orderforms=pagesI headers=headers1%}
             </div>
         </div>
         <div class="row">
@@ -47,7 +47,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orderforms=recur pages=pagesR headers=headers2%}
+                {%include "store/list_generic.html" with orderforms=pagesR headers=headers2%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -62,7 +62,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orderforms=compNotBill pages=pagesCNB headers=headers3%}
+                {%include "store/list_generic.html" with orderforms=pagesCNB headers=headers3%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -78,7 +78,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orderforms=compBill pages=pagesCB headers=headers4%}
+                {%include "store/list_generic.html" with orderforms=pagesCB headers=headers4%}
             </div>
         </div>
     </div>

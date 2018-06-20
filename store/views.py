@@ -399,16 +399,6 @@ def view_order(request):
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
 
-    OrderStatusFormSet = modelformset_factory(
-    Order, 
-    formset=PaginatedModelFormSet,
-    fields=('status',),
-    widgets={
-        'status': forms.Select(choices=Order.STATUS_CHOICES)
-        },
-    extra=0,
-    )
-
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
@@ -462,32 +452,32 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-    incomp = OrderStatusFormSet(queryset=incomp_queryset, per_page=10, page_num=1, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=recur_queryset, per_page=10, page_num=1, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, per_page=10, page_num=1, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset, per_page=10, page_num=1, prefix='compBill')
+    incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill')
 
     #pagination
-    # page = request.GET.get('page')
-    # paginatorI = Paginator(incomp_queryset, 10)
-    # paginatorR = Paginator(recur_queryset, 10)
-    # paginatorCNB = Paginator(compNotBill_queryset, 20)
-    # paginatorCB = Paginator(compBill_queryset, 30)
-    # try:
-    #     pagesI = paginatorI.page(page,)
-    #     pagesR = paginatorR.page(page)
-    #     pagesCNB = paginatorCNB.page(page)
-    #     pagesCB = paginatorCB.page(page)
-    # except PageNotAnInteger:
-    #     pagesI = paginatorI.page(1)
-    #     pagesR = paginatorR.page(1)
-    #     pagesCNB = paginatorCNB.page(1)
-    #     pagesCB = paginatorCB.page(1)
-    # except EmptyPage:
-    #     pagesI = paginatorI.page(paginatorI.num_pages)
-    #     pagesR = paginatorR.page(paginatorR.num_pages)
-    #     pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
-    #     pagesCB = paginatorCB.page(paginatorCB.num_pages)
+    page = request.GET.get('page')
+    paginatorI = Paginator(incomp, 10)
+    paginatorR = Paginator(recur, 10)
+    paginatorCNB = Paginator(compNotBill, 20)
+    paginatorCB = Paginator(compBill, 30)
+    try:
+        pagesI = paginatorI.page(page,)
+        pagesR = paginatorR.page(page)
+        pagesCNB = paginatorCNB.page(page)
+        pagesCB = paginatorCB.page(page)
+    except PageNotAnInteger:
+        pagesI = paginatorI.page(1)
+        pagesR = paginatorR.page(1)
+        pagesCNB = paginatorCNB.page(1)
+        pagesCB = paginatorCB.page(1)
+    except EmptyPage:
+        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesR = paginatorR.page(paginatorR.num_pages)
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+        pagesCB = paginatorCB.page(paginatorCB.num_pages)
 
 
 
@@ -499,10 +489,10 @@ def view_order(request):
         'headers4': list(sort_headers4.headers()),
         'user': user,
         'orders': orders,
-        # 'pagesI': pagesI,
-        # 'pagesR': pagesR,
-        # 'pagesCNB': pagesCNB,
-        # 'pagesCB': pagesCB,
+        'pagesI': pagesI,
+        'pagesR': pagesR,
+        'pagesCNB': pagesCNB,
+        'pagesCB': pagesCB,
         'incomp':incomp,
         'recur':recur,
         'compNotBill':compNotBill,
