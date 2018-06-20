@@ -39,7 +39,8 @@
                 {% if user.is_staff is True %}
                 <td class="col-xs-3"><a href="{% url 'edit_single_item' SingleItem.id %}">{{InventoryItem.inventory_text}}</a></td>                
                 {% else %}
-                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>                
+                <td class="col-xs-3"><a href="{% url 'single_item' InventoryItem.id %}">{{InventoryItem.inventory_text}}</a></td>
+                {% endif %}                
                 <td class="col-xs-2">{{InventoryItem.product}}</td>
                 <td class="col-xs-2">{{InventoryItem.container|default:'N/A'}}</td>
                 <td class="col-xs-2" id="center_columns">{{InventoryItem.volume|default:'N/A'}}</td>
