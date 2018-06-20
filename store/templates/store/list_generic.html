@@ -46,11 +46,11 @@
 
                     {% endif %}
                     <!-- recurring -->
-                    {% if orderforms == pagesR %}
+                    {% if orderforms == recur %}
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     <!-- completed not billed -->
-                    {% elif orderforms == pagesCNB %}
+                    {% elif orderforms == compNotBill %}
                     <td>{{orderform.instance.date_complete}}</td>
                     {% if orderform.instance.is_recurring %}
                         <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
@@ -58,7 +58,7 @@
                         <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
                     {% endif %}
                     <!-- why??? -->
-                    {% elif orderforms == pagesI %}     
+                    {% elif orderforms == incomp %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
                     {% if orderform.instance.is_recurring %}
@@ -132,16 +132,16 @@
     </table>
     <div class="pagination">
         <span class="step-links">
-            {% if orderforms.has_previous %}
-                <a href="?page={{ orderforms.previous_page_number }}">previous</a>
+            {% if pages.has_previous %}
+                <a href="?page={{ pages.previous_page_number }}">previous</a>
             {% endif %}
     
             <span class="current">
-                Page {{ orderforms.number }} of {{ orderforms.paginator.num_pages }}.
+                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
             </span>
     
-            {% if orderforms.has_next %}
-                <a href="?page={{ orderforms.next_page_number }}">next</a>
+            {% if pages.has_next %}
+                <a href="?page={{ pages.next_page_number }}">next</a>
             {% endif %}
         </span>
     </div>

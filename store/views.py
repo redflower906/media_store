@@ -451,7 +451,10 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-
+    incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
 
     #pagination
     page = request.GET.get('page')
@@ -475,10 +478,7 @@ def view_order(request):
         pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
         pagesCB = paginatorCB.page(paginatorCB.num_pages)
 
-    incomp = OrderStatusFormSet(queryset=pagesI, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
+
 
     return render(request,
         'store/order_view2.html',{
@@ -493,6 +493,9 @@ def view_order(request):
         'pagesCNB': pagesCNB,
         'pagesCB': pagesCB,
         'incomp':incomp,
+        'recur':recur,
+        'compNotBill':compNotBill,
+        'compBill':compBill,
         })
 
 def export_orders(request):
