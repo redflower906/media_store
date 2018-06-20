@@ -419,7 +419,7 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
 
-        messages.success('Order #{0} has been completed'.format(instance.id))
+        messages.success(request, 'Order #{0} has been completed'.format(instance.id))
 
         instance.date_complete = date.today()
 
