@@ -15,7 +15,7 @@ function register_row(row){
     //add django formset-style ids to container and notes p tags,
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
-    row.find('.inv_notes p').attr('id', prefix + 'notes')
+    row.find('.inv_notes p').attr('id', prefix + 'notes_order')
 
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').on('input', handle_qty_update)

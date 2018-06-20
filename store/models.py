@@ -418,8 +418,11 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
-        messages.success('Order #{0} has been completed')
+
+        messages.success('Order #{0} has been completed'.format(instance.id))
+
         instance.date_complete = date.today()
+
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
