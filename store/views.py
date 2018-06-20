@@ -399,9 +399,19 @@ def view_order(request):
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
 
+    OrderStatusFormSet = modelformset_factory(
+    Order, 
+    formset=PaginatedModelFormSet,
+    fields=('status',),
+    widgets={
+        'status': forms.Select(choices=Order.STATUS_CHOICES)
+        },
+    extra=0,
+    )
+
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
-        order_formset = OrderStatusFormSet(request.POST, per_page=10, page_num=1)
+        order_formset = OrderStatusFormSet(request.POST, per_page=10, page_num=1, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 

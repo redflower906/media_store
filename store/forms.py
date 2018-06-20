@@ -197,12 +197,4 @@ class AnnouncementsForm(forms.ModelForm):
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
 
-OrderStatusFormSet = modelformset_factory(
-    Order, 
-    formset=PaginatedModelFormSet,
-    fields=('status',),
-    widgets={
-        'status': forms.Select(choices=Order.STATUS_CHOICES)
-        },
-    extra=0,
-)
+
