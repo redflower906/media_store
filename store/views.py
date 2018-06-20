@@ -401,19 +401,19 @@ def view_order(request):
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
-        order_formset = OrderStatusFormSet(request.POST, prefix='incomp', per_page=10, page_num=1)
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='recur', per_page=10, page_num=1)
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill', per_page=10, page_num=1)
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compBill', per_page=10, page_num=1)
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
