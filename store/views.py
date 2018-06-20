@@ -401,19 +401,19 @@ def view_order(request):
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
-        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp', per_page=10, page_num=1)
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur', per_page=10, page_num=1)
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill', per_page=10, page_num=1)
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill', per_page=10, page_num=1)
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
@@ -453,9 +453,9 @@ def view_order(request):
     orderline__inventory__id='686')
 
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp', per_page=10, page_num=1 )
-    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
+    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur', per_page=10, page_num=1)
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill', per_page=10, page_num=1)
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill', per_page=10, page_num=1)
 
     #pagination
     page = request.GET.get('page')
