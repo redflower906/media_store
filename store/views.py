@@ -433,10 +433,10 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-    # incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
-    # recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
-    # compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
-    # compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill')
+    incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill')
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
@@ -478,6 +478,7 @@ def view_order(request):
             pagesR = paginatorR.page(paginatorR.num_pages)
             pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
             pagesCB = paginatorCB.page(paginatorCB.num_pages)
+
         pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
         pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
         pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
