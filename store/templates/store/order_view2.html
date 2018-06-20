@@ -66,7 +66,7 @@
             </div>
         </div>
         {% if user.is_staff is True %}
-        <a href="{% url 'export_orders' %}" name='data' class="btn btn-info">data dump!</a>
+        <a href="{% url 'export_orders' %}" name='data' class="btn btn-info">Export Billing Data</a>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
         {% endif %}
     </div>

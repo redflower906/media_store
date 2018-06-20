@@ -104,7 +104,6 @@
                                         <th>Notes</th>
                                     </tr>
                                 {% for line in orderform.instance.orderline_set.all %}                                
-                                {% comment %} have to call from "orderform" variable for each line to know which order it's getting info from {% endcomment %}
                                 </thead>
                                 <tr>
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
