@@ -199,10 +199,10 @@ class AnnouncementsForm(forms.ModelForm):
 
 OrderStatusFormSet = modelformset_factory(
     Order, 
+    formset=PaginatedModelFormSet,
     fields=('status',),
     widgets={
         'status': forms.Select(choices=Order.STATUS_CHOICES)
         },
     extra=0,
-    formset=PaginatedModelFormSet
 )
