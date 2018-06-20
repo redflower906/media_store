@@ -440,10 +440,12 @@ def view_order(request):
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
+    
+
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
-    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Canceled').exclude(date_recurring_stop__gte = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
