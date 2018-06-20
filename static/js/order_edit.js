@@ -10,12 +10,12 @@ function register_row(row){
     var inventory_select = $('#id_' + prefix + 'inventory')
     //register listeners to changes in the dropdowns
     media_select.change(populate_inventory)
-    inventory_select.change(populate_notes_and_containers)
+    inventory_select.change(populate_vol_and_containers)
 
-    //add django formset-style ids to container and notes p tags,
+    //add django formset-style ids to container and vol p tags,
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
-    row.find('.inv_notes p').attr('id', prefix + 'notes')
+    row.find('.inv_vol p').attr('id', prefix + 'vol')
 
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').on('input', handle_qty_update)
@@ -30,7 +30,7 @@ function register_row(row){
         media_select.val(media_code)
         populate_inventory({ target: media_select[0]})
         inventory_select.val(selected_inventory)
-        populate_notes_and_containers({target: inventory_select[0]})
+        populate_vol_and_containers({target: inventory_select[0]})
     }
 
 }
@@ -66,14 +66,14 @@ function populate_inventory(e){
 * Inventory select handler. Fills out form with inventory data
 * @param {js event} e - event object for inventory select change
 */
-function populate_notes_and_containers(e){
+function populate_vol_and_containers(e){
     // fill in the note and container fields for 
     var id = $(e.target).val()
     var prefix = build_prefix(e.target.name)
     if(id){
         var item = find_invdetails(id)
         $('#' + prefix + 'container').text(item.container)
-        $('#' + prefix + 'notes').text(item.notes)
+        $('#' + prefix + 'vol').text(item.vol)
         //add cost and quantity
         //set quantity to 1 if 0/empty
         var cur_quantity = $('#id_' + prefix + 'qty').val()
@@ -85,9 +85,9 @@ function populate_notes_and_containers(e){
         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
     }
     else{
-        //clear container, notes, qty, and cost
+        //clear container, vol, qty, and cost
         $('#' + prefix + 'container').text('-------')
-        $('#' + prefix + 'notes').text('-------')
+        $('#' + prefix + 'vol').text('-------')
         $('#id_' + prefix + 'qty').val(0)
         $('#id_' + prefix + 'line_cost').val(0)
     }
