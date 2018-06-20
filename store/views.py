@@ -436,27 +436,26 @@ def view_order(request):
     incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
     recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill') 
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
-        order_formset = OrderStatusFormSet(request.POST or None, prefix='incomp')
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST or None, prefix='recur')
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST or None, prefix='compNotBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST or None, prefix='compBill')
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-    else:
-
+            
         #pagination
         page = request.GET.get('page')
         paginatorI = Paginator(incomp_queryset, 10)
