@@ -15,7 +15,7 @@ function register_row(row){
     //add django formset-style ids to container and notes p tags,
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
-    row.find('.inv_notes p').attr('id', prefix + 'notes_order')
+    row.find('.inv_notes p').attr('id', prefix + 'notes')
 
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').on('input', handle_qty_update)
@@ -73,7 +73,7 @@ function populate_notes_and_containers(e){
     if(id){
         var item = find_invdetails(id)
         $('#' + prefix + 'container').text(item.container)
-        $('#' + prefix + 'notes').text(item.desc)
+        $('#' + prefix + 'notes').text(item.notes)
         //add cost and quantity
         //set quantity to 1 if 0/empty
         var cur_quantity = $('#id_' + prefix + 'qty').val()
