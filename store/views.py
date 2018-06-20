@@ -433,10 +433,10 @@ def view_order(request):
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
-    incomp = OrderStatusFormSet(queryset=incomp_queryset.object_list, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=recur_queryset.object_list, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset.object_list, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset.object_list, prefix='compBill') 
+    incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill') 
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
