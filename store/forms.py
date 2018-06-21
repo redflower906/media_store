@@ -201,7 +201,7 @@ OrderStatusFormSet = modelformset_factory(
 Order, 
 fields=('status',),
 widgets={
-    'status': forms.Select(attrs={'class': self.order.status,}, choices=Order.STATUS_CHOICES)
+    'status': forms.Select(choices=Order.STATUS_CHOICES)
     },
 extra=0,
 )
