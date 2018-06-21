@@ -78,7 +78,7 @@
                         {% endfor %}
                         <td>
                             {{orderform.status.errors}}
-                            {{orderform.status|add_class:"test"}}
+                            {{orderform.status|add_class:orderform.instance.status}}
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
