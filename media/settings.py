@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'widget-tweaks',
 #    'django_extensions',
     'jquery',
     'djangoformsetjs',
