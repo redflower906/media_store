@@ -75,13 +75,13 @@
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
                         {% endfor %}
-                        <td class='{{ orderform.status }}'>
+                        <td class='{{ orderform.instance.status }}'>
                             {{orderform.status.errors}}
                             {{orderform.status}}
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td class='{{ orderform.status }}'>{{orderform.instance.status}}</td>
+                    <td class='{{ orderform.instance.status }}'>{{orderform.instance.status}}</td>
                     {% endif %}
                     <td>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
