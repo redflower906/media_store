@@ -156,14 +156,13 @@ class OrderManager(models.Manager):
                 models.When(status='Submitted', then=models.Value(0)),
                 models.When(status='In Progress', then=models.Value(1)),
                 models.When(status='Complete', then=models.Value(2)),
-                models.When(status='Canceled', then=models.Value(3)),
+                models.When(status='Billed', then=models.Value(3)),
                 models.When(status='Problem', then=models.Value(4)),
-                models.When(status='Problem', then=models.Value(5)),
-                models.When(status='Problem', then=models.Value(6)),
+                models.When(status='Canceled', then=models.Value(5)),
+                models.When(status='Auto', then=models.Value(6)),
                 default=models.Value(7),
                 output_field=models.IntegerField(), )
-            ).order_by('custom_order', 'date_recurring_stop'
-        )
+            ).order_by('custom_order', 'date_recurring_stop')
         return orders
 
 class Order(models.Model):
@@ -172,10 +171,10 @@ class Order(models.Model):
         ('Submitted', 'Submitted'),
         ('In Progress', 'In Progress'),
         ('Complete', 'Complete'),
-        ('Canceled', 'Canceled'),
+        ('Billed', 'Billed'),
         ('Problem', 'Problem'),
+        ('Canceled', 'Canceled'),
         ('Auto', 'Auto'),
-        ('Billed', 'Billed')
     )
     LOCATION_CHOICES =(
         ('2W.225', '2W.225 (4C)'),

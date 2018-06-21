@@ -117,6 +117,6 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
-    document.getElementById('id_comNotBill').selectedIndex = 6;
-    console.log("this worked!");
+    document.getElementsByName('compNotBill').selectedIndex = 6;
+    console.log("this worked! by name");
 }
