@@ -78,11 +78,11 @@
                         {% endfor %}
                         <td>
                             {{orderform.status.errors}}
-                            {{orderform.status|add_class:"{{orderform.instance.status}}"}}
+                            {{orderform.status|add_class:"test"}}
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td>{{orderform.instance.status|add_class:"{{orderform.instance.status}}"}}</td>
+                    <td>{{orderform.instance.status|add_class:"test"}}</td>
                     {% endif %}
                     <td>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
