@@ -107,10 +107,16 @@ $(function(){
     });
 });
 
-
+//Alert when editing a recurring order
 function recurringAlert(){
     var recur = $('input:checked').attr('id');
     if (recur == 'id_order-is_recurring_0') {
         alert('Be aware that, if this order has been edited, any changes may not be implemented until the following week. Please email media facility with any questions.')
     }
+}
+
+//Change all orders tagged as complete to billed
+function changeAllBill(){
+    document.getElementById('id_comNotBill').selectedIndex = 6;
+    console.log("this worked!");
 }
