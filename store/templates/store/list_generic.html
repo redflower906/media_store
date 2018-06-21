@@ -1,6 +1,7 @@
 {% extends "store/empty_base.html" %}
 {% block content %}
 {% load store_tags %}
+{% load widget_tweaks %}
 
     <table class="table table-hover" id="order_table">
         {{ orderforms.management_form }}
@@ -75,13 +76,13 @@
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
                         {% endfor %}
-                        <td class='{{ orderform.instance.status }}'>
+                        <td>
                             {{orderform.status.errors}}
-                            {{orderform.status}}
+                            {{orderform.status|add_class:'{{ orderform.instance.status }}'}}
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td class='{{ orderform.instance.status }}'>{{orderform.instance.status}}</td>
+                    <td>{{orderform.instance.status|add_class:'{{ orderform.instance.status }}'}}</td>
                     {% endif %}
                     <td>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
