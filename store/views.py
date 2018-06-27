@@ -233,23 +233,23 @@ def create_order(request, copy_id=None):
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
 
-        if copy_id:
-            try:
-                order = Order.objects.get(pk=copy_id)
-            except Order.DoesNotExist:
-                messages.error(
-                    request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
-                return HttpResponseRedirect('/order/view')
-            order_form = OrderForm(prefix='order', instance=order)
-            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-            orderlineformset.copy_orderline_data(order)
-            order.pk = None
-            order.id = None
+        # if copy_id:
+        #     try:
+        #         order = Order.objects.get(pk=copy_id)
+        #     except Order.DoesNotExist:
+        #         messages.error(
+        #             request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
+        #         return HttpResponseRedirect('/order/view')
+        #     order_form = OrderForm(prefix='order', instance=order)
+        #     orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+        #     orderlineformset.copy_orderline_data(order)
+        #     order.pk = None
+        #     order.id = None
 
-        else:
-            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
-            orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines', instance=order)
+        # else:
+        #     order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
+        #     orderlineformset = OrderLineInlineFormSet(
+        #         prefix='orderlines', instance=order)
 
 
 
