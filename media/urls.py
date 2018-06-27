@@ -52,7 +52,7 @@ urlpatterns = [
     url(r'^order/edit/(?P<id>[0-9]*)$', views.edit_order, name='edit_order'),
     url(r'^order/view', views.view_order, name='view_order'),
     url(r'^order', views.view_order, name='view_order'),
-    url(r'^order/copy/(?P<id>[0-9]*)$', views.copy_order, name = 'copy_order'),
+    url(r'^order/copy/(?P<id>[0-9]*)$', views.copy_order, name= 'copy_order'),
     url(r'^export/xls/$', views.export_orders, name='export_orders'),
     url(r'^delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
 
