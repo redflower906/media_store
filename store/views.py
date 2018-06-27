@@ -340,8 +340,8 @@ def edit_order(request, id): #changed from copy to edit
 
         if order_form.is_valid() and orderlineformset.is_valid():
             orderlineformset.save()
-            order = order_form.save(commit=False)
-            order.id = None
+            order = order_form.save()
+            # order.id = None
             order.pk = None
             order.save()
             subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
