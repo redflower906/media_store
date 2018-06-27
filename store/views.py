@@ -186,7 +186,7 @@ def __build_inventory_groups():
 
 
 @login_required(login_url='login')
-def create_order(request, copy_id=None):
+def create_order(request, copy_id=id):
 
     order = Order()
     user = request.user
