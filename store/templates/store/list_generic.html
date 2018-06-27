@@ -88,7 +88,7 @@
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
                     </td>
-                        <a href="{% url 'copy_order' orderform.instance.id %}" class="btn btn-success btn-sm order-copy" data-copyid="{{orderform.instance.id}}">copy</a>
+                        <a href="{% url 'copy_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
                     </td>
                     <td></td>
                     <tr id="notes" class="collapse" role="text">                        
