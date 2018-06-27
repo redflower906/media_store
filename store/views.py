@@ -245,10 +245,6 @@ def create_order(request, copy_id=None):
             orderlineformset.copy_orderline_data(order)
             order.pk = None
             order.id = None
-            order.save()
-            messages.success(request,
-            'Order {0} was successfully duplicated.'.format(order.instance.id))
-            return HttpResponseRedirect('edit_order')
 
         else:
             order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
