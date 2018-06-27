@@ -418,6 +418,10 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
+        if instance.is_recurring == True:
+            order = Order.objects.get(pk=instance.id)
+            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+            orderlineformset.copy_orderline_data(order)
 
         # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
@@ -436,10 +440,3 @@ def status_email(sender, instance, *args, **kwargs):
         instance.days_since_bill = (today-lastbill).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
-
-@receiver(post_save, sender=Order)
-    def recurring_copy(sender, instance, *args, *kwargs):
-        if instance.status == 'Complete' and instance.is_recurring = True:
-            order = Order.objects.get(pk=instance.id)
-            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-            orderlineformset.copy_orderline_data(order)
