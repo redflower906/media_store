@@ -330,7 +330,7 @@ def copy_order(request, id):
     except Order.DoesNotExist:  # expression as identifier:
         messages.error(
             request, 'Could not copy order #{}. Order does not exist.'.format(id))
-        return HttpResponseRedirect('/order/view')
+        return HttpResponseRedirect('/order/inventory')
 
     if request.method == "POST":
 
