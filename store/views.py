@@ -263,7 +263,7 @@ def create_order(request, copy_id=None):
     })
 
 @login_required(login_url='login')
-def edit_order(request, id):
+def copy_order(request, id): #changed from edit to copy
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
     # but not edit
@@ -321,7 +321,7 @@ def edit_order(request, id):
 
 
 @login_required(login_url='login')
-def copy_order(request, id):
+def edit_order(request, id): #changed from copy to edit
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
     # but not edit
@@ -330,7 +330,7 @@ def copy_order(request, id):
     except Order.DoesNotExist:  # expression as identifier:
         messages.error(
             request, 'Could not copy order #{}. Order does not exist.'.format(id))
-        return HttpResponseRedirect('/order/inventory')
+        return HttpResponseRedirect('/order/view')
 
     if request.method == "POST":
 
