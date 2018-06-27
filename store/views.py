@@ -231,7 +231,7 @@ def create_order(request, copy_id=None):
             return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    else:
+    #else:
 
         # if copy_id:
         #     try:
