@@ -304,7 +304,7 @@ def copy_order(request, id): #changed from edit to copy
             email.send()
             messages.success(request,
                 'Order {0} was successfully updated.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/order/view')
+            return HttpResponseRedirect('/order/inventory')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
