@@ -45,18 +45,14 @@ urlpatterns = [
     url(r'^inventory/new', views.create_item, name='new_item'),
     url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
     url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
-
     url(r'^services/', views.services, name='services'),
 
 ##orders
     url(r'^order/new', views.create_order, name='create_order'),
-    # url(r'^order/past', views.past_order, name='past_order'),
-    # url(r'^order/(?P<id>[0-9]*)$', views.past_order, name='past_order'),
     url(r'^order/edit/(?P<id>[0-9]*)$', views.edit_order, name='edit_order'),
-    # url(r'^order/(?P<id>[0-9]*)$', views.recurring_order, name='recurring_order'),
     url(r'^order/view', views.view_order, name='view_order'),
     url(r'^order', views.view_order, name='view_order'),
-    url(r'^order/copy/(?P<copy_id>[0-9]*)$', views.create_order, name = 'copy_order'),
+    url(r'^order/copy/(?P<copy_id>[0-9]*)$', views.copy_order, name = 'copy_order'),
     url(r'^export/xls/$', views.export_orders, name='export_orders'),
     url(r'^delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
 
