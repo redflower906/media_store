@@ -339,7 +339,7 @@ def edit_order(request, id): #changed from copy to edit
             request.POST, prefix='orderlines', instance=order)
 
         if order_form.is_valid() and orderlineformset.is_valid():
-            order = order_form
+            order = order_form.save()
             order.id = None
             order.pk = None
             order.save()
