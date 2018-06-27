@@ -89,7 +89,8 @@
                         <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
                     </td>
                     <td>
-                        <a href="/order/copy/{{orderform.instance.id}}" class="btn btn-success btn-sm workorder-copy" data-copyid="{{orderform.instance.id}}">copy</a>
+                        <a href="/order/copy/{{orderform.instance.id}}" class="btn btn-success btn-sm order-copy" data-copyid="{{orderform.instance.id}}">copy</a>
+                        {{copy_id}}
                     </td>
                     <td></td>
                     <tr id="notes" class="collapse" role="text">                        
