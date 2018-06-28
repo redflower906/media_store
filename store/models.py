@@ -419,7 +419,7 @@ def status_email(sender, instance, *args, **kwargs):
 
         if instance.is_recurring == True:
             order = Order.objects.get(pk=instance.id)
-            ol = order.prefetch_related('orderline_set')
+            ol = Order.prefetch_related('orderline_set').get(pk=instance.id)
             order.id = None
             order.pk = None
             order.save()
