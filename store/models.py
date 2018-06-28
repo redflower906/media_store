@@ -18,9 +18,7 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
-from store.forms import OrderForm, OrderLineInlineFormSet
-# from .forms import OrderLineInlineFormSet
-
+# from store.forms import OrderForm, OrderLineInlineFormSet
 
 
 # Create your models here.
@@ -252,6 +250,11 @@ class Order(models.Model):
         return self.status.name == 'Complete'
         ##DO WE NEED THIS?? ~FIX~
 
+    def recur_duplicate(self):
+        if self.is_recurring == True:
+            self.pk = None
+            self.id = None
+            self.save()
 
 class OrderLine(models.Model):
     order = models.ForeignKey(Order, blank=False, null=False)
@@ -419,6 +422,8 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
+
+        recur_duplicate()
         # if instance.is_recurring == True:
         #     order = Order.objects.get(pk=instance.id)
         #     order_form = OrderForm(prefix='order', instance=order)
