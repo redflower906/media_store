@@ -261,7 +261,7 @@ def create_order(request, copy_id=None):
     })
 
 @login_required(login_url='login')
-def copy_order(request, id): #changed from edit to copy
+def edit_order(request, id): #changed from edit to copy
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
     # but not edit
@@ -318,66 +318,66 @@ def copy_order(request, id): #changed from edit to copy
     })
 
 
-@login_required(login_url='login')
-def edit_order(request, id): #changed from copy to edit
-    #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
-    # new order/view/{id} view and template, and redirect the user there if they are allowed to view
-    # but not edit
-    try:
-        order = Order.objects.get(pk=id)
-    except Order.DoesNotExist:  # expression as identifier:
-        messages.error(
-            request, 'Could not copy order #{}. Order does not exist.'.format(id))
-        return HttpResponseRedirect('/order/view')
+# @login_required(login_url='login')
+# def edit_order(request, id): #changed from copy to edit
+#     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
+#     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
+#     # but not edit
+#     try:
+#         order = Order.objects.get(pk=id)
+#     except Order.DoesNotExist:  # expression as identifier:
+#         messages.error(
+#             request, 'Could not copy order #{}. Order does not exist.'.format(id))
+#         return HttpResponseRedirect('/order/view')
 
-    if request.method == "POST":
+#     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order)
-        orderlineformset = OrderLineInlineFormSet(
-            request.POST, prefix='orderlines', instance=order)
+#         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order)
+#         orderlineformset = OrderLineInlineFormSet(
+#             request.POST, prefix='orderlines', instance=order)
 
-        if order_form.is_valid() and orderlineformset.is_valid():
-            orderline = orderlineformset.save()
-            order = order_form.save()
-            # order.id = None
-            order.pk = None
-            order.save()
-            orderline.save()
-            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
-            #change submitter email to requester after testing ~FIX~
-            context = Context({
-                'id': order_form.instance.id,
-                'location': order_form.instance.location,
-                'c_or_e': 'edited'
-            })
-            m_plain = render_to_string('create_email.txt', context.flatten())
-            m_html = render_to_string('create_email.html', context.flatten())
-            email =EmailMultiAlternatives(
-               subject,
-               m_plain,
-               from_email,
-               [to],
-               cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
-            )
-            #order_form.instance.submitter.user_profile.email_address MOVE TO CC ~FIX~
-            email.attach_alternative(m_html, "text/html")
-            email.send()
-            messages.success(request,
-                'Order {0} was successfully duplicated.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/order/view')
-        else:
-            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    else:
-        order_form = OrderForm(prefix='order', instance=order)
-        orderlineformset = OrderLineInlineFormSet(
-            prefix='orderlines', instance=order)
+#         if order_form.is_valid() and orderlineformset.is_valid():
+#             orderline = orderlineformset.save()
+#             order = order_form.save()
+#             # order.id = None
+#             order.pk = None
+#             order.save()
+#             orderline.save()
+#             subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
+#             #change submitter email to requester after testing ~FIX~
+#             context = Context({
+#                 'id': order_form.instance.id,
+#                 'location': order_form.instance.location,
+#                 'c_or_e': 'edited'
+#             })
+#             m_plain = render_to_string('create_email.txt', context.flatten())
+#             m_html = render_to_string('create_email.html', context.flatten())
+#             email =EmailMultiAlternatives(
+#                subject,
+#                m_plain,
+#                from_email,
+#                [to],
+#                cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+#             )
+#             #order_form.instance.submitter.user_profile.email_address MOVE TO CC ~FIX~
+#             email.attach_alternative(m_html, "text/html")
+#             email.send()
+#             messages.success(request,
+#                 'Order {0} was successfully duplicated.'.format(order_form.instance.id))
+#             return HttpResponseRedirect('/order/view')
+#         else:
+#             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+#     else:
+#         order_form = OrderForm(prefix='order', instance=order)
+#         orderlineformset = OrderLineInlineFormSet(
+#             prefix='orderlines', instance=order)
 
-    return render(request, 'store/order_create.html', {
-        'order_form': order_form,
-        'formset': orderlineformset,
-        'inventory_lists': __build_inventory_groups(),
-        'media_types': MEDIA_CHOICES
-    })
+#     return render(request, 'store/order_create.html', {
+#         'order_form': order_form,
+#         'formset': orderlineformset,
+#         'inventory_lists': __build_inventory_groups(),
+#         'media_types': MEDIA_CHOICES
+#     })
 
 
 def delete_order(request, id):
@@ -391,16 +391,6 @@ def delete_order(request, id):
 #     model = Order
 #     success_url = reverse_lazy('view_order')
 #     template_name = 'delete.html'
-
-
-#needed????
-# def past_order(request):
-#     context = {}
-#     return render(request, 'store/order_past.html')
-
-# def recurring_order(request):
-#     context = {}
-#     return render(request, 'store/order_list.html')
 
 
 @login_required
