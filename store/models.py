@@ -250,14 +250,6 @@ class Order(models.Model):
         return self.status.name == 'Complete'
         ##DO WE NEED THIS?? ~FIX~
 
-    @classmethod
-    def recur_duplicate(self):
-        if self.is_recurring == True:
-            print ("it's being called")
-            self.pk = None
-            self.id = None
-            self.save()
-
 class OrderLine(models.Model):
     order = models.ForeignKey(Order, blank=False, null=False)
     # description = models.TextField(blank=True) #Where is this being used??~FIX~
@@ -425,15 +417,11 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
 
-        Order.recur_duplicate()
-        # if instance.is_recurring == True:
-        #     order = Order.objects.get(pk=instance.id)
-        #     order_form = OrderForm(prefix='order', instance=order)
-        #     orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-        #     copy = orderlineformset.copy_orderline_data(order)
-        #     order.id = None
-        #     order.pk = None
-        #     order.save()
+        if instance.is_recurring == True:
+            order = Order.objects.get(pk=instance.id)
+            order.id = None
+            order.pk = None
+            order.save()
         # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
     instance.date_complete = date.today()
