@@ -231,25 +231,23 @@ def create_order(request, copy_id=None):
             return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    #else:
+    else:
 
-        # if copy_id:
-        #     try:
-        #         order = Order.objects.get(pk=copy_id)
-        #     except Order.DoesNotExist:
-        #         messages.error(
-        #             request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
-        #         return HttpResponseRedirect('/order/view')
-        #     order_form = OrderForm(prefix='order', instance=order)
-        #     orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-        #     orderlineformset.copy_orderline_data(order)
-        #     order.pk = None
-        #     order.id = None
+        if copy_id:
+            try:
+                order = Order.objects.get(pk=copy_id)
+            except Order.DoesNotExist:
+                messages.error(
+                    request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
+                return HttpResponseRedirect('/order/view')
+            order_form = OrderForm(prefix='order', instance=order)
+            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+            orderlineformset.copy_orderline_data(order)
 
-        # else:
-        #     order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
-        #     orderlineformset = OrderLineInlineFormSet(
-        #         prefix='orderlines', instance=order)
+        else:
+            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order)
 
 
 
@@ -343,7 +341,6 @@ def edit_order(request, id): #changed from copy to edit
             order = order_form.save()
             # order.id = None
             order.pk = None
-            orderline.pk = None
             order.save()
             orderline.save()
             subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address

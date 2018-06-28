@@ -259,8 +259,8 @@ class OrderLine(models.Model):
     qty = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)
     # unit = models.CharField(max_length=30, blank=True,
-    #                         null=True)  # DO WE NEED THIS??
-    # shouldn't this be the same as Inventory cost? do we need it? this was considered container but we don't need that within the orderline
+    #                         null=True)  # DO WE NEED THIS?? this was considered container but we don't need that within the orderline
+    # shouldn't this be the same as Inventory cost? do we need it? 
     line_cost = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)
 
