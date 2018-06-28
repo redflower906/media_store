@@ -18,7 +18,7 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
-# from .forms import OrderForm, OrderLineInlineFormSet
+from store.forms import OrderForm, OrderLineInlineFormSet
 # from .forms import OrderLineInlineFormSet
 
 
