@@ -423,7 +423,7 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
 
-        recur_duplicate()
+        Order().recur_duplicate()
         # if instance.is_recurring == True:
         #     order = Order.objects.get(pk=instance.id)
         #     order_form = OrderForm(prefix='order', instance=order)
