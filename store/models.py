@@ -3,7 +3,7 @@ All data models for Media Store
 """
 
 from django.db import models
-from django.db.models import prefetch, prefetch_related, prefetch_related_objects
+from django.db.models import prefetch_related
 #from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -19,7 +19,6 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
-# from store.forms import OrderForm, OrderLineInlineFormSet
 
 
 # Create your models here.
@@ -420,7 +419,7 @@ def status_email(sender, instance, *args, **kwargs):
 
         if instance.is_recurring == True:
             order = Order.objects.get(pk=instance.id)
-            ol = prefetch_related_objects(order, 'orderline')
+            ol = Order.prefetch_related('orderline_set').get(pk=instance.id)
             order.id = None
             order.pk = None
             order.save()
