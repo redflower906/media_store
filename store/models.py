@@ -253,6 +253,7 @@ class Order(models.Model):
     @classmethod
     def recur_duplicate(self):
         if self.is_recurring == True:
+            print ("it's being called")
             self.pk = None
             self.id = None
             self.save()
