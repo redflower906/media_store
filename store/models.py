@@ -400,6 +400,7 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
+    print(instance)
     if instance.status == 'Complete':
         context = Context({
             'id': instance.id,
