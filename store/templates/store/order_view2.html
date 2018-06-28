@@ -3,7 +3,6 @@
 {% include "store/navbar.html" %}
 {% endblock %} 
 {% block content %}
-{% load widget_tweaks %}
 <hr/>
 
 {% if user.is_staff is True and days <= 4 %}
