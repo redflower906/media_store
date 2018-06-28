@@ -18,6 +18,7 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
+from .forms import OrderForm, OrderLineInlineFormSet
 # from .forms import OrderLineInlineFormSet
 
 
@@ -418,11 +419,14 @@ def status_email(sender, instance, *args, **kwargs):
             fail_silently=False,
             html_message=m_html,
         )
-        # if instance.is_recurring == True:
-        #     order = Order.objects.get(pk=instance.id)
-        #     orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-        #     orderlineformset.copy_orderline_data(order)
-
+        if instance.is_recurring == True:
+            order = Order.objects.get(pk=instance.id)
+            order_form = OrderForm(prefix='order', instance=order)
+            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+            copy = orderlineformset.copy_orderline_data(order)
+            order.id = None
+            order.pk = None
+            order.save()
         # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
     instance.date_complete = date.today()
