@@ -3,6 +3,7 @@ All data models for Media Store
 """
 
 from django.db import models
+from django.db.models import prefetch, prefetch_related, prefetch_related_objects
 #from django.contrib.admin.models import LogEntry
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
