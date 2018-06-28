@@ -250,6 +250,7 @@ class Order(models.Model):
         return self.status.name == 'Complete'
         ##DO WE NEED THIS?? ~FIX~
 
+    @classmethod
     def recur_duplicate(self):
         if self.is_recurring == True:
             self.pk = None
@@ -423,7 +424,7 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
 
-        Order().recur_duplicate()
+        Order.recur_duplicate()
         # if instance.is_recurring == True:
         #     order = Order.objects.get(pk=instance.id)
         #     order_form = OrderForm(prefix='order', instance=order)
