@@ -261,7 +261,7 @@ def create_order(request, copy_id=None):
     })
 
 @login_required(login_url='login')
-def edit_order(request, id): #changed from edit to copy
+def edit_order(request, id):
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
     # but not edit
