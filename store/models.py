@@ -398,6 +398,7 @@ class SortHeaders(models.Model):
             self.header_defs[self.order_field][1],
         )
 
+@receiver(pre_save, sender=OrderLine)
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
     print(instance)
@@ -420,8 +421,7 @@ def status_email(sender, instance, *args, **kwargs):
 
         if instance.is_recurring == True:
             order = Order.objects.get(pk=instance.id)
-            ol = Order.objects.prefetch_related('orderline_set')
-            ol = ol.get(pk=instance.id)
+            ol = Order.objects.get(pk=instance.id)
             order.id = None
             order.pk = None
             order.save()
