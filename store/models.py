@@ -420,11 +420,12 @@ def status_email(sender, instance, *args, **kwargs):
 
         if instance.is_recurring == True:
             order = Order.objects.get(pk=instance.id)
-            ol = Order.objects.filter(pk=instance.id).prefetch_related('orderline_set')
+            ol = Order.objects.prefetch_related('orderline_set')
+            ol = ol.get(pk=instance.id)
             order.id = None
             order.pk = None
             order.save()
-            order.orderline_set.set(ol)
+            # order.orderline_set.set(ol)
         # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
     instance.date_complete = date.today()
