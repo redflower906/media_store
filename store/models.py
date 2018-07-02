@@ -418,7 +418,7 @@ def status_email(sender, instance, *args, **kwargs):
             html_message=m_html,
         )
 
-        if instance.is_recurring == True and date.today() =< instance.date_recurring_stop:
+        if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.id = None
