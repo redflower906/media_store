@@ -83,7 +83,7 @@ INSTALLED_APPS = [
 #    'hijack',
 #    'south',
     'import_export',
-    'django-crontab',
+    'django_crontab',
 ]
 
 MIDDLEWARE = [
