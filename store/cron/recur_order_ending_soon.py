@@ -9,7 +9,8 @@ from store.models import Order
 def recur_end_email():
     today = date.today()
     orders = Order.objects.all()
-    print(list(orders.id))
+    order_list = list(Order.objects.all())
+    print(order_list)
     for order in orders:
         today_to_stop = (today - order.date_recurring_stop).days
         domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
