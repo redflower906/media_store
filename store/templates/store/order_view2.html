@@ -90,7 +90,8 @@
         $('select').on('change', function(e){
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value);
-            console.log(e.target.value);
+            console.log('target =', e.target.id);
+            console.log('currentTarget =', e.currentTarget.id);
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
                     $(this).closest('.koala').removeClass('sdd');
