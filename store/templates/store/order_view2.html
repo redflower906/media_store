@@ -99,6 +99,10 @@
             }else{
                 $(this).closest('.koala').addClass('sdd');
             }
+            if($('[id*="recur"]')){
+                var today = datepicker.formatDate('yyyy-mm-dd', new Date());
+                console.log(today)
+            }
         });
     });
 </script>
