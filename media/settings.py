@@ -123,7 +123,7 @@ WSGI_APPLICATION = 'media.wsgi.application'
 
 CRONJOBS = [
     ('* * * * *', 'store.cron.recur_order_ending_soon'),
-    ('0 1 * * *', 'store.management.commands.update_users', ['-v3'])
+    # ('0 1 * * *', 'store.management.commands.update_users', ['-v3'])
 ]
 
 
