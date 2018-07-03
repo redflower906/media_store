@@ -1,5 +1,4 @@
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
-from crontab import CronTab
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from dateutil import relativedelta
