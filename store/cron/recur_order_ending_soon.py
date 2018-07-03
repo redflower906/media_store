@@ -11,7 +11,7 @@ def recur_end_email():
     orders = Order.objects.all()
     for order in orders:
         if order.date_recurring_stop:
-            today_to_stop = (today - order.date_recurring_stop).days
+            today_to_stop = (order.date_recurring_stop - today).days
             print(today_to_stop)
             if today_to_stop == 21:
                 print('second if worked') 
