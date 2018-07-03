@@ -3,7 +3,7 @@ from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from dateutil import relativedelta
 from datetime import datetime, date
-from .models import Order
+# from store.models import Order
 
 
 def recur_end_email():
