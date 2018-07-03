@@ -11,15 +11,14 @@ def recur_end_email():
     today = date.today()
     orders = Order.objects.all()
 
-    subject,from_email,to = 'test', 'mediafacility@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
-    m_plain = render_to_string('test')
-    email =EmailMultiAlternatives(
-    subject,
-    m_plain,
-    from_email,
-    [to],
+    send_mail(
+        'Subject here',
+        'Here is the message.',
+        'from@example.com',
+        ['to@example.com'],
+        fail_silently=False,
     )
-    email.send()
+
 
     # for order in orders:
     #     today_to_stop = (today - order.date_recurring_stop).days
