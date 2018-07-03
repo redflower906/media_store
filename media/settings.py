@@ -122,7 +122,7 @@ WSGI_APPLICATION = 'media.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 CRONJOBS = [
-    ('* * * * *', 'store.cron.recur_order_ending_soon'),
+    ('* * * * *', 'store.cron.recur_order_ending_soon.recur_and_email'),
     # ('0 1 * * *', 'store.management.commands.update_users', ['-v3'])
 ]
 

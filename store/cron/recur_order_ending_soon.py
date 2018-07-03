@@ -8,7 +8,7 @@ from datetime import datetime, date
 
 def recur_end_email():
     today = date.today()
-    orders = Order.objects.all()
+    # orders = Order.objects.all()
     print('hello world inside cron')
     send_mail(
         'Subject here',
