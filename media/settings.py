@@ -77,14 +77,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django-crontab',
 #    'django_extensions',
     'jquery',
     'djangoformsetjs',
 #    'hijack',
 #    'south',
     'import_export',
-    'widget_tweaks',
+    'django-crontab',
 ]
 
 MIDDLEWARE = [
