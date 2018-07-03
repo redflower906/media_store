@@ -11,7 +11,7 @@ def recur_end_email():
     orders = Order.objects.all()
     for order in orders:
         today_to_stop = (today - order.date_recurring_stop).days
-        print(today_to_stop)
+        print(order)
         domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
         if today_to_stop == 21: 
             subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.email
