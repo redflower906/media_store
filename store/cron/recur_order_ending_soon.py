@@ -9,7 +9,7 @@ from store.models import Order
 def recur_end_email():
     today = date.today()
     orders = Order.objects.all()
-    order_list = Order.objects.all().value_list()
+    order_list = Order.objects.all().values_list()
     print(order_list)
     for order in orders:
         today_to_stop = (today - order.date_recurring_stop).days
