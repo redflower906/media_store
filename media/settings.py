@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django-crontab',
 #    'django_extensions',
     'jquery',
     'djangoformsetjs',
@@ -121,7 +122,10 @@ WSGI_APPLICATION = 'media.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-
+CRONJOBS = [
+    ('* * * * *', 'store.recur_order_ending_soon.py'),
+    ('0 1 * * *', 'store.management.commands.update_users.py', ['-v3'])
+]
 
 
 # Password validation
