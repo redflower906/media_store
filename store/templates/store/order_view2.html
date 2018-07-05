@@ -88,11 +88,8 @@
 <script>
     $(function recurEnd(){
         var date = moment();
-        console.log($(this));
         $(this).find("[class^='date-stop']").each(function(){
-            console.log($(this));
             var endDate = moment($(this).text());
-            console.log(endDate);
             var days = endDate.diff(date, 'days');
             console.log(days);
             if( 21 >= days && days >= 7){

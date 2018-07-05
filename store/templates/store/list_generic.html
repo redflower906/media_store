@@ -49,7 +49,7 @@
                     <!-- recurring -->
                     {% if orderforms == recur %}
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
-                    <td>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
+                    <td class='date-stop{{orderform.instance.id}}'>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     <!-- completed not billed -->
                     {% elif orderforms == compNotBill %}
                     <td>{{orderform.instance.date_complete}}</td>
