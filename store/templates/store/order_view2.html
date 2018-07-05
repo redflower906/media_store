@@ -88,7 +88,7 @@
 <script>
     $(function recurEnd(){
         var date = moment();
-        console.log(date);
+        console.log($(this));
         $(this).find("[class^='date-stop']").each(function(){
             console.log($(this));
             var endDate = moment($(this).text());
