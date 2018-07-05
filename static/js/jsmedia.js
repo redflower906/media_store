@@ -117,6 +117,5 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
-    document.getElementsByClassName('Complete').value = 'Billed';
-    console.log("this worked! by name");
+    console.log($(this));
 }
