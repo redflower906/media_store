@@ -87,9 +87,10 @@
 {% comment %} highlight changed status {% endcomment %}
 <script>
     $(function recurEnd(){
-        var date = moment();
+        var date = moment().format('YYY-MM-DD');
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'YYYY-MM-DD');
+            console.log(endDate);
             var days = endDate.diff(date, 'days');
             console.log(days);
             if( 21 >= days && days >= 7){
