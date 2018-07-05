@@ -461,22 +461,18 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            order_formset.refresh_from_db()
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            order_formset.refresh_from_db()
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            order_formset.refresh_from_db()
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            order_formset.refresh_from_db()
 
     return render(request,
         'store/order_view2.html',{

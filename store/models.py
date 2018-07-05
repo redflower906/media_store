@@ -427,7 +427,8 @@ def status_email(sender, instance, *args, **kwargs):
             for ol in orderlines:
                 ol.pk = None
                 ol.order = order
-                ol.save()            
+                ol.save()
+            order.refresh_from_db()            
         # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
     instance.date_complete = date.today()
