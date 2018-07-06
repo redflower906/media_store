@@ -67,6 +67,7 @@
         </div>
         {% if user.is_staff is True %}
         <a href="{% url 'export_orders' %}" name='data' class="btn btn-info">Export Billing Data</a>
+        <button type="info" class="btn btn-primary pull-right" onclick="changeAllBill()">Change to billed</button>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
         {% endif %}
     </div>

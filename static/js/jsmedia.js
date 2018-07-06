@@ -117,5 +117,5 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
-    console.log($(this));
-}
+    $('td.statusComplete').children().val('Billed');
+};
