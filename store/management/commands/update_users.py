@@ -469,7 +469,7 @@ def add_visitor(emp, in_workday):
         return
 
     # now we have a user object set up the profile
-    profile = user.user_profile.first()
+    profile = user.user_profile[0]
 
     # if they have an employeeid, make sure they are in the pool of users from workday that
     # are active or were terminated in the last 30 days
