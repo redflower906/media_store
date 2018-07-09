@@ -153,16 +153,19 @@ def get_active_employees(emp_id=None):
         url += '?includeTeams=false'
 
     res = requests.get(url)
-    #employees = json.loads(res.content)
     employees = res.json()
-    # print (json.dumps(employees, indent=4)) #seems like all employees are found, not just visitors
     #filter out employees that have termination dates previous to 30 days ago
     def should_be_active(emp):
         if not emp['TERMINATIONDATE']:
             return True
         term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
         return term_date.date() >= THIRTY_DAYS_AGO.date()
-    return list(filter(should_be_active, employees))
+
+    #filter out employees who do not work in Janelia
+    def from_janelia(emp):
+        if emp['LOCATIONCODE'] == 'Janelia_site':
+            return True       
+    return list(filter(should_be_active, from_janelia, employees))
 
 def determine_username(emp):
     email = emp['EMAILADDRESS']
