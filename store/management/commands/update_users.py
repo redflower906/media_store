@@ -461,14 +461,16 @@ def add_visitor(emp, in_workday):
         message(u"Couldn't save visitor user {0} {1}: {2} \n".format(user.first_name, user.last_name, e), 'error')
         return
 
-    # now we have a user object set up the profile
 
     # if they have an employeeid, make sure they are in the pool of users from workday that
     # are active or were terminated in the last 30 days
     
     try:
         profile = user.user_profile
-    
+
+        if profile and profile.employee_id and profile.employee_id not in in_workday.keys():
+            return
+            
     except ObjectDoesNotExist:
         print ('user does not have a profile')
         profile = UserProfile(
@@ -479,8 +481,7 @@ def add_visitor(emp, in_workday):
 
     # if hasattr(user, 'user_profile'):
     #     profile = user.user_profile
-    #     if profile and profile.employee_id and profile.employee_id not in in_workday.keys():
-    #         return
+
 
     # # couldn't find a profile, so create one.
     # else:
