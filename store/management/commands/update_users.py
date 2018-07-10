@@ -24,8 +24,9 @@ import ldap
 from dateutil import parser
 from dateutil.relativedelta import relativedelta
 
-from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
+from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import Group, User
+from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.db import transaction
 from django.db.utils import IntegrityError
@@ -156,7 +157,7 @@ def get_active_employees(emp_id=None):
     employees = res.json()
     #filter out employees that don't work at janelia and have termination dates previous to 30 days ago
     def should_be_active_janelia(emp):
-        if emp['LOCATIONCODE'] == 'Janelia_site':
+       if emp['LOCATIONCODE'] == 'Janelia_site':
             if not emp['TERMINATIONDATE']:
                 return True
             term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
@@ -452,15 +453,7 @@ def add_visitor(emp, in_workday):
         user.save()
         try:
             first_name = user.first_name
-            # if isinstance(first_name, str):
-            #     first_name = ftfy.guess_bytes(first_name)[0]
-            # first_name = ftfy.fix_text(first_name)
-
             last_name = user.last_name
-            # if isinstance(last_name, str):
-            #     last_name = ftfy.guess_bytes(last_name)[0]
-            # last_name = ftfy.fix_text(last_name)
-
             message(u"Updated visitor {0} {1}\n".format(first_name, last_name), 'success')
         except UnicodeDecodeError as e:
             message(u"Encountered error printing username for user {0}\n".format(user.id), 'error')
@@ -469,20 +462,33 @@ def add_visitor(emp, in_workday):
         return
 
     # now we have a user object set up the profile
-    profile = user.user_profile[0]
 
     # if they have an employeeid, make sure they are in the pool of users from workday that
     # are active or were terminated in the last 30 days
-    if profile and profile.employee_id and profile.employee_id not in in_workday.keys():
-        return
-
-    # couldn't find a profile, so create one.
-    elif not profile:
+    
+    try:
+        profile = user.user_profile
+    
+    except ObjectDoesNotExist:
+        print ('user does not have a profile')
         profile = UserProfile(
-             user = user,
-             email_address = user.email,
-             #is_manager = False
+            user = user,
+            email_address = user.email,
+            #is_manager = False
         )
+
+    # if hasattr(user, 'user_profile'):
+    #     profile = user.user_profile
+    #     if profile and profile.employee_id and profile.employee_id not in in_workday.keys():
+    #         return
+
+    # # couldn't find a profile, so create one.
+    # else:
+    #     profile = UserProfile(
+    #          user = user,
+    #          email_address = user.email,
+    #          #is_manager = False
+    #     )
 
     if not profile.skip_updates:
         profile.department      = dept

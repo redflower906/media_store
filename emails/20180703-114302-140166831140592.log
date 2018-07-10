@@ -1,0 +1,44 @@
+Content-Type: multipart/alternative;
+ boundary="===============5452764780446214306=="
+MIME-Version: 1.0
+Subject: Order #6 Submitted
+From: mediafacility@janelia.hhmi.org
+To: kelie@janelia.hhmi.org
+Cc: kelie@janelia.hhmi.org
+Date: Tue, 03 Jul 2018 15:43:02 -0000
+Message-ID: <20180703154302.2424.62223@vm650.int.janelia.org>
+
+--===============5452764780446214306==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+Your recurring media store order #6 will be ending in three weeks. Please review your order and extend the end date if necessary.
+
+You can view a summary of this order here:
+mediastore.int.janelia.org/order/edit/6
+
+Sincerely,
+
+The Media Facility
+
+--===============5452764780446214306==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+
+Your recurring media store order #6 will be ending in three weeks. Please review your order and extend the end date if necessary.<br><br>
+
+You can view a summary of this order:<br>
+<b><a href="mediastore.int.janelia.org/order/edit/6">Order #6</a></b><br><br>
+
+Sincerely,<br><br>
+
+The Media Facility
+--===============5452764780446214306==--
+
+-------------------------------------------------------------------------------
