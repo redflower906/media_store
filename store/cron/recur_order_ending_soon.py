@@ -10,7 +10,7 @@ def recur_end_email():
     today = date.today()
     orders = Order.objects.all()
     for order in orders:
-        if order.date_recurring_stop:
+        if order.date_recurring_stop and order.recur_end_email is False:
             today_to_stop = (order.date_recurring_stop - today).days
             print(today_to_stop)
             if today_to_stop == 21:
@@ -32,3 +32,5 @@ def recur_end_email():
                 )
                 email.attach_alternative(m_html, "text/html")
                 email.send()
+                order.recur_end_email == True
+                order.save(update_fields=['recur_end_email'])
