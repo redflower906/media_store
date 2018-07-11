@@ -51,14 +51,16 @@
     <fieldset>
         <legend>Who is paying?</legend>
     <div class='row'>
-        <div class='col-xs-2 form-group'>
-            {{ order_form.requester.errors }}
-            {{ order_form.requester }}
-        </div>
-        <div><p> : </p></div>
-        <div class='col-xs-2 form-group'>
-            {{ order_form.department.errors }}
-            {{ order_form.department }}
+        <div class='col-xs-6'>
+            <div class='col-xs-2 form-group'>
+                {{ order_form.requester.errors }}
+                {{ order_form.requester }}
+            </div>
+            <div><p> : </p></div>
+            <div class='col-xs-2 form-group'>
+                {{ order_form.department.errors }}
+                {{ order_form.department }}
+            </div>
         </div>
     </div>
     <p>&nbsp;</p>
