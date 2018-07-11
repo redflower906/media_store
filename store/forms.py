@@ -103,7 +103,7 @@ class OrderForm(forms.ModelForm):
             (True, 'Yes'),
             (False, 'No')             
         ], attrs={'class': 'form-contorl'}),
-        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={}),
+        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control'}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'notes_order': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes form-control'}), 
@@ -197,7 +197,7 @@ OrderStatusFormSet = modelformset_factory(
 Order, 
 fields=('status',),
 widgets={
-    'status': forms.Select(choices=Order.STATUS_CHOICES)
+    'status': forms.Select(choices=Order.STATUS_CHOICES, attrs={'class': 'form-control'})
     },
 extra=0,
 )

@@ -57,6 +57,7 @@ function populate_inventory(e){
     var selected_inventory_group = inventory_groups[mediatype]
     selected_inventory_group.map(function (item) {
         $('#id_' + prefix + 'inventory').append("<option value=" + item.id + ">" + item.desc + "</option>");
+        $(this).addClass('form-control');
     })
     $('#id_' + prefix + 'inventory').removeAttr('disabled')
     
