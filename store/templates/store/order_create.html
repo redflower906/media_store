@@ -120,22 +120,11 @@
                         <thead>
                             <div class='row'>
                                 <tr>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Media Type</th>
-                                </div>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Item</th>
-                                </div>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Container</th>
-                                </div>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Volume</th>
-                                </div>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Qty</th>
-                                </div>
-                                <div class='col text-center'>
                                     <th class='col text-center'>Location 
                                         <a data-toggle="modal" href="#mapmodal">?</a>    
                                     <!-- Modal -->
@@ -158,11 +147,8 @@
                                         </div>
                                         </div>
                                     </div>
-                                    </th>
-                                </div>                                
-                                <div class='col text-center'>
+                                    </th>                               
                                     <th class='col text-center'>Cost</th>
-                                </div>
                                 </tr>
                             </div>
                         </thead>
@@ -181,7 +167,6 @@
                                 {{ hidden_field.errors }} 
                                 {{ hidden_field }}
                                 {% endfor %}
-                            <div class='col text-center'>
                                 <td class='col text-center'>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
@@ -194,36 +179,24 @@
                                         {% endfor %}
                                     </select>
                                 </td>
-                            </div>
-                            <div class='col text-center'>
                                 <td class='col text-center'>
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
-                            </div>
-                            <div class='col text-center'>
-                                <td class="inv_container">
+                                <td class="col text-center inv_container">
                                     <p> --------- </p>
                                 </td>
-                            </div>
-                            <div class='col text-center'>
-                                <td class="inv_vol"> 
+                                <td class="col text-center inv_vol"> 
                                     <p> --------- </p>  
                                 </td>
-                            </div>
-                            <div class='col text-center'>
                                 <td class='col text-center'>
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
-                            </div>
-                            <div class='col text-center'>
                                 <td class='col text-center'>
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
                                 </td>
-                            </div>
-                            <div class='col text-center'>                                
                                 <td class='col text-center'>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
