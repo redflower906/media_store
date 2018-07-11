@@ -88,7 +88,7 @@ class DateInput(TextInput):
     
 class OrderForm(forms.ModelForm):
         
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), attrs={'class': 'form-control'})
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     class Meta:
@@ -98,7 +98,6 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'requester': forms.Select(attrs={'class': 'form-control'}),
         'department': forms.Select(attrs={'class': 'form-control'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
@@ -107,7 +106,7 @@ class OrderForm(forms.ModelForm):
         'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
-        'notes_order': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}), 
+        'notes_order': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes form-control'}), 
         }
 
     def __init__(self, *args, **kwargs):
