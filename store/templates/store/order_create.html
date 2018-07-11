@@ -111,106 +111,104 @@
             {{ hidden_field }} 
         {% endfor %}
         <div class='row'>
-            <div class='col-xs-12'>
-                <table id='form_holder'>
-                    <tr>
-                        <td style="padding:0" class="OrderLines">
-                            {{formset.management_form}}
-                            {{formset.media}}
-                            <table id='order_table'>
-                            <thead>
-                                <tr>
-                                <th>Media Type</th>
-                                <th>Item</th>
-                                <th>Container</th>
-                                <th>Volume</th>
-                                <th>Qty</th>
-                                <th>Location
-                                <a data-toggle="modal" href="#mapmodal">?</a>              
-                                <!-- Modal -->
-                                <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                        <h5 class="modal-title" id="mapmodalTitle"><b>Drop Off Locations</b></h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <img class="img-responsive" id="img_map" src="/static/images/2E.png">
-                                        </div>
-                                        <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary print" onClick="window.print();return false">Print</button>
-                                        </div>
+            <table id='form_holder'>
+                <tr>
+                    <td style="padding:0" class="OrderLines">
+                        {{formset.management_form}}
+                        {{formset.media}}
+                        <table id='order_table'>
+                        <thead>
+                            <tr>
+                            <th>Media Type</th>
+                            <th>Item</th>
+                            <th>Container</th>
+                            <th>Volume</th>
+                            <th>Qty</th>
+                            <th>Location
+                            <a data-toggle="modal" href="#mapmodal">?</a>              
+                            <!-- Modal -->
+                            <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="mapmodalTitle"><b>Drop Off Locations</b></h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
                                     </div>
+                                    <div class="modal-body">
+                                        <img class="img-responsive" id="img_map" src="/static/images/2E.png">
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary print" onClick="window.print();return false">Print</button>
                                     </div>
                                 </div>
-                                </th>
-                                <th>Cost</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for form in formset %}
-                                {% if form.non_field_errors %}
-                                <tr>
-                                    <td colspan="6">
-                                        {{ form.non_field_errors }}
-                                    </td>
-                                </tr>
-                                {% endif %}
-                                <tr>
-                                 {% for hidden_field in form.hidden_fields %} 
-                                    {{ hidden_field.errors }} 
-                                    {{ hidden_field }}
-                                    {% endfor %}
-
-                                <td>
-                                    <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
-                                     {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
-                                        <option value=""> --------- </option>
-                                        {% for media_type, media_type_desc in media_types %}
-                                            <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
-                                                {{media_type_desc}}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
+                                </div>
+                            </div>
+                            </th>
+                            <th>Cost</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for form in formset %}
+                            {% if form.non_field_errors %}
+                            <tr>
+                                <td colspan="6">
+                                    {{ form.non_field_errors }}
                                 </td>
-                                <td>
-                                    {{ form.inventory.errors }}
-                                    {{ form.inventory }}
-                                </td>
-
-                                <td class="inv_container">
-                                    <p> --------- </p>
-                                </td>
-                                <td class="inv_vol"> 
-                                   <p> --------- </p>  
-                                </td>
-                                <td>
-                                    {{ form.qty.errors }}
-                                    {{ form.qty }}
-                                </td>
-                                <td>
-                                    {{ order_form.location.errors }}
-                                    {{order_form.location}}
-
-                                </td>                                
-                                <td>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                                </tr>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                {% for hidden_field in form.hidden_fields %} 
+                                {{ hidden_field.errors }} 
+                                {{ hidden_field }}
                                 {% endfor %}
 
-                            </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                            <td>
+                                <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
+                                    {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
+                                    <option value=""> --------- </option>
+                                    {% for media_type, media_type_desc in media_types %}
+                                        <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
+                                            {{media_type_desc}}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </td>
+                            <td>
+                                {{ form.inventory.errors }}
+                                {{ form.inventory }}
+                            </td>
+
+                            <td class="inv_container">
+                                <p> --------- </p>
+                            </td>
+                            <td class="inv_vol"> 
+                                <p> --------- </p>  
+                            </td>
+                            <td>
+                                {{ form.qty.errors }}
+                                {{ form.qty }}
+                            </td>
+                            <td>
+                                {{ order_form.location.errors }}
+                                {{order_form.location}}
+
+                            </td>                                
+                            <td>
+                                {{ form.line_cost.errors }}
+                                {{ form.line_cost }}
+                            </td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
         </div>
                  
         <div class='row'>
