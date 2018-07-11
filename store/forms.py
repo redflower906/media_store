@@ -31,31 +31,31 @@ class Item_Model_Form(forms.ModelForm):
             'notes_inv': 'Item Notes'
         }
         widgets = {
-            'inventory_text': forms.TextInput(attrs={'class': 'form-text'}),
-            'product': forms.TextInput(attrs={'class': 'form-text'}),
-            'media_type': forms.Select(attrs={'class': 'form-text'}),
-            'cost': forms.TextInput(attrs={'class': 'form-text'}),
-            'container': forms.TextInput(attrs={'class': 'form-text'}),
-            'volume': forms.TextInput(attrs={'class': 'form-text'}),
-            'active': forms.Select(attrs={'class': 'form-text'}),
-            'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),            
+            'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
+            'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
+            'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+            'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
+            'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
+            'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
+            'active': forms.Select(attrs={'class': 'form-control form-text'}),
+            'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'form-control line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
         
 class Email_Form(forms.Form):
     To = forms.EmailField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'email-form-text'}),
+        widget=forms.TextInput(attrs={'class': 'form-control email-form-text'}),
         label='To:',
     )
     From = forms.EmailField(
         required=True,
-        widget=forms.TextInput(attrs={'class': 'email-form-text'}),
+        widget=forms.TextInput(attrs={'class': 'form-control email-form-text'}),
         label = 'From:',
     )
     Text = forms.CharField(
         required=True,
-        widget=forms.Textarea,
+        widget=forms.Textarea(attrs={'class':'form-control'}),
         label = 'Content:',
         )        
     
@@ -69,14 +69,14 @@ def item_model_formset_factory(extra):
             'notes_inv': 'Item Notes'
         },
     widgets = {
-        'inventory_text': forms.TextInput(attrs={'class': 'form-text'}),
-        'product': forms.TextInput(attrs={'class': 'form-text'}),
-        'media_type': forms.Select(attrs={'class': 'form-text'}),
-        'cost': forms.TextInput(attrs={'class': 'form-text'}),
-        'container': forms.TextInput(attrs={'class': 'form-text'}),
-        'volume': forms.TextInput(attrs={'class': 'form-text'}),
-        'active': forms.Select(attrs={'class': 'form-text'}),
-        'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes'}),
+        'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
+        'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
+        'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+        'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
+        'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
+        'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
+        'active': forms.Select(attrs={'class': 'form-control form-text'}),
+        'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'form-control line-notes'}),
         #'vendor': forms.TextInput(attrs={'class': 'line-container'})
     },
     extra=extra, can_delete=False,
