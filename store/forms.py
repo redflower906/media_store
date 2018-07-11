@@ -98,10 +98,12 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
+        'requester': forms.Select(attrs={'class': 'form-control'}),
+        'department': forms.Select(attrs={'class': 'form-control'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
-        ]),
+        ], attrs={'class': 'form-contorl'}),
         'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
