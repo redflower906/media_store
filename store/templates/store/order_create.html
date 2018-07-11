@@ -182,7 +182,7 @@
                                 {{ hidden_field }}
                                 {% endfor %}
                             <div class='col' align='center'>
-                                <td>
+                                <td class='col'>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
                                     <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
@@ -196,23 +196,23 @@
                                 </td>
                             </div>
                             <div class='col' align='center'>
-                                <td>
+                                <td class='col'>
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
                             </div>
                             <div class='col' align='center'>
-                                <td class="inv_container">
+                                <td class="inv_container col">
                                     <p> --------- </p>
                                 </td>
                             </div>
                             <div class='col' align='center'>
-                                <td class="inv_vol"> 
+                                <td class="inv_vol col"> 
                                     <p> --------- </p>  
                                 </td>
                             </div>
                             <div class='col' align='center'>
-                                <td>
+                                <td class='col'>
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
