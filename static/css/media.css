@@ -217,9 +217,9 @@ input[type=number] {
 #order_id {
   width: 10em;
 }
-tr {
+/* tr {
   border-bottom: 3px solid #ddd; 
-}
+} */
 tr.deleted {
   background: #eee;
   color: #aaa;
