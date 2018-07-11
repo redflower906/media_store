@@ -135,7 +135,7 @@
                                 <div class='col text-center'>
                                     <th>Qty</th>
                                 </div>
-                                <div class='col' align='center'>
+                                <div class='col text-center'>
                                     <th>Location 
                                         <a data-toggle="modal" href="#mapmodal">?</a>    
                                     <!-- Modal -->
@@ -181,8 +181,8 @@
                                 {{ hidden_field.errors }} 
                                 {{ hidden_field }}
                                 {% endfor %}
-                            <div class='col' align='center'>
-                                <td class='col'>
+                            <div class='col text-center'>
+                                <td>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
                                     <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
@@ -195,35 +195,35 @@
                                     </select>
                                 </td>
                             </div>
-                            <div class='col' align='center'>
-                                <td class='col'>
+                            <div class='col text-center'>
+                                <td>
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
                             </div>
-                            <div class='col' align='center'>
-                                <td class="inv_container col">
+                            <div class='col text-center'>
+                                <td class="inv_container">
                                     <p> --------- </p>
                                 </td>
                             </div>
-                            <div class='col' align='center'>
-                                <td class="inv_vol col"> 
+                            <div class='col text-center'>
+                                <td class="inv_vol"> 
                                     <p> --------- </p>  
                                 </td>
                             </div>
-                            <div class='col' align='center'>
-                                <td class='col'>
+                            <div class='col text-center'>
+                                <td>
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
                             </div>
-                            <div class='col' align='center'>
+                            <div class='col text-center'>
                                 <td>
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
                                 </td>
                             </div>
-                            <div class='col' align='center'>                                
+                            <div class='col text-center'>                                
                                 <td>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
