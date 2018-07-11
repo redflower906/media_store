@@ -121,22 +121,22 @@
                             <div class='row'>
                                 <tr>
                                 <div class='col text-center'>
-                                    <th>Media Type</th>
+                                    <th class='col text-center'>Media Type</th>
                                 </div>
                                 <div class='col text-center'>
-                                    <th>Item</th>
+                                    <th class='col text-center'>Item</th>
                                 </div>
                                 <div class='col text-center'>
-                                    <th>Container</th>
+                                    <th class='col text-center'>Container</th>
                                 </div>
                                 <div class='col text-center'>
-                                    <th>Volume</th>
+                                    <th class='col text-center'>Volume</th>
                                 </div>
                                 <div class='col text-center'>
-                                    <th>Qty</th>
+                                    <th class='col text-center'>Qty</th>
                                 </div>
                                 <div class='col text-center'>
-                                    <th>Location 
+                                    <th class='col text-center'>Location 
                                         <a data-toggle="modal" href="#mapmodal">?</a>    
                                     <!-- Modal -->
                                     <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
@@ -161,7 +161,7 @@
                                     </th>
                                 </div>                                
                                 <div class='col text-center'>
-                                    <th>Cost</th>
+                                    <th class='col text-center'>Cost</th>
                                 </div>
                                 </tr>
                             </div>
@@ -182,7 +182,7 @@
                                 {{ hidden_field }}
                                 {% endfor %}
                             <div class='col text-center'>
-                                <td>
+                                <td class='col text-center'>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
                                     <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
@@ -196,7 +196,7 @@
                                 </td>
                             </div>
                             <div class='col text-center'>
-                                <td>
+                                <td class='col text-center'>
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
@@ -212,19 +212,19 @@
                                 </td>
                             </div>
                             <div class='col text-center'>
-                                <td>
+                                <td class='col text-center'>
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
                             </div>
                             <div class='col text-center'>
-                                <td>
+                                <td class='col text-center'>
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
                                 </td>
                             </div>
                             <div class='col text-center'>                                
-                                <td>
+                                <td class='col text-center'>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
                                 </td>
