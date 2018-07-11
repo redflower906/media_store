@@ -51,12 +51,10 @@
     <fieldset>
         <legend>Who is paying?</legend>
         <div class='row'>
-            <div class='form-group'>
-                {{ order_form.requester.errors }}
-                {{ order_form.requester }}:
-                {{ order_form.department.errors }}
-                {{ order_form.department }}
-            </div>
+            {{ order_form.requester.errors }}
+            {{ order_form.requester }}:
+            {{ order_form.department.errors }}
+            {{ order_form.department }}
         </div>
     <p>&nbsp;</p>
     </fieldset>
@@ -64,7 +62,7 @@
 
     <fieldset>
         <legend>Is this a recurring order?</legend>
-        <div class='form-group row'>
+        <div class='row'>
             <div class='col-xs-2'>
                 {{ order_form.is_recurring.errors }}
                 {{ order_form.is_recurring }}
