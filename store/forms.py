@@ -124,9 +124,9 @@ class OrderLineInlineFormSet(
     inlineformset_factory(Order, OrderLine,
         fields=('qty', 'line_cost', 'inventory'),
         widgets={
-        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'line_calc line_qty'}),
-        'line_cost': NumInput(attrs={'step': 'any', 'class': 'line_calc line_cost', 'readonly': '1'}),
-        'inventory': forms.Select(),
+        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': ' form-control line_calc line_qty'}),
+        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control line_calc line_cost', 'readonly': '1'}),
+        'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
         extra=1, can_delete=True
         )):
