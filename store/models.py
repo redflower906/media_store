@@ -29,6 +29,7 @@ class Department(models.Model):
     account_code = models.IntegerField(null=True, blank=True)
     is_shared_resource = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
+    department_manager = models.ForeignKey(User, blank=True, null=True)
 
     #objects = ActiveDepartmentManager() #~FIX~ RM has this but I don't think MS needs it 
     # all_objects = models.Manager()
