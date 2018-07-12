@@ -38,7 +38,7 @@ class Item_Model_Form(forms.ModelForm):
             'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'active': forms.Select(attrs={'class': 'form-control form-text'}),
-            'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'form-control line-notes'}),            
+            'notes_inv': forms.Textarea(attrs={'class': 'form-control line-notes'}),            
             #'vendor': forms.TextInput(attrs={'class': 'line-container'})
         }
         
@@ -76,7 +76,7 @@ def item_model_formset_factory(extra):
         'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'active': forms.Select(attrs={'class': 'form-control form-text'}),
-        'notes_inv': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'form-control line-notes'}),
+        'notes_inv': forms.Textarea(attrs={'class': 'form-control line-notes'}),
         #'vendor': forms.TextInput(attrs={'class': 'line-container'})
     },
     extra=extra, can_delete=False,
