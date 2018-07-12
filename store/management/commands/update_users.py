@@ -220,7 +220,7 @@ def determine_username(emp):
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
 
-#NEEDED? ~FIX~
+#NEEDED? yes, for human-readable department drop-down
 def get_manager(manager_id):
     try:
         manager_profile = UserProfile.objects.get(employee_id=manager_id)
@@ -323,8 +323,8 @@ def add_employee(emp, **kwargs):
     else:
         message("Skipping profile updates for {0} {1}, skip_updates flag set on user profile.\n".format(user.first_name, user.last_name), 'warning')
 
-    # if is_manager:
-    #     profile.is_privileged = True
+    if is_manager:
+        profile.is_privileged = True
 
 
     if emp['ACTIVEFLAG'] == 'Y':
@@ -476,7 +476,7 @@ def add_visitor(emp, in_workday):
         profile = UserProfile(
             user = user,
             email_address = user.email,
-            #is_manager = False
+            is_manager = False
         )
 
     # if hasattr(user, 'user_profile'):

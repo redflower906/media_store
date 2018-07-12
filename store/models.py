@@ -42,14 +42,13 @@ class Department(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile')
     department = models.ForeignKey(Department, blank=True, null=True)
-#   alt_departments = models.ManyToManyField(Department, related_name='alt_departments', blank=True, null=True) #Jody said we probably don't need ~FIX~
     hhmi_project_id = models.CharField(max_length=30, blank=True, null=True) #needed for visitor projects
     employee_id = models.CharField(max_length=20, blank=True, null=True)
     email_address = models.CharField(max_length=255, blank=True, null=True)
     first_name = models.CharField(max_length=30, blank=True, null=True)
     last_name = models.CharField(max_length=30, blank=True, null=True)
-#   manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL) ~FIX~
-    is_manager = models.BooleanField(default=False) #do we need? ~FIX~
+    manager = models.ForeignKey(User, related_name='user_manager', blank=True, null=True, on_delete=models.SET_NULL) #needed for human-readable department drop-down
+    is_manager = models.BooleanField(default=False) #do we need? Yes, for manager priveleges (viewing all orders within dept)
     is_active = models.BooleanField(default=False)
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
