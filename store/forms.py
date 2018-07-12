@@ -106,7 +106,7 @@ class OrderForm(forms.ModelForm):
         'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control'}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
-        'notes_order': forms.Textarea(attrs={'cols': 50, 'rows': 10, 'class': 'line-notes form-control'}), 
+        'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 
         }
 
     def __init__(self, *args, **kwargs):
@@ -124,8 +124,8 @@ class OrderLineInlineFormSet(
     inlineformset_factory(Order, OrderLine,
         fields=('qty', 'line_cost', 'inventory'),
         widgets={
-        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control line_calc line_qty'}),
-        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control line_calc line_cost', 'readonly': '1'}),
+        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty'}),
+        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly': '1'}),
         'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
         extra=1, can_delete=True

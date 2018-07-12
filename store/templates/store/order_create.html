@@ -189,14 +189,10 @@
                                 <td class="col text-center inv_vol"> 
                                     <p> --------- </p>  
                                 </td>
-                                <div class='col-centered'>
-                                    <div class='input-group'>
-                                        <td class='col col-centered'>
-                                            {{ form.qty.errors }}
-                                            {{ form.qty }}
-                                        </td>
-                                    </div>
-                                </div>
+                                <td class='col'>
+                                    {{ form.qty.errors }}
+                                    {{ form.qty }}
+                                </td>
                                 <td class='col text-center'>
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}

@@ -161,6 +161,10 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
   text-decoration: underline;
 }
 
+.line-notes{
+  width: 100%;
+}
+
 .notes {
   display: none;
 }
