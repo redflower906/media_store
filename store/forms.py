@@ -33,7 +33,7 @@ class Item_Model_Form(forms.ModelForm):
         widgets = {
             'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
-            'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+            'media_type': forms.Select(attrs={'class': 'form-control form-text chosen-select'}),
             'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
@@ -88,7 +88,7 @@ class DateInput(TextInput):
     
 class OrderForm(forms.ModelForm):
         
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'form-control'}))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'form-control chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     class Meta:
@@ -98,12 +98,12 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'department': forms.Select(attrs={'class': 'form-control'}),
+        'department': forms.Select(attrs={'class': 'form-control chosen-select'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
         ], attrs={'class': 'form-contorl'}),
-        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control'}),
+        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control chosen-select'}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 
