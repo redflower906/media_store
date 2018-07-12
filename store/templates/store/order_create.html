@@ -189,10 +189,14 @@
                                 <td class="col text-center inv_vol"> 
                                     <p> --------- </p>  
                                 </td>
-                                <td class='col-xs-offset-1'>
-                                    {{ form.qty.errors }}
-                                    {{ form.qty }}
-                                </td>
+                                <div class='d-flex justify-content-center'>
+                                    <div class='input-group'>
+                                        <td class='col'>
+                                            {{ form.qty.errors }}
+                                            {{ form.qty }}
+                                        </td>
+                                    </div>
+                                </div>
                                 <td class='col text-center'>
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
