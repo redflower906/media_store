@@ -33,7 +33,7 @@
     <img id="img" src="/static/images/2E.png">
 </div>
 
-<form id='order_form' method="post" action="" class="form-control post-form form-horizontal" enctype="multipart/form-data">
+<form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
     {{ order_form.non_field_errors }}
     {% for hidden_field in order_form.hidden_fields %}
@@ -211,8 +211,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
-                 
+        </div>         
         <div class='row'>
                 <div class = 'col-xs-3'>
                     <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
@@ -244,7 +243,8 @@
                 <a href='/' class="btn btn-danger">Cancel</a>
             </div>
         </div>
-        
+    </fieldset>
+    
 </form>
 <script type="text/javascript">
     $(function () {

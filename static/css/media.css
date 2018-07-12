@@ -162,7 +162,8 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
 }
 
 .line-notes{
-  width: 100%;
+  width: auto !important;
+  height: auto !important;
 }
 
 .notes {
@@ -201,14 +202,14 @@ fieldset.submitter-data {
   padding: 5px 10px 5px 5px;
 }
 
-/* textarea {
+textarea {
   width: 20em;
   height: 4em
 }
 
 #order_table textarea {
   width: 15em;
-} */
+}
 
 select {
   width: 200px;
