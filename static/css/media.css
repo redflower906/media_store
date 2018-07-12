@@ -229,6 +229,10 @@ tr.deleted {
 .line_items {
   display: none;
 }
+.col-centered {
+  margin: 0 auto;
+  float: none;
+}
 
 table {
   display:table;
