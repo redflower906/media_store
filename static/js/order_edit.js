@@ -25,6 +25,7 @@ function register_row(row){
     inventory_select.empty()
     inventory_select.append("<option value=''> ---------- </option>");
     inventory_select.attr('disabled', 1)
+    $(this).closest('#inventory_chosen').prop('disabled', true).trigger('chosen:updated');
     if (selected_inventory){
         media_code = find_invdetails(selected_inventory).media_code
         media_select.val(media_code)
@@ -52,13 +53,14 @@ function populate_inventory(e){
     // filter the inventory values to only the selected media types
     var prefix = build_prefix(e.target.name)
     var mediatype = $(e.target).val()
-    $('#id_' + prefix + 'inventory').empty()
-    $('#id_' + prefix + 'inventory').append("<option value=''> ---------- </option>");        
+    $('#id_' + prefix + 'inventory_chosen').empty()
+    $('#id_' + prefix + 'inventory_chosen').append("<option value=''> ---------- </option>");        
     var selected_inventory_group = inventory_groups[mediatype]
+    console.log(selected_inventory_group);
     selected_inventory_group.map(function (item) {
-        $('#id_' + prefix + 'inventory').append("<option value=" + item.id + ">" + item.desc + "</option>");
+        $('#id_' + prefix + 'inventory_chosen').append("<option value=" + item.id + ">" + item.desc + "</option>");
     })
-    $('#id_' + prefix + 'inventory').removeAttr('disabled')
+    $('#id_' + prefix + 'inventory_chosen').removeAttr('disabled')
     
 }
 
