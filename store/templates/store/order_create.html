@@ -168,7 +168,7 @@
                                 <td class='col text-center'>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
+                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control chosen-select'>
                                         <option value=""> --------- </option>
                                         {% for media_type, media_type_desc in media_types %}
                                             <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
