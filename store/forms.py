@@ -71,7 +71,7 @@ def item_model_formset_factory(extra):
     widgets = {
         'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
-        'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+        'media_type': forms.Select(attrs={'class': 'form-control form-text chosen-select'}),
         'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
@@ -126,7 +126,7 @@ class OrderLineInlineFormSet(
         widgets={
         'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty'}),
         'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly': '1'}),
-        'inventory': forms.Select(attrs={'class': 'form-control'}),
+        'inventory': forms.Select(attrs={'class': 'chosen-select form-control'}),
         },
         extra=1, can_delete=True
         )):
