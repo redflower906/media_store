@@ -248,6 +248,7 @@ def get_department(deptid, deptname, **kwargs):
         dept.department_manager = kwargs['deptmgr']
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
+        print(kwargs['deptmgr'])
     #make sure we are billing the correct department for Gerry
     if dept.number == 'CC51050':
         try:
@@ -328,7 +329,6 @@ def add_employee(emp, **kwargs):
     if not profile.skip_updates:
         if profile.is_manager == True:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=user)
-            print('manager!!')
         profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
