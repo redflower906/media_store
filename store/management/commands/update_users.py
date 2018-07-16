@@ -231,7 +231,7 @@ def get_manager(manager_id):
 
 def get_department(deptid, deptname, deptmgr):
     try:
-        dept = Department.objects.get(number=deptid)
+        dept = Department.all_objects.get(number=deptid)
     except:
         dept = Department()
         dept.number = deptid
@@ -242,7 +242,7 @@ def get_department(deptid, deptname, deptmgr):
     #make sure we are billing the correct department for Gerry
     if dept.number == 'CC51050':
         try:
-            dept = Department.objects.get(number='CC50040')
+            dept = Department.all_objects.get(number='CC50040')
         except:
             dept = Department()
             dept.number = 'CC50040'
