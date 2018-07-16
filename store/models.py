@@ -30,17 +30,17 @@ class ActiveDepartmentManager(models.Manager):
 class Department(models.Model):
     department_name = models.CharField(max_length=100)
     number = models.CharField(unique=True, max_length=10)
-    account_code = models.IntegerField(null=True, blank=True)
+    account_code = models.IntegerField(null=True, blank=True) #I don't think this is necessary, not used anywhere except admin.py ~FIX~
     is_shared_resource = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
-    department_manager = models.ForeignKey(User, related_name='dept_manager', blank=True, null=True)
+    # department_manager = models.ForeignKey(User, related_name='dept_manager', blank=True, null=True)
 
-    objects = ActiveDepartmentManager() #~FIX~ RM has this but I don't think MS needs it 
+    objects = ActiveDepartmentManager()
     all_objects = models.Manager()
 
     def __str__(self):
         if self.department_name == 'Group Leader/Lab Head':
-            return self.number + " " + self.department_manager.UserFullName
+            return self.number + " "
         else:
             return self.number + " " + self.department_name
 
