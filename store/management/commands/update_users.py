@@ -156,13 +156,22 @@ def get_active_employees(emp_id=None):
     res = requests.get(url)
     employees = res.json()
     #filter out employees that don't work at janelia and have termination dates previous to 30 days ago
-    def should_be_active_janelia(emp):
-       if emp['LOCATIONCODE'] == 'Janelia_site':
-            if not emp['TERMINATIONDATE']:
-                return True
-            term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
-            return term_date.date() >= THIRTY_DAYS_AGO.date()    
-    return list(filter(should_be_active_janelia, employees))
+    # def should_be_active_janelia(emp):
+    #    if emp['LOCATIONCODE'] == 'Janelia_site':
+    #         if not emp['TERMINATIONDATE']:
+    #             return True
+    #         term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
+    #         return term_date.date() >= THIRTY_DAYS_AGO.date()    
+    # return list(filter(should_be_active_janelia, employees))
+
+    #filter out employess that have termination dates previous to 30 days ago. Keeping all employees (even non-janelia) for mgrID
+    def should_be_active(emp):
+        if not emp['TERMINATIONDATE']:
+            return True
+        term_date = datetime.strptime(emp['TERMINATIONDATE'], '%m/%d/%Y').replace(tzinfo=THIRTY_DAYS_AGO.tzinfo)
+        return term_date.date() >= THIRTY_DAYS_AGO.date()    
+    return list(filter(should_be_active, employees))
+
 
 def determine_username(emp):
     email = emp['EMAILADDRESS']
