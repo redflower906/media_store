@@ -474,8 +474,8 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        var = Department.objects.all()
-        print(var)
+    var = Department.objects.all()
+    print(var)
 
     return render(request,
         'store/order_view2.html',{
