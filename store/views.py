@@ -474,7 +474,7 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-    var = Department.objects.all()
+    var = Department.objects.all().values_list()
     print(var)
 
     return render(request,
