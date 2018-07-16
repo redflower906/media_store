@@ -245,7 +245,7 @@ def get_department(deptid, deptname, **kwargs):
         dept = Department()
         dept.number = deptid
         dept.department_name = deptname
-        dept.department_manager = deptmgr
+        dept.department_manager = kwargs['deptmgr']
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
     #make sure we are billing the correct department for Gerry
