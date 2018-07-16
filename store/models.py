@@ -61,7 +61,6 @@ class UserProfile(models.Model):
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
     is_privileged = models.BooleanField(default=False)
-    manager_id = models.Foreign
 
 # this is used to prevent updates from workday overriding the values that have
 # been altered in ResourceMatrix. We need to do this for people who are in the
