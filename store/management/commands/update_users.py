@@ -326,8 +326,9 @@ def add_employee(emp, **kwargs):
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
-        if profile.is_manager:
+        if profile.is_manager == True:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=user)
+            print('manager!!')
         profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
