@@ -33,7 +33,7 @@ class Department(models.Model):
     account_code = models.IntegerField(null=True, blank=True) #I don't think this is necessary, not used anywhere except admin.py ~FIX~
     is_shared_resource = models.BooleanField(default=False)
     active = models.BooleanField(default=True)
-    # department_manager = models.ForeignKey(User, related_name='dept_manager', blank=True, null=True)
+    department_manager = models.ForeignKey(User, related_name='dept_manager', blank=True, null=True)
 
     objects = ActiveDepartmentManager()
     all_objects = models.Manager()
@@ -90,6 +90,11 @@ class UserProfile(models.Model):
     def has_job_privileges(self):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
+
+    def save(self, *args, **kwargs):
+        if self.is_manager:
+            return self.department.department_manager == self.user
+        super(UserProfile, self).save(*args, **kwargs)
 
 class UserFullName(User):
     class Meta:
