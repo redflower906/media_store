@@ -61,6 +61,7 @@ class UserProfile(models.Model):
     is_janelia = models.BooleanField(default=False)
     is_visitor = models.BooleanField(default=False)
     is_privileged = models.BooleanField(default=False)
+    manager_id = models.Foreign
 
 # this is used to prevent updates from workday overriding the values that have
 # been altered in ResourceMatrix. We need to do this for people who are in the
@@ -91,10 +92,6 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
-    def save(self, *args, **kwargs):
-        if self.is_manager:
-            return self.department.department_manager == self.user
-        super(UserProfile, self).save(*args, **kwargs)
 
 class UserFullName(User):
     class Meta:

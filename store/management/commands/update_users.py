@@ -238,14 +238,14 @@ def get_manager(manager_id):
         manager = None
     return manager
 
-def get_department(deptid, deptname):
+def get_department(deptid, deptname, **kwargs):
     try:
         dept = Department.all_objects.get(number=deptid)
     except:
         dept = Department()
         dept.number = deptid
         dept.department_name = deptname
-        # dept.department_manager = deptmgr
+        dept.department_manager = deptmgr
         dept.save()
         message("Created department with id {0}\n".format(deptid),'warning')
     #make sure we are billing the correct department for Gerry
@@ -326,6 +326,8 @@ def add_employee(emp, **kwargs):
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
+        if profile.is_manager:
+            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=user)
         profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
