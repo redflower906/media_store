@@ -328,13 +328,14 @@ def add_employee(emp, **kwargs):
     # we don't want to update these details if the skip_update flag has been
     # set for this employee.
     if not profile.skip_updates:
-        profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
         if profile.is_manager == False:
-            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager)
-            print(profile.manager)
+            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager.id)
+            print(profile.manager.id)
+        else:
+            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
     else:
         message("Skipping profile updates for {0} {1}, skip_updates flag set on user profile.\n".format(user.first_name, user.last_name), 'warning')
 
