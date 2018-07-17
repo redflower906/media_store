@@ -126,3 +126,10 @@ javascript to change all statuses from complete to billed via one button
 
 resourcematrix/timematrix/management/commands/
 
+to install server updates:
+    sudo apt-get upgrade
+
+website/admin
+    go to users, if cronjob worked, should have date joined be today
+
+delete a few known people from database, then run cronjob at 12 am, tomorrow see if anyone was updated 7/18

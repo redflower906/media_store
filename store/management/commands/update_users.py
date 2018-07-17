@@ -208,10 +208,10 @@ def determine_username(emp):
             # if found try to get username
             ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
             return ldap_account['uid'][0]
-        # then by email address
-        if emp['EMAILADDRESS'] in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
-            return ldap_account['uid'][0]
+        # # then by email address
+        # if emp['EMAILADDRESS'] in LDAP_USERS:
+        #     ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
+        #     return ldap_account['uid'][0]
 
         emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
         emp_name_dept = emp_name + '_' + emp['COSTCENTER']
