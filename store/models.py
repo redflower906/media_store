@@ -40,7 +40,7 @@ class Department(models.Model):
 
     def __str__(self):
         if self.department_name == 'Group Leader/Lab Head' and self.department_manager:
-            return self.number + " " + self.department_manager.userfullname
+            return self.number + " " + self.department_manager.user_profile.name
         else:
             return self.number + " " + self.department_name
 
