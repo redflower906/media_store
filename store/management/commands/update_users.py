@@ -209,9 +209,9 @@ def determine_username(emp):
             ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
             return ldap_account['uid'][0]
         # # then by email address
-        # if emp['EMAILADDRESS'] in LDAP_USERS:
-        #     ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
-        #     return ldap_account['uid'][0]
+        if emp['EMAILADDRESS'] in LDAP_USERS:
+            ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
+            return ldap_account['uid'][0]
 
         emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
         emp_name_dept = emp_name + '_' + emp['COSTCENTER']
@@ -280,11 +280,11 @@ def add_employee(emp, **kwargs):
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
     if not profile:
-        try:
-            user = User.objects.get(email=emp['EMAILADDRESS'])
-            message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
-        except:
-            message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
+        # try:
+        #     user = User.objects.get(email=emp['EMAILADDRESS'])
+        #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
+        # except:
+        #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
 
         if user:
             try:
