@@ -332,8 +332,8 @@ def add_employee(emp, **kwargs):
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
         if profile.is_manager == False and profile.manager:
-            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager.id)
-            print(profile.manager.id)
+            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager.user.id)
+            print(profile.manager.user.id)
         else:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
     else:
