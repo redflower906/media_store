@@ -88,7 +88,7 @@ class DateInput(TextInput):
     
 class OrderForm(forms.ModelForm):
         
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
+    requester = forms.ModelChoiceField(queryset=UserProfile.objects.all().name().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     class Meta:
