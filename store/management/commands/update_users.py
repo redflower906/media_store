@@ -224,7 +224,7 @@ def determine_username(emp):
 
     # cant use part before @ of email address because lots of people are "unknown@hhmi.org"
     # add first letter of first name to end of last name and lowercase.
-    if not re.search('\w+', uname):
+    if not re.search(r'\w+', uname):
         uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
