@@ -255,6 +255,7 @@ def get_department(deptid, deptname, **kwargs):
             dept = Department.all_objects.get(number='CC50040')
         except:
             dept = Department()
+            dept.dept_name = 'Rubin Lab'
             dept.number = 'CC50040'
             dept.save()
             message("Created department with id {0}\n".format(deptid),'warning')

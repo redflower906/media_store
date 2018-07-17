@@ -39,8 +39,8 @@ class Department(models.Model):
     all_objects = models.Manager()
 
     def __str__(self):
-        if self.department_name == 'Group Leader/Lab Head':
-            return self.number + " "
+        if self.department_name == 'Group Leader/Lab Head' and self.department_manager:
+            return self.number + " " + self.department_manager.UserFullName
         else:
             return self.number + " " + self.department_name
 
