@@ -334,6 +334,7 @@ def add_employee(emp, **kwargs):
         profile.last_name     = user.last_name
         if profile.is_manager == False:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager)
+            print(profile.manager)
     else:
         message("Skipping profile updates for {0} {1}, skip_updates flag set on user profile.\n".format(user.first_name, user.last_name), 'warning')
 
