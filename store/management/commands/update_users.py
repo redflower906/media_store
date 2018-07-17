@@ -255,7 +255,7 @@ def get_department(deptid, deptname, **kwargs):
             dept = Department.all_objects.get(number='CC50040')
         except:
             dept = Department()
-            dept.dept_name = 'Rubin Lab'
+            dept.department_name = 'Rubin Lab'
             dept.number = 'CC50040'
             dept.save()
             message("Created department with id {0}\n".format(deptid),'warning')
@@ -332,8 +332,8 @@ def add_employee(emp, **kwargs):
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
         if profile.is_manager == False and profile.manager:
-            profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'], deptmgr=profile.manager.user.id)
-            print(profile.manager.user.id)
+            profile.department    = get_department(deptid=(emp['COSTCENTER']), deptname=(emp['SUPORGNAME']), deptmgr=(profile.manager.id))
+            print(profile.manager.id)
         else:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
     else:
