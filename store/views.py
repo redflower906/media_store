@@ -193,7 +193,7 @@ def create_order(request, copy_id=None):
 
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user, 'department': request.user_profile.department})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
