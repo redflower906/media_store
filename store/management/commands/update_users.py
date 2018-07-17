@@ -280,11 +280,11 @@ def add_employee(emp, **kwargs):
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
     if not profile:
-        # try:
-        #     user = User.objects.get(email=emp['EMAILADDRESS'])
-        #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
-        # except:
-        #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
+        try:
+            user = User.objects.get(email=emp['EMAILADDRESS'])
+            message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
+        except:
+            message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
 
         if user:
             try:
