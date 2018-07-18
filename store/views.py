@@ -615,3 +615,23 @@ def current_sign_outs (request):
 #             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
 #         return qs test
+
+def get_details(request): #get the requestor bill_to details !!!
+    requester = request.GET['id']
+    try:
+        user = User.objects.get(id=requester)
+        last_name = user.last_name
+        first_name = user.first_name
+        profile = user.user_profile.all()[0]
+        department = profile.department
+        project_id = ''
+
+        if profile.hhmi_project_id:
+            project_id = profile.hhmi_project_id.strip()
+
+        result_set = []
+        result_set.append({'department_id':department.id,'project':project_id})
+    except:
+        logging.info("/get_details - unable to load user for userid: {0}".format(requestor))
+        result_set = []
+    return HttpResponse(simplejson.dumps(result_set), content_type='application/json')

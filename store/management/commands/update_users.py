@@ -280,11 +280,11 @@ def add_employee(emp, **kwargs):
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
     if not profile:
-        try:
-            user = User.objects.get(email=emp['EMAILADDRESS'])
-            message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
-        except:
-            message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
+        # try:
+        #     user = User.objects.get(email=emp['EMAILADDRESS'])
+        #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
+        # except:
+        #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
 
         if user:
             try:
@@ -331,8 +331,8 @@ def add_employee(emp, **kwargs):
         profile.manager       = get_manager(emp['MGRID'])
         profile.first_name    = user.first_name
         profile.last_name     = user.last_name
-        if profile.is_manager == False and profile.manager:
-            profile.department    = get_department(deptid=(emp['COSTCENTER']), deptname=(emp['SUPORGNAME']), deptmgr=(profile.manager))
+        if profile.is_manager == True:
+            profile.department    = get_department(deptid=(emp['COSTCENTER']), deptname=(emp['SUPORGNAME']), deptmgr=user)
         else:
             profile.department    = get_department(emp['COSTCENTER'], emp['SUPORGNAME'])
     else:

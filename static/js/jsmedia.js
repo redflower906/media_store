@@ -119,3 +119,33 @@ function recurringAlert(){
 function changeAllBill(){
     $('td.statusComplete').children().val('Billed');
 };
+
+//getting bill_to department associated with requestor !!!
+$('select#id_order_requester').change(function() {
+    var optionSelected = $(this).find("option:selected");
+    var valueSelected = optionSelected.val();
+    var requestor_name = optionSelected.text();
+    data = {'id': valueSelected,'name':requestor_name},
+    $.ajax({
+      url: '/get_details',
+    data: data,
+    success: function(response){
+      if (response[0] && response[0]['department_id']) {
+        $("#id_order-department").val(response[0]['department_id']).trigger("chosen:updated");
+      } else {
+        $("#id_order-department").val('').trigger("chosen:updated");
+      }
+  
+    //   if (response[0] && response[0]['project']) {
+    //     var val = response[0]['project'];
+    //     val = val + ' ' + requestor_name.split(',',1)[0];
+    //     $("#id_workorderdepartment-0-hhmi_project_id").val(val).trigger("chosen:updated");
+    //   } else {
+    //     $("#id_workorderdepartment-0-hhmi_project_id").val('').trigger("chosen:updated");
+    //   }
+    },
+    error: function(){
+             console.log("failure");
+           }
+    });
+  }); 
