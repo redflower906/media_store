@@ -285,14 +285,19 @@ def add_employee(emp, **kwargs):
             #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
             # except:
             #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
+            print('not profile')
 
             if user:
+                print('user')
                 try:
+                    print('has profile')
                     profile = user.user_profile.all()[0]
                 except:
+                    print('no profile, need to create')
                     profile = UserProfile()
 
         if not user and not profile:
+            print('no user or profile')
             message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
             user = User()
             profile = UserProfile()
