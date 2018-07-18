@@ -280,14 +280,17 @@ def add_employee(emp, **kwargs):
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
         try:
-             user = User.objects.get(username = determine_username(emp))
-             profile = UserProfile()
+            user = User.objects.get(username = determine_username(emp))
+            print(user + ' try')
         
         except:
             message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
             user = User()
             profile = UserProfile()
-        # if not profile:
+            print(user + ' except')
+        else:
+            profile = UserProfile()        
+             # if not profile:
             # try:
             #     user = User.objects.get(email=emp['EMAILADDRESS'])
             #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
