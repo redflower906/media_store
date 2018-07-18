@@ -202,29 +202,29 @@ def determine_username(emp):
 
         message("Couldn't find LDAP account for {FIRSTNAME} {LASTNAME} ({EMPLOYEEID})\n".format(**emp), 'warning')
 
-    elif re.search('hhmi.org$', email):
-        # try to find the matching ldap account first by employee id
-        if emp['EMPLOYEEID'] in LDAP_USERS:
-            # if found try to get username
-            ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
-            return ldap_account['uid'][0]
-        # # then by email address
-        if emp['EMAILADDRESS'] in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
-            return ldap_account['uid'][0]
+    # elif re.search('hhmi.org$', email):
+    #     # try to find the matching ldap account first by employee id
+    #     if emp['EMPLOYEEID'] in LDAP_USERS:
+    #         # if found try to get username
+    #         ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
+    #         return ldap_account['uid'][0]
+    #     # # then by email address
+    #     if emp['EMAILADDRESS'] in LDAP_USERS:
+    #         ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
+    #         return ldap_account['uid'][0]
 
-        emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
-        emp_name_dept = emp_name + '_' + emp['COSTCENTER']
-        # then by name_department
-        if emp_name_dept in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp_name_dept]
-            return ldap_account['uid'][0]
+    #     emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
+    #     emp_name_dept = emp_name + '_' + emp['COSTCENTER']
+    #     # then by name_department
+    #     if emp_name_dept in LDAP_USERS:
+    #         ldap_account = LDAP_USERS[emp_name_dept]
+    #         return ldap_account['uid'][0]
         # Don't bother trying just a name as there are too many people with the
         # same name. eg: Jose Rodriguez
 
     # cant use part before @ of email address because lots of people are "unknown@hhmi.org"
     # add first letter of first name to end of last name and lowercase.
-    if not re.search(r'\w+', uname):
+    if not re.search('\w+', uname):
         uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
         uname = re.sub("[^a-zA-Z0-9]","", uname)
     return uname.lower()[:30]
@@ -279,28 +279,31 @@ def add_employee(emp, **kwargs):
     except:
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
-        if not profile:
+        try:
+             user = User.objects.get(username = determine_username(emp))
+             profile = UserProfile()
+        
+        except:
+            message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
+            user = User()
+            profile = UserProfile()
+        # if not profile:
             # try:
             #     user = User.objects.get(email=emp['EMAILADDRESS'])
             #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
             # except:
             #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
-            print('not profile')
 
-            if user:
-                print('user')
-                try:
-                    print('has profile')
-                    profile = user.user_profile.all()[0]
-                except:
-                    print('no profile, need to create')
-                    profile = UserProfile()
+            # if user: #how can there be profile.user if there is no profile?
+            #     try:
+            #         profile = user.user_profile.all()[0]
+            #     except:
+            #         profile = UserProfile()
 
-        if not user and not profile:
-            print('no user or profile')
-            message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
-            user = User()
-            profile = UserProfile()
+    # if not user and not profile:
+    #     message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
+    #     user = User()
+    #     profile = UserProfile()
 
     # update user details
     user.first_name = emp['PREFERREDFIRSTNAME'].encode('utf-8')
