@@ -279,23 +279,23 @@ def add_employee(emp, **kwargs):
     except:
         message("Couldn't find user profile with id: {EMPLOYEEID}\n".format(**emp),'warning')
 
-    if not profile:
-        # try:
-        #     user = User.objects.get(email=emp['EMAILADDRESS'])
-        #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
-        # except:
-        #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
+        if not profile:
+            # try:
+            #     user = User.objects.get(email=emp['EMAILADDRESS'])
+            #     message("Found employee with email {EMAILADDRESS}\n".format(**emp),'success')
+            # except:
+            #     message("Couldn't find user with email: {EMAILADDRESS}\n".format(**emp),'warning')
 
-        if user:
-            try:
-                profile = user.user_profile.all()[0]
-            except:
-                profile = UserProfile()
+            if user:
+                try:
+                    profile = user.user_profile.all()[0]
+                except:
+                    profile = UserProfile()
 
-    if not user and not profile:
-        message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
-        user = User()
-        profile = UserProfile()
+        if not user and not profile:
+            message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
+            user = User()
+            profile = UserProfile()
 
     # update user details
     user.first_name = emp['PREFERREDFIRSTNAME'].encode('utf-8')
@@ -417,7 +417,7 @@ def get_visitor_details(emp):
         try:
             dept = Department.objects.get(number=department_code)
         except:
-            message("Can't find department code {1} in resourcematrix for user {0.first_name} {0.last_name} in vstar\n".format(emp, department_code), 'error')
+            message("Can't find department code {1} in mediastore for user {0.first_name} {0.last_name} in vstar\n".format(emp, department_code), 'error')
     return dept, project_code
 
 def add_visitor(emp, in_workday):
