@@ -175,7 +175,6 @@ def get_active_employees(emp_id=None):
 
 def determine_username(emp):
     email = emp['EMAILADDRESS']
-    uname = email.lower()[:30]
 
     # if janelia email address
     if re.search('janelia.hhmi.org$', email):
@@ -200,6 +199,7 @@ def determine_username(emp):
             ldap_account = LDAP_USERS[emp_name]
             return ldap_account['uid'][0]
 
+        uname = email.lower()[:30]
         message("Couldn't find LDAP account for {FIRSTNAME} {LASTNAME} ({EMPLOYEEID})\n".format(**emp), 'warning')
 
     # elif re.search('hhmi.org$', email):
@@ -224,9 +224,12 @@ def determine_username(emp):
 
     # cant use part before @ of email address because lots of people are "unknown@hhmi.org"
     # add first letter of first name to end of last name and lowercase.
-    if not re.search('\w+', uname):
-        uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
-        uname = re.sub("[^a-zA-Z0-9]","", uname)
+    # if not re.search('\w+', uname):
+    #     uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
+    #     uname = re.sub("[^a-zA-Z0-9]","", uname)
+
+    else:
+        uname = emp['WORKERUSERID']
     return uname.lower()[:30]
 
 #NEEDED? yes, for human-readable department drop-down
