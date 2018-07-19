@@ -174,33 +174,63 @@ def get_active_employees(emp_id=None):
 
 
 def determine_username(emp):
-    email = emp['EMAILADDRESS']
+    
+    uname = emp['WORKERUSERID']
 
-    # if janelia email address
-    if re.search('janelia.hhmi.org$', email):
-        # try to find the matching ldap account first by employee id
-        if emp['EMPLOYEEID'] in LDAP_USERS:
-            # if found try to get username
-            ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
-            return ldap_account['uid'][0]
-        # then by email address
-        if emp['EMAILADDRESS'] in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
-            return ldap_account['uid'][0]
+    # try to find the matching ldap account first by employee id
+    if emp['EMPLOYEEID'] in LDAP_USERS:
+        # if found try to get username
+        ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
+        return ldap_account['uid'][0]
+    # then by email address
+    elif emp['WORKERUSERID'] in LDAP_USERS:
+        ldap_account = LDAP_USERS[emp['WORKERUSERID']]
+        return ldap_account['uid'][0]
 
-        emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
-        emp_name_dept = emp_name + '_' + emp['COSTCENTER']
-        # then by name_department
-        if emp_name_dept in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp_name_dept]
-            return ldap_account['uid'][0]
-        #then by name
-        if emp_name in LDAP_USERS:
-            ldap_account = LDAP_USERS[emp_name]
-            return ldap_account['uid'][0]
+    emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
+    emp_name_dept = emp_name + '_' + emp['COSTCENTER']
+    # then by name_department
+    elif emp_name_dept in LDAP_USERS:
+        ldap_account = LDAP_USERS[emp_name_dept]
+        return ldap_account['uid'][0]
+    #then by name
+    elif emp_name in LDAP_USERS:
+        ldap_account = LDAP_USERS[emp_name]
+        return ldap_account['uid'][0]
 
-        uname = email.lower()[:30]
+    else:
+        uname = emp['WORKERUSERID']
         message("Couldn't find LDAP account for {FIRSTNAME} {LASTNAME} ({EMPLOYEEID})\n".format(**emp), 'warning')
+    return uname
+
+
+    # email = emp['EMAILADDRESS']
+
+    # # if janelia email address
+    # if re.search('janelia.hhmi.org$', email):
+    #     # try to find the matching ldap account first by employee id
+    #     if emp['EMPLOYEEID'] in LDAP_USERS:
+    #         # if found try to get username
+    #         ldap_account = LDAP_USERS[emp['EMPLOYEEID']]
+    #         return ldap_account['uid'][0]
+    #     # then by email address
+    #     if emp['EMAILADDRESS'] in LDAP_USERS:
+    #         ldap_account = LDAP_USERS[emp['EMAILADDRESS']]
+    #         return ldap_account['uid'][0]
+
+    #     emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
+    #     emp_name_dept = emp_name + '_' + emp['COSTCENTER']
+    #     # then by name_department
+    #     if emp_name_dept in LDAP_USERS:
+    #         ldap_account = LDAP_USERS[emp_name_dept]
+    #         return ldap_account['uid'][0]
+    #     #then by name
+    #     if emp_name in LDAP_USERS:
+    #         ldap_account = LDAP_USERS[emp_name]
+    #         return ldap_account['uid'][0]
+
+    #     uname = email.lower()[:30]
+    #     message("Couldn't find LDAP account for {FIRSTNAME} {LASTNAME} ({EMPLOYEEID})\n".format(**emp), 'warning')
 
     # elif re.search('hhmi.org$', email):
     #     # try to find the matching ldap account first by employee id
@@ -228,9 +258,9 @@ def determine_username(emp):
     #     uname = emp['LASTNAME'] + emp['FIRSTNAME'][:1] + emp['EMPLOYEEID']
     #     uname = re.sub("[^a-zA-Z0-9]","", uname)
 
-    else:
-        uname = emp['WORKERUSERID']
-    return uname.lower()[:30]
+    # else:
+    #     uname = emp['WORKERUSERID']
+    # return uname.lower()[:30]
 
 #NEEDED? yes, for human-readable department drop-down
 def get_manager(manager_id):
