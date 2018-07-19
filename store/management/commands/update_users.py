@@ -189,10 +189,12 @@ def determine_username(emp):
 
     emp_name = emp['FIRSTNAME'] + '_' + emp['LASTNAME']
     emp_name_dept = emp_name + '_' + emp['COSTCENTER']
+
     # then by name_department
-    elif emp_name_dept in LDAP_USERS:
+    if emp_name_dept in LDAP_USERS:
         ldap_account = LDAP_USERS[emp_name_dept]
         return ldap_account['uid'][0]
+
     #then by name
     elif emp_name in LDAP_USERS:
         ldap_account = LDAP_USERS[emp_name]
