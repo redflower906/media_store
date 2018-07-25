@@ -317,14 +317,12 @@ def add_employee(emp, **kwargs):
         try:
             user = User.objects.get(username = determine_username(emp))
             print(user)
-            print('try')
         
         except:
             message("Creating a new user account for {0}, {1}\n".format(emp['PREFERREDFIRSTNAME'].encode('utf-8'), emp['PREFERREDLASTNAME'].encode('utf-8')), 'warning')
             user = User()
             profile = UserProfile()
             print(user)
-            print('except')
         else:
             profile = UserProfile()        
              # if not profile:

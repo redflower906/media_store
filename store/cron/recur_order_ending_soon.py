@@ -16,7 +16,7 @@ def recur_end_email():
             if today_to_stop == 21:
                 print('second if worked') 
                 domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
-                subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.email
+                subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.submitter.user_profile.email_address #change submitter to requester after testing ~FIX~
                 context = Context({
                     'id': order.id,
                     'domain': domain,
@@ -28,7 +28,7 @@ def recur_end_email():
                 m_plain,
                 from_email,
                 [to],
-                cc=[order.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
+                # cc=[order.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
                 )
                 email.attach_alternative(m_html, "text/html")
                 email.send()

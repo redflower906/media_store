@@ -207,7 +207,8 @@ def create_order(request, copy_id=None):
             order.save()
             orderlineformset.save()
             domain = request.get_host()
-            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.email
+            # change submitter to requester after testing ~FIX~
+            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -295,9 +296,8 @@ def edit_order(request, id):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+            #    cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'], ~FIX~
             )
-            #order_form.instance.submitter.user_profile.email_address MOVE TO CC ~FIX~
             email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
