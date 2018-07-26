@@ -123,8 +123,9 @@ function changeAllBill(){
 //getting bill_to department associated with requestor !!!
 $(function(){
     $('#id_order-requester').change(function() {
-        console.log('I changed!');
+    //this works
         var optionSelected = $(this).find("option:selected");
+        console.log(optionSelected);
         var valueSelected = optionSelected.val();
         var requester_name = optionSelected.text();
         data = {'id': valueSelected,'name':requester_name},
