@@ -125,19 +125,22 @@ $(function(){
     $('#id_order-requester').change(function() {
     //this works
         var optionSelected = $(this).find("option:selected");
-        console.log(optionSelected + ' optionSelected');
+        //this works
         var valueSelected = optionSelected.val();
-        console.log(valueSelected + ' valueSelected');
+        //this works
         var requester_name = optionSelected.text();
-        console.log(requester_name + ' requester_name');
+        //this works
         data = {'id': valueSelected,'name':requester_name},
+        console.log(data + ' data');
         $.ajax({
         url: '/get_details',
         data: data,
         success: function(response){
         if (response[0] && response[0]['department_id']) {
+            console.log('success:if');
             $("#id_order-department").val(response[0]['department_id']).trigger("chosen:updated");
         } else {
+            console.log('success:else');
             $("#id_order-department").val('').trigger("chosen:updated");
         }
     
