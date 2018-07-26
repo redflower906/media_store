@@ -17,7 +17,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
 import decimal
-import datetime
+from datetime import datetime, date
 from dateutil import relativedelta
 
 
@@ -226,7 +226,7 @@ class Order(models.Model):
     is_recurring = models.BooleanField(default=False)
     #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
-    date_recurring_start = models.DateField(default=datetime.datetime.now, blank=True, null=True)
+    date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=30, blank=False, null=False,
         choices=LOCATION_CHOICES
