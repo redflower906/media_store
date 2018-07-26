@@ -135,10 +135,10 @@ class Inventory(models.Model):
     cost = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     container = models.CharField(max_length=50, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
-    date_created = models.DateField(auto_now_add=True)
+    date_created = models.DateField(_("Date"), auto_now_add=True)
     notes_inv = models.CharField(max_length=500, blank=True, null=True)
     vendor = models.ForeignKey(Vendor, blank=True, null=True)
-    date_modified = models.DateField(auto_now_add=True)
+    date_modified = models.DateField(_("Date"), auto_now_add=True)
     deposit = models.IntegerField(default=0, blank=True,null=True)
     minimum_amt = models.IntegerField(blank=True, null=True)
     withdrawal = models.IntegerField(default=0, blank=True, null=True)
@@ -218,16 +218,16 @@ class Order(models.Model):
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     department = models.ForeignKey(Department, blank=False, null=False)
     special_instructions = models.TextField(blank=True)
-    date_created = models.DateField(auto_now_add=True)
-    date_modified = models.DateField(auto_now=True, blank=True, null=True)
-    date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created? ~FIX~
-    date_complete = models.DateField(blank=True, null=True)
-    date_billed = models.DateField(blank=True, null=True)
+    date_created = models.DateField(_("Date"), auto_now_add=True)
+    date_modified = models.DateField(_("Date"), auto_now=True, blank=True, null=True)
+    date_submitted = models.DateField(_("Date"), blank=True, null=True) #is this the same as date_created? ~FIX~
+    date_complete = models.DateField(_("Date"), blank=True, null=True)
+    date_billed = models.DateField(_("Date"), blank=True, null=True)
     is_recurring = models.BooleanField(default=False)
     #had to set a default to migrate
     #make below an if statement if boolean is true and if boolean is false
-    date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
-    date_recurring_stop = models.DateField(blank=True, null=True)
+    date_recurring_start = models.DateField(_("Date"), default=datetime.now, blank=True, null=True)
+    date_recurring_stop = models.DateField(_("Date"), blank=True, null=True)
     location = models.CharField(max_length=30, blank=False, null=False,
         choices=LOCATION_CHOICES
     )
