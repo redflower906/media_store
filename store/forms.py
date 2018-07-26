@@ -91,7 +91,7 @@ class OrderForm(forms.ModelForm):
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
-    project_code = forms.ModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__regex=r'^(JVS) +').values_list('hhmi_project_id'), widget=forms.Select(attrs={'class': 'chosen-select'}))
+    project_code = forms.ModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS').values_list('hhmi_project_id'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     class Meta:
         model = Order
         fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order','project_code')
