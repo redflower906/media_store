@@ -91,6 +91,7 @@ class OrderForm(forms.ModelForm):
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
+    project_code = forms.ModelCHoiceField(queryset=UserProfile.hhmi_project_id.objects.all(), widget=forms.Select(attrs={'class': 'chosen-select'}))
     class Meta:
         model = Order
         fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order','project_code')
@@ -99,7 +100,6 @@ class OrderForm(forms.ModelForm):
         }
         widgets={
         'department': forms.Select(attrs={'class': 'chosen-select'}),
-        'project_code': forms.Select(attrs={'class': 'chosen-select'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             

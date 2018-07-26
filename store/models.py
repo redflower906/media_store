@@ -75,10 +75,7 @@ class UserProfile(models.Model):
 
 
     def __str__(self):
-        if self.hhmi_project_id:
-            return self.hhmi_project_id
-        else:
-            return str(self.user)
+        return str(self.user)
 
     def department_id_list(self):
         deparment_ids = [dept.id for dept in self.alt_departments.all()]
