@@ -131,7 +131,7 @@ $(function(){
         var requester_name = optionSelected.text();
         //this works
         data = {'id': valueSelected,'name':requester_name},
-        console.log(data + ' data');
+        //this kind of works? [object Object]
         $.ajax({
         url: '/get_details',
         data: data,
