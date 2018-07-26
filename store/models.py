@@ -17,7 +17,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
 import decimal
-from datetime import datetime, date
+import datetime
 from dateutil import relativedelta
 
 
