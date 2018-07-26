@@ -617,7 +617,7 @@ def current_sign_outs (request):
 #         return qs test
 
 def get_details(request): #get the requestor bill_to details !!!
-    requester = request.GET[id]
+    requester = request.GET['id']
     try:
         user = User.objects.get(id=requester)
         # last_name = user.last_name
