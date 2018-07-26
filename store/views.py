@@ -632,6 +632,6 @@ def get_details(request): #get the requestor bill_to details !!!
         result_set = []
         result_set.append({'department_id':department.id,'project':project_id})
     except:
-        logging.info("/get_details - unable to load user for userid: {0}".format(requestor))
+        logging.info("/get_details - unable to load user for userid: {0}".format(requester))
         result_set = []
     return HttpResponse(simplejson.dumps(result_set), content_type='application/json')

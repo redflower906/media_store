@@ -121,7 +121,7 @@ function changeAllBill(){
 };
 
 //getting bill_to department associated with requestor !!!
-$('select#id_order_requester').change(function() {
+$('select#id_order-requester').change(function() {
     var optionSelected = $(this).find("option:selected");
     var valueSelected = optionSelected.val();
     var requestor_name = optionSelected.text();
