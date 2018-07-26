@@ -17,7 +17,7 @@ from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
 import decimal
-from datetime import datetime, date
+import datetime
 from dateutil import relativedelta
 
 
@@ -132,7 +132,7 @@ class Inventory(models.Model):
     inventory_text = models.CharField(max_length=75)
     product = models.CharField(max_length=40, blank=True, null=True)
     media_type = models.CharField(max_length=30, blank=True, null=True, choices=MEDIA_CHOICES)
-    cost = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    cost = models.DecimalField(max_digits=5, default=0)#decimal_places=2
     container = models.CharField(max_length=50, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True)
