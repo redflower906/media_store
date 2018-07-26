@@ -125,9 +125,11 @@ $(function(){
     $('#id_order-requester').change(function() {
     //this works
         var optionSelected = $(this).find("option:selected");
-        console.log(optionSelected);
+        console.log(optionSelected + ' optionSelected');
         var valueSelected = optionSelected.val();
+        console.log(valueSelected + ' valueSelected');
         var requester_name = optionSelected.text();
+        console.log(requester_name + ' requester_name');
         data = {'id': valueSelected,'name':requester_name},
         $.ajax({
         url: '/get_details',
