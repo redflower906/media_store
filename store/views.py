@@ -193,7 +193,8 @@ def create_order(request, copy_id=None):
 
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'requester': request.user, 'department': user.user_profile.department})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 

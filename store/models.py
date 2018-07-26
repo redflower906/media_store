@@ -216,6 +216,7 @@ class Order(models.Model):
     notes_order = models.CharField(max_length=500, blank=True, null=True)
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
+    project_code = models.ForeignKey(UserProfile, related_name='pcode', null=True, blank=True)
     department = models.ForeignKey(Department, blank=False, null=False)
     special_instructions = models.TextField(blank=True)
     date_created = models.DateField(auto_now_add=True)

@@ -93,12 +93,13 @@ class OrderForm(forms.ModelForm):
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     class Meta:
         model = Order
-        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order',)
+        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order','project_code')
         labels = {
             'notes_order': 'Special Instructions'
         }
         widgets={
         'department': forms.Select(attrs={'class': 'chosen-select'}),
+        'project_code': forms.Select(attrs={'class': 'chosen-select'}, required=False),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
@@ -117,6 +118,10 @@ class OrderForm(forms.ModelForm):
         self.fields['requester'].empty_label = "Select a requester"
         # following line needed to refresh widget copy of choice list
         self.fields['requester'].widget.choices = self.fields['requester'].choices
+        self.fields['project_code'].empty_label = "Select a project code"
+        # following line needed to refresh widget copy of choice list
+        self.fields['project_code'].widget.choices = self.fields['project_code'].choices
+
 
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
