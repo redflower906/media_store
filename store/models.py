@@ -457,4 +457,4 @@ def status_email(sender, instance, *args, **kwargs):
 
 class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
-         return obj.hhmi_project_id
+         return obj.hhmi_project_id + ' ' + obj.name()
