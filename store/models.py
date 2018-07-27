@@ -10,7 +10,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.mail import send_mail, EmailMessage
 from django.core.exceptions import ValidationError
 from django.contrib import messages
-from django.forms import ModelForm
+from django.forms import ModelForm, ModelChoiceField
 from django.template import Context
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
@@ -19,7 +19,6 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
-from django.forms import ModelChoiceField
 
 # Create your models here.
 
