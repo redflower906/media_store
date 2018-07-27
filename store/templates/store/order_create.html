@@ -53,21 +53,21 @@
     <div class='row'>
         <table>
             <thead>
-                <th>Requester</th>
-                <th>Department</th>
-                <th>Project Code</th>
+                <th class='col text-center'>Requester</th>
+                <th class='col text-center'>Department</th>
+                <th class='col text-center'>Project Code</th>
             </thead>
             <tbody>
                 <tr>
-                    <td>
+                    <td class='col text-center'>
                         {{ order_form.requester.errors }}
                         {{ order_form.requester }}
                     </td>
-                    <td>
+                    <td class='col text-center'>
                         {{ order_form.department.errors }}
                         {{ order_form.department }}
                     </td>
-                    <td>
+                    <td class='col text-center'>
                         {{ order_form.project_code.errors }}
                         {{ order_form.project_code }}
                     </td>
