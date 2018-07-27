@@ -19,6 +19,7 @@ from django.utils import timezone
 logger = logging.getLogger('default')
 
 
+
 class NumInput(TextInput):
     input_type = 'number'
 
@@ -91,7 +92,7 @@ class OrderForm(forms.ModelForm):
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
-    project_code = forms.ModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), to_field_name='hhmi_project_id', widget=forms.Select(attrs={'class': 'chosen-select'}))
+    project_code = forms.ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     class Meta:
         model = Order
         fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order','project_code')

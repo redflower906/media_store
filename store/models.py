@@ -19,7 +19,7 @@ from django_auth_ldap.backend import LDAPBackend
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
-
+from django.forms import ModelChoiceField
 
 # Create your models here.
 
@@ -455,3 +455,7 @@ def status_email(sender, instance, *args, **kwargs):
         instance.days_since_bill = (today-lastbill).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
+
+class ProjectModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+         return obj.hhmi_project_id
