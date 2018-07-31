@@ -208,8 +208,7 @@ textarea {
 }
 
 #order_table textarea {
-  /* width: 15em; */
-  width: 100%;
+  width: 15em;
 }
 
 select {
