@@ -167,7 +167,7 @@ $(function(){
         var requester_name = optionSelected.text();
         console.log(requester_name);
         $.ajax({
-        url: 'ajax_test',
+        url: '/ajax_test',
         data: {
             'id': valueSelected,
             'name': requester_name
