@@ -645,4 +645,4 @@ def ajax_test(request):
 
     }
     data = serializers.serialize('json', obj)
-    return JsonResponse(data)
+    return JsonResponse(obj)
