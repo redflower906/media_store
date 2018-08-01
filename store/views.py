@@ -11,7 +11,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
-from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse,  JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
@@ -503,7 +503,7 @@ def export_orders(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="orders.csv"'
     writer = csv.writer(response)
-    writer.writerow(['order num', 'requester', 'date_wth_dep', 'product', 'qty', 'price', 'email'])
+    writer.writerow(['order_id', 'c_JM_Requester', 'Date_Wth_Dep', 'Product', 'Withdrawl', 'Unit_Price', 'email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
     'id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
 
@@ -636,3 +636,10 @@ def get_details(request): #get the requestor bill_to details !!!
         logging.info("/get_details - unable to load user for userid: {0}".format(requester))
         result_set = []
     return HttpResponse(simplejson.dumps(result_set), content_type='application/json')
+
+def ajax_test(request):
+    requester_test = request.GET.get('id', None)
+    data = {
+        'r_id': User.objects.filter(id__exact=requester_test).exist()
+    }
+    return JsonResponse(data)

@@ -77,6 +77,8 @@ urlpatterns = [
 
 #Ajax calls
     url(r'^get_details', views.get_details, name='get_details'), #json for user department and project codes
+    url(r'^ajax_test', views.ajax_test, name='ajax_test'), #json for user department and project codes
+
 ]
 
 if settings.DEBUG:
