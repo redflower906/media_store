@@ -641,8 +641,7 @@ def get_details(request): #get the requestor bill_to details !!!
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
     data = {
-        # 'r_id': User.objects.filter(pk=requester_test).values_list('id')
-        'r_id': serializers.serialize('json', User.objects.filter(pk=requester_test).values_list('id'))
+        'r_id': User.objects.filter(pk=requester_test).values_list('id')
 
     }
-    return JsonResponse(data)
+    return HttpResponse(simplejson.dumps(data), content_type='application/json')
