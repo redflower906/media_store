@@ -644,5 +644,5 @@ def ajax_test(request):
         'r_id': User.objects.get(id=requester_test)
 
     }
-    data = serializers.serialize('json', obj)
-    return JsonResponse(obj)
+    data = JsonResponse(obj.json())
+    return HttpResponse(data, content_type='application/json')
