@@ -640,6 +640,6 @@ def get_details(request): #get the requestor bill_to details !!!
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
     data = {
-        'r_id': User.objects.filter(id__exact=requester_test).exist()
+        'r_id': User.objects.filter(id=requester_test)
     }
     return JsonResponse(data)
