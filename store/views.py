@@ -15,6 +15,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpReques
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
+from django.core import serializers
 from dateutil import relativedelta
 from datetime import datetime, date
 from .forms import *
@@ -640,6 +641,8 @@ def get_details(request): #get the requestor bill_to details !!!
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
     data = {
-        'r_id': User.objects.filter(pk=requester_test).values_list('id')
+        # 'r_id': User.objects.filter(pk=requester_test).values_list('id')
+        'r_id': serializers.serialize('json', User.objects.filter(pk=requester_test).values_list('id'))
+
     }
     return JsonResponse(data)
