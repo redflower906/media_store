@@ -168,7 +168,10 @@ $(function(){
         console.log(requester_name);
         $.ajax({
         url: 'ajax_test',
-        data = {'id': valueSelected,'name':requester_name},
+        data: {
+            'id': valueSelected,
+            'name': requester_name
+        },
         dataType: 'json',
         success: function(data){
             if (data.r_id) {
