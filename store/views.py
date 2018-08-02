@@ -22,8 +22,7 @@ from .forms import *
 from .models import *
 from .resources import *
 import MySQLdb, sys
-import json
-# import json as simplejson
+import json as simplejson
 import csv
 import time
 
@@ -643,10 +642,10 @@ def ajax_test(request):
     requester_test = request.GET.get('id', None)
     user = User.objects.get(id=requester_test) 
     data = {'r_id':user.id }
-    dataOne = json.dumps(data)
+    dataOne = simplejson.dumps(data)
     # obj = {
     #     'r_id': User.objects.get(id=requester_test)
 
     # }
     # data = JsonResponse(obj.json())
-    return HttpResponse(json.loads(dataOne), content_type='application/json')
+    return HttpResponse(simplejson.loads(dataOne), content_type='application/json')
