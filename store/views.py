@@ -639,7 +639,7 @@ def get_details(request): #get the requestor bill_to details !!!
     except:
         logging.info("/get_details - unable to load user for userid: {0}".format(requester))
         result_set = []
-    return JsonResponse(result_set)
+    return JsonResponse(serializers.serialize('json', result_set), safe=False)
 
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
