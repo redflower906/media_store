@@ -176,6 +176,7 @@ $(function(){
         success: function(data){
             if (data.r_id) {
                 console.log('success! ' + data);
+                $("#id_order-department").val('test').trigger("chosen:updated");
             } 
         },
         });
