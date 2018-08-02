@@ -644,8 +644,9 @@ def get_details(request): #get the requestor bill_to details !!!
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
     user = User.objects.get(id=requester_test)
-    department = user.user_profile.department 
-    data = {'r_id': user.id, 'd_id':department.id}
+    department = user.user_profile.department
+    project = user.user_profile.hhmi_project_id 
+    data = {'r_id': user.id, 'd_id':department.id, 'p_id':project}
     data = simplejson.dumps(data)
     dataOne = simplejson.loads(data)
     # obj = {
