@@ -248,7 +248,7 @@ def create_order(request, copy_id=None):
             orderlineformset.copy_orderline_data(order)
 
         else:
-            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user, 'department': user.user_profile.department})
+            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id}})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
 

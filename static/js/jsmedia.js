@@ -179,7 +179,7 @@ $(function(){
                 $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
 
                 if(data.p_id){
-                    $("#id_order-project_code").val(data['p_id']).trigger("chosen:updated");
+                    $("#id_order-project_code").val(data['r_id']).trigger("chosen:updated");
                 }
             } 
         },
