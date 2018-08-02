@@ -646,7 +646,7 @@ def ajax_test(request):
     user = User.objects.get(id=requester_test)
     department = user.user_profile.department
     project = user.user_profile.hhmi_project_id 
-    data = {'r_id': user.id, 'd_id':department.id, 'p_id':project}
+    data = {'r_id': user.id, 'd_id':department.id, 'p_id':project, 'up_id':user.user_profile.id}
     data = simplejson.dumps(data)
     dataOne = simplejson.loads(data)
     # obj = {
