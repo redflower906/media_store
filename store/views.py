@@ -641,11 +641,11 @@ def get_details(request): #get the requestor bill_to details !!!
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
     user = User.objects.get(id=requester_test) 
-    result_set = []
-    result_set.append({'r_id':user.id })
-    obj = {
-        'r_id': User.objects.get(id=requester_test)
+    data = {'r_id':user.id }
+    dataOne = json.dumps(data)
+    # obj = {
+    #     'r_id': User.objects.get(id=requester_test)
 
-    }
-    data = JsonResponse(obj.json())
-    return HttpResponse(simplejson.dumps(result_set), content_type='application/json')
+    # }
+    # data = JsonResponse(obj.json())
+    return HttpResponse(json.loads(dataOne), content_type='application/json')
