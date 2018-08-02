@@ -640,7 +640,7 @@ def get_details(request): #get the requestor bill_to details !!!
 
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
-    user = User.objects.get(id=requester) 
+    user = User.objects.get(id=requester_test) 
     result_set = []
     result_set.append({'r_id':user.id })
     obj = {
