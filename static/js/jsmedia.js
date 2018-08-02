@@ -179,6 +179,7 @@ $(function(){
                 $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
 
                 if(data.p_id){
+                    console.log('project!')
                     $("#id_order-project_code").val(data['r_id']).trigger("chosen:updated");
                 }
             } 
