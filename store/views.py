@@ -631,12 +631,15 @@ def get_details(request): #get the requestor bill_to details !!!
         if profile.hhmi_project_id:
             project_id = profile.hhmi_project_id.strip()
 
-        result_set = []
-        result_set.append({'department_id':department.id,'project':project_id})
+        # result_set = []
+        # result_set.append({'department_id':department.id,'project':project_id})
+        result_setOne = {'department_id':department.id,'project':project_id}
+        result_setOne = simplejson.dumps(result_setOne)
+        result_set = simplejson.loads(result_setOne)
     except:
         logging.info("/get_details - unable to load user for userid: {0}".format(requester))
         result_set = []
-    return HttpResponse(simplejson.dumps(result_set), content_type='application/json')
+    return JsonResponse(result_set)
 
 def ajax_test(request):
     requester_test = request.GET.get('id', None)
