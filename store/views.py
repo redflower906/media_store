@@ -643,9 +643,10 @@ def ajax_test(request):
     user = User.objects.get(id=requester_test) 
     data = {'r_id': user.id}
     data = simplejson.dumps(data)
+    dataOne = simplejson.loads(data)
     # obj = {
     #     'r_id': User.objects.get(id=requester_test)
 
     # }
     # data = JsonResponse(obj.json())
-    return HttpResponse(simplejson.loads(data), content_type='application/json')
+    return JsonResponse(dataOne)
