@@ -228,8 +228,6 @@ def create_order(request, copy_id=None):
                cc=[order_form.instance.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
             )
             email.attach_alternative(m_html, "text/html")
-            if order_form.instance.doc:
-                email.attach_file(order_form.instance.doc)
             email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
