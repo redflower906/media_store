@@ -228,6 +228,8 @@ def create_order(request, copy_id=None):
                cc=[order_form.instance.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
             )
             email.attach_alternative(m_html, "text/html")
+            if order_form.instance.doc:
+                email.attach_file(order_form.instance.doc)
             email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
@@ -618,30 +620,8 @@ def current_sign_outs (request):
 
 #         return qs test
 
-def get_details(request): #get the requestor bill_to details !!!
-    requester = request.GET.get('id', None)
-    try:
-        user = User.objects.get(id=requester)
-        # last_name = user.last_name
-        # first_name = user.first_name
-        profile = user.user_profile.all()[0]
-        department = profile.department
-        project_id = ''
 
-        if profile.hhmi_project_id:
-            project_id = profile.hhmi_project_id.strip()
-
-        # result_set = []
-        # result_set.append({'department_id':department.id,'project':project_id})
-        result_setOne = {'department_id':department.id,'project':project_id}
-        result_setOne = simplejson.dumps(result_setOne)
-        result_set = simplejson.loads(result_setOne)
-    except:
-        logging.info("/get_details - unable to load user for userid: {0}".format(requester))
-        result_set = []
-    return JsonResponse(serializers.serialize('json', result_set), safe=False)
-
-def ajax_test(request):
+def ajax(request):
     requester_test = request.GET.get('id', None)
     user = User.objects.get(id=requester_test)
     department = user.user_profile.department

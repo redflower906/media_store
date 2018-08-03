@@ -120,52 +120,14 @@ function changeAllBill(){
     $('td.statusComplete').children().val('Billed');
 };
 
-//getting bill_to department associated with requestor !!!
-// $(function(){
-//     $('#id_order-requester').change(function() {
-//     //this works
-//         var optionSelected = $(this).find("option:selected");
-//         //this works
-//         var valueSelected = optionSelected.val();
-//         //this works
-//         var requester_name = optionSelected.text();
-//         //this works
-//         data = {'id': valueSelected,'name':requester_name};
-//         //this kind of works? [object Object]
-//         $.ajax({
-//         url: '/get_details',
-//         data: data,
-//         success: function(response){
-//         if (response[0] && response[0]['department_id']) {
-//             console.log('success:if');
-//             $("#id_order-department").val(response[0]['department_id']).trigger("chosen:updated");
-//         } else {
-//             console.log('success:else');
-//             $("#id_order-department").val('').trigger("chosen:updated");
-//         }
-    
-//         //   if (response[0] && response[0]['project']) {
-//         //     var val = response[0]['project'];
-//         //     val = val + ' ' + requestor_name.split(',',1)[0];
-//         //     $("#id_workorderdepartment-0-hhmi_project_id").val(val).trigger("chosen:updated");
-//         //   } else {
-//         //     $("#id_workorderdepartment-0-hhmi_project_id").val('').trigger("chosen:updated");
-//         //   }
-//         },
-//         error: function(){
-//                 console.log("failure");
-//             }
-//         });
-//     });
-// }); 
-
+//Automatically choose department and project code based on requester
 $(function(){
     $('#id_order-requester').change(function() {
         var optionSelected = $(this).find("option:selected");
         var valueSelected = optionSelected.val();
         var requester_name = optionSelected.text();
         $.ajax({
-        url: '/ajax_test',
+        url: '/ajax',
         data: {
             'id': valueSelected,
             'name': requester_name
