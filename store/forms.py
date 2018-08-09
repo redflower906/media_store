@@ -100,7 +100,7 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'department': forms.Select(attrs={'class': 'chosen-select', 'required': False}),
+        'department': forms.Select(attrs={'required': False, 'class': 'chosen-select'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
@@ -131,11 +131,16 @@ class OrderLineInlineFormSet(
         fields=('qty', 'line_cost', 'inventory'),
         widgets={
         'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty'}),
-        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly': '1'}),
+        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost'}), #'readonly': '1'
         'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
         extra=1, can_delete=True
         )):
+
+    def __init__(self, *args, **kwargs):
+        super(OrderLineInlineFormSet, self).__init__(*args, **kwargs)
+        if self.fields['inventory'] == 'Custom Order':
+            self.fields['line_cost'].widget.attrs['readonly'] = False
 
     def clean(self):
         """ Additional form validation
