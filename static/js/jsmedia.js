@@ -157,5 +157,9 @@ $(function(){
     var inv = $('#id_orderlines-0-inventory').val();
     if (inv == 'Custom Order'){
         $('#id_orderlines-0-inventory').removeAttr('readonly');
+        console.log('inv = custom order');
+    }
+    else{
+        console.log('else');
     }
 })
