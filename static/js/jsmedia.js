@@ -157,7 +157,7 @@ $(function(){
     $('#id_orderlines-0-inventory').change(function(){
         var inv = $('#id_orderlines-0-inventory').val();
         if (inv == 1350){
-            $('#id_orderlines-0-inventory').removeAttr('readonly');
+            $('#id_orderlines-0-line_cost').removeAttr('readonly');
             console.log('inv = custom order');
         }
         else{
