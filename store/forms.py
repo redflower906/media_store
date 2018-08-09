@@ -100,7 +100,7 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'department': forms.Select(attrs={'class': 'chosen-select'}),
+        'department': forms.Select(attrs={'class': 'chosen-select'}, required=False),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
