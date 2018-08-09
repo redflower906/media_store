@@ -162,6 +162,7 @@ $(function(){
         }
         else{
             console.log('else');
+            console.log(inv);
         }
     })
 })
