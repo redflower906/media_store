@@ -54,7 +54,8 @@ function populate_inventory(e){
     var mediatype = $(e.target).val()
     $('#id_' + prefix + 'inventory').empty()
     $('#id_' + prefix + 'inventory').append("<option value=''> ---------- </option>");        
-    var selected_inventory_group = inventory_groups[mediatype]
+    var selected_inventory_group = inventory_groups[mediatype];
+    console.log(selected_inventory_group);
     selected_inventory_group.map(function (item) {
         $('#id_' + prefix + 'inventory').append("<option value=" + item.id + ">" + item.desc + "</option>");
     })

@@ -161,7 +161,7 @@ def single_item(request, id):
     if request.method == "POST":
         return update_item(request, id)
     elif request.method == "DELETE":
-        return delete_item(request, id)
+        return delete_item(request, id) #what is this doing? ~FIX~
     else:
         return get_item(request, id)
 
