@@ -237,6 +237,12 @@
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
                                 </td>
+                                {% if user.is_staff is True %}
+                                <td class='col text-center staff'>
+                                    {{ form.line_cost.errors }}
+                                    {{ form.line_cost }}
+                                </td>
+                                {% else %}
                                 <td class='col text-center'>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
