@@ -131,7 +131,7 @@ class OrderLineInlineFormSet(
         fields=('qty', 'line_cost', 'inventory'),
         widgets={
         'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty'}),
-        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly': '1'}),
+        'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost'}),
         'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
         extra=1, can_delete=True
@@ -140,8 +140,8 @@ class OrderLineInlineFormSet(
     def __init__(self, *args, **kwargs):
         super(OrderLineInlineFormSet, self).__init__(*args, **kwargs)
         for form in self:
-            if form.fields['inventory'] == 'Custom Order':
-                form.fields['line_cost'].widget.attrs['readonly'] = False
+            if form.fields['inventory'] != 'Custom Order':
+                form.fields['line_cost'].widget.attrs['readonly'] = 'readonly'
 
 
     def clean(self):
