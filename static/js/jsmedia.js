@@ -150,4 +150,12 @@ $(function(){
         },
         });
     });
-}); 
+});
+
+//remove readonly attribute if orderlines-0-inventory is 'custom order'
+$(function(){
+    var inv = $('#id_orderlines-0-inventory').val();
+    if (inv == 'Custom Order'){
+        $('#id_orderlines-0-inventory').attr('readonly', 'readonly');
+    }
+})
