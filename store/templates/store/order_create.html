@@ -294,7 +294,8 @@
         
 </form>
 <script type="text/javascript">
-    $(function () {
+    $(function () {        
+        $(".chosen-select").chosen();
         $('#order_table tbody tr').formset({
             prefix:'{{ formset.prefix }}',
             addText:'Add Item',
@@ -303,10 +304,9 @@
             deleteCssClass:'btn btn-danger',
             added: register_row,
             removed: deregister_row
-        });
+        });            
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
-            $(".chosen-select").chosen();
         });    
     });
 </script>
