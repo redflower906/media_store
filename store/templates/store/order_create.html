@@ -293,9 +293,9 @@
         </div>
         
 </form>
-<script type="text/javascript">
+<script type="text/javascript">        
+    $(".chosen-select").chosen();
     $(function () {        
-        $(".chosen-select").chosen();
         $('#order_table tbody tr').formset({
             prefix:'{{ formset.prefix }}',
             addText:'Add Item',
