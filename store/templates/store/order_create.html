@@ -294,8 +294,7 @@
         
 </form>
 <script type="text/javascript">
-    $(function () {        
-        $(".chosen-select").chosen();
+    $(function () {
         $('#order_table tbody tr').formset({
             prefix:'{{ formset.prefix }}',
             addText:'Add Item',
@@ -305,6 +304,7 @@
             added: register_row,
             removed: deregister_row
         });            
+        $(".chosen-select").chosen();
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
         });    
