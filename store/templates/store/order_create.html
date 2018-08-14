@@ -210,7 +210,7 @@
                                 <td class='col text-center'>
                                     <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                         {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='{{form.prefix}}-mediatype form-control chosen-select'>
+                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype chosen-select' class='form-control chosen-select'>
                                         <option value=""> --------- </option>
                                         {% for media_type, media_type_desc in media_types %}
                                             <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
@@ -304,7 +304,7 @@
             added: register_row,
             removed: deregister_row
         });            
-        $(".chosen-select").chosen();
+        $("#chosen-select").chosen();
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
         });    
