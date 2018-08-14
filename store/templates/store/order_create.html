@@ -304,7 +304,9 @@
             added: register_row,
             removed: deregister_row
         });            
-        $(".chosen-select").chosen();
+        $(".chosen-select").chosen().change(
+            $(this).addclass('hi')
+        );
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
         });    
