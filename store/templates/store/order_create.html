@@ -304,14 +304,11 @@
             added: register_row,
             removed: deregister_row
         });            
-        $(".chosen-select").chosen().change(
-            $(this).addclass('scarlett')
-        );
+        $(".chosen-select").chosen();
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
         });    
     });
-    $(".chosen-select").chosen();
 
 </script>
 
