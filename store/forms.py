@@ -34,7 +34,7 @@ class Item_Model_Form(forms.ModelForm):
         widgets = {
             'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
-            'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+            'media_type': forms.Select(attrs={'class': 'form-control form-text chosen-select'}),
             'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
             'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
@@ -72,7 +72,7 @@ def item_model_formset_factory(extra):
     widgets = {
         'inventory_text': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'product': forms.TextInput(attrs={'class': 'form-control form-text'}),
-        'media_type': forms.Select(attrs={'class': 'form-control form-text'}),
+        'media_type': forms.Select(attrs={'class': 'form-control form-text chosen-select'}),
         'cost': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'container': forms.TextInput(attrs={'class': 'form-control form-text'}),
         'volume': forms.TextInput(attrs={'class': 'form-control form-text'}),
