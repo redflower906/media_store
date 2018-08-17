@@ -105,7 +105,7 @@ class OrderForm(forms.ModelForm):
             (True, 'Yes'),
             (False, 'No')             
         ], attrs={'class': 'form-contorl'}),
-        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control chosen-select'}),
+        'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control'}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 

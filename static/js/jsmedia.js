@@ -165,4 +165,12 @@ $(function(){
             console.log(inv);
         }
     })
+    if ((inv == 1350) && $('#id_cost').hasClass('staff')){
+        $('#id_orderlines-0-line_cost').removeAttr('readonly');
+        console.log('inv = custom order');
+    }
+    else{
+        console.log('else');
+        console.log(inv);
+    }
 })
