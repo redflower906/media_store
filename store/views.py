@@ -209,8 +209,7 @@ def create_order(request, copy_id=None):
             order.save()
             orderlineformset.save()
             domain = request.get_host()
-            # change submitter to requester after testing ~FIX~
-            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
+            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -225,7 +224,7 @@ def create_order(request, copy_id=None):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
+               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -284,8 +283,7 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
-            subject,from_email,to = 'Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.submitter.user_profile.email_address
-            #change submitter email to requester after testing ~FIX~
+            subject,from_email,to = 'Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -298,7 +296,7 @@ def edit_order(request, id):
                m_plain,
                from_email,
                [to],
-            #    cc=[order_form.instance.requester.user_profile.email_address, 'mediafacility@janelia.hhmi.org'], ~FIX~
+               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -522,10 +520,10 @@ def email_form(request, id):
     domain = request.get_host()
 
     if user.is_staff is True:
-        Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) #change email to requester after testing ~FIX~
+        Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) 
         sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) #change email to requester after testing ~FIX~
+        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) 
         sender = order_info.requester.get_full_name()
     if request.method == "POST":
         Email = Email_Form(request.POST)
