@@ -103,6 +103,10 @@
 
     <fieldset>
         <legend>Is this a recurring order?</legend>
+        <div>
+            <p>Recurring orders can only be set for a maximum of three months at a time. You will receive an email notifying you three weeks before the order end date. 
+            If you need to extend the amount of time, please edit the existing order.</p>
+        </div>
         <div class='row'>
             <div class='col-xs-2'>
                 {{ order_form.is_recurring.errors }}
