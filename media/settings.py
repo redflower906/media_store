@@ -51,10 +51,10 @@ if DEBUG:
 ALLOWED_HOSTS = ['*']
 # 'mediastore', 'mediastore.int.janelia.org', 'localhost'
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_SERVER = 'harrisons1@janelia.hhmi.org'
-# EMAIL_HOST = '10.42.5.23'
-#port = 465
+EMAIL_HOST = '10.42.5.23'
+port = 465
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
