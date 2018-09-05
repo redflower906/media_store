@@ -109,14 +109,14 @@
                                 </thead>
                                 <tr>
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
-                                    <td class='inv{{orderform.instance.status}}'>{{line.inventory.inventory_text}}</td>
+                                    <td class='inv{{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
                                     {% if orderforms == recur %} 
                                         <td>{{orderform.instance.date_complete}}</td>
                                         <td>{{orderform.instance.date_billed}}</td>
                                     {% endif %}
                                     <td>{{line.qty}}</td>
-                                    <td>${{line.total}}</td>
+                                    <td class = 'total{{orderform.instance.id}}'>${{line.total}}</td>
                     <td>{{orderform.instance.notes_order}}</td>
                                 {% endfor %}
                                 {% else %}
