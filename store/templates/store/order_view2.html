@@ -101,7 +101,7 @@
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             if(orderInv == 'Custom Order'){
-                $(this).parent().css('background-color', '#FEFE51');
+                $(this).closest('.koala').css('background-color', '#FEFE51'); //CHANGE TO UNIQUE COLOR ~FIX~
             }
         });
     });
