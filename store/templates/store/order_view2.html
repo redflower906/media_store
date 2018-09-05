@@ -85,7 +85,7 @@
     </div>
 </div>
 </form>
-{% comment %} highlight changed status {% endcomment %}
+{% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
 <script>
     $(function recurEnd(){
         var date = moment();
@@ -96,6 +96,12 @@
                 $(this).parent().css('background-color', '#FEFE51');
             } else if( 7 > days && days >= 0){
                 $(this).parent().css('background-color', '#FE5B5B');
+            }
+        });
+        $(this).find("[class^='inv']").each(function(){
+            var orderInv = $(this).text();
+            if(orderInv == 'Custom Order'){
+                $(this).parent().css('background-color', '#FEFE51');
             }
         });
     });

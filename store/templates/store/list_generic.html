@@ -109,7 +109,7 @@
                                 </thead>
                                 <tr>
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
-                                    <td>{{line.inventory.inventory_text}}</td>
+                                    <td class='inv{{orderform.instance.status}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
                                     {% if orderforms == recur %} 
                                         <td>{{orderform.instance.date_complete}}</td>

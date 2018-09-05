@@ -104,8 +104,11 @@
     <fieldset>
         <legend>Is this a recurring order?</legend>
         <div>
-            <p>Recurring orders can only be set for a maximum of three months at a time. You will receive an email notifying you three weeks before the order end date. 
-            If you need to extend the amount of time, please edit the existing order.</p>
+            <ul>
+                <li>Recurring orders can only be set for a maximum of three months at a time. You will receive an email notifying you three weeks before the order end date. 
+                If you need to extend the amount of time, please edit the existing order.</li>
+                <li>Please note in the "special instructions" box below if you recurring order is not weekly (every other week, every three weeks, etc).</li>
+            </ul>
         </div>
         <div class='row'>
             <div class='col-xs-2'>
@@ -289,10 +292,10 @@
         <hr/>
             <p></p>
             <div class='col-xs-11'>
-                <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
+                <a href='/' class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-xs-1">
-                <a href='/' class="btn btn-danger">Cancel</a>
+                <input class='btn btn-default' type='submit' value='Complete Order' name='submit'>
             </div>
         </div>
         
