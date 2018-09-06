@@ -100,6 +100,8 @@
         });
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
+            var lineCost = $(this).siblings('.linetotal').text();
+            console.log(lineCost);
             if(orderInv == 'Custom Order'){
                 $(this).css({'color':'red', 'font-weight':'bold'});
                 $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
