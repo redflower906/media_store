@@ -74,15 +74,15 @@
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
                         {% endfor %}
-                        <td class='status{{orderform.instance.status}}'>
+                        <td class='status {{orderform.instance.status}}'>
                             {{orderform.status.errors}}
                             {{orderform.status}}
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td class='status{{orderform.instance.status}}'>{{orderform.instance.status}}</td>
+                    <td class='status {{orderform.instance.status}}'>{{orderform.instance.status}}</td>
                     {% endif %}
-                    <td class='ordertotal{{orderform.instance.id}}'>${{orderform.instance.order_total}}</td>
+                    <td class='ordertotal {{orderform.instance.id}}'>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
                     </td>
@@ -109,14 +109,14 @@
                                 </thead>
                                 <tr>
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
-                                    <td class='inv{{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
+                                    <td class='inv {{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
                                     {% if orderforms == recur %} 
                                         <td>{{orderform.instance.date_complete}}</td>
                                         <td>{{orderform.instance.date_billed}}</td>
                                     {% endif %}
                                     <td>{{line.qty}}</td>
-                                    <td class = 'linetotal{{orderform.instance.id}}'>${{line.total}}</td>
+                                    <td class = 'linetotal {{orderform.instance.id}}'>${{line.total}}</td>
                     <td>{{orderform.instance.notes_order}}</td>
                                 {% endfor %}
                                 {% else %}

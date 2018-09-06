@@ -102,7 +102,7 @@
             var orderInv = $(this).text();
             if(orderInv == 'Custom Order'){
                 var parent = $(this).parents('.collapse').prev(); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
-                $(parent).css('background-color', '#FEFE51');
+                $(parent).children('.ordertotal').css('background-color', '#FEFE51');
             }
         });
     });
