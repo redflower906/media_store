@@ -123,6 +123,10 @@ table.foodcal tr, table.foodcal th, table.foodcal td {
   text-align: center;
 }
 
+.smalltext {
+  font-size: 50%
+}
+
 .flex-row {
   display: flex;
   flex-wrap: wrap;
