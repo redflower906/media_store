@@ -101,7 +101,7 @@
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             if(orderInv == 'Custom Order'){
-                $(this).parents('.collapse').prev().children('.ordertotal').css('background-color', '#FEFE51'); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
+                $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'}); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
                 //$(parent).children('.ordertotal').css('background-color', '#FEFE51');
             }
         });
