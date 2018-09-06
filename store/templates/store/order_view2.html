@@ -101,8 +101,7 @@
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             var lineCost = $(this).siblings('.linetotal').text();
-            console.log(lineCost);
-            if(orderInv == 'Custom Order'){
+            if(orderInv == 'Custom Order' && lineCost == '$1.00'){
                 $(this).css({'color':'red', 'font-weight':'bold'});
                 $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
                 $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'});
