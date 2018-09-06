@@ -68,6 +68,7 @@ var updateTotals = function() {
             var qty = parseFloat($(this).find('line_qty').val());
             var cost = parseFloat($(this).find('line_cost').val());
             var line_total = 0;
+            //I think this is what needs to change to allow a manual override of line_cost ~FIX~
             if (fixed) {
                 line_total = fixed;
             } else if (cost && qty) {

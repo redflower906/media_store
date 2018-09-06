@@ -134,7 +134,7 @@ function build_prefix(id) {
 }
 
 /**
- * Utility to calculate line costs
+ * Utility to calculate line costs OR MAYBE THIS IS WHAT NEEDS TO CHANGE TO MANUALLY OVERRIDE LINE COSTS ~FIX~
  * @param {string} qty - qty field value
  * @param {string} cost - cost field value
  */
