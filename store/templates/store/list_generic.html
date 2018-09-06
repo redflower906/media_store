@@ -82,7 +82,7 @@
                     {% comment %} customer: can't change status {% endcomment %}
                     <td class='status{{orderform.instance.status}}'>{{orderform.instance.status}}</td>
                     {% endif %}
-                    <td>${{orderform.instance.order_total}}</td>
+                    <td class='ordertotal{{orderform.instance.id}}'>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
                     </td>
@@ -116,7 +116,7 @@
                                         <td>{{orderform.instance.date_billed}}</td>
                                     {% endif %}
                                     <td>{{line.qty}}</td>
-                                    <td class = 'total{{orderform.instance.id}}'>${{line.total}}</td>
+                                    <td class = 'linetotal{{orderform.instance.id}}'>${{line.total}}</td>
                     <td>{{orderform.instance.notes_order}}</td>
                                 {% endfor %}
                                 {% else %}

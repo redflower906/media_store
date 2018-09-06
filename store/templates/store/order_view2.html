@@ -13,7 +13,7 @@
     </div>
 </div>
 {% endif %}
-<ul onload='recurEnd()' class="nav nav-tabs">
+<ul onload='highlight()' class="nav nav-tabs">
     <li class="active">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
     </li>
@@ -87,7 +87,7 @@
 </form>
 {% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
 <script>
-    $(function recurEnd(){
+    $(function highlight(){
         var date = moment();
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
@@ -101,7 +101,7 @@
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             if(orderInv == 'Custom Order'){
-                $(this).parents('.collapse').prev().css('background-color', '#FEFE51'); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
+                $(this).parents('.collapse').prev().child('.ordertotal').css('background-color', '#FEFE51'); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
             }
         });
     });
