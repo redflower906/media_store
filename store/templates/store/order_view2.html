@@ -101,8 +101,8 @@
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             if(orderInv == 'Custom Order'){
-                $(this).parents('.collapse').prev().css('background-color', '#FEFE51'); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
-                console.log('custom!!')
+                var parent = $(this).parents('.collapse').prev(); //have to go up to parent tr, then prev tr. CHANGE TO UNIQUE COLOR ~FIX~
+                $(parent).css('background-color', '#FEFE51');
             }
         });
     });
