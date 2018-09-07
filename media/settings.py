@@ -48,8 +48,8 @@ if DEBUG:
     }
 
 
-ALLOWED_HOSTS = ['*']
-# 'mediastore', 'mediastore.int.janelia.org', 'localhost'
+ALLOWED_HOSTS = ['mediastore', 'mediastore.int.janelia.org', 'localhost']
+
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_SERVER = 'harrisons1@janelia.hhmi.org'
