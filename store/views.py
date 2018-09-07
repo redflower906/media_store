@@ -191,7 +191,6 @@ def create_order(request, copy_id=None):
 
     order = Order()
     user = request.user
-    request = HttpRequest()
 
     if request.method == "POST":
 
@@ -209,7 +208,7 @@ def create_order(request, copy_id=None):
             order.submitter = user
             order.save()
             orderlineformset.save()
-            domain = request.build_absolute_uri()
+            domain = 'mediastore.int.janelia.org'
             subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
