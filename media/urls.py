@@ -53,7 +53,8 @@ urlpatterns = [
     url(r'^order/copy/(?P<copy_id>[0-9]*)$', views.create_order, name='copy_order'),
     url(r'^order/view', views.view_order, name='view_order'),
     url(r'^order', views.view_order, name='view_order'),
-    url(r'^export/xls/$', views.export_orders, name='export_orders'),
+    url(r'^export/xls/$', views.export_ordersCNB, name='export_ordersCNB'),
+    url(r'^export/xls/$', views.export_ordersIP, name='export_ordersIP'),
     url(r'^delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
 
 ##Search

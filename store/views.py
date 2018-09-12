@@ -208,7 +208,7 @@ def create_order(request, copy_id=None):
             order.submitter = user
             order.save()
             orderlineformset.save()
-            domain = 'mediastore.int.janelia.org'
+            domain = 'mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
@@ -461,6 +461,7 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
+            return redirect('export_ordersIP')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
@@ -474,7 +475,7 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-    var = Department.objects.all().values_list()
+    var = Department.objects.all().values_list() #what is this? ~FIX~
     print(var)
 
     return render(request,
@@ -496,7 +497,7 @@ def view_order(request):
         'var':var,
         })
 
-def export_orders(request):
+def export_ordersCNB(request):
     
     orders = Order.objects.all()
     response = HttpResponse(content_type='text/csv')
@@ -504,9 +505,25 @@ def export_orders(request):
     writer = csv.writer(response)
     writer.writerow(['order_id', 'c_JM_Requester', 'Date_Wth_Dep', 'Product', 'Withdrawl', 'Unit_Price', 'email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__email')
+    'id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost')
 
     for record in compNotBill:
+        writer.writerow(record)            
+
+    return response
+
+def export_ordersIP(request):
+    
+    orders = Order.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="orders.csv"'
+    writer = csv.writer(response)
+    writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Product', 'Withdrawl', 'Unit_Price', 'Special_Instructions', 'Location'])
+    inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
+    'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 
+    'orderline__qty', 'orderline__inventory__cost', 'special_instructions','location')
+
+    for record in inProgress:
         writer.writerow(record)            
 
     return response
