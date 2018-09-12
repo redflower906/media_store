@@ -5,6 +5,7 @@ All data models for Media Store
 from django.db import models
 # from django.db.models import prefetch_related
 #from django.contrib.admin.models import LogEntry
+from django.shorcuts import redirect
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.mail import send_mail, EmailMessage
@@ -409,7 +410,6 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
-    print(instance)
     if instance.status == 'Complete':
         context = Context({
             'id': instance.id,
@@ -455,6 +455,9 @@ def status_email(sender, instance, *args, **kwargs):
         instance.days_since_bill = (today-lastbill).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
+
+    if instance.status == 'In Progress':
+        return redirect('export_ordersIP')
 
 class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
