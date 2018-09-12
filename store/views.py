@@ -516,7 +516,7 @@ def export_ordersIP(request):
     
     orders = Order.objects.all()
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="orders.csv"'
+    response['Content-Disposition'] = 'attachment; filename="In_Progress.csv"'
     writer = csv.writer(response)
     writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Product', 'Withdrawl', 'Unit_Price', 'Special_Instructions', 'Location'])
     inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
