@@ -461,7 +461,7 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            return redirect('export_ordersIP')
+            # return redirect('export_ordersIP')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
