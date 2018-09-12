@@ -5,7 +5,6 @@ All data models for Media Store
 from django.db import models
 # from django.db.models import prefetch_related
 #from django.contrib.admin.models import LogEntry
-from django.shorcuts import redirect
 from django.contrib.auth.models import Group, User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.mail import send_mail, EmailMessage
