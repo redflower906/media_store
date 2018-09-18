@@ -452,9 +452,6 @@ def status_email(sender, instance, *args, **kwargs):
 
         instance.date_billed = today
         instance.days_since_bill = (today-lastbill).days
-    
-    if instance.status == 'In Progress':
-        return redirect('export_ordersIP')
 
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
