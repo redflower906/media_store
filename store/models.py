@@ -452,13 +452,16 @@ def status_email(sender, instance, *args, **kwargs):
 
         instance.date_billed = today
         instance.days_since_bill = (today-lastbill).days
-    ##elif instance.status == 'Canceled':
-        ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
-
-@receiver(post_save, sender=Order)
-def export_inp(sender, instance, *args, **kwargs):
+    
     if instance.status == 'In Progress':
         return redirect('export_ordersIP')
+
+    ##elif instance.status == 'Canceled':
+        ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
+# def export_inp(sender, instance, *args, **kwargs):
+#     if instance.status == 'In Progress':
+#         return redirect('export_ordersIP')
+
 
 class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
