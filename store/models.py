@@ -16,6 +16,7 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
+from django.shortcuts import redirect
 import decimal
 from datetime import datetime, date
 from dateutil import relativedelta
@@ -437,7 +438,6 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.order = order
                 ol.save()
             order.refresh_from_db()            
-        # messages.success(request, 'Order #{0} has been completed'.format(instance.id)) can't get request within a signal. find something better ~FIX~
 
     instance.date_complete = date.today()
 
@@ -454,6 +454,11 @@ def status_email(sender, instance, *args, **kwargs):
         instance.days_since_bill = (today-lastbill).days
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
+
+@receiver(post_save, sender=Order)
+def export_inp(sender, instance, *args, **kwargs):
+    if instance.status == 'In Progress':
+        return redirect('export_ordersIP')
 
 class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
