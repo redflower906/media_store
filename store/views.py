@@ -501,7 +501,7 @@ def export_ordersCNB(request):
     
     orders = Order.objects.all()
     response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="orders.csv"'
+    response['Content-Disposition'] = 'attachment; filename="Complete_not_billed.csv"'
     writer = csv.writer(response)
     writer.writerow(['order_id', 'c_JM_Requester', 'Date_Wth_Dep', 'Product', 'Withdrawl', 'Unit_Price', 'email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
