@@ -510,7 +510,7 @@ def view_order(request):
         'headers2': list(sort_headers2.headers()),
         'headers3': list(sort_headers3.headers()),
         'headers4': list(sort_headers4.headers()),
-        'headers5': list(sort_headers5()),
+        'headers5': list(sort_headers5.headers()),
         'user': user,
         'orders': orders,
         'pagesI': pagesI,
