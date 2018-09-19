@@ -58,7 +58,7 @@
                         <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
                     {% endif %}
                     <!-- why??? -->
-                    {% elif orderforms == incomp %}     
+                    {% elif orderforms == incomp or orderforms == cancel %}     
                     {% else %}
                     <td>{{orderform.instance.date_billed}}</td>
                     {% if orderform.instance.is_recurring %}
