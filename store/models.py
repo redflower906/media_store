@@ -455,9 +455,6 @@ def status_email(sender, instance, *args, **kwargs):
 
     ##elif instance.status == 'Canceled':
         ##DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
-# def export_inp(sender, instance, *args, **kwargs):
-#     if instance.status == 'In Progress':
-#         return redirect('export_ordersIP')
 
 
 class ProjectModelChoiceField(ModelChoiceField):

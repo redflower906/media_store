@@ -12,14 +12,19 @@ def recur_end_email():
     for order in orders:
         if order.date_recurring_stop:
             today_to_stop = (order.date_recurring_stop - today).days
-            print(today_to_stop)
+
             if today_to_stop == 21:
-                print('second if worked') 
+                number = 'three'
+            if today_to_stop == 7:
+                number = 'one'
+
+            if (today_to_stop == 21) or (today_to_stop == 7):
                 domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
-                subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.submitter.user_profile.email_address #change submitter to requester after testing ~FIX~
+                subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.user_profile.email_address #change submitter to requester after testing ~FIX~
                 context = Context({
                     'id': order.id,
                     'domain': domain,
+                    'number': number,
                 })
                 m_plain = render_to_string('three_weeks.txt', context.flatten())
                 m_html = render_to_string('three_weeks.html', context.flatten())
@@ -28,7 +33,6 @@ def recur_end_email():
                 m_plain,
                 from_email,
                 [to],
-                # cc=[order.submitter.user_profile.email_address], #add mediafacility email here ~FIX~
-                )
+                cc=[order.submitter.user_profile.email_address],
                 email.attach_alternative(m_html, "text/html")
                 email.send()

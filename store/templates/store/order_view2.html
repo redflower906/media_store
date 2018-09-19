@@ -84,6 +84,20 @@
             </div>
         </div>
     </div>
+    {% if user.is_staff is True %}
+    <div role="tabpanel" class="tab-pane fade" id="canceled">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Canceled</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=cancel pages=pagesCAN headers=headers5%}
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 </form>
 {% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}

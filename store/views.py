@@ -383,10 +383,24 @@ def view_order(request):
         ('Status', 'status'),
         ('Order Total', 'order_total')
     )
+
+    ORDER_LIST_HEADERS_CAN = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester'),
+        ('Submitted', 'date_submitted'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
+    sort_headers5 = SortHeaders(request, ORDER_LIST_HEADERS_CAN)
+
 
     user = request.user
     
@@ -423,6 +437,8 @@ def view_order(request):
     orderline__inventory__id='686')
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('-date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
+    cancel_queryset = orders.filter(status__icontains='Canceled').exclude(date_billed__isnull=False).order_by('date_submitted').prefetch_related('orderline_set').exclude(
+    orderline__inventory__id='686')
 
     #pagination
     page = request.GET.get('page')
@@ -430,31 +446,38 @@ def view_order(request):
     paginatorR = Paginator(recur_queryset, 10)
     paginatorCNB = Paginator(compNotBill_queryset, 20)
     paginatorCB = Paginator(compBill_queryset, 30)
+    paginatorCAN = Paginator(cancel_queryset, 30)
+
     try:
         pagesI = paginatorI.page(page)
         pagesR = paginatorR.page(page)
         pagesCNB = paginatorCNB.page(page)
         pagesCB = paginatorCB.page(page)
+        pagesCAN = paginatorCAN.page(page)
     except PageNotAnInteger:
         pagesI = paginatorI.page(1)
         pagesR = paginatorR.page(1)
         pagesCNB = paginatorCNB.page(1)
         pagesCB = paginatorCB.page(1)
+        pagesCAN = paginatorCAN.page(1)
     except EmptyPage:
         pagesI = paginatorI.page(paginatorI.num_pages)
         pagesR = paginatorR.page(paginatorR.num_pages)
         pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
         pagesCB = paginatorCB.page(paginatorCB.num_pages)
+        pagesCAN = paginatorCAN.page(paginatorCAN.num_pages)
 
     pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
     pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
     pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
+    pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
     incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
     recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
+    cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
@@ -474,6 +497,10 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
+        order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
     var = Department.objects.all().values_list() #what is this? ~FIX~
     print(var)
 
@@ -483,16 +510,19 @@ def view_order(request):
         'headers2': list(sort_headers2.headers()),
         'headers3': list(sort_headers3.headers()),
         'headers4': list(sort_headers4.headers()),
+        'headers5': list(sort_headers5()),
         'user': user,
         'orders': orders,
         'pagesI': pagesI,
         'pagesR': pagesR,
         'pagesCNB': pagesCNB,
         'pagesCB': pagesCB,
+        'pagesCAN': pagesCAN,
         'incomp':incomp,
         'recur':recur,
         'compNotBill':compNotBill,
         'compBill':compBill,
+        'cancel': cancel,
         'var':var,
         })
 

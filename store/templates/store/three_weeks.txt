@@ -1,5 +1,5 @@
 Greetings,
-Your recurring media store order #{{id}} will be ending in three weeks. Please review your order and extend the end date if necessary.
+Your recurring media store order #{{id}} will be ending in {{number}} week(s). Please review your order and extend the end date if necessary.
 
 You can view a summary of this order here:
 {{domain}}
