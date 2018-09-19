@@ -23,12 +23,9 @@
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
     </li>
-    {% if user.is_staff is True %}
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#canceled">Canceled</a>
     </li>
-    {% else %}
-    {% endif %}
 </ul>
 
 <form method="post" action="" id="orderstatusform">
