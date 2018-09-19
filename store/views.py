@@ -497,9 +497,9 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
+        # order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
+        # if order_formset.has_changed() and order_formset.is_valid():
+        #     order_formset.save()
 
     var = Department.objects.all().values_list() #what is this? ~FIX~
     print(var)
