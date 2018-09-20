@@ -23,11 +23,11 @@
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
     </li>
-    <!-- {% if user.is_staff is True %}
+    {% if user.is_staff is True %}
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#can">Canceled</a>
     </li>
-    {% endif %} -->
+    {% endif %}
 </ul>
 
 <form method="post" action="" id="orderstatusform">
@@ -70,11 +70,11 @@
                 {%include "store/list_generic.html" with orderforms=compNotBill pages=pagesCNB headers=headers3%}
             </div>
         </div>
-        <!-- {% if user.is_staff is True %}
+        {% if user.is_staff is True %}
         <a href="{% url 'export_ordersCNB' %}" name='data' class="btn btn-info">Export Billing Data</a>
         <button type="info" class="btn btn-warning" onclick="changeAllBill()">Change to billed</button>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
-        {% endif %} -->
+        {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_billed">
         <div class="row">
@@ -88,7 +88,7 @@
             </div>
         </div>
     </div>
-    <!-- {% if user.is_staff is True %}
+    {% if user.is_staff is True %}
     <div role="tabpanel" class="tab-pane fade" id="can">
         <div class="row">
             <div class="col-xs-12">
@@ -102,7 +102,7 @@
         </div>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </div>
-    {% endif %} -->
+    {% endif %}
 </div>
 </form>
 {% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
