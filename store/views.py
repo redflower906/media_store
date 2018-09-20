@@ -325,12 +325,6 @@ def delete_order(request, id):
         'Order {0} was successfully deleted.'.format(order.id))
     return HttpResponseRedirect('/order/view')
 
-# class DeleteOrder(DeleteView):
-#     model = Order
-#     success_url = reverse_lazy('view_order')
-#     template_name = 'delete.html'
-
-
 @login_required
 def view_order(request):
 
