@@ -319,7 +319,6 @@ def edit_order(request, id):
 
 
 def delete_order(request, id):
-    order = Order.objects.get(Order, pk=id)
     try:
         order = Order.objects.get(pk=id)
     except Order.DoesNotExist:  # expression as identifier:
