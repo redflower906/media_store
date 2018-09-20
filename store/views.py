@@ -319,7 +319,7 @@ def edit_order(request, id):
 
 
 def delete_order(request, id):
-    order = get_object_or_404(Order, pk=id)
+    order = get_object_or_404(Order, id)
     order.delete()
     messages.success(request,
         'Order {0} was successfully deleted.'.format(order.id))
