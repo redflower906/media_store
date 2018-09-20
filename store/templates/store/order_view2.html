@@ -14,7 +14,7 @@
 </div>
 {% endif %}
 <ul onload='highlight()' class="nav nav-tabs">
-    <li class="active">
+    <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
     </li>
     <li class="nav-item">
@@ -33,7 +33,7 @@
 <form method="post" action="" id="orderstatusform">
 {% csrf_token %}
 <div class="tab-content">
-    <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
+    <div role="tabpanel" class="tab-pane fade" id="incomplete">
         <div class="row">
             <div class="col-xs-12">
                 <h3>Submitted/In-Progress Orders</h3>
