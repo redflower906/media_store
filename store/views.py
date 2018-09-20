@@ -319,7 +319,13 @@ def edit_order(request, id):
 
 
 def delete_order(request, id):
-    order = get_object_or_404(Order, id)
+    order = Order.objects.get(Order, pk=id)
+     try:
+        order = Order.objects.get(pk=id)
+    except Order.DoesNotExist:  # expression as identifier:
+        messages.error(
+            request, 'Could not delete order #{}. Order does not exist.'.format(id))
+        return HttpResponseRedirect('/order/view')
     order.delete()
     messages.success(request,
         'Order {0} was successfully deleted.'.format(order.id))
