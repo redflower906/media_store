@@ -317,7 +317,7 @@ def edit_order(request, id):
         'media_types': MEDIA_CHOICES
     })
 
-
+@login_required(login_url='login')
 def delete_order(request, pk):
     try:
         order = Order.objects.get(pk=id)
@@ -496,9 +496,9 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        # order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
-        # if order_formset.has_changed() and order_formset.is_valid():
-        #     order_formset.save()
+        order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
 
     var = Department.objects.all().values_list() #what is this? ~FIX~
     print(var)
