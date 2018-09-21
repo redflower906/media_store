@@ -533,7 +533,7 @@ def export_ordersCNB(request):
     writer = csv.writer(response)
     writer.writerow(['order_id', 'c_JM_Requester', 'Date_Wth_Dep', 'Product', 'Withdrawl', 'Unit_Price', 'email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','requester__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost')
+    'id','requester__user_profile__employee_id', 'date_created', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'requester__user_profile__email_address')
 
     for record in compNotBill:
         writer.writerow(record)            
@@ -548,7 +548,7 @@ def export_ordersIP(request):
     writer = csv.writer(response)
     writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Product', 'Withdrawl', 'Unit_Price', 'Special_Instructions', 'Location'])
     inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_submitted', 'orderline__inventory__inventory_text', 
+    'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'special_instructions','location')
 
     for record in inProgress:
