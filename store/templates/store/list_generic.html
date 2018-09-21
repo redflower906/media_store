@@ -91,11 +91,11 @@
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'copy_order' orderform.instance.id %}" class='btn btn-success'>Copy</a>
                     </td>
-                    <!-- {% if orderform.instance.status == 'Submitted' %}
+                    {% if orderform.instance.status == 'Submitted' %}
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'delete_order' orderform.instance.id %}" class='btn btn-danger'>Delete</a>
                     </td>
-                    {% endif %} -->
+                    {% endif %}
                     <tr id="notes" class="collapse" role="text">                        
                         <td colspan="10">
                             <table class ='table'>
