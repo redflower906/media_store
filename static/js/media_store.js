@@ -66,9 +66,7 @@ var updateTotals = function() {
     lines.each(function(line) {
         if (!$(this).find('input[type=checkbox]').prop('checked')) {
             var qty = parseFloat($(this).find('line_qty').val());
-            console.log(qty);
             var cost = parseFloat($(this).find('line_cost').val());
-            console.log(cost);
             var line_total = 0;
             //I think this is what needs to change to allow a manual override of line_cost ~FIX~
             if (fixed) {
