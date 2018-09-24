@@ -141,10 +141,11 @@ function build_prefix(id) {
 function calc_cost(qty, cost){
     if(qty==='' || qty===null){
         return 0
-    }
-    return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
+    }    
     console.log(qty);
     console.log(cost);
+    return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
+
 }
 
 /**
