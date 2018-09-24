@@ -157,9 +157,9 @@ class OrderLineInlineFormSet(
             raise forms.ValidationError(
                 "Please include at least one Order Line.")
 
-        if not self.total_is_positive_nonzero():
-            raise forms.ValidationError(
-                "Total cost must be greater than zero")
+        # if not self.total_is_positive_nonzero():
+        #     raise forms.ValidationError(
+        #         "Total cost must be greater than zero")
         
     def have_minimum(self):
         line_count = 0

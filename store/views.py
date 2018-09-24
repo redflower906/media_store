@@ -411,11 +411,11 @@ def view_order(request):
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
     if today >= nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
 
     #delete canceled orders that were created over 31 days ago
     dates = Order.objects.all()
