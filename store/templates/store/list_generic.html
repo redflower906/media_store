@@ -140,7 +140,7 @@
             <div><p>There are no orders at this time.</p></div>        
         {% endif %}    
     </table>
-    {% comment %} <div class="pagination">
+    <div class="pagination">
         <span class="step-links">
             {% if pages.has_previous %}
                 <a href="?page={{ pages.previous_page_number }}">previous</a>
@@ -154,5 +154,5 @@
                 <a href="?page={{ pages.next_page_number }}">next</a>
             {% endif %}
         </span>
-    </div> {% endcomment %}
+    </div>
 {% endblock %} 

@@ -441,11 +441,11 @@ def view_order(request):
 
     #pagination
     page = request.GET.get('page')
-    paginatorI = Paginator(incomp_queryset, 10)
-    paginatorR = Paginator(recur_queryset, 10)
-    paginatorCNB = Paginator(compNotBill_queryset, 20)
-    paginatorCB = Paginator(compBill_queryset, 30)
-    paginatorCAN = Paginator(cancel_queryset, 30)
+    paginatorI = Paginator(incomp_queryset, 50)
+    paginatorR = Paginator(recur_queryset, 50)
+    paginatorCNB = Paginator(compNotBill_queryset, 50)
+    paginatorCB = Paginator(compBill_queryset, 50)
+    paginatorCAN = Paginator(cancel_queryset, 50)
 
     try:
         pagesI = paginatorI.page(page)
