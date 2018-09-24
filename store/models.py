@@ -132,7 +132,7 @@ class Inventory(models.Model):
     inventory_text = models.CharField(max_length=75)
     product = models.CharField(max_length=40, blank=True, null=True)
     media_type = models.CharField(max_length=30, blank=True, null=True, choices=MEDIA_CHOICES)
-    cost = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    cost = models.DecimalField(max_digits=5, decimal_places=3, default=0)
     container = models.CharField(max_length=50, blank=True, null=True)
     volume = models.CharField(max_length=15, blank=True, null=True)
     date_created = models.DateField(auto_now_add=True, blank=True, null=True)
@@ -265,18 +265,25 @@ class OrderLine(models.Model):
     # description = models.TextField(blank=True) #Where is this being used??~FIX~
     inventory = models.ForeignKey(Inventory, blank=False, null=False)
     qty = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=False, null=False)
+        max_digits=10, decimal_places=3, blank=False, null=False)
     # unit = models.CharField(max_length=30, blank=True,
     #                         null=True)  # DO WE NEED THIS?? this was considered container but we don't need that within the orderline
     # shouldn't this be the same as Inventory cost? do we need it? 
     line_cost = models.DecimalField(
-        max_digits=10, decimal_places=2, blank=False, null=False)
+        max_digits=10, decimal_places=3, blank=False, null=False)
+
+    # def total(self):
+    #     total = 0.00
+    #     if self.inventory.cost and self.qty:
+    #         total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.inventory.cost)),2)
+    #     return decimal.Decimal(total)
 
     def total(self):
         total = 0.00
         if self.inventory.cost and self.qty:
-            total = round(decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.inventory.cost)),2)
+            total = decimal.Decimal(str(self.qty))*decimal.Decimal(str(self.inventory.cost))
         return decimal.Decimal(total)
+
 
     class Meta:
         verbose_name_plural = 'order lines'
