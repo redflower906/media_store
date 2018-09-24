@@ -137,12 +137,6 @@ class OrderLineInlineFormSet(
         extra=1, can_delete=True
         )):
 
-    # def __init__(self, *args, **kwargs):
-    #     super(OrderLineInlineFormSet, self).__init__(*args, **kwargs)
-    #     for form in self:
-    #         if form.fields['inventory'] != 'Custom Order':
-    #             form.fields['line_cost'].widget.attrs['readonly'] = 'readonly'
-
 
     def clean(self):
         """ Additional form validation
