@@ -30,7 +30,7 @@
                         {{orderform.instance.id}}
                     </td>
                     {% endif %}
-                    {% orderform.instance.department.department_manager %}
+                    {% if orderform.instance.department.department_manager %}
                     <td>{{orderform.instance.department.department_manager.UserFullName}}</td>
                     {% else %}    
                     <td>{{orderform.instance.department.department_name}}</td>
