@@ -265,7 +265,7 @@ class OrderLine(models.Model):
     # description = models.TextField(blank=True) #Where is this being used??~FIX~
     inventory = models.ForeignKey(Inventory, blank=False, null=False)
     qty = models.DecimalField(
-        max_digits=10, decimal_places=3, blank=False, null=False)
+        max_digits=10, decimal_places=2, blank=False, null=False)
     # unit = models.CharField(max_length=30, blank=True,
     #                         null=True)  # DO WE NEED THIS?? this was considered container but we don't need that within the orderline
     # shouldn't this be the same as Inventory cost? do we need it? 
