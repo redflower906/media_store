@@ -283,11 +283,13 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
+            domain = 'mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
-                'c_or_e': 'edited'
+                'c_or_e': 'edited',
+                'domain': domain,
             })
             m_plain = render_to_string('create_email.txt', context.flatten())
             m_html = render_to_string('create_email.html', context.flatten())
