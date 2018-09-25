@@ -283,7 +283,7 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
-            domain = 'mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
@@ -533,9 +533,9 @@ def export_ordersCNB(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="Complete_not_billed.csv"'
     writer = csv.writer(response)
-    writer.writerow(['order_id', 'c_JM_Requester', 'Date_Wth_Dep', 'Product', 'Withdrawl', 'Unit_Price', 'notes', 'email'])
+    writer.writerow(['Order_ID','Date_Created', 'Product', 'Qty', 'Price', 'Requester_Email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','requester__user_profile__employee_id', 'date_created', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'notes_order', 'requester__user_profile__email_address')
+    'id','date_created','orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost','requester__user_profile__email_address')
 
     for record in compNotBill:
         writer.writerow(record)            
@@ -564,7 +564,7 @@ def email_form(request, id):
 
     user = request.user
     order_info = get_object_or_404(Order, pk=id)
-    domain = request.get_host()
+    domain = 'http://mediastore.int.janelia.org'
 
     if user.is_staff is True:
         Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) 
