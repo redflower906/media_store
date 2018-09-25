@@ -31,7 +31,7 @@
                     </td>
                     {% endif %}
                     {% orderform.instance.department.department_manager %}
-                    <td>{{orderform.instance.department.department_manager}}</td>
+                    <td>{{orderform.instance.department.department_manager.UserFullName}}</td>
                     {% else %}    
                     <td>{{orderform.instance.department.department_name}}</td>
                     <!-- coldroom sign-out -->
