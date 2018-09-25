@@ -445,7 +445,7 @@ def view_order(request):
     page = request.GET.get('page')
     paginatorI = Paginator(incomp_queryset, 50)
     paginatorR = Paginator(recur_queryset, 50)
-    paginatorCNB = Paginator(compNotBill_queryset, 50)
+    paginatorCNB = Paginator(compNotBill_queryset, 100)
     paginatorCB = Paginator(compBill_queryset, 50)
     paginatorCAN = Paginator(cancel_queryset, 50)
 
