@@ -34,6 +34,7 @@
                     <td>{{orderform.instance.department.department_manager.UserFullName}}</td>
                     {% else %}    
                     <td>{{orderform.instance.department.department_name}}</td>
+                    {% endif %}
                     <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
                     <td>{{orderform.instance.date_created}}</td>
