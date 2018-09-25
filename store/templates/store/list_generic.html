@@ -30,11 +30,8 @@
                         {{orderform.instance.id}}
                     </td>
                     {% endif %}
-                    {% if orderform.instance.department.department_manager %}
-                    <td>{{orderform.instance.department.department_manager.user_profile.name, ' :', orderform.instance.department.department_name}}</td>
-                    {% else %}    
-                    <td>{{orderform.instance.department.department_name}}</td>
-                    {% endif %}
+                    {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
+                    <td>{{orderform.instance.department.department_name}}</td> 
                     <!-- coldroom sign-out -->
                     {% if orderforms == cornmeal %}
                     <td>{{orderform.instance.date_created}}</td>
