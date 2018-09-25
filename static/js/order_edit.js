@@ -144,7 +144,8 @@ function calc_cost(qty, cost){
     }    
     console.log(qty);
     console.log((qty * parseFloat(cost)).toFixed(2), 'parsefloat, tofixed');
-    return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
+    return  (qty * parseFloat(cost)).toFixed(2)
+    // return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
 
 }
 
@@ -161,5 +162,5 @@ function update_total(){
         total += val
     });
     $('p.aggregate_total').text('$' + total.toFixed(2))
-    console.log('order_edit');
+    console.log(total, 'update_total');
 }
