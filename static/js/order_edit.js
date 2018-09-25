@@ -143,7 +143,7 @@ function calc_cost(qty, cost){
         return 0
     }    
     console.log(qty);
-    console.log((parseInt(qty) * parseFloat(cost)).toFixed(2));
+    console.log((parseInt(qty) * parseFloat(cost)).toFixed(2), 'parseint, parsefloat, tofixed');
     return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
 
 }
