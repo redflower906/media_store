@@ -118,7 +118,7 @@ function recurringAlert(){
 //Change all orders tagged as complete to billed
 function changeAllBill(){
     // $('td.statusComplete').children().val('Billed');
-    console.log( $('td.statusComplete').children().val());
+    console.log( $('td.statusComplete option').val());
 };
 
 //Automatically choose department and project code based on requester
