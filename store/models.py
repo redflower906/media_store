@@ -426,7 +426,7 @@ def status_email(sender, instance, *args, **kwargs):
         m_html = render_to_string('complete_email.html', context.flatten())
 
         send_mail(
-            'Order #{0} Complete'.format(instance.id),
+            'MediaStore Order #{0} Complete'.format(instance.id),
             m_plain,
             'mediafacility@janelia.hhmi.org',
             [instance.requester.user_profile.email_address], 

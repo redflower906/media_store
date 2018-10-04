@@ -209,7 +209,7 @@ def create_order(request, copy_id=None):
             order.save()
             orderlineformset.save()
             domain = 'mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            subject,from_email,to = 'Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -284,7 +284,7 @@ def edit_order(request, id):
             order = order_form.save()
             orderlineformset.save()
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            subject,from_email,to = 'Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            subject,from_email,to = 'MediaStore Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,
@@ -553,7 +553,11 @@ def export_ordersIP(request):
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
 
     for record in inProgress:
-        writer.writerow(record)            
+        if record.is_recurring:
+            if (date.today() - record.due_date) <= 6:
+                writer.writerow(record)
+        else:    
+            writer.writerow(record)            
 
     return response
 
@@ -585,7 +589,7 @@ def email_form(request, id):
                 'domain': domain,
                 'sender': sender,
             })
-            subject = 'Message regarding Media Store Order {0}'.format(order_info.id)
+            subject = 'Message regarding MediaStore Order {0}'.format(order_info.id)
             msg_plain = render_to_string('details_email.txt', ctx.flatten())
             msg_html = render_to_string('details_email.html', ctx.flatten())
             send_mail(

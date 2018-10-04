@@ -20,7 +20,7 @@ def recur_end_email():
 
             if (today_to_stop == 21) or (today_to_stop == 7):
                 domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
-                subject,from_email,to = 'Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.user_profile.email_address #change submitter to requester after testing ~FIX~
+                subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.user_profile.email_address #change submitter to requester after testing ~FIX~
                 context = Context({
                     'id': order.id,
                     'domain': domain,
