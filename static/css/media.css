@@ -243,6 +243,11 @@ tr.deleted {
   float: none;
 }
 
+.smallwarningtext {
+  font-size: 40%;
+  color: red;
+}
+
 table {
   display:table;
   border-collapse: collapse;
