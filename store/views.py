@@ -427,13 +427,6 @@ def view_order(request):
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
-        if x.is_recurring:
-            if x.date_created < x.date_recurring_start:
-                x.due_date = x.date_recurring_start
-                
-            
-
-
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')

@@ -446,7 +446,14 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.save()
             order.refresh_from_db()            
 
-    instance.date_complete = date.today()
+        instance.date_complete = date.today()
+    
+    if instance.is_recurring:
+        if instance.date_created <= instance.date_recurring_start:
+                instance.due_date = instance.date_recurring_start
+        else:
+            if instance.weeks == '1':
+               instance.due_date = instance.date_recurring_start + timedelta(days=7)
 
     if instance.status == 'Billed':
         today = date.today()
