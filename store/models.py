@@ -454,13 +454,13 @@ def status_email(sender, instance, *args, **kwargs):
         else:
             if instance.weeks == '1':
                instance.due_date = instance.date_recurring_start + timedelta(days=7)
-            if instance.weeks = '2':
+            elif instance.weeks == '2':
                instance.due_date = instance.date_recurring_start + timedelta(days=14)
-            if instance.weeks = '3':
+            elif instance.weeks == '3':
                 instance.due_date = instance.date_recurring_start + timedelta(days=21)            
-            if instance.weeks = '4':
+            elif instance.weeks == '4':
                 instance.due_date = instance.date_recurring_start + timedelta(days=28)
-                
+
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
