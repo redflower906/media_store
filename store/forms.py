@@ -95,7 +95,7 @@ class OrderForm(forms.ModelForm):
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
-        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'doc', 'notes_order','project_code')
+        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'week', 'doc', 'notes_order','project_code')
         labels = {
             'notes_order': 'Special Instructions'
         }
@@ -108,7 +108,7 @@ class OrderForm(forms.ModelForm):
         'location': forms.Select(choices=Order.LOCATION_CHOICES, attrs={'class': 'form-control'}),
         'date_recurring_start': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
-        #'week': forms.Select(choices=Order.WEEK_CHOICES, attrs={'required': False, 'class': 'form-control'}),
+        'week': forms.Select(choices=Order.WEEK_CHOICES, attrs={'required': False, 'class': 'form-control'}),
         'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 
         }
 
