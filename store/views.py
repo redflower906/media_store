@@ -428,7 +428,7 @@ def view_order(request):
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
 
-        if x.date_created < x.start_date
+        if x.date_created < x.start_date:
             x.due_date = x.start_date
             
             
