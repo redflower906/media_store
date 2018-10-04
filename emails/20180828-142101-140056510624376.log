@@ -1,0 +1,43 @@
+Content-Type: multipart/alternative;
+ boundary="===============1943180248587826595=="
+MIME-Version: 1.0
+Subject: Order #7 Complete
+From: mediafacility@janelia.hhmi.org
+To: rebhornb@janelia.hhmi.org
+Date: Tue, 28 Aug 2018 18:21:01 -0000
+Message-ID: <20180828182101.2105.21675@vm650.int.janelia.org>
+
+--===============1943180248587826595==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+Your media store order #7 has been completed. 
+Please remember to pick up your order from your preferred pick-up location:3E.267.
+
+You can view a summary of this order:
+7
+
+Sincerely,
+
+The Media Facility
+--===============1943180248587826595==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+Your media store order #7 has been completed. <br><br>
+Please remember to pick up your order from your preferred pick-up location: <b>3E.267</b>.<br><br>
+
+You can view a summary of this order:<br>
+<b><a href="/order/edit/7">Order #7</a></b><br><br>
+
+Sincerely,<br><br>
+
+The Media Facility
+--===============1943180248587826595==--
+
+-------------------------------------------------------------------------------

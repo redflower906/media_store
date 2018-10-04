@@ -1,0 +1,44 @@
+Content-Type: multipart/alternative;
+ boundary="===============0103553910630231588=="
+MIME-Version: 1.0
+Subject: Order #11 Submitted
+From: mediafacility@janelia.hhmi.org
+To: rebhornb@janelia.hhmi.org
+Cc: rebhornb@janelia.hhmi.org
+Date: Fri, 17 Aug 2018 19:40:32 -0000
+Message-ID: <20180817194032.48245.77192@vm650.int.janelia.org>
+
+--===============0103553910630231588==
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,
+Your media store order #11 has been created. 
+
+You can view a summary of this order here:
+11
+
+Sincerely,
+
+The Media Facility
+--===============0103553910630231588==
+Content-Type: text/html; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Greetings,<br><br>
+
+Your media store order #11 has been created. <br><br>
+
+You can view a summary of this order:<br>
+<a href="mediastore.int.janelia.org/order/edit/11">Order #11</a><br><br>
+
+
+
+Sincerely,<br><br>
+
+The Media Facility
+--===============0103553910630231588==--
+
+-------------------------------------------------------------------------------
