@@ -209,9 +209,9 @@ class Order(models.Model):
         ('3E.267', '3E.267 (4C)'),
     )
     WEEK_CHOICES = (
-        ('1', 'week'),
-        ('2', '2 weeks'),
-        ('3', '3 weeks'),
+        ('1', 'every week'),
+        ('2', 'every 2 weeks'),
+        ('3', 'every 3 weeks'),
         ('4', 'once a month'),
     )
     def user_directory_path(instance, filename):
