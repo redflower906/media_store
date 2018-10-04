@@ -18,7 +18,7 @@ from django.template.loader import render_to_string
 from django_auth_ldap.backend import LDAPBackend
 from django.shortcuts import redirect
 import decimal
-from datetime import datetime, date
+from datetime import datetime, date, timedelta
 from dateutil import relativedelta
 
 # Create your models here.
@@ -454,7 +454,13 @@ def status_email(sender, instance, *args, **kwargs):
         else:
             if instance.weeks == '1':
                instance.due_date = instance.date_recurring_start + timedelta(days=7)
-
+            if instance.weeks = '2':
+               instance.due_date = instance.date_recurring_start + timedelta(days=14)
+            if instance.weeks = '3':
+                instance.due_date = instance.date_recurring_start + timedelta(days=21)            
+            if instance.weeks = '4':
+                instance.due_date = instance.date_recurring_start + timedelta(days=28)
+                
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
