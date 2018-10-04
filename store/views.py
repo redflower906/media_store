@@ -340,7 +340,7 @@ def view_order(request):
         ('Department to Bill', 'department__department_name'),
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
-        ('Submitted', 'date_submitted'),
+        ('Submitted', 'date_created'),
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
@@ -351,7 +351,8 @@ def view_order(request):
         ('Department to Bill', 'department__department_name'),
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
-        ('Submitted', 'date_submitted'),
+        ('Submitted', 'date_created'),
+        ('Due Date', 'due_date'),
         ('Start Date', 'date_recurring_start'),
         ('End Date', 'date_recurring_stop'),
         ('Location', 'location'),
@@ -364,7 +365,7 @@ def view_order(request):
         ('Department to Bill', 'department__department_name'),
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
-        ('Submitted', 'date_submitted'),
+        ('Submitted', 'date_created'),
         ('Date Complete', 'date_complete'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
@@ -377,7 +378,7 @@ def view_order(request):
         ('Department to Bill', 'department__department_name'),
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
-        ('Submitted', 'date_submitted'),
+        ('Submitted', 'date_created'),
         ('Date Billed', 'date_billed'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
@@ -390,7 +391,7 @@ def view_order(request):
         ('Department to Bill', 'department__department_name'),
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
-        ('Submitted', 'date_submitted'),
+        ('Submitted', 'date_created'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
@@ -426,7 +427,11 @@ def view_order(request):
         days_to_delete = (today-dc).days
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
-    
+
+        #if x.week == '':
+            
+            
+
 
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
@@ -438,7 +443,7 @@ def view_order(request):
     orderline__inventory__id='686')
     compBill_queryset = orders.filter(status__icontains='Billed').filter(days_since_bill__lte = 31).order_by('-date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
-    cancel_queryset = orders.filter(status__icontains='Canceled').exclude(date_billed__isnull=False).order_by('date_submitted').prefetch_related('orderline_set').exclude(
+    cancel_queryset = orders.filter(status__icontains='Canceled').exclude(date_billed__isnull=False).order_by('date_created').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686')
 
     #pagination

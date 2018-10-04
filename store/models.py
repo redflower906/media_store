@@ -184,7 +184,7 @@ class Order(models.Model):
         ('Canceled', 'Canceled'),
         ('Auto', 'Auto'),
     )
-    LOCATION_CHOICES =(
+    LOCATION_CHOICES = (
         ('2W.225', '2W.225 (4C)'),
         ('2W.227', '2W.227 (4C)'),
         ('2W.263', '2W.263 (4C)'),
@@ -208,6 +208,12 @@ class Order(models.Model):
         ('3E.265', '3E.265 (18C)'),
         ('3E.267', '3E.267 (4C)'),
     )
+    WEEK_CHOICES = (
+        ('1', 'week'),
+        ('2', '2 weeks'),
+        ('3', '3 weeks'),
+        ('4', 'once a month'),
+    )
     def user_directory_path(instance, filename):
         # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
         return 'user_{0}/{1}'.format(instance.user.UserFullName, filename)
@@ -230,15 +236,13 @@ class Order(models.Model):
     #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
-    location = models.CharField(max_length=30, blank=False, null=False,
-        choices=LOCATION_CHOICES
-    )
-    status = models.CharField(max_length=30, blank=False, null=False, default='Submitted',
-        choices=STATUS_CHOICES
-    )
+    location = models.CharField(max_length=30, blank=False, null=False, choices=LOCATION_CHOICES)
+    status = models.CharField(max_length=30, blank=False, null=False, default='Submitted', choices=STATUS_CHOICES)
     doc = models.FileField(upload_to='documents', null=True, blank=True)
     # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
     days_since_bill = models.IntegerField(blank=True, null=True)
+    weeks = models.CharField(max_length=30, blank=True, null=True, choices=WEEK_CHOICES)
+    due_date = models.DateField(blank=True, null=True) #Might have to change datefield to charfield?
     objects = OrderManager()
 
     def already_billed(self):
