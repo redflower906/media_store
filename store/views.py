@@ -555,7 +555,7 @@ def export_ordersIP(request):
 
     for x in orders:
         if x.is_recurring:
-            if ((today - x.due_date) <= 6):
+            if ((today - x.due_date).days <= 6):
                 writer.writerow(x)
 
     for record in inProgress:
