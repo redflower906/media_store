@@ -554,7 +554,7 @@ def export_ordersIP(request):
     today = date.today()
 
     for x in orders:
-        if x.is_recurring:
+        if x.due_date:
             due = x.due_date
             days_to_due = (today-due).days
             if days_to_due <= 6:
