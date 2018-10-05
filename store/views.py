@@ -551,10 +551,11 @@ def export_ordersIP(request):
     inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
     'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
+    today = date.today()
 
     for x in orders:
         if x.is_recurring:
-            if (date.today() - x.due_date) <= 6:
+            if ((today - x.due_date) <= 6):
                 writer.writerow(x)
 
     for record in inProgress:
