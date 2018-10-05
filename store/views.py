@@ -552,12 +552,13 @@ def export_ordersIP(request):
     'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
 
-    for record in inProgress:
-        if record.is_recurring:
+    for x in orders:
+        if x.is_recurring:
             if (date.today() - record.due_date) <= 6:
                 writer.writerow(record)
-        else:    
-            writer.writerow(record)            
+                
+    for record in inProgress:
+        writer.writerow(record)            
 
     return response
 
