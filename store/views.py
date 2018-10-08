@@ -561,9 +561,12 @@ def export_ordersIP(request):
                 iplist.append(x.id)
         # else:
         #     writer.writerow(x)
-    ipRecur = Order.objects.filter(pk__in=iplist).values_list('id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+    ipRecur = Order.objects.filter(pk__in=iplist).values_list('id','requester__user_profile.name', 'submitter__user_profile.name', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')            
     for record in ipRecur:
+        writer.writerow(record)
+    
+    for record in inProgress:
         writer.writerow(record)
 
     return response
