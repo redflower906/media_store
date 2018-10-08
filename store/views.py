@@ -549,7 +549,7 @@ def export_ordersIP(request):
     writer = csv.writer(response)
     writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
     inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+    'id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
     today = date.today()
     iplist = []
@@ -561,7 +561,7 @@ def export_ordersIP(request):
                 iplist.append(x.id)
         # else:
         #     writer.writerow(x)
-    ipRecur = Order.objects.filter(pk__in=iplist).values_list('id','requester__UserFullName', 'submitter__UserFullName', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+    ipRecur = Order.objects.filter(pk__in=iplist).values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')            
     for record in ipRecur:
         writer.writerow(record)
