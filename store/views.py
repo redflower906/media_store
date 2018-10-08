@@ -562,7 +562,7 @@ def export_ordersIP(request):
                 iplist.append(x)
         # else:
         #     writer.writerow(x)            
-    response = iplist
+    response = iplist.items()
 
     return response
 
