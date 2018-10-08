@@ -556,11 +556,9 @@ def export_ordersIP(request):
     for x in orders:
         if x.due_date:
             due = x.due_date
-            days_to_due = (today-due).days
-            if days_to_due <= 6:
+            days_to_due = (due-today).days
+            if -6 <= days_to_due <= 6:
                 iplist.append(x.id)
-        # else:
-        #     writer.writerow(x)
     ipRecur = Order.objects.filter(pk__in=iplist).values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')            
     for record in ipRecur:
