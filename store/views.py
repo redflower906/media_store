@@ -548,18 +548,19 @@ def export_ordersIP(request):
     response['Content-Disposition'] = 'attachment; filename="In_Progress.csv"'
     writer = csv.writer(response)
     writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
-    inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(['id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'notes_order','location'])
+    inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
+    'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+    'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
+    ipRecur = orders.filter(due_date__isnull=False)
     today = date.today()
 
-    ipList = list(inProgress)
-    for x in ipList:
-        if x.due_date:
-            due = x.due_date
-            days_to_due = (today-due).days
-            if days_to_due <= 6:
-                writer.writerow(x)
-        else:
-            writer.writerow(x)            
+    for x in ipRecur:
+        due = x.due_date
+        days_to_due = (today-due).days
+        if days_to_due <= 6:
+            writer.writerow(x)
+        # else:
+        #     writer.writerow(x)            
 
     return response
 
