@@ -321,14 +321,22 @@ def edit_order(request, id):
 
 @login_required(login_url='login')
 def delete_order(request, id):
-    try:
-        delOrder = Order.objects.get(pk=id)
-    except Order.DoesNotExist:  # expression as identifier:
-        messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
+    delOrder = Order.objects.get_object_or_404(pk=id)
+    if delOrder:
+        delOrder.delete()
+        messages.success(request,'Order #{0} was successfully deleted.'.format(id))
         return HttpResponseRedirect('/order/view')
-    delOrder.delete()
-    messages.success(request,'Order #{0} was successfully deleted.'.format(id))
-    return render(request, 'store/order_view2.html')
+    else:
+        messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
+    return HttpResponseRedirect('/order/view')
+    # try:
+    #     delOrder = Order.objects.get(pk=id)
+    # except Order.DoesNotExist:  # expression as identifier:
+    #     messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
+    #     return HttpResponseRedirect('/order/view')
+    # delOrder.delete()
+    # messages.success(request,'Order #{0} was successfully deleted.'.format(id))
+    # return render(request, 'store/order_view2.html')
 
 @login_required
 def view_order(request):
