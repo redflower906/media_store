@@ -553,7 +553,7 @@ def export_ordersIP(request):
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
     today = date.today()
 
-    for x in orders:
+    for x in inProgress:
         if x.due_date:
             due = x.due_date
             days_to_due = (today-due).days
