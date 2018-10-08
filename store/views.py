@@ -562,7 +562,7 @@ def export_ordersIP(request):
                 iplist.append(x)
         # else:
         #     writer.writerow(x)            
-    listvals = [[int(v) for k,v in d.items()] for d in iplist]
+    listvals = [[int(v) for k,v in d.values_list()] for d in iplist]
     for record in listvals:
         writer.writerow(record)
 
