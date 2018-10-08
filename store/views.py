@@ -559,7 +559,7 @@ def export_ordersIP(request):
             due = x.due_date
             days_to_due = (today-due).days
             if days_to_due <= 6:
-                writer.writerow(x)
+                print(x)
         # else:
         #     writer.writerow(x)            
 
