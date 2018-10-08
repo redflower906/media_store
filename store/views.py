@@ -559,11 +559,10 @@ def export_ordersIP(request):
             due = x.due_date
             days_to_due = (today-due).days
             if days_to_due <= 6:
-                iplist.append(x)
+                iplist.append(x.id)
         # else:
         #     writer.writerow(x)            
-    listvals = [[int(v) for k,v in d.values_list()] for d in iplist]
-    for record in listvals:
+    for record in iplist:
         writer.writerow(record)
 
     return response
