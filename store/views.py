@@ -551,7 +551,6 @@ def export_ordersIP(request):
     inProgress = orders.filter(status__icontains='Progress').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
     'id','requester__user_profile__employee_id', 'submitter__user_profile__employee_id', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
-    ipRecur = orders.filter(due_date__isnull=False).values_list()
     today = date.today()
     iplist = []
     for x in orders:
@@ -561,8 +560,9 @@ def export_ordersIP(request):
             if days_to_due <= 6:
                 iplist.append(x.id)
         # else:
-        #     writer.writerow(x)            
-    for record in iplist:
+        #     writer.writerow(x)
+    ipRecur = Order.objects.filter(pk__in=iplist)            
+    for record in ipRecur:
         writer.writerow(record)
 
     return response
