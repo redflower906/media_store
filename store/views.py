@@ -330,6 +330,8 @@ def delete_order(request, id):
     messages.success(request,'Order #{0} was successfully deleted.'.format(id))
     return HttpResponseRedirect('/order/view')
 
+    return render(request, 'store/order_view2.html')
+
 @login_required
 def view_order(request):
 
