@@ -559,9 +559,8 @@ def export_ordersIP(request):
             days_to_due = (today-due).days
             if days_to_due <= 6:
                 writer.writerow(x)
-
-    for record in inProgress:
-        writer.writerow(record)            
+        else:
+            writer.writerow(x)            
 
     return response
 
