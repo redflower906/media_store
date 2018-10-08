@@ -553,13 +553,13 @@ def export_ordersIP(request):
     'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
     ipRecur = orders.filter(due_date__isnull=False).values_list()
     today = date.today()
-
+    iplist = []
     for x in orders:
         if x.due_date:
             due = x.due_date
             days_to_due = (today-due).days
             if days_to_due <= 6:
-                print(x)
+                iplist.append(x.values_list())
         # else:
         #     writer.writerow(x)            
 
