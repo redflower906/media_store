@@ -554,7 +554,7 @@ def export_ordersIP(request):
     ipRecur = orders.filter(due_date__isnull=False).values_list()
     today = date.today()
 
-    for x in ipRecur:
+    for x in orders:
         due = x.due_date
         days_to_due = (today-due).days
         if days_to_due <= 6:
