@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^order', views.view_order, name='view_order'),
     url(r'^export/xls/$', views.export_ordersCNB, name='export_ordersCNB'),
     url(r'^export/xls/test$', views.export_ordersIP, name='export_ordersIP'),
-    url(r'^order/delete/(?P<pk>\d+)/$', views.delete_order, name="delete_order"),
+    url(r'^order/delete/(?P<pk>\d+)/$', views.delete_order, name='delete_order'),
 
 ##Search
     # url(r'^order/search', SearchListView.as_view(), name='Search'),

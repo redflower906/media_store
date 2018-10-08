@@ -303,8 +303,8 @@ def edit_order(request, id):
             email.attach_alternative(m_html, "text/html")
             email.send()
             messages.success(request,
-                'Order {0} was successfully updated.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/order/inventory')
+                'Order #{0} was successfully updated.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/order/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
@@ -322,14 +322,12 @@ def edit_order(request, id):
 @login_required(login_url='login')
 def delete_order(request, id):
     try:
-        order = Order.objects.get(pk=id)
+        delOrder = Order.objects.get(pk=id)
     except Order.DoesNotExist:  # expression as identifier:
-        messages.error(
-            request, 'Could not delete order #{}. Order does not exist.'.format(id))
+        messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
         return HttpResponseRedirect('/order/view')
-    order.delete()
-    messages.success(request,
-        'Order {0} was successfully deleted.'.format(order.id))
+    delOrder.delete()
+    messages.success(request,'Order #{0} was successfully deleted.'.format(id))
     return HttpResponseRedirect('/order/view')
 
 @login_required
