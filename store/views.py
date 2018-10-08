@@ -554,6 +554,7 @@ def export_ordersIP(request):
     ipRecur = orders.filter(due_date__isnull=False).values_list()
     today = date.today()
     iplist = []
+    listvals = [[int(v) for k,v in d.items()] for d in iplist]
     for x in orders:
         if x.due_date:
             due = x.due_date
@@ -562,7 +563,7 @@ def export_ordersIP(request):
                 iplist.append(x)
         # else:
         #     writer.writerow(x)            
-    for record in iplist:
+    for record in listvals:
         writer.writerow(record)
 
     return response
