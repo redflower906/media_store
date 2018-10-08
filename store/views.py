@@ -320,7 +320,7 @@ def edit_order(request, id):
     })
 
 @login_required(login_url='login')
-def delete_order(request, pk):
+def delete_order(request, id):
     try:
         order = Order.objects.get(pk=id)
     except Order.DoesNotExist:  # expression as identifier:
