@@ -555,10 +555,11 @@ def export_ordersIP(request):
     today = date.today()
 
     for x in orders:
-        due = x.due_date
-        days_to_due = (today-due).days
-        if days_to_due <= 6:
-            writer.writerow(x)
+        if x.due_date:
+            due = x.due_date
+            days_to_due = (today-due).days
+            if days_to_due <= 6:
+                writer.writerow(x)
         # else:
         #     writer.writerow(x)            
 
