@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib import messages
 from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
 from django.db.models import Q
 from django.views import generic
@@ -319,8 +320,7 @@ def edit_order(request, id):
         'media_types': MEDIA_CHOICES
     })
 
-@login_required(login_url='login')
-class OrderDelete(DeleteView):
+class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
     template_name = 'delete_order.html'
 
