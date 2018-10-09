@@ -95,7 +95,7 @@
                     </td>
                     {% if orderform.instance.status == 'Submitted' %}
                     <td class="col-xs-1" id="center_columns">
-                        <a href="{% url 'order_delete' pk=orderform.instance.id %}" class='btn btn-danger'>Delete</a>
+                        <a href="{% url 'order_delete' pk=orderform.instance.id %}">Delete</a>
                     </td>
                     {% endif %}
                     <tr id="notes" class="collapse" role="text">                        
