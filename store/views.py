@@ -336,7 +336,7 @@ def delete_order(request, id):
         return HttpResponseRedirect('/order/view')
     else:
         messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
-    return HttpResponseRedirect(reverse('store.views.view_order'))
+    return HttpResponseRedirect('/order/view')
     # try:
     #     delOrder = Order.objects.get(pk=id)
     # except Order.DoesNotExist:  # expression as identifier:
