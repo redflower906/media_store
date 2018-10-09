@@ -7,6 +7,51 @@
 border:none;
 }*/
 
+.btn-danger cancelbtn { 
+  color: #FFFFFF; 
+  background-color: #611BBD; 
+  border-color: #130269; 
+} 
+ 
+.btn-danger cancelbtn:hover, 
+.btn-danger cancelbtn:focus, 
+.btn-danger cancelbtn:active, 
+.btn-danger cancelbtn.active, 
+.open .dropdown-toggle.btn-danger cancelbtn { 
+  color: #FFFFFF; 
+  background-color: #49247A; 
+  border-color: #130269; 
+} 
+ 
+.btn-danger cancelbtn:active, 
+.btn-danger cancelbtn.active, 
+.open .dropdown-toggle.btn-danger cancelbtn { 
+  background-image: none; 
+} 
+ 
+.btn-danger cancelbtn.disabled, 
+.btn-danger cancelbtn[disabled], 
+fieldset[disabled] .btn-danger cancelbtn, 
+.btn-danger cancelbtn.disabled:hover, 
+.btn-danger cancelbtn[disabled]:hover, 
+fieldset[disabled] .btn-danger cancelbtn:hover, 
+.btn-danger cancelbtn.disabled:focus, 
+.btn-danger cancelbtn[disabled]:focus, 
+fieldset[disabled] .btn-danger cancelbtn:focus, 
+.btn-danger cancelbtn.disabled:active, 
+.btn-danger cancelbtn[disabled]:active, 
+fieldset[disabled] .btn-danger cancelbtn:active, 
+.btn-danger cancelbtn.disabled.active, 
+.btn-danger cancelbtn[disabled].active, 
+fieldset[disabled] .btn-danger cancelbtn.active { 
+  background-color: #611BBD; 
+  border-color: #130269; 
+} 
+ 
+.btn-danger cancelbtn .badge { 
+  color: #611BBD; 
+  background-color: #FFFFFF; 
+}
 
 body{
   padding-bottom:10px;
