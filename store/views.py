@@ -320,23 +320,28 @@ def edit_order(request, id):
     })
 
 @login_required(login_url='login')
-def delete_order(request, id):
-    delOrder = get_object_or_404(Order, pk=id)
-    if delOrder:
-        delOrder.delete()
-        messages.success(request,'Order #{0} was successfully deleted.'.format(id))
-        return HttpResponseRedirect('/order/view')
-    else:
-        messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
-    return HttpResponseRedirect(reverse('store.views.view_order'))
-    # try:
-    #     delOrder = Order.objects.get(pk=id)
-    # except Order.DoesNotExist:  # expression as identifier:
-    #     messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
-    #     return HttpResponseRedirect('/order/view')
-    # delOrder.delete()
-    # messages.success(request,'Order #{0} was successfully deleted.'.format(id))
-    # return render(request, 'store/order_view2.html')
+class OrderDelete(DeleteView):
+    model = Order
+    success_url = reverse_lazy('view_order')
+    template_name = 'delete_order.html'
+# @login_required(login_url='login')
+# def delete_order(request, id):
+#     delOrder = get_object_or_404(Order, pk=id)
+#     if delOrder:
+#         delOrder.delete()
+#         messages.success(request,'Order #{0} was successfully deleted.'.format(id))
+#         return HttpResponseRedirect('/order/view')
+#     else:
+#         messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
+#     return HttpResponseRedirect(reverse('store.views.view_order'))
+#     # try:
+#     #     delOrder = Order.objects.get(pk=id)
+#     # except Order.DoesNotExist:  # expression as identifier:
+#     #     messages.error(request, 'Could not delete order #{}. Order does not exist.'.format(id))
+#     #     return HttpResponseRedirect('/order/view')
+#     # delOrder.delete()
+#     # messages.success(request,'Order #{0} was successfully deleted.'.format(id))
+#     # return render(request, 'store/order_view2.html')
 
 @login_required
 def view_order(request):
