@@ -56,7 +56,7 @@ urlpatterns = [
     url(r'^export/xls/$', views.export_ordersCNB, name='export_ordersCNB'),
     url(r'^export/xls/test$', views.export_ordersIP, name='export_ordersIP'),
     url(r'^order/delete/(?P<id>[0-9]*)$', views.delete_order, name='delete_order'),
-    url(r'^order/delete/(?P<id>[0-9]*)$', views.OrderDelete, name='order_delete'),
+    url(r'^order/delete/(?P<pk>\d+)/$', views.OrderDelete.as_view(), name='order_delete'),
 
 
 ##Search

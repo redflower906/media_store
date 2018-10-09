@@ -1,5 +1,16 @@
-Hey, are you sure you want to delete {{ object.id }}?
-<form method="post">
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Delete Order</h1>
+
+<p>Are you sure you want to delete the order {{ order.id }}?</p>
+
+<form action="{% url 'order_delete' pk=order.id %}" method="POST">
   {% csrf_token %}
-  <button type="submit" class="btn btn-danger">Yeap, I'm sure.</button>
+
+  <input type="submit" value="Yes, delete." />
+  <a href="{% url 'view_order' %}">No, cancel.</a>
 </form>
+
+{% endblock %}

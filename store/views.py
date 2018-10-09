@@ -322,8 +322,10 @@ def edit_order(request, id):
 @login_required(login_url='login')
 class OrderDelete(DeleteView):
     model = Order
-    success_url = reverse_lazy('view_order')
     template_name = 'delete_order.html'
+
+    def get_success_url(self):
+        return reverse('view_order')
 
 @login_required(login_url='login')
 def delete_order(request, id):
