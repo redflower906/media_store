@@ -121,10 +121,12 @@ function changeAllBill(){
 };
 
 //User cancel an order
-function changeCancel(){
-    console.log($(this).find('.koala'))
-    // $('td.statusComplete').children().val('Billed');
-};
+$(function(){
+    $('.btn btn-danger').click(function(){
+        console.log($(this));
+    });
+});
+
 
 
 //Automatically choose department and project code based on requester
