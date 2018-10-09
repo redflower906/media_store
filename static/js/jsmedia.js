@@ -117,13 +117,13 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
-    $('td.statusComplete').children().val('Billed');
+    $('td.Complete').children().val('Billed');
 };
 
 //User cancel an order
 $(function(){
-    $('.pika').click(function(){
-        $(this).parent().siblings('.status').children().val('Auto');
+    $('.cancelbtn').click(function(){
+        $(this).parent().siblings('.status').children().val('Canceled');
     });
 });
 
