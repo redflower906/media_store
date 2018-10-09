@@ -120,6 +120,13 @@ function changeAllBill(){
     $('td.statusComplete').children().val('Billed');
 };
 
+//User cancel an order
+function changeCancel(){
+    console.log($(this))
+    // $('td.statusComplete').children().val('Billed');
+};
+
+
 //Automatically choose department and project code based on requester
 $(function(){
     $('#id_order-requester').change(function() {
