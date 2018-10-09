@@ -122,7 +122,7 @@ function changeAllBill(){
 
 //User cancel an order
 function changeCancel(){
-    console.log($(this))
+    console.log($(this.closest('.status').val()))
     // $('td.statusComplete').children().val('Billed');
 };
 
