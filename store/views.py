@@ -13,7 +13,7 @@ from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse,  JsonResponse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.core.urlresolvers import reverse_lazy
+from django.core.urlresolvers import reverse_lazy, reverse
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.core import serializers
 from dateutil import relativedelta
@@ -321,10 +321,10 @@ def edit_order(request, id):
 
 @login_required(login_url='login')
 def delete_order(request, id):
-    delOrder = Order.objects.get(pk=id)
+    delOrder = get_object_or_404(Order, pk=id).delete()
     delOrder.delete()
     messages.success(request,'Order #{0} was successfully deleted.'.format(id))
-    return HttpResponseRedirect('/order/view')
+    return HttpResponseRedirect(reverse('store.views.view_order'))
 
     # try:
     #     delOrder = Order.objects.get(pk=id)
