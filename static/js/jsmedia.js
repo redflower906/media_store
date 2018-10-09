@@ -122,8 +122,8 @@ function changeAllBill(){
 
 //User cancel an order
 $(function(){
-    $('.btn btn-danger').click(function(){
-        $('td.status').children().val('Billed');
+    $('.pika').click(function(){
+        $(this).parent().siblings('.status').children().val('Auto');
     });
 });
 
