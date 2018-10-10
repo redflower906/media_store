@@ -87,14 +87,6 @@ INVENTORY_LIST_HEADERS = (
 )
 
 def inventory(request):
-    """
-    # figure out who is logged in.
-    user = request.user
-    user_profile = UserProfile.objects.get(user=user.id)
-    department_id = user_profile.department.id
-    department_ids = [dept.id for dept in user_profile.alt_departments.all()]
-    department_ids.append(department_id) ~FIX~
-"""
     InventoryItemsAll = Inventory.objects.all()
     sort_headers = SortHeaders(request, INVENTORY_LIST_HEADERS)
     InventoryItems = Inventory.objects.order_by(sort_headers.get_order_by())
@@ -320,6 +312,7 @@ def edit_order(request, id):
         'media_types': MEDIA_CHOICES
     })
 
+#neither one of these delete views work WHY?? ~fix~
 class OrderDelete(LoginRequiredMixin, DeleteView):
     model = Order
     template_name = 'delete_order.html'
@@ -487,7 +480,7 @@ def view_order(request):
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
     pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
-    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
+    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp').order_by(sort_headers1.get_order_by())
     recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
