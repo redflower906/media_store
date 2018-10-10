@@ -52,7 +52,7 @@ def home(request):
     if request.method == "POST" and 'eform' in request.POST:
         Email_form = Email_Form(request.POST, initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address})
         if Email_form.is_valid():
-            form_to = Email_form.cleaned_data['To']
+            # form_to = Email_form.cleaned_data['To']
             form_from = Email_form.cleaned_data['From']
             form_content = Email_form.cleaned_data['Text']
             ctx = Context({
