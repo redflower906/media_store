@@ -275,9 +275,9 @@
 </div>
 <div class="post form">
     <div class='row'>
-        <h2>
-            <span>Give us feedback on mediastore</span>
-        </h2>
+        <h3>
+            <span>Give us feedback on media store</span>
+        </h3>
         <hr/>
     <form method="POST" action="" class="post-form form-vertical">
         {% csrf_token %}
@@ -291,13 +291,12 @@
             </div>
             <div class='fieldWrapper'>
                     {{Email_form.Text.errors}}
-                    <label for='{{ Email_form.Text.id_for_label }}'>From:</label>
+                    <label for='{{ Email_form.Text.id_for_label }}'>Your feedback:</label>
                     {{Email_form.Text}}
                 </div>
             </table>
             <div class='text-right', id='email-form-buttons'>
                 <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
-                <a href="/order/view/" class="btn btn-default pull-right">Cancel</a>
         </div>
     </form>    
     </div>

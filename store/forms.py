@@ -56,7 +56,7 @@ class Email_Form(forms.Form):
     )
     Text = forms.CharField(
         required=True,
-        widget=forms.Textarea(attrs={'class':'form-control', 'rows':10, 'cols':6}),
+        widget=forms.Textarea(attrs={'class':'form-control', 'rows':10}),
         label = 'Content:',
         )        
     
