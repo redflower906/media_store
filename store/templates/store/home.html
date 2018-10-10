@@ -272,15 +272,19 @@
     <p><a href="mailto:mediafacility@janelia.hhmi.org">Email</a> us with any questions or comments
     </p>
     <p>&nbsp;</p>
-    <p>&nbsp;</p>
 </div>
 <div class="post form">
     <div class='row'>
+        <h2>
+            <span>Give us feedback on mediastore</span>
+        </h2>
+        <hr/>
     <form method="POST" action="" class="post-form form-vertical">
         {% csrf_token %}
         <div>
             <table>
-            {{Email_form.as_table}}
+            {{Email_form.from}}
+            {{Email_form.text}}
             </table>
             <div class='text-right', id='email-form-buttons'>
                 <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
