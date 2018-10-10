@@ -45,15 +45,44 @@ def home(request):
             'Annoucements have been updated')
             return HttpResponseRedirect('/store/')
     else:
-        AForm = AnnouncementsForm(instance=post)
+        AForm = AnnouncementsForm(instance=post)    
+    
+    Email_form = Email_Form(initial={'To': 'harrisons1@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
+    sender = user.get_full_name()
+    if request.method == "POST":
+        Email = Email_Form(request.POST)
+        if Email.is_valid():
+            form_to = Email.cleaned_data['To']
+            form_from = Email.cleaned_data['From']
+            form_content = Email.cleaned_data['Text']
+            ctx = Context({
+                'form_to': form_to,
+                'form_from': form_from,
+                'form_content': form_content,
+                'sender': sender,
+            })
+            subject = 'Feedback about mediastore'
+            msg_plain = render_to_string('feedback_email.txt', ctx.flatten())
+            # msg_html = render_to_string('feedback_email.html', ctx.flatten())
+            send_mail(
+                subject,
+                msg_plain,
+                form_from,
+               [form_to],
+            #    html_message=msg_html,
+                )
+            messages.success(request,
+            'Email was successfully sent')
+            return HttpResponseRedirect('/order/view/')
     return render(request, 'store/home.html', {
         'post': post,
         'AForm': AForm,
         'user': user,
+        'Email_form': Email_form,
         }
     )
 
-def login(request):
+def login(request, user):
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)

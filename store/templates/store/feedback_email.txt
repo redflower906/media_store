@@ -1,0 +1,8 @@
+Greetings,
+This is a feedback email from {{ sender }}:
+
+{{form_content}}
+
+Sincerely,
+
+{{sender}}
