@@ -73,7 +73,7 @@ def home(request):
                 )
             messages.success(request,
             'Email was successfully sent')
-            return HttpResponseRedirect('/order/view/')
+            return HttpResponseRedirect('/store/')
         else:
             messages.error(request, "your email can't be sent at this time")
             return HttpResponseRedirect('/store/')
@@ -82,7 +82,7 @@ def home(request):
         'post': post,
         'AForm': AForm,
         'user': user,
-        'Email': Email,
+        'Email_form': Email_form,
         }
     )
 
