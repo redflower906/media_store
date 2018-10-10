@@ -56,7 +56,7 @@ def home(request):
             form_from = Email_form.cleaned_data['From']
             form_content = Email_form.cleaned_data['Text']
             ctx = Context({
-                'form_to': form_to,
+                # 'form_to': form_to,
                 'form_from': form_from,
                 'form_content': form_content,
                 'sender': sender,
