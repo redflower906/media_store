@@ -283,7 +283,8 @@
         {% csrf_token %}
         <div class='col-xs-6'>
             <table>
-            {{Email_form.non_field_errors}}
+                {{Email_form.as_table}}
+            <!-- {{Email_form.non_field_errors}}
             <div class='fieldWrapper'>
                 {{Email_form.From.errors}}
                 <label for='{{ Email_form.From.id_for_label }}'>From:</label>
@@ -293,7 +294,7 @@
                     {{Email_form.Text.errors}}
                     <label for='{{ Email_form.Text.id_for_label }}'>Your feedback:</label>
                     {{Email_form.Text}}
-                </div>
+                </div> -->
             </table>
             <div class='text-right', id='email-form-buttons'>
                 <button class="save btn btn-primary pull-right" type="submit" name='eform' value="Submit">Submit</button>
