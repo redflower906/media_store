@@ -12,7 +12,7 @@
         <div class="panel-body" style="text-align: center">
             {% csrf_token %}                  
             {{ AForm }} 
-        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button> 
+        <button class="save btn btn-primary pull-right" type="submit" name='aform' value="Submit">Submit</button> 
         </div>
     </div>
 </form> 
@@ -296,7 +296,7 @@
                 </div>
             </table>
             <div class='text-right', id='email-form-buttons'>
-                <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+                <button class="save btn btn-primary pull-right" type="submit" name='eform' value="Submit">Submit</button>
         </div>
     </form>    
     </div>

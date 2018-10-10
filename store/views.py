@@ -37,7 +37,7 @@ def home(request):
     post = get_object_or_404(Announcements)
     user = request.user
     #if staff member
-    if request.method == "POST":
+    if request.method == "POST" and 'aform' in request.POST:
         AForm = AnnouncementsForm(request.POST, instance=post)
         if AForm.is_valid():
             AForm.save()
@@ -49,7 +49,7 @@ def home(request):
     
     Email_form = Email_Form(initial={'To': 'harrisons1@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
     sender = user.get_full_name()
-    if request.method == "POST":
+    if request.method == "POST" and 'eform' in request.POST:
         Email = Email_Form(request.POST)
         if Email.is_valid():
             form_to = Email.cleaned_data['To']
