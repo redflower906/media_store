@@ -436,7 +436,7 @@ def view_order(request):
             x.delete()
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
-    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
+    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers1.get_order_by())
     #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686')
@@ -480,7 +480,7 @@ def view_order(request):
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
     pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
-    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp').order_by(sort_headers1.get_order_by())
+    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
     recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
     compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
