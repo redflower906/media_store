@@ -283,8 +283,17 @@
         {% csrf_token %}
         <div>
             <table>
-            {{Email_form.From}}
-            {{Email_form.Text}}
+            {{Email_form.non_field_errors}}
+            <div class='fieldWrapper'>
+                {{Email_form.From.errors}}
+                <label for='{{ Email_form.From.id_for_label }}'>From:</label>
+                {{Email_form.From}}
+            </div>
+            <div class='fieldWrapper'>
+                    {{Email_form.Text.errors}}
+                    <label for='{{ Email_form.Text.id_for_label }}'>From:</label>
+                    {{Email_form.Text}}
+                </div>
             </table>
             <div class='text-right', id='email-form-buttons'>
                 <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
