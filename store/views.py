@@ -50,11 +50,11 @@ def home(request):
     Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
     sender = user.get_full_name()
     if request.method == "POST" and 'eform' in request.POST:
-        Email = Email_Form(request.POST)
-        if Email.is_valid():
-            form_to = Email.cleaned_data['To']
-            form_from = Email.cleaned_data['From']
-            form_content = Email.cleaned_data['Text']
+        Email_form = Email_Form(request.POST, initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address})
+        if Email_form.is_valid():
+            form_to = Email_form.cleaned_data['To']
+            form_from = Email_form.cleaned_data['From']
+            form_content = Email_form.cleaned_data['Text']
             ctx = Context({
                 'form_to': form_to,
                 'form_from': form_from,
@@ -63,19 +63,19 @@ def home(request):
             })
             subject = 'Feedback about mediastore'
             msg_plain = render_to_string('feedback_email.txt', ctx.flatten())
-            # msg_html = render_to_string('feedback_email.html', ctx.flatten())
+            msg_html = render_to_string('feedback_email.html', ctx.flatten())
             send_mail(
                 subject,
                 msg_plain,
                 form_from,
                [form_to],
-            #    html_message=msg_html,
+               html_message=msg_html,
                 )
             messages.success(request,
             'Email was successfully sent')
             return HttpResponseRedirect('/store/')
         else:
-            messages.error(request, "your email can't be sent at this time")
+            messages.error(request, "Sorry, your email can't be sent at this time. Please email coffmans@janelia.hhmi.org directly.")
             return HttpResponseRedirect('/store/')
 
     return render(request, 'store/home.html', {
