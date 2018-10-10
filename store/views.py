@@ -74,11 +74,15 @@ def home(request):
             messages.success(request,
             'Email was successfully sent')
             return HttpResponseRedirect('/order/view/')
+        else:
+            messages.error(request, "your email can't be sent at this time")
+            return HttpResponseRedirect('/store/')
+
     return render(request, 'store/home.html', {
         'post': post,
         'AForm': AForm,
         'user': user,
-        'Email_form': Email_form,
+        'Email': Email,
         }
     )
 
