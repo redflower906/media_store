@@ -50,7 +50,7 @@ def home(request):
     Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
     sender = user.get_full_name()
     if request.method == "POST" and 'eform' in request.POST:
-        if user:
+        if user.user_profile:
             Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org', 'From': user.user_profile.email_address})
         else:
             Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org'})
