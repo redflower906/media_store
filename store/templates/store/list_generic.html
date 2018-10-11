@@ -86,6 +86,10 @@
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
                     <td class='{{orderform.instance.status}}'>{{orderform.instance.status}}</td>
+                    {% for hidden_field in orderform.hidden_fields %} 
+                        {{ hidden_field.errors }} 
+                        {{ hidden_field }} 
+                    {% endfor %}
                     <td style='display:none;' class='status {{orderform.instance.status}}'>
                             {{orderform.status.errors}}
                             {{orderform.status}}
