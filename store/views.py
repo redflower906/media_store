@@ -472,8 +472,7 @@ def view_order(request):
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
 
-    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
-    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers1.get_order_by())
+    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers1.get_order_by())
     #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers2.get_order_by())

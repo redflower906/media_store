@@ -454,7 +454,6 @@ def status_email(sender, instance, *args, **kwargs):
         else:
             if instance.weeks == '1':
                instance.due_date = instance.date_recurring_start + timedelta(days=7)
-               instance.notes_order = 'TEST 1 WEEK'
             elif instance.weeks == '2':
                instance.due_date = instance.date_recurring_start + timedelta(days=14)
             elif instance.weeks == '3':
