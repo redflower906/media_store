@@ -73,12 +73,12 @@
                         {% endif %}
                     {% endif %}                
                     <td>{{orderform.instance.location}}</td>
-                    <!-- staff user -->
-                    {% if user.is_staff is True %}
-                        {% for hidden_field in orderform.hidden_fields %} 
+                    <!-- staff user -->                        
+                    {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 
-                        {% endfor %}
+                    {% endfor %}
+                    {% if user.is_staff is True %}
                         <td class='status {{orderform.instance.status}}'>
                             {{orderform.status.errors}}
                             {{orderform.status}}
@@ -86,10 +86,6 @@
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
                     <td class='{{orderform.instance.status}}'>{{orderform.instance.status}}</td>
-                    {% for hidden_field in orderform.hidden_fields %} 
-                        {{ hidden_field.errors }} 
-                        {{ hidden_field }} 
-                    {% endfor %}
                     <td style='display:none;' class='status {{orderform.instance.status}}'>
                             {{orderform.status.errors}}
                             {{orderform.status}}
