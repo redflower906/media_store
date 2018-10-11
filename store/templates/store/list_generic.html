@@ -85,7 +85,8 @@
                         </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
-                    <td class='status {{orderform.instance.status}}'>{{orderform.instance.status}}</td>
+                    <td class='status {{orderform.instance.status}}'>{{orderform.instance.status}}{{orderform.status.as_hidden}}</td>
+                    
                     {% endif %}
                     <td class='ordertotal {{orderform.instance.id}}'>${{orderform.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">

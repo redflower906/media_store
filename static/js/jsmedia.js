@@ -123,7 +123,7 @@ function changeAllBill(){
 //User cancel an order
 $(function(){
     $('.cancelbtn').click(function(){
-        $(this).parent().siblings('.status').html('Canceled');
+        $(this).parent().siblings('.status').children().val('Canceled');
     });
 });
 
