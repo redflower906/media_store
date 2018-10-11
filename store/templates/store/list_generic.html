@@ -45,9 +45,10 @@
                     <td>{{orderform.instance.requester.user_profile.name}}</td>
                     <td>{{orderform.instance.date_created}}</td>
                     {% endif %}
-
+                    {% if orderforms == cancel %}
+                    <td>{{orderform.instance.date_modified}}</td>
                     <!-- recurring -->
-                    {% if orderforms == recur %}
+                    {% elif orderforms == recur %}
                     <td>{{orderform.instance.due_date}}</td>
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td class='date-stop{{orderform.instance.id}}'>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>

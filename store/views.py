@@ -50,7 +50,10 @@ def home(request):
     Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
     sender = user.get_full_name()
     if request.method == "POST" and 'eform' in request.POST:
-        Email_form = Email_Form(request.POST, initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address})
+        if user:
+            Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org', 'From': user.user_profile.email_address})
+        else:
+            Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org'})
         if Email_form.is_valid():
             form_to = Email_form.cleaned_data['To']
             form_from = Email_form.cleaned_data['From']
@@ -432,6 +435,7 @@ def view_order(request):
         ('Cost Center', 'department__number'),
         ('Requester', 'requester'),
         ('Submitted', 'date_created'),
+        ('Canceled', 'date_modified'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
