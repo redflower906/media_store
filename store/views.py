@@ -46,14 +46,13 @@ def home(request):
             return HttpResponseRedirect('/store/')
     else:
         AForm = AnnouncementsForm(instance=post)    
-    
-    Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address}) 
+    if user.user_profile:
+        Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org', 'From': user.user_profile.email_address})
+    else:
+        Email_form = Email_Form(initial={'To': 'coffmans@janelia.hhmi.org'})
     sender = user.get_full_name()
     if request.method == "POST" and 'eform' in request.POST:
-        if user.user_profile:
-            Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org', 'From': user.user_profile.email_address})
-        else:
-            Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org'})
+        Email_form = Email_Form(request.POST, initial={'To': 'harrisons1@janelia.hhmi.org'})
         if Email_form.is_valid():
             form_to = Email_form.cleaned_data['To']
             form_from = Email_form.cleaned_data['From']
