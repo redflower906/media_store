@@ -97,7 +97,9 @@
                 {%include "store/list_generic.html" with orderforms=cancel pages=pagesCAN headers=headers5%}
             </div>
         </div>
+        {% if user.is_staff is True %}
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
     </div>
 </div>
 </form>
