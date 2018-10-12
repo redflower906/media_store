@@ -237,7 +237,7 @@ def create_order(request, copy_id=None):
             order.submitter = user
             order.save()
             orderlineformset.save()
-            domain = 'mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
