@@ -290,7 +290,11 @@
                 <a href='/' class="btn btn-danger">Cancel</a>
             </div>
             <div class="col-xs-1">
+                {% if order_form.instance.id %}
+                <input class='btn btn-primary' type='submit' value='Update Order' name='submit'>
+                {% else %}
                 <input class='btn btn-primary' type='submit' value='Complete Order' name='submit'>
+                {% endif %}
             </div>
         </div>
         
