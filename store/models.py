@@ -20,6 +20,7 @@ from django.shortcuts import redirect
 import decimal
 from datetime import datetime, date, timedelta
 from dateutil import relativedelta
+from djrichtextfield.models import RichTextField
 
 # Create your models here.
 
@@ -301,7 +302,7 @@ class OrderLine(models.Model):
     
 
 class Announcements(models.Model):
-   text = models.TextField()
+   text = models.RichTextField()
    show = models.BooleanField(default=False)
 
 ORDER_VAR = 'o'
