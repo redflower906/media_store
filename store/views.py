@@ -479,7 +479,7 @@ def view_order(request):
     status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers2.get_order_by())
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686').order_by(sort_headers3.get_order_by())
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date__range=[today, lastbill]).order_by('-date_billed').prefetch_related('orderline_set').exclude(
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[today, lastbill]).order_by('-date_billed').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686').order_by(sort_headers4.get_order_by())
     cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').exclude(
     orderline__inventory__id='686').order_by(sort_headers5.get_order_by())
