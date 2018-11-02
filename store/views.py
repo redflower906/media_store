@@ -679,7 +679,7 @@ def current_sign_outs (request):
 
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
-    orders = OrderLine.objects.all()
+    orders = Order.objects.all()
     current = orders.filter(Q(inventory__id=1263)| Q(inventory__id=1245)).filter(order__date_billed__isnull=False)
     billed = orders.filter(Q(inventory__id=1263)| Q(inventory__id=1245)).filter(order__date_billed__isnull=True)
 
