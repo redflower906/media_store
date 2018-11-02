@@ -693,6 +693,7 @@ def current_sign_outs (request):
         'headers2':list(sort_headers2.headers()),
         'current': current,
         'billed': billed,
+        'orders': orders,
         })
 
 # class SearchListView(ListView):
