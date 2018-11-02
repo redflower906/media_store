@@ -680,19 +680,19 @@ def current_sign_outs (request):
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
     orders = OrderLine.objects.all()
-    cornmeal = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=False)
-    corn_b = orders.filter(Q(inventory__id=686)| Q(inventory__id=668)).filter(order__date_billed__isnull=True)
+    current = orders.filter(Q(inventory__id=1263)| Q(inventory__id=1245)).filter(order__date_billed__isnull=False)
+    billed = orders.filter(Q(inventory__id=1263)| Q(inventory__id=1245)).filter(order__date_billed__isnull=True)
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
     return render(request,
         'store/sign_out_view.html',{
         'headers1':list(sort_headers1.headers()),
         'headers2':list(sort_headers2.headers()),
-        'cornmeal': cornmeal,
-        'corn_b': corn_b,
+        'cornmeal': current,
+        'corn_b': billed,
         })
 
 # class SearchListView(ListView):

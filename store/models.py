@@ -241,25 +241,10 @@ class Order(models.Model):
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted', choices=STATUS_CHOICES)
     doc = models.FileField(upload_to='documents', null=True, blank=True)
     # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
-    days_since_bill = models.IntegerField(blank=True, null=True)
+    days_since_bill = models.IntegerField(blank=True, null=True) #delete when i get the chance (after work) ~FIX~
     weeks = models.CharField(max_length=30, blank=True, null=True, choices=WEEK_CHOICES)
     due_date = models.DateField(blank=True, null=True) #Might have to change datefield to charfield?
     objects = OrderManager()
-
-    def since_bill(self):
-        if self.status == 'Billed':
-            today = date.today()
-            nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-            lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-
-            if today >= nextbill:
-                nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-                lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-
-            bill_day = self.date_billed
-            num_bill_days = (bill_day-lastbill).days
-            return num_bill_days
-        return 0
             
 
     def already_billed(self):
