@@ -98,6 +98,7 @@ INSTALLED_APPS = [
 #    'south',
     'import_export',
     'django_crontab',
+    'djrichtextfield',
 ]
 
 MIDDLEWARE = [
@@ -140,6 +141,20 @@ CRONJOBS = [
     ('0 1 * * *', 'store.management.commands.update_users.command', ['-v3'])
 ]
 
+DJRICHTEXTFIELD_CONFIG = {
+    'js': ["//cdn.ckeditor.com/4.10.1/basic/ckeditor.js"],
+    'init_template': 'djrichtextfield/init/ckeditor.js',
+    'settings': {  # CKEditor
+        'toolbar': [
+            {'items': ['Format', '-', 'Bold', 'Italic', '-',
+                    'RemoveFormat']},
+            {'items': ['Link', 'Unlink', 'Image', 'Table']},
+            {'items': ['Source']}
+        ],
+        'format_tags': 'p;h1;h2;h3',
+        'width': 700
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

@@ -15,6 +15,7 @@ from django.db.utils import ProgrammingError, OperationalError
 from django.db.models import Q
 from django.forms import ModelChoiceField, ChoiceField, widgets, ModelForm
 from django.utils import timezone
+from djrichtextfield.widgets import RichTextWidget
 
 logger = logging.getLogger('default')
 
@@ -196,7 +197,7 @@ class AnnouncementsForm(forms.ModelForm):
             'show': 'Display'
         }
         widgets = {
-            'text': forms.Textarea (attrs={'rows': 5, 'class':'form-control'}),
+            'text': forms.Textarea(widget=RichTextWidget(), attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
 
