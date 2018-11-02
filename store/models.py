@@ -246,6 +246,22 @@ class Order(models.Model):
     due_date = models.DateField(blank=True, null=True) #Might have to change datefield to charfield?
     objects = OrderManager()
 
+    def since_bill(self):
+        if self.status == 'Billed':
+            today = date.today()
+            nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+            lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+            if today >= nextbill:
+                nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+                lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+
+            bill_day = self.date_billed
+            num_bill_days = (bill_day-lastbill).days
+            return num_bill_days
+        return 0
+            
+
     def already_billed(self):
         if self.date_billed:
             return True
