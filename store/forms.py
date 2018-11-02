@@ -197,10 +197,10 @@ class AnnouncementsForm(forms.ModelForm):
             'show': 'Display'
         }
         widgets = {
-            # 'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
+            'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
-        text = forms.CharField(widget=RichTextWidget())
+        # text = forms.CharField(widget=RichTextWidget()) richtexteditor on hold ~FIX~
 
 
 OrderStatusFormSet = modelformset_factory(
