@@ -142,7 +142,7 @@ CRONJOBS = [
 ]
 
 DJRICHTEXTFIELD_CONFIG = {
-    'js': ["//cdn.ckeditor.com/4.10.1/basic/ckeditor.js"],
+    'js': ["//cdn.ckeditor.com/4.10.1/standard/ckeditor.js"],
     'init_template': 'djrichtextfield/init/ckeditor.js',
     'settings': {  # CKEditor
         'toolbar': [
