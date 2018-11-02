@@ -302,7 +302,7 @@ class OrderLine(models.Model):
     
 
 class Announcements(models.Model):
-   text = models.RichTextField()
+   text = RichTextField()
    show = models.BooleanField(default=False)
 
 ORDER_VAR = 'o'
