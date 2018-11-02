@@ -29,7 +29,7 @@ app_name = 'store'
 urlpatterns = [
 
 # richtextfield    
-    path('djrichtextfield/', include('djrichtextfield.urls')),
+    url(r'^djrichtextfield/', include('djrichtextfield.urls')),
 
 #main views
     url(r'^$', views.home, name='home'),
