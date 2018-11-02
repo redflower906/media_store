@@ -691,8 +691,8 @@ def current_sign_outs (request):
         'store/sign_out_view.html',{
         'headers1':list(sort_headers1.headers()),
         'headers2':list(sort_headers2.headers()),
-        'cornmeal': current,
-        'corn_b': billed,
+        'current': current,
+        'billed': billed,
         })
 
 # class SearchListView(ListView):
