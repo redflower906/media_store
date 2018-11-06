@@ -300,8 +300,13 @@
         <div class='col-xs-6'>
             <table>
                 {{Email_form.as_table}}
-            <!-- {{Email_form.non_field_errors}}
-            <div class='fieldWrapper'>
+                {{Email_form.non_field_errors}}
+            </table>
+            <div class='text-right', id='email-form-buttons'>
+                <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+            </div>
+        </div>
+            <!--<div class='fieldWrapper'>
                 {{Email_form.From.errors}}
                 <label for='{{ Email_form.From.id_for_label }}'>From:</label>
                 {{Email_form.From}}
