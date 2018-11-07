@@ -697,7 +697,7 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder (request):
+def sign_outs_remainder(request):
     orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()

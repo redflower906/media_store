@@ -69,6 +69,8 @@ urlpatterns = [
 
 ##sign-out
     url(r'^signout', views.current_sign_outs, name='signout'),
+    url(r'^signout/remainder', views.sign_outs_remainder, name='remainder'),
+
 
 #add link to dump to Resource Matrix here
 
