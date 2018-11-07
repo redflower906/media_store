@@ -60,6 +60,11 @@ $(function (){
     var radio = $('input:checked').attr('id');
     if (radio == 'id_order-is_recurring_0') {
         $('#datepicker').show();
+        $('#datepicker').children('#id_order-date_recurring_start').prop('required', true);
+        $('#datepicker').children('#id_order-date_recurring_stop').prop('required', true);
+        $('#datepicker').children('#id_order-weeks').prop('required', true);
+
+
     }
     else{
         $('#datepicker').hide();
@@ -68,6 +73,9 @@ $(function (){
         function(){
             if (this.checked && this.value == 'True') {
                 $('#datepicker').show();
+                $('#datepicker').children('#id_order-date_recurring_start').prop('required', true);
+                $('#datepicker').children('#id_order-date_recurring_stop').prop('required', true);
+                $('#datepicker').children('#id_order-weeks').prop('required', true);
             }
             else {
                 $('#datepicker').hide();
