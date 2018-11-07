@@ -703,7 +703,7 @@ def sign_outs_remainder(request):
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
     
-    current = orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_billed__range=[lastbill, today]).aggregate(Sum('orderline__inventory__qty'))
+    current = orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_billed__range=[lastbill, today]).aggregate(Sum('orderline__qty'))
 
 
 
