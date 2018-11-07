@@ -450,21 +450,6 @@ def status_email(sender, instance, *args, **kwargs):
 
         instance.date_complete = date.today()
 
-    today = date.today()
-
-    if instance.is_recurring:
-        if today <= instance.date_recurring_start:
-                instance.due_date = instance.date_recurring_start
-        else:
-            if instance.weeks == '1':
-               instance.due_date = instance.date_recurring_start + timedelta(days=7)
-            elif instance.weeks == '2':
-               instance.due_date = instance.date_recurring_start + timedelta(days=14)
-            elif instance.weeks == '3':
-                instance.due_date = instance.date_recurring_start + timedelta(days=21)            
-            elif instance.weeks == '4':
-                instance.due_date = instance.date_recurring_start + timedelta(days=28)
-
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -484,3 +469,19 @@ def status_email(sender, instance, *args, **kwargs):
 class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
          return obj.hhmi_project_id + ' ' + obj.name()
+
+@receiver(post_save, sender=Order)
+def recurring_dates(sender, instance, *args, **kwargs):
+
+    if instance.is_recurring:
+        if instance.date_created <= instance.date_recurring_start:
+            instance.due_date = instance.date_recurring_start
+    else:
+        if instance.weeks == '1':
+            instance.due_date = instance.date_recurring_start + timedelta(days=7)
+        elif instance.weeks == '2':
+            instance.due_date = instance.date_recurring_start + timedelta(days=14)
+        elif instance.weeks == '3':
+            instance.due_date = instance.date_recurring_start + timedelta(days=21)            
+        elif instance.weeks == '4':
+            instance.due_date = instance.date_recurring_start + timedelta(days=28)
