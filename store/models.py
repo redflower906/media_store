@@ -451,7 +451,7 @@ def status_email(sender, instance, *args, **kwargs):
         instance.date_complete = date.today()
     
     if instance.is_recurring:
-        if instance.date_created <= instance.date_recurring_start:
+        if date.today() <= instance.date_recurring_start:
                 instance.due_date = instance.date_recurring_start
         else:
             if instance.weeks == '1':

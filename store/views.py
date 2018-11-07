@@ -6,7 +6,7 @@ from django.contrib.auth.models import Group, User
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login
-from django.db.models import Q
+from django.db.models import Q, Sum
 from django.views import generic
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
@@ -693,6 +693,23 @@ def current_sign_outs (request):
         'headers2':list(sort_headers2.headers()),
         'current': current,
         'billed': billed,
+        'orders': orders,
+        })
+
+@login_required
+def sign_outs_remainder (request):
+    orders = Order.objects.all()
+    today = date.today()
+    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
+    
+    current = orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_billed__range=[lastbill, today]).aggregate(Sum('orderline__inventory__qty'))
+
+
+
+    return render(request,
+        'store/signout_leftovers.html',{
+        'current': current,
         'orders': orders,
         })
 
