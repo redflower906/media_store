@@ -699,6 +699,7 @@ def current_sign_outs (request):
 def sign_outs_remainder(request, id):
     user = request.user
     orders = Order.objects.all()
+    instance = get_object_or_404(Bottles_Vials, pk=id)
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
@@ -709,7 +710,6 @@ def sign_outs_remainder(request, id):
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
 
-    instance = get_object_or_404(Bottles_Vials, pk=id)
     if request.method == "POST":
         formset = B_VFormSet(request.POST or None, instance=instance)
         if formset.is_valid():
