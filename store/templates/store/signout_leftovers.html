@@ -25,7 +25,7 @@
             <th scop='col'></th>
             <th scope='col'># Made this Billing Period</th>
             <th scope='col'># Billed this Period</th>
-            <th scope='col'># Left Over</th>
+            <th scope='col'># Remainder</th>
         </tr>
     </thead>
     <tbody>
@@ -37,7 +37,7 @@
                 </div>
             </td>
             <td id='bottle_c'>{{currentBottles}}</td>
-            <td>LEFTOVER BOTTLES JS</td>
+            <td class='bottle_lo'></td>
         </tr>
         <tr>
             <th scope='row'>Vials</th>
@@ -59,7 +59,9 @@
             console.log(bottle_ival);
             var bottle_cval = $('#bottle_i').parents('.bottle_i_td').siblings('#bottle_c').text();
             console.log(bottle_cval);
-            console.log(bottle_cval - bottle_ival);
+            var bottle_r = (bottle_cval - bottle_ival);
+            $('td.bottle_lo').text(bottle_r.toFixed(2));
+
         })
     })
 </script>
