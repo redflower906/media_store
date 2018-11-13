@@ -162,5 +162,4 @@ function update_total(){
         total += val
     });
     $('p.aggregate_total').text('$' + total.toFixed(2))
-    console.log(total, 'update_total');
 }

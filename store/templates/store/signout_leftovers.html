@@ -47,7 +47,7 @@
                 </div>
             </td>
             <td id='vial_c'>{{currentVials}}</td>
-            <td>LEFTOVER VIALS</td>
+            <td class='vial_lo'></td>
         </tr>
     </tbody>
 </table>
@@ -56,11 +56,25 @@
     $(function(){
         $('#bottle_i').on('input', function (evt){
             var bottle_ival = evt.target.value;
-            console.log(bottle_ival);
             var bottle_cval = $('#bottle_i').parents('.bottle_i_td').siblings('#bottle_c').text();
-            console.log(bottle_cval);
             var bottle_r = (bottle_cval - bottle_ival);
-            $('td.bottle_lo').text(bottle_r.toFixed(2));
+            $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
+                'color': 'green',
+                'font-weight': 'bolder'
+            });
+
+        })
+
+        $('#vial_i').on('input', function (evt){
+            var vial_ival = evt.target.value;
+            console.log(vial_ival);
+            var vial_cval = $('#vial_i').parents('.vial_i_td').siblings('#vial_c').text();
+            console.log(vial_cval);
+            var vial_r = (vial_cval - vial_ival);
+            $('td.vial_lo').text(vial_r.toFixed(2)).css({
+                'color': 'green',
+                'font-weight': 'bolder'
+            });
 
         })
     })
