@@ -696,10 +696,10 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request, id=None):
+def sign_outs_remainder(request, pk):
     user = request.user
     orders = Order.objects.all()
-    instance = get_object_or_404(Bottles_Vials, pk=id)
+    instance = get_object_or_404(Bottles_Vials, pk=pk)
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
