@@ -232,5 +232,6 @@ class Bottles_VialsForm(forms.ModelForm):
 
 B_VFormSet = modelformset_factory(
 Bottles_Vials,
+form=Bottles_VialsForm,
 extra=2,
 )
