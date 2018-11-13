@@ -715,7 +715,7 @@ def sign_outs_remainder(request):
     return render(request,
         'store/signout_leftovers.html',{
         'currentBottles': currentBottles,
-        'currentVials': currentVials
+        'currentVials': currentVials,
         'orders': orders,
         })
 
