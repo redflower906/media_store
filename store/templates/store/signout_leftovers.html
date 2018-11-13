@@ -56,7 +56,7 @@
     $(function(){
         $('#bottle_i').on('input', function (evt){
             var bottle_ival = evt.target.value;
-            var bottle_cval = $('#bottle_i').parents('.bottle_i_td').siblings('#bottle_c').text();
+            var bottle_cval = $('#bottle_c').text();
             var bottle_r = (bottle_cval - bottle_ival);
             $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
                 'color': 'green',
