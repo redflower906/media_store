@@ -53,6 +53,7 @@
 </table>
 
 <script type='text/javascript'>
+    //to show remainder of bottles and vials to bill to Fly Facility
     $(function(){
         $('#bottle_i').on('input', function (evt){
             var bottle_ival = evt.target.value;
@@ -68,7 +69,7 @@
         $('#vial_i').on('input', function (evt){
             var vial_ival = evt.target.value;
             console.log(vial_ival);
-            var vial_cval = $('#vial_i').parents('.vial_i_td').siblings('#vial_c').text();
+            var vial_cval = $('#vial_c').text();
             console.log(vial_cval);
             var vial_r = (vial_cval - vial_ival);
             $('td.vial_lo').text(vial_r.toFixed(2)).css({
