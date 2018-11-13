@@ -696,7 +696,7 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request):
+def sign_outs_remainder(request, id):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
