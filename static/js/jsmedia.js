@@ -180,17 +180,22 @@ $(function(){
             $('#id_orderlines-0-line_cost').removeAttr('readonly');
             console.log('inv = custom order');
         }
-        else{
-            console.log('else');
-            console.log(inv);
-        }
     })
     if ($('#id_cost').hasClass('staff')){
         $('#id_orderlines-0-line_cost').removeAttr('readonly');
         console.log('inv = custom order');
     }
-    else{
-        console.log('else');
-        console.log(inv);
-    }
 })
+
+//Remainder bottles/vials
+
+function update_remainder(){
+    $('#bottle_i').on('input', function (evt){
+        var bottle_ival = evt.target.value;
+        console.log(bottle_ival);
+        var bottle_cval = $('#bottle_i').parents('.bottle_i_td').siblings('#bottle_c').val();
+        console.log(bottle_cval);
+
+
+    })
+}
