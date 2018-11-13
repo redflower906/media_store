@@ -213,11 +213,12 @@ extra=0,
 
 class Bottles_VialsForm(forms.ModelForm):
     
+    class Meta:    
+        
     ITEM_CHOICES = (
     ('1245', 'Bottles'),
     ('1263', 'Vials'),
     )
-    class Meta:
         model = Bottles_Vials
         fields = ('item', 'amnt')
         labels = {
