@@ -696,7 +696,7 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request, id):
+def sign_outs_remainder(request, id=None):
     user = request.user
     orders = Order.objects.all()
     instance = get_object_or_404(Bottles_Vials, pk=id)
@@ -718,8 +718,6 @@ def sign_outs_remainder(request, id):
             'Amounts have been updated.')
             return HttpResponseRedirect('/signout/remainder')
     else: formset = B_VFormSet(instance=instance)
-
-
 
     return render(request,
         'store/signout_leftovers.html',{
