@@ -25,6 +25,7 @@
 <table class='table'>
     <thead>
         <tr>
+            <th scop='col'></th>
             <th scope='col'># Made this Billing Period</th>
             <th scope='col'># Billed this Period</th>
             <th scope='col'># Left Over</th>
@@ -33,13 +34,21 @@
     <tbody>
         <tr>
             <th scope='row'>Bottles</th>
-            <td>INPUT BOTTLES</td>
+            <td>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Bottle input" aria-describedby="basic-addon1">
+                </div>
+            </td>
             <td>{{currentBottles}}</td>
             <td>LEFTOVER BOTTLES JS</td>
         </tr>
         <tr>
             <th scope='row'>Vials</th>
-            <td>INPUT VIALS</td>
+            <td>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Vial input" aria-describedby="basic-addon1">
+                </div>
+            </td>
             <td>{{currentVials}}</td>
             <td>LEFTOVER VIALS</td>
         </tr>
