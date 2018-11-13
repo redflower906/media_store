@@ -59,44 +59,43 @@
             var bottle_ival = evt.target.value;
             var bottle_cval = $('#bottle_c').text();
             var bottle_r = (bottle_cval - bottle_ival);
-            if(bottle_r < 0){
+            if (bottle_r < 0){
                 $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
                     'color': 'red',
                     'font-weight': 'bolder'
                 });
             }
-            else if(bottle_r = 'NaN'){
+            else if (bottle_r = 'NaN'){
                 $('td.bottle_lo').text('Numbers only please').css({
                     'color': 'red',
                     'font-weight': 'bolder'
                 });
             }
-            else{
+            else {
                 $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
                     'color': 'green',
                     'font-weight': 'bolder'
                 });
             }
-
         })
 
         $('#vial_i').on('input', function (evt){
             var vial_ival = evt.target.value;
             var vial_cval = $('#vial_c').text();
             var vial_r = (vial_cval - vial_ival);
-            if(vial_r < 0){
+            if (vial_r < 0){
                 $('td.vial_lo').text(vial_r.toFixed(2)).css({
                     'color': 'red',
                     'font-weight': 'bolder'
                 });
             }
-            else if(vial_r = 'NaN'){
-                $('td.bottle_lo').text('Numbers only please').css({
+            else if (vial_r = 'NaN'){
+                $('td.vial_lo').text('Numbers only please').css({
                     'color': 'red',
                     'font-weight': 'bolder'
                 });
             }
-            else{
+            else {
                 $('td.vial_lo').text(vial_r.toFixed(2)).css({
                     'color': 'green',
                     'font-weight': 'bolder'
