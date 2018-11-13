@@ -229,6 +229,10 @@ class Bottles_VialsForm(forms.ModelForm):
             'item': forms.Select(choices=ITEM_CHOICES, attrs={'class':'form-control'}),
             'amnt': forms.NumberInput(attrs={'class':'form-control'})
         }
+    
+    def __init__(self, *args, **kwargs):
+        super(Bottles_VialsForm, self).__init__(*args, **kwargs)
+        self.fields['item'].choices = ITEM_CHOICES
 
 B_VFormSet = modelformset_factory(
 Bottles_Vials,
