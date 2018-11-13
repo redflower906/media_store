@@ -308,6 +308,11 @@ class Announcements(models.Model):
 
 
 class Bottles_Vials(models.Model):
+    ITEM_CHOICES = (
+    ('1245', 'Bottles'),
+    ('1263', 'Vials'),
+    )   
+
     item = models.ForeignKey(Inventory, blank=True, null=True)
     amnt = models.DecimalField(
         max_digits=10, decimal_places=2, blank=False, null=False)

@@ -215,10 +215,6 @@ class Bottles_VialsForm(forms.ModelForm):
     
     class Meta:    
         
-        ITEM_CHOICES = (
-        ('1245', 'Bottles'),
-        ('1263', 'Vials'),
-        )
         model = Bottles_Vials
         fields = ('item', 'amnt')
         labels = {
@@ -226,13 +222,13 @@ class Bottles_VialsForm(forms.ModelForm):
             'amnt': 'QTY'
         }
         widgets = {
-            'item': forms.Select(choices=ITEM_CHOICES, attrs={'class':'form-control'}),
+            'item': forms.Select(choices=Bottles_Vials.ITEM_CHOICES, attrs={'class':'form-control'}),
             'amnt': forms.NumberInput(attrs={'class':'form-control'})
         }
     
     def __init__(self, *args, **kwargs):
         super(Bottles_VialsForm, self).__init__(*args, **kwargs)
-        self.fields['item'].choices = ITEM_CHOICES
+        self.fields['item'].choices = Bottles_Vials.ITEM_CHOICES
 
 B_VFormSet = modelformset_factory(
 Bottles_Vials,
