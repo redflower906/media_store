@@ -717,7 +717,7 @@ def sign_outs_remainder(request, id):
             messages.success(request,
             'Amounts have been updated.')
             return HttpResponseRedirect('/signout/remainder')
-    else: formset = B_VFormSet(queryset=Bottles_Vials.objects.none())
+    else: formset = B_VFormSet(instance=instance)
 
 
 
