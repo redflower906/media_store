@@ -190,7 +190,7 @@ $(function(){
 //Remainder bottles/vials
 
 function update_remainder(){
-    $(document).ready(function(){
+    $(function(){
         $('#bottle_i').on('input', function (evt){
             var bottle_ival = evt.target.value;
             console.log(bottle_ival);
