@@ -19,7 +19,8 @@ from djrichtextfield.widgets import RichTextWidget
 
 logger = logging.getLogger('default')
 
-
+class NumInput(TextInput):
+    input_type = 'number'
 
 class Item_Model_Form(forms.ModelForm):
     class Meta:
