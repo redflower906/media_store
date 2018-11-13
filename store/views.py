@@ -709,8 +709,9 @@ def sign_outs_remainder(request):
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
 
+    instance = get_object_or_404(Bottles_Vials, id=id)
     if request.method == "POST":
-        formset = B_VFormSet(request.POST)
+        formset = B_VFormSet(request.POST or None, instance=instance)
         if formset.is_valid():
             formset.save()
             messages.success(request,
