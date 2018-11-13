@@ -20,10 +20,12 @@
 <p>&nbsp;</p>
 
 <form method='post' action=''>
+    {% csrf_token %}
     <table>
         {{formset}}
-        <input class='btn btn-primary' type='submit' value='Submit' name='submit'>
-    </table>
+    </table>        
+    <input class='btn btn-primary' type='submit' value='Submit' name='submit'>
+
 </form>
 <table class='table'>
     <thead>
