@@ -65,6 +65,12 @@
                     'font-weight': 'bolder'
                 });
             }
+            else if(bottle_r = 'NaN'){
+                $('td.bottle_lo').text('Numbers only please').css({
+                    'color': 'red',
+                    'font-weight': 'bolder'
+                });
+            }
             else{
                 $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
                     'color': 'green',
@@ -80,6 +86,12 @@
             var vial_r = (vial_cval - vial_ival);
             if(vial_r < 0){
                 $('td.vial_lo').text(vial_r.toFixed(2)).css({
+                    'color': 'red',
+                    'font-weight': 'bolder'
+                });
+            }
+            else if(vial_r = 'NaN'){
+                $('td.bottle_lo').text('Numbers only please').css({
                     'color': 'red',
                     'font-weight': 'bolder'
                 });
