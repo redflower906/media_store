@@ -703,13 +703,19 @@ def sign_outs_remainder(request):
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
     
-    current = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_billed__range=[lastbill, today]).aggregate(Sum('orderline__qty')).values())[0]
+    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_billed__range=[lastbill, today]).aggregate(
+    Sum('orderline__qty')).values())[0]
+
+    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
+    Sum('orderline__qty')).values())[0]
+
 
 
 
     return render(request,
         'store/signout_leftovers.html',{
-        'current': current,
+        'currentBottles': currentBottles,
+        'currentVials': currentVials
         'orders': orders,
         })
 

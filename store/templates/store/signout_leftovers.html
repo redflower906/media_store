@@ -22,5 +22,27 @@
 <hr/>
 <p>&nbsp;</p>
 
-<div><p>bottles:{{current}}</p></div>
+<table class='table'>
+    <thead>
+        <tr>
+            <th scope='col'># Made this Billing Period</th>
+            <th scope='col'># Billed this Period</th>
+            <th scope='col'># Left Over</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope='row'>Bottles</th>
+            <td>INPUT BOTTLES</td>
+            <td>{{currentBottles}}</td>
+            <td>LEFTOVER BOTTLES JS</td>
+        </tr>
+        <tr>
+            <th scope='row'>Vials</th>
+            <td>INPUT VIALS</td>
+            <td>{{currentVials}}</td>
+            <td>LEFTOVER VIALS</td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}
