@@ -147,7 +147,6 @@ def create_item(request):
             newItem = formset.save()
             messages.success(request,
             'Product was successfully created.')
-            print(newItem[0].pk)
             return HttpResponseRedirect('/inventory/')
     else: formset = ItemModelFormset(queryset=Inventory.objects.none())
     # just show the form
@@ -698,6 +697,7 @@ def current_sign_outs (request):
 
 @login_required
 def sign_outs_remainder(request):
+    user = request.user
     orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -709,6 +709,14 @@ def sign_outs_remainder(request):
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
 
+    if request.method == "POST":
+        formset = B_VFormSet(request.POST)
+        if formset.is_valid():
+            formset.save()
+            messages.success(request,
+            'Amounts have been updated.')
+            return HttpResponseRedirect('/signout/remainder')
+    else: formset = B_VFormSet(queryset=Bottles_Vials.objects.none())
 
 
 
@@ -717,6 +725,7 @@ def sign_outs_remainder(request):
         'currentBottles': currentBottles,
         'currentVials': currentVials,
         'orders': orders,
+        'formset':formset,
         })
 
 # class SearchListView(ListView):

@@ -306,6 +306,13 @@ class Announcements(models.Model):
    text = models.TextField()
    show = models.BooleanField(default=False)
 
+
+class Bottles_Vials(models.Model):
+    item = models.ForeignKey(Inventory, blank=True, null=True)
+    amnt = models.DecimalField(
+        max_digits=10, decimal_places=2, blank=False, null=False)
+
+
 ORDER_VAR = 'o'
 ORDER_TYPE_VAR = 'ot'
 

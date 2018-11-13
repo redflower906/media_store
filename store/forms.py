@@ -21,9 +21,6 @@ logger = logging.getLogger('default')
 
 
 
-class NumInput(TextInput):
-    input_type = 'number'
-
 class Item_Model_Form(forms.ModelForm):
     class Meta:
         model = Inventory
@@ -210,4 +207,28 @@ widgets={
     'status': forms.Select(choices=Order.STATUS_CHOICES, attrs={'class': 'form-control'})
     },
 extra=0,
+)
+
+
+class Bottles_VialsForm(forms.ModelForm):
+    
+    ITEM_CHOICES = (
+    ('1245', 'Bottles'),
+    ('1263', 'Vials'),
+    )
+    class Meta:
+        model = Bottles_Vials
+        fields = ('item', 'amnt')
+        labels = {
+            'item': 'Item',
+            'amnt': 'QTY'
+        }
+        widgets = {
+            'item': forms.Select(choices=ITEM_CHOICES, attrs={'class':'form-control'}),
+            'amnt': forms.NumberInput(attrs={'class':'form-control'})
+        }
+
+B_VFormSet = modelformset_factory(
+Bottles_Vials,
+extra=2,
 )
