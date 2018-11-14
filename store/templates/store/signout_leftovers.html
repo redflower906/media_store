@@ -29,15 +29,15 @@
     <table class='table'>
         <thead>
             <tr>
-                <th scope='col'></th>
-                <th scope='col'>QTY</th>
+                <th class='col text-center'></th>
+                <th class='col text-center'>QTY</th>
             </tr>
         </thead>
         <tbody>
             {% for form in formset %}
             {% if form.non_field_errors %}
             <tr>
-                <td colspan="6">
+                <td>
                     {{ form.non_field_errors }}
                 </td>
             </tr>
