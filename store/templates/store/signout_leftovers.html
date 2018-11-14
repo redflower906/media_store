@@ -104,9 +104,9 @@
 <script type='text/javascript'>
 
     //allow submission of disabled fields
-    //$('#bvform').submit(function() {
-    //    $('.amnt').removeAttr('disabled');
-    //})
+    $('#bvform').submit(function() {
+        $('select').removeAttr('disabled');
+    })
 
     //to show remainder of bottles and vials to bill to Fly Facility
     $(function(){
