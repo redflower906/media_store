@@ -186,3 +186,54 @@ $(function(){
         console.log('inv = custom order');
     }
 })
+
+    //to show remainder of bottles and vials to bill to Fly Facility FOR USE WITH INPUT ONLY
+    // $(function(){
+    //     $('#bottle_i').on('input', function (evt){
+    //         var bottle_ival = evt.target.value;
+    //         var bottle_cval = $('#bottle_c').text();
+    //         var bottle_r = (bottle_ival - bottle_cval);
+    //         if (bottle_r < 0){
+    //             $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
+    //                 'color': 'red',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //         else if (isNaN(bottle_r)){
+    //             $('td.bottle_lo').text('Numbers only please').css({
+    //                 'color': 'red',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //         else {
+    //             $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
+    //                 'color': 'green',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //     })
+
+    //     $('#vial_i').on('input', function (evt){
+    //         var vial_ival = evt.target.value;
+    //         var vial_cval = $('#vial_c').text();
+    //         var vial_r = (vial_ival - vial_cval);
+    //         if (vial_r < 0){
+    //             $('td.vial_lo').text(vial_r.toFixed(2)).css({
+    //                 'color': 'red',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //         else if (isNaN(vial_r)){
+    //             $('td.vial_lo').text('Numbers only please').css({
+    //                 'color': 'red',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //         else {
+    //             $('td.vial_lo').text(vial_r.toFixed(2)).css({
+    //                 'color': 'green',
+    //                 'font-weight': 'bolder'
+    //             });
+    //         }
+    //     })
+    // })
