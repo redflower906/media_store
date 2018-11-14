@@ -19,88 +19,93 @@
 <hr/>
 <p>&nbsp;</p>
 
-<form id='bvform' method='post' action=''>
-    {% csrf_token %}
-    {{ formset.non_field_errors }}
-    {% for hidden_field in formset.hidden_fields %}
-        {{ hidden_field.errors }}
-        {{ hidden_field }}
-    {% endfor %}
-    {{formset.management_form}}
+<fieldset>
+    <legend>Submit this month's total numbers for cornmeal bottles and vials</legend>
+    <form id='bvform' method='post' action=''>
+        {% csrf_token %}
+        {{ formset.non_field_errors }}
+        {% for hidden_field in formset.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
+        {% endfor %}
+        {{formset.management_form}}
+        <table class='table'>
+            <thead>
+                <tr>
+                    <th class='col-xs-2'></th>
+                    <th class='col-xs-1 text-center'>QTY</th>
+                    <th class='col-xs-9'></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in formset %}
+                {% if form.non_field_errors %}
+                <tr>
+                    <td>
+                        {{ form.non_field_errors }}
+                    </td>
+                </tr>
+                {% endif %}
+                <tr>
+                    {% for hidden_field in form.hidden_fields %} 
+                    {{ hidden_field.errors }} 
+                    {{ hidden_field }}
+                    {% endfor %}
+                <tr>
+                    <td class='col-xs-2'>
+                        {{form.item.errors}}
+                        {{form.item}}
+                    </td>
+                    <td class='col-xs-1'>
+                        {{form.amnt.errors}}
+                        {{form.amnt}}
+                    </td>
+                    <td class='col-xs-9'></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>     
+        <input class='btn btn-primary' type='submit' value='Submit' name='submit'>
+    </form>
+</fieldset>
+
+<fieldset>
+    <legend>Made vs. billed for this billing period</legend>
     <table class='table'>
         <thead>
             <tr>
-                <th class='col-xs-2'></th>
-                <th class='col-xs-1 text-center'>QTY</th>
-                <th class='col-xs-9'></th>
+                <th scop='col'></th>
+                <th scope='col'># Made this Billing Period</th>
+                <th scope='col'># Billed this Period</th>
+                <th scope='col'># Remainder</th>
             </tr>
         </thead>
         <tbody>
-            {% for form in formset %}
-            {% if form.non_field_errors %}
             <tr>
-                <td>
-                    {{ form.non_field_errors }}
+                <th scope='row'>Bottles</th>
+                <td class='bottle_i_td'>
+                    {{inputBottles.amnt}}
+                    {% comment %} <div class="input-group">
+                        <input type="text" class="form-control" id='bottle_i' placeholder="Bottle input" aria-describedby="basic-addon1">
+                    </div> {% endcomment %}
                 </td>
+                <td id='bottle_c'>{{currentBottles}}</td>
+                <td class='bottle_lo'></td>
             </tr>
-            {% endif %}
             <tr>
-                {% for hidden_field in form.hidden_fields %} 
-                {{ hidden_field.errors }} 
-                {{ hidden_field }}
-                {% endfor %}
-            <tr>
-                <td class='col-xs-2'>
-                    {{form.item.errors}}
-                    {{form.item}}
+                <th scope='row'>Vials</th>
+                <td class='vial_i_td'>
+                    {{inputVials.amnt}}
+                    {% comment %} <div class="input-group">
+                        <input type="text" class="form-control" id='vial_i' placeholder="Vial input" aria-describedby="basic-addon1">
+                    </div> {% endcomment %}
                 </td>
-                <td class='col-xs-1'>
-                    {{form.amnt.errors}}
-                    {{form.amnt}}
-                </td>
-                <td class='col-xs-9'></td>
+                <td id='vial_c'>{{currentVials}}</td>
+                <td class='vial_lo'></td>
             </tr>
-            {% endfor %}
         </tbody>
-    </table>     
-    <input class='btn btn-primary' type='submit' value='Submit' name='submit'>
-
-</form>
-<table class='table'>
-    <thead>
-        <tr>
-            <th scop='col'></th>
-            <th scope='col'># Made this Billing Period</th>
-            <th scope='col'># Billed this Period</th>
-            <th scope='col'># Remainder</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope='row'>Bottles</th>
-            <td class='bottle_i_td'>
-                {{inputBottles.amnt}}
-                {% comment %} <div class="input-group">
-                    <input type="text" class="form-control" id='bottle_i' placeholder="Bottle input" aria-describedby="basic-addon1">
-                </div> {% endcomment %}
-            </td>
-            <td id='bottle_c'>{{currentBottles}}</td>
-            <td class='bottle_lo'></td>
-        </tr>
-        <tr>
-            <th scope='row'>Vials</th>
-            <td class='vial_i_td'>
-                {{inputVials.amnt}}
-                {% comment %} <div class="input-group">
-                    <input type="text" class="form-control" id='vial_i' placeholder="Vial input" aria-describedby="basic-addon1">
-                </div> {% endcomment %}
-            </td>
-            <td id='vial_c'>{{currentVials}}</td>
-            <td class='vial_lo'></td>
-        </tr>
-    </tbody>
-</table>
-
+    </table>
+</fieldset>
 <script type='text/javascript'>
 
     //allow submission of disabled fields
@@ -115,12 +120,6 @@
         var bottle_r = (bottle_ival - bottle_cval);
         if (bottle_r < 0){
             $('td.bottle_lo').text(bottle_r.toFixed(2)).css({
-                'color': 'red',
-                'font-weight': 'bolder'
-            });
-        }
-        else if (isNaN(bottle_r)){
-            $('td.bottle_lo').text('Numbers only please').css({
                 'color': 'red',
                 'font-weight': 'bolder'
             });
@@ -143,18 +142,12 @@
                 'font-weight': 'bolder'
             });
         }
-        else if (isNaN(vial_r)){
-            $('td.vial_lo').text('Numbers only please').css({
-                'color': 'red',
-                'font-weight': 'bolder'
-            });
-        }
         else {
             $('td.vial_lo').text(vial_r.toFixed(2)).css({
                 'color': 'green',
                 'font-weight': 'bolder'
             });
         }
-    })
+    });
 </script>
 {% endblock %}
