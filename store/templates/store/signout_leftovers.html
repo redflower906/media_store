@@ -29,8 +29,9 @@
     <table class='table'>
         <thead>
             <tr>
-                <th class='col-xs-1 text-center'></th>
-                <th class='col-xs-1 text-center'>QTY</th>
+                <th class='col-xs-2 text-center'></th>
+                <th class='col-xs-2 text-center'>QTY</th>
+                <th class='col-xs-8'></th>
             </tr>
         </thead>
         <tbody>
@@ -48,14 +49,15 @@
                 {{ hidden_field }}
                 {% endfor %}
             <tr>
-                <td class='col-xs-1'>
+                <td class='col-xs-2'>
                     {{form.item.errors}}
                     {{form.item}}
                 </td>
-                <td class='col-xs-1'>
+                <td class='col-xs-2'>
                     {{form.amnt.errors}}
                     {{form.amnt}}
                 </td>
+                <td class='col-xs-8'></td>
             </tr>
             {% endfor %}
         </tbody>
