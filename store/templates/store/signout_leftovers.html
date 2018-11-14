@@ -40,9 +40,10 @@
         <tr>
             <th scope='row'>Bottles</th>
             <td class='bottle_i_td'>
-                <div class="input-group">
+                {{inputBottles}}
+                {% comment %} <div class="input-group">
                     <input type="text" class="form-control" id='bottle_i' placeholder="Bottle input" aria-describedby="basic-addon1">
-                </div>
+                </div> {% endcomment %}
             </td>
             <td id='bottle_c'>{{currentBottles}}</td>
             <td class='bottle_lo'></td>
@@ -50,9 +51,10 @@
         <tr>
             <th scope='row'>Vials</th>
             <td class='vial_i_td'>
-                <div class="input-group">
+                {{inputVials}}
+                {% comment %} <div class="input-group">
                     <input type="text" class="form-control" id='vial_i' placeholder="Vial input" aria-describedby="basic-addon1">
-                </div>
+                </div> {% endcomment %}
             </td>
             <td id='vial_c'>{{currentVials}}</td>
             <td class='vial_lo'></td>
