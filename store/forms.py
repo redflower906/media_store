@@ -230,6 +230,10 @@ class Bottles_VialsForm(forms.ModelForm):
         super(Bottles_VialsForm, self).__init__(*args, **kwargs)
         self.fields['item'].choices = Bottles_Vials.ITEM_CHOICES
 
+    def clean_item(self):
+        # when field is cleaned, we always return the existing model field.
+        return self.instance.item
+
 B_VFormSet = modelformset_factory(
 Bottles_Vials,
 form=Bottles_VialsForm,
