@@ -101,6 +101,14 @@
 </table>
 
 <script type='text/javascript'>
+
+    //allow submission of disabled fields
+    $('form').submit(function(e) {
+        $(':disabled').each(function(e) {
+            $(this).removeAttr('disabled');
+        })
+    });
+
     //to show remainder of bottles and vials to bill to Fly Facility
     $(function(){
         $('#bottle_i').on('input', function (evt){
