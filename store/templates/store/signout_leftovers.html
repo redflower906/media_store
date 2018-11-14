@@ -21,9 +21,45 @@
 
 <form method='post' action=''>
     {% csrf_token %}
-    <table>
-        {{formset}}
-    </table>        
+    {{ formset.non_field_errors }}
+    {% for hidden_field in formset.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+    <table class='table'>
+        <thead>
+            <tr>
+                <th scope='col'></th>
+                <th scope='col'>QTY</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for form in formset %}
+            {% if form.non_field_errors %}
+            <tr>
+                <td colspan="6">
+                    {{ form.non_field_errors }}
+                </td>
+            </tr>
+            {% endif %}
+            <tr>
+                {% for hidden_field in form.hidden_fields %} 
+                {{ hidden_field.errors }} 
+                {{ hidden_field }}
+                {% endfor %}
+            <tr>
+                <td>
+                    {{form.item.errors}}
+                    {{form.item}}
+                </td>
+                <td>
+                    {{form.amnt.errors}}
+                    {{form.amnt}}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>     
     <input class='btn btn-primary' type='submit' value='Submit' name='submit'>
 
 </form>
@@ -40,7 +76,7 @@
         <tr>
             <th scope='row'>Bottles</th>
             <td class='bottle_i_td'>
-                {{inputBottle.amnt}}
+                {{inputBottles.amnt}}
                 {% comment %} <div class="input-group">
                     <input type="text" class="form-control" id='bottle_i' placeholder="Bottle input" aria-describedby="basic-addon1">
                 </div> {% endcomment %}
