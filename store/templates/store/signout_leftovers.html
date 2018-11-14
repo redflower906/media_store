@@ -19,7 +19,7 @@
 <hr/>
 <p>&nbsp;</p>
 
-<form method='post' action=''>
+<form id='bvform' method='post' action=''>
     {% csrf_token %}
     {{ formset.non_field_errors }}
     {% for hidden_field in formset.hidden_fields %}
@@ -103,11 +103,9 @@
 <script type='text/javascript'>
 
     //allow submission of disabled fields
-    $('form').submit(function(e) {
-        $(':disabled').each(function(e) {
-            $(this).removeAttr('disabled');
+    $('#bvform').submit(function() {
+        $('select').prop('disabled', false);
         })
-    });
 
     //to show remainder of bottles and vials to bill to Fly Facility
     $(function(){
