@@ -710,9 +710,9 @@ def sign_outs_remainder(request):
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
 
-    inputBottles = bv.filter(item=1245).values('amnt')
+    inputBottles = Bottles_Vials.objects.get(item='1245').values('amnt')
 
-    inputVials = bv.filter(item=1263).values('amnt')
+    inputVials = Bottles_Vials.objects.get(item='1263').values('amnt')
 
     if request.method == "POST":
         formset = B_VFormSet(request.POST)
