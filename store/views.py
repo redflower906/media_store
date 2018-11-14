@@ -696,7 +696,7 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request, id):
+def sign_outs_remainder(request):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
@@ -708,14 +708,8 @@ def sign_outs_remainder(request, id):
 
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
-    try:
-        instance = Bottles_Vials.objects.get(pk=id)
-    except Bottles_Vials.DoesNotExist:
-        messages.error(
-            request, 'Could not find order #{} for copy. Order does not exist.'.format(id))
-        return HttpResponseRedirect('/signout')
     if request.method == "POST":
-        formset = B_VFormSet(request.POST, instance=instance)
+        formset = B_VFormSet(request.POST)
         if formset.is_valid():
             formset.save()
             messages.success(request,
@@ -723,7 +717,7 @@ def sign_outs_remainder(request, id):
             return HttpResponseRedirect('/inventory')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    else: formset = B_VFormSet(instance=instance)
+    else: formset = B_VFormSet()
 
     return render(request,
         'store/signout_leftovers.html',{
