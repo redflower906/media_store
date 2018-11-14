@@ -724,7 +724,8 @@ def sign_outs_remainder(request, r_id=None):
                 'Amounts have been updated.')
                 return HttpResponseRedirect('/signout/remainder')
         else:
-            formset = B_VFormSet(instance=instance)
+            formset = B_VFormSet(request.POST)
+    else: formset = B_VFormSet()
 
     return render(request,
         'store/signout_leftovers.html',{
