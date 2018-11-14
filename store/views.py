@@ -725,7 +725,7 @@ def sign_outs_remainder(request, r_id=None):
                 return HttpResponseRedirect('/inventory')
         else:
             formset = B_VFormSet(request.POST)
-    else: formset = B_VFormSet()
+    else: formset = B_VFormSet(instance=instance)
 
     return render(request,
         'store/signout_leftovers.html',{
