@@ -696,7 +696,7 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request, r_id=None):
+def sign_outs_remainder(request, id):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
@@ -708,23 +708,21 @@ def sign_outs_remainder(request, r_id=None):
 
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_billed__range=[lastbill, today]).aggregate(
     Sum('orderline__qty')).values())[0]
-
+    try:
+        instance = Bottles_Vials.objects.get(pk=id)
+    except Bottles_Vials.DoesNotExist:
+        messages.error(
+            request, 'Could not find order #{} for copy. Order does not exist.'.format(id))
+        return HttpResponseRedirect('/signout')
     if request.method == "POST":
-        if r_id:
-            try:
-                instance = Bottles_Vials.objects.get(pk=r_id)
-            except Bottles_Vials.DoesNotExist:
-                messages.error(
-                    request, 'Could not find order #{} for copy. Order does not exist.'.format(r_id))
-                return HttpResponseRedirect('/signout')
-            formset = B_VFormSet(request.POST, instance=instance)
-            if formset.is_valid():
-                formset.save()
-                messages.success(request,
-                'Amounts have been updated.')
-                return HttpResponseRedirect('/inventory')
+        formset = B_VFormSet(request.POST, instance=instance)
+        if formset.is_valid():
+            formset.save()
+            messages.success(request,
+            'Amounts have been updated.')
+            return HttpResponseRedirect('/inventory')
         else:
-            formset = B_VFormSet(request.POST)
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else: formset = B_VFormSet(instance=instance)
 
     return render(request,
