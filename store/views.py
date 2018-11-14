@@ -714,9 +714,9 @@ def sign_outs_remainder(request):
             formset.save()
             messages.success(request,
             'Amounts have been updated.')
-            return HttpResponseRedirect('/inventory')
+            return HttpResponseRedirect('/signout/remainder')
         else:
-            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+            messages.error(request, 'There was a problem updating amounts.')
     else: formset = B_VFormSet()
 
     return render(request,
