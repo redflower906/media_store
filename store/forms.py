@@ -222,7 +222,7 @@ class Bottles_VialsForm(forms.ModelForm):
             'amnt': 'QTY'
         }
         widgets = {
-            'item': forms.Select(choices=Bottles_Vials.ITEM_CHOICES, attrs={'class':'form-control', 'readonly':'True'}),
+            'item': forms.Select(choices=Bottles_Vials.ITEM_CHOICES, attrs={'class':'form-control'}, disabled=True),
             'amnt': forms.NumberInput(attrs={'class':'form-control'})
         }
     
