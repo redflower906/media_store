@@ -716,13 +716,13 @@ def sign_outs_remainder(request, r_id=None):
             except Bottles_Vials.DoesNotExist:
                 messages.error(
                     request, 'Could not find order #{} for copy. Order does not exist.'.format(r_id))
-                return HttpResponseRedirect('/signout/remainder')
+                return HttpResponseRedirect('/signout')
             formset = B_VFormSet(request.POST or None, instance=instance)
             if formset.is_valid():
                 formset.save()
                 messages.success(request,
                 'Amounts have been updated.')
-                return HttpResponseRedirect('/signout/remainder')
+                return HttpResponseRedirect('/inventory')
         else:
             formset = B_VFormSet(request.POST)
     else: formset = B_VFormSet()
