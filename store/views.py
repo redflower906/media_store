@@ -696,10 +696,9 @@ def current_sign_outs (request):
         })
 
 @login_required
-def sign_outs_remainder(request, pk):
+def sign_outs_remainder(request, r_id=None):
     user = request.user
     orders = Order.objects.all()
-    instance = get_object_or_404(Bottles_Vials, pk=pk)
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
@@ -711,13 +710,21 @@ def sign_outs_remainder(request, pk):
     Sum('orderline__qty')).values())[0]
 
     if request.method == "POST":
-        formset = B_VFormSet(request.POST or None, instance=instance)
-        if formset.is_valid():
-            formset.save()
-            messages.success(request,
-            'Amounts have been updated.')
-            return HttpResponseRedirect('/signout/remainder')
-    else: formset = B_VFormSet(instance=instance)
+        if r_id:
+            try:
+                instance = Bottles_Vials.objects.get(pk=r_id)
+            except Bottles_Vials.DoesNotExist:
+                messages.error(
+                    request, 'Could not find order #{} for copy. Order does not exist.'.format(r_id))
+                return HttpResponseRedirect('/signout/remainder')
+            formset = B_VFormSet(request.POST or None, instance=instance)
+            if formset.is_valid():
+                formset.save()
+                messages.success(request,
+                'Amounts have been updated.')
+                return HttpResponseRedirect('/signout/remainder')
+        else:
+            formset = B_VFormSet(instance=instance)
 
     return render(request,
         'store/signout_leftovers.html',{
