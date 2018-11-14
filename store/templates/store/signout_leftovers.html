@@ -104,8 +104,8 @@
 
     //allow submission of disabled fields
     $('#bvform').submit(function() {
-        $('select').prop('disabled', false);
-        })
+        $('select').removeAttr('disabled');
+    })
 
     //to show remainder of bottles and vials to bill to Fly Facility
     $(function(){
