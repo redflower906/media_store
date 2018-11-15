@@ -453,6 +453,7 @@ def status_email(sender, instance, *args, **kwargs):
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.id = None
             order.pk = None
+            order.status = 'Submitted'
             order.save()
             for ol in orderlines:
                 ol.pk = None

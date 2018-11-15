@@ -699,9 +699,7 @@ def current_sign_outs (request):
 
 @login_required
 def sign_outs_remainder(request):
-    cNSock = socket.gethostname()
-    cNPlat = platform.node()
-    cNOS = os.environ['COMPUTERNAME']
+
     user = request.user
     orders = Order.objects.all()
     bv = Bottles_Vials.objects.all()
@@ -738,9 +736,6 @@ def sign_outs_remainder(request):
         'formset': formset,
         'inputBottles': inputBottles,
         'inputVials': inputVials,
-        'cNSock': cNSock,
-        'cNPlat': cNPlat,
-        'cNOS': cNOS,
         })
 
 # class SearchListView(ListView):
