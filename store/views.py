@@ -27,6 +27,8 @@ import json as simplejson
 import csv
 import time
 import socket
+import platform
+import os
 
 
 def index(request):
@@ -697,7 +699,9 @@ def current_sign_outs (request):
 
 @login_required
 def sign_outs_remainder(request):
-    compName = socket.gethostname()
+    cNSock = socket.gethostname()
+    cNPlat = platform.node()
+    cNOS = os.environ['COMPUTERNAME']
     user = request.user
     orders = Order.objects.all()
     bv = Bottles_Vials.objects.all()
@@ -734,7 +738,9 @@ def sign_outs_remainder(request):
         'formset': formset,
         'inputBottles': inputBottles,
         'inputVials': inputVials,
-        'compName': compName,
+        'cNSock': cNSock,
+        'cNPlat': cNPlat,
+        'cNOS': cNOS,
         })
 
 # class SearchListView(ListView):
