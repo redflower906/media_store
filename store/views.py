@@ -26,7 +26,7 @@ import MySQLdb, sys
 import json as simplejson
 import csv
 import time
-
+import socket
 
 
 def index(request):
@@ -697,6 +697,7 @@ def current_sign_outs (request):
 
 @login_required
 def sign_outs_remainder(request):
+    compName = socket.gethostname()
     user = request.user
     orders = Order.objects.all()
     bv = Bottles_Vials.objects.all()
@@ -733,6 +734,7 @@ def sign_outs_remainder(request):
         'formset': formset,
         'inputBottles': inputBottles,
         'inputVials': inputVials,
+        'compName': compName,
         })
 
 # class SearchListView(ListView):
@@ -767,11 +769,6 @@ def ajax(request):
     data = {'r_id': user.id, 'd_id':department.id, 'p_id':project, 'up_id':user.user_profile.id}
     data = simplejson.dumps(data)
     dataOne = simplejson.loads(data)
-    # obj = {
-    #     'r_id': User.objects.get(id=requester_test)
-
-    # }
-    # data = JsonResponse(obj.json())
     return JsonResponse(dataOne)
 
 def create_signout(request):
