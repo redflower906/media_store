@@ -31,16 +31,19 @@ $(function () {
         $('#filter').keyup(function () {
             //creates a regex to compare the typed values with values in table
             var rex = new RegExp($(this).val(), 'i');
-            //hides every row in the table
-            $('.searchable tr.koala').hide();
-            //finds any instance of a minus glyph and changes it to a plus
-            $('.searchable tr.koala').find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
-            //closes all notes
-            $('.searchable tr.koala').next().fadeOut();
-            //searches each row for the regex and then shows it
-            $('.searchable tr.koala').filter(function () {
-                return rex.test($(this).text());
-            }).show();
+            // for inventory search
+            if( $('.searchable tr.koala')) {
+                //hides every row in the table
+                $('.searchable tr.koala').hide();
+                //finds any instance of a minus glyph and changes it to a plus
+                $('.searchable tr.koala').find('i').removeClass('glyphicon-minus').addClass('glyphicon-plus')
+                //closes all notes
+                $('.searchable tr.koala').next().fadeOut();
+                //searches each row for the regex and then shows it
+                $('.searchable tr.koala').filter(function () {
+                    return rex.test($(this).text());
+                }).show();
+            }
         });
     }(jQuery));
 });
