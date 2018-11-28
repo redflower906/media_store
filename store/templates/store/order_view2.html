@@ -13,6 +13,10 @@
     </div>
 </div>
 {% endif %}
+<div class="alert alert-warning recur3" role='alert'>You have one or more orders that will end in 3 weeks. If you want to extend the end date, please edit the order(s).</div>
+<div class="alert alert-danger recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
+
+
 <ul onload='highlight()' class="nav nav-tabs">
     <li class="active">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
@@ -114,9 +118,9 @@
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
-                $(this).parent().addClass('threeWeeks').css('background-color', '#FEFE51');
+                $(this).parent().addClass('threeWeeks');
             } else if( 7 > days && days >= 0){
-                $(this).parent().addClass('oneWeek').css('background-color', '#FE5B5B');
+                $(this).parent().addClass('oneWeek');
             }
         });
         $(this).find("[class^='inv']").each(function(){

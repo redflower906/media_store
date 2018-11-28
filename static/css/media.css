@@ -155,6 +155,21 @@ h1 {
   text-align: center;
 }
 
+.threeWeeks {
+  background-color: #FEFE51;
+}
+
+.oneWeek{
+  background-color: #FE5B5B;
+}
+
+.recur3{
+  visibility: hidden;
+}
+
+.recur1{
+  visibility: hidden;
+}
 
 p {
   font-size: 125%;

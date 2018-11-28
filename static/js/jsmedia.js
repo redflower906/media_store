@@ -131,9 +131,13 @@ function recurringAlert(){
 
 //Alert when recurring order will end soon
 function endingAlert(){
-    var recur = $('input:checked').attr('id');
-    if (recur == 'id_order-is_recurring_0') {
-        alert('Be aware that, if this order has been edited, any changes may not be implemented until the following week. Please email media facility with any questions.')
+    if ($('.threeWeeks')) {
+        $('.recur3').show();
+    } else if ($('.oneWeek')){
+        $('.recur1').show();
+    } else {
+        $('.recur3').hide();
+        $('.recur1').hide();
     }
 }
 
