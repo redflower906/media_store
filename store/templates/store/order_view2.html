@@ -5,7 +5,7 @@
 {% block content %}
 <hr/>
 
-{% if user.is_staff is True and days <= 4 %}
+{% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="panel panel-danger">
     <div class="panel-heading" style="text-align: center">Warning</div>
     <div class="panel-body" style="text-align: center">
@@ -25,6 +25,11 @@
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#can">Canceled</a>
+    </li>
+    <li>                    
+        <div class="form-group pull-right">
+            <input id="filter" type="text" class="form-control" placeholder="Search for...">
+        </div>
     </li>
 </ul>
 
