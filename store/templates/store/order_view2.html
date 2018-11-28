@@ -114,9 +114,9 @@
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
-                $(this).parent().css('background-color', '#FEFE51');
+                $(this).parent().addClass('threeWeeks').css('background-color', '#FEFE51');
             } else if( 7 > days && days >= 0){
-                $(this).parent().css('background-color', '#FE5B5B');
+                $(this).parent().addClass('oneWeek').css('background-color', '#FE5B5B');
             }
         });
         $(this).find("[class^='inv']").each(function(){
