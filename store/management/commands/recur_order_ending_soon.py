@@ -7,7 +7,13 @@ from datetime import datetime, date
 from store.models import Order
 
 class Command(BaseCommand):
-    def handle_noargs(self, **options):
+    
+    help = 'Send an email to users and media about recurring orders ending in 3 and 1 weeks'
+
+    def add_argument(self):
+        pass
+
+    def handle(self, **options):
         today = date.today()
         orders = Order.objects.all()
         for order in orders:
