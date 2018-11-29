@@ -186,6 +186,7 @@ class Order(models.Model):
         ('Auto', 'Auto'),
     )
     LOCATION_CHOICES = (
+        ('1E.390', '1E.390 (21C)'),
         ('2W.225', '2W.225 (4C)'),
         ('2W.227', '2W.227 (4C)'),
         ('2W.263', '2W.263 (4C)'),

@@ -774,9 +774,22 @@ def ajax(request):
     dataOne = simplejson.loads(data)
     return JsonResponse(dataOne)
 
+@login_required(login_url='login')
 def create_signout(request):
 
     order = Order()
+    user = request.user
+
+    if user == 17380:
+        loc = '2E.233'
+        uname = 2
+    elif user == 17381:
+        loc = '1E.390'
+        uname = 1
+    elif user == 17382:
+        loc = '3E.265'
+        uname = 3
+
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, )
@@ -784,36 +797,14 @@ def create_signout(request):
             request.POST, prefix='orderlines', instance=order)
 
         if order_form.is_valid() and orderlineformset.is_valid():
-            # TODO for Scarlett and Amanda: decide desired behavior for date_submitted.
-            #   Some options:
-            #       only set on create (but this is the same as date_created...)--handle in model
-            #       update on edit or create only set on create--handle in model
-            order = order_form.save()
+ 
+            order = order_form.save(commit=False)
+            order.location = loc
+            order.save()
             orderlineformset.save()
-            # NO NEED TO SEND EMAILS EVERY TIME SOMEONE SIGNS OUT MOLASSAS FOOD, RIGHT? ~FIX~
-            # domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            # subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
-            # context = Context({
-            #     'id': order_form.instance.id,
-            #     'location': order_form.instance.location,
-            #     'c_or_e': 'created',            
-            #     'upload': order_form.instance.doc,
-            #     'domain': domain,
-            # })
-            # m_plain = render_to_string('create_email.txt', context.flatten())
-            # m_html = render_to_string('create_email.html', context.flatten())
-            # email =EmailMultiAlternatives(
-            #    subject,
-            #    m_plain,
-            #    from_email,
-            #    [to],
-            #    cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
-            # )
-            # email.attach_alternative(m_html, "text/html")
-            # email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/order/view')
+            return HttpResponseRedirect('/signout/new')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
@@ -828,4 +819,7 @@ def create_signout(request):
         'formset': orderlineformset,
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
+        'loc': loc,
+        'uname': uname,
+        'user': user,
     })
