@@ -790,8 +790,8 @@ def create_signout(request):
         loc = '3E.265'
         uname = 3
     else:
-        loc = ''
-        uname = ''
+        loc = False
+        uname = False
 
     if request.method == "POST":
 
