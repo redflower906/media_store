@@ -225,7 +225,7 @@ def create_order(request, copy_id=None):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-            'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -234,9 +234,9 @@ def create_order(request, copy_id=None):
             #   Some options:
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
-            order = order_form.save(commit=False)
-            order.submitter = user
-            order.save()
+            order = order_form.save()
+            # order.submitter = user
+            # order.save()
             orderlineformset.save()
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
@@ -277,7 +277,8 @@ def create_order(request, copy_id=None):
             orderlineformset.copy_orderline_data(order)
 
         else:
-            order_form = OrderForm(prefix='order', instance=order, initial={'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            order_form = OrderForm(prefix='order', instance=order, initial={
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
 

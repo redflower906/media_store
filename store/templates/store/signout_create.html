@@ -40,12 +40,17 @@
             <table id='form_holder'>
                 <thead>
                     <tr>
+                        <th>Who are you?</th>
                         <th>Who is the food for?</th>
                         <th>Dept?</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            {{ order_form.submitter.errors }}
+                            {{ order_form.submitter }}
+                        </td>
                         <td>
                             {{ order_form.requester.errors }}
                             {{ order_form.requester }}
@@ -166,15 +171,11 @@
             <div class='row'>
             <hr/>
                 <p></p>
-                <div class='col-xs-11'>
+                <div class='col-xs-10'>
                     <a href='/' class="btn btn-danger">Cancel</a>
                 </div>
-                <div class="col-xs-1">
-                    {% if order_form.instance.id %}
-                    <input class='btn btn-primary' type='submit' value='Update Order' name='submit'>
-                    {% else %}
-                    <input class='btn btn-primary' type='submit' value='Complete Order' name='submit'>
-                    {% endif %}
+                <div class="col-xs-2">
+                    <input class='btn btn-primary pull-right' type='submit' value='Complete Order' name='submit'>
                 </div>
             </div>
             

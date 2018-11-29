@@ -43,7 +43,18 @@
 
     <fieldset>
         <legend>Who is creating this order?</legend>
-        <p>{{ user.get_full_name }}</p>
+        <div class='row'>
+            <table id='form_holder'>
+                <tbody>
+                    <tr>
+                        <td class='submitter'>
+                            {{ order_form.submitter.errors }}
+                            {{ order_form.submitter }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     </fieldset>
     <p>&nbsp;</p>
@@ -316,6 +327,9 @@
     });
    $(".chosen-select").chosen();
 
+    $(function (){
+        $('.submitter').children().prop('disabled', true);
+    })
 </script>
 
 <p>&nbsp;</p>
