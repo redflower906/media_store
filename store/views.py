@@ -789,6 +789,9 @@ def create_signout(request):
     elif user == 17382:
         loc = '3E.265'
         uname = 3
+    else:
+        loc = ''
+        uname = ''
 
     if request.method == "POST":
 
