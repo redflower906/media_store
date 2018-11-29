@@ -33,7 +33,7 @@ def recur_end_email():
                 m_plain,
                 from_email,
                 [to],
-                cc=[order.submitter.user_profile.email_address],
+                cc=[order.submitter.user_profile.email_address],)
                 email.attach_alternative(m_html, "text/html")
                 email.send()
     subject,from_email,to = 'cron job successful!', 'harrisons1@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
@@ -42,6 +42,6 @@ def recur_end_email():
     subject,
     m_plain,
     from_email,
-    [to],
+    [to],)
     email.send()
     return
