@@ -1,3 +1,4 @@
+from django.core.management.base import BaseCommand, CommandError
 from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
