@@ -98,7 +98,7 @@ class UserFullName(User):
         proxy = True
     
     def __str__(self):
-        return self.get_full_name()
+        return self.get_full_name() + " (" + self.user_profile.employee_id + ")"
 
 class Vendor(models.Model):
     email_address = models.CharField(max_length=225, blank=True, null=True)

@@ -31,7 +31,7 @@ $(function () {
         $('#filter').keyup(function () {
             //creates a regex to compare the typed values with values in table
             var rex = new RegExp($(this).val(), 'i');
-            // for inventory search
+            // for inventory/order search
             if( $('.searchable tr.koala')) {
                 //hides every row in the table
                 $('.searchable tr.koala').hide();
