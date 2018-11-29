@@ -47,7 +47,7 @@
             <table id='form_holder'>
                 <tbody>
                     <tr>
-                        <td class='submitter'>
+                        <td>
                             {{ order_form.submitter.errors }}
                             {{ order_form.submitter }}
                         </td>
@@ -328,7 +328,7 @@
    $(".chosen-select").chosen();
 
     $(function (){
-        $('.submitter').children().prop('disabled', true);
+        $('.submitter').removeClass('chosen-select').prop('disabled', true);
     })
 </script>
 
