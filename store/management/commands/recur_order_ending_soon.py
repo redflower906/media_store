@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     email.attach_alternative(m_html, "text/html")
                     email.send()
         subject,from_email,to = 'cron job successful!', 'harrisons1@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
-        m_plain = render_to_string('cron_successful.txt', context.flatten())
+        m_plain = render_to_string('cron_successful.txt')
         email =EmailMultiAlternatives(
         subject,
         m_plain,
