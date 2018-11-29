@@ -14,7 +14,7 @@
 
 <hr/>
 <p>&nbsp;</p>
-{% if uname != False or user.is_staff is True%}
+{% if uname is not False or user.is_staff is True%}
     <div class='row'>
         <div class='col-xs-12'>
             <h2>Media Sign-out {{uname}}</h2>           
