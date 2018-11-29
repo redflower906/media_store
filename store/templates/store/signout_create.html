@@ -36,22 +36,16 @@
         {% endfor %}
 
         <fieldset>
-            <legend>Who are you?</legend>
         <div class='row'>
             <table id='form_holder'>
                 <thead>
                     <tr>
-                        <th>Who are you?</th>
-                        <th>Who is using the food?</th>
+                        <th>Who is the food for?</th>
                         <th>Dept?</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>
-                            {{ order_form.submitter.errors }}
-                            {{ order_form.submitter }}
-                        </td>
                         <td>
                             {{ order_form.requester.errors }}
                             {{ order_form.requester }}
@@ -89,29 +83,6 @@
                                         <th class='col text-center'>Container</th>
                                         <th class='col text-center'>Volume</th>
                                         <th class='col text-center'>Qty</th>
-                                        <th class='col text-center'>Location 
-                                            <a data-toggle="modal" href="#mapmodal">?</a>    
-                                        <!-- Modal -->
-                                        <div class="modal fade" id="mapmodal" tabindex="-1" role="dialog" aria-labelledby="mapmodalTitle" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                <h5 class="modal-title" id="mapmodalTitle"><b>Drop Off Locations</b></h5>
-                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <img class="img-responsive" id="img_map" src="/static/images/2E.png">
-                                                </div>
-                                                <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-primary print" onClick="window.print();return false">Print</button>
-                                                </div>
-                                            </div>
-                                            </div>
-                                        </div>
-                                        </th>                               
                                         <th class='col text-center'>Cost</th>
                                     </tr>
                                 </div>
@@ -157,10 +128,6 @@
                                         {{ form.qty.errors }}
                                         {{ form.qty }}
                                     </td>
-                                    <td class='col text-center'>
-                                        {{ order_form.location.errors }}
-                                        {{order_form.location}}
-                                    </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
                                         {{ form.line_cost.errors }}
@@ -195,16 +162,7 @@
                     </div>
             </div>
         </fieldset>
-            <p>&nbsp;</p>
-            <fieldset>
-                <legend>Special Instructions</legend>
-                <div class='row'>
-                    <div class='col-xs-2'>
-                    {{ order_form.notes_order.errors }}
-                    {{ order_form.notes_order}}
-                    </div>
-                </div>
-            </fieldset>           
+            <p>&nbsp;</p>         
             <div class='row'>
             <hr/>
                 <p></p>

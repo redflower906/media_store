@@ -800,10 +800,10 @@ def create_signout(request):
             request.POST, prefix='orderlines', instance=order)
 
         if order_form.is_valid() and orderlineformset.is_valid():
- 
             order = order_form.save(commit=False)
             order.location = loc
             order.is_recurring = 0
+            order.submitter = order.requester
             order.save()
             orderlineformset.save()
             messages.success(request,
