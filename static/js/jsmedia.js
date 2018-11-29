@@ -156,7 +156,7 @@ $(function(){
 
 
 //Automatically choose department and project code based on requester
-$(function(){
+$(function autoChoose(){
     $('#id_order-requester').change(function() {
         var optionSelected = $(this).find("option:selected");
         var valueSelected = optionSelected.val();
