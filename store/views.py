@@ -803,6 +803,7 @@ def create_signout(request):
  
             order = order_form.save(commit=False)
             order.location = loc
+            order.is_recurring = 0
             order.save()
             orderlineformset.save()
             messages.success(request,

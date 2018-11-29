@@ -17,7 +17,7 @@
 {% if uname is not False or user.is_staff is True%}
     <div class='row'>
         <div class='col-xs-12'>
-            <h2>Media Sign-out {{uname}}</h2>           
+            <h2>Media Sign-out for {{loc}}</h2>           
         </div>
     </div>
     <hr/>
@@ -36,33 +36,22 @@
         {% endfor %}
 
         <fieldset>
-            <legend>Who is creating this order?</legend>
-            <p>{{ user.get_full_name }}</p>
-
-        </fieldset>
-        <p>&nbsp;</p>
-
-        <fieldset>
-            <legend>Who is paying?</legend>
-            <div>
-                <ul>
-                    <li>
-                    The order requester must belong to the <b>department</b> being billed. If the order creator and requester 
-                    are different, please specify who should receive the order in the <b>special instructions</b> box below.
-                    </li>
-                </ul>
-            </div>
+            <legend>Who are you?</legend>
         <div class='row'>
             <table id='form_holder'>
                 <thead>
                     <tr>
-                        <th>Requester</th>
-                        <th>Department</th>
-                        <th>Project Code</th>
+                        <th>Who are you?</th>
+                        <th>Who is using the food?</th>
+                        <th>Dept?</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <td>
+                            {{ order_form.submitter.errors }}
+                            {{ order_form.submitter }}
+                        </td>
                         <td>
                             {{ order_form.requester.errors }}
                             {{ order_form.requester }}
@@ -71,74 +60,13 @@
                             {{ order_form.department.errors }}
                             {{ order_form.department }}
                         </td>
-                        <td>
-                            {{ order_form.project_code.errors }}
-                            {{ order_form.project_code }}
-                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
         <p>&nbsp;</p>
         </fieldset>
-        <fieldset>
-            <legend>Is this a recurring order?</legend>
-            <div>
-                <ul>
-                    <li>
-                        Recurring orders can only be set for a maximum of three months at a time. 
-                        You will receive an email notifying you at three weeks and again at one week before the order end date. 
-                        If you need to extend the amount of time, please edit the existing order.
-                    </li>
-                </ul>
-            </div>
-            <div class='row'>
-                <div class='col-xs-2'>
-                    {{ order_form.is_recurring.errors }}
-                    {{ order_form.is_recurring }}
-                </div>
-                <div class='col-xs-10' id='datepicker'>
-                    <div class='col-xs-1'>
-                        <p><b>From:</b></p>
-                    </div>
-                    <div class='col-xs-3'>
-                        {{ order_form.date_recurring_start }}
-                    </div>
-                    <div class='col-xs-1'>
-                        <p><b>To:</b></p>
-                    </div>
-                    <div class='col-xs-3'>
-                        {{ order_form.date_recurring_stop }}
-                    </div>
-                    <div class='col-xs-1'>
-                        <p><b>How often:</b></p>
-                    </div>
-                    <div class='col-xs-3'>
-                        {{ order_form.weeks.errors }}
-                        {{ order_form.weeks }}
-                    </div>
-                </div>
-            </div>
-        </fieldset>
         <p>&nbsp;</p>
-    {% comment %} NEED TO SET UP STAFF DOWNLOAD, I DON'T THINK IT CAN BE DONE CORRECTLY UNTIL WE HAVE THE SERVER RUNNING {% endcomment %}
-        <fieldset>
-            <legend>Recipe Upload</legend>
-            <div class='row'>
-                {% comment %} <div class='col-xs-2'>
-                {{ order_form.doc.errors }}
-                {{ order_form.doc}}
-                </div>  {% endcomment %}
-                <div class="email">
-                    <p><a href="mailto:mediafacility@janelia.hhmi.org">Email</a> us if you have a custom recipe.
-                    </p>
-                    <p>&nbsp;</p>
-                    <p>&nbsp;</p>
-                </div> 
-            </div>
-        </fieldset>
-        <p>&nbsp;</p>
-
         <fieldset>
             <legend>What would you like to order?</legend>
             {{ formset.non_form_errors }} 
