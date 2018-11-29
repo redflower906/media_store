@@ -163,13 +163,9 @@ h1 {
   background-color: #FE5B5B;
 }
 
-/* .recur3{
-  visibility: hidden;
+.hidden{
+  display: none;
 }
-
-.recur1{
-  visibility: hidden;
-} */
 
 p {
   font-size: 125%;
