@@ -189,7 +189,7 @@ $(function autoChoose(){
 
 //Automatically choose department and project code based on requester
 $(function auto(){
-    console.log($(this));
+    console.log($(this).find("option:selected").val());
     var optionSelected = $(this).find("option:selected");
     var valueSelected = optionSelected.val();
     var requester_name = optionSelected.text();
