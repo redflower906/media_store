@@ -157,11 +157,12 @@ $(function(){
 
 //Automatically choose department and project code based on requester
 $(function autoChoose(){
+    var url = window.location.href;
     if ($('.classMSO')){
         $('#id_order-submitter').change(function() {
             var optionSelectedSub = $(this).find("option:selected");
             var valueSelectedSub = optionSelectedSub.val();
-            var submitter_name = optionSelected.text();
+            var submitter_name = optionSelectedSub.text();
             $.ajax({
             url: '/ajax',
             data: {
