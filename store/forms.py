@@ -88,7 +88,7 @@ class DateInput(TextInput):
     
 class OrderForm(forms.ModelForm):
 
-    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class':'chosen-select'}))
+    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class':'chosen-select',}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
@@ -123,6 +123,11 @@ class OrderForm(forms.ModelForm):
         self.fields['project_code'].empty_label = "Select a project code"
         # following line needed to refresh widget copy of choice list
         self.fields['project_code'].widget.choices = self.fields['project_code'].choices
+
+        if 'inital' in kwargs:
+            _sub = str(kwargs.get('initial').get('submitter', None))
+            if _sub:
+                self.fields['submitter'].widget.attrs['data-search-text'] = _sub
 
 
 
