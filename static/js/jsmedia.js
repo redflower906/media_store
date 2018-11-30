@@ -155,10 +155,9 @@ $(function(){
 
 
 
-//Automatically choose department and project code based on requester
+//Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
     var url = String(window.location.href);
-    console.log(url);
     if (url == 'http://mediastore.int.janelia.org/signout/new'){
         $('#id_order-submitter').change(function() {
             var optionSelectedSub = $(this).find("option:selected");
