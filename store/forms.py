@@ -124,11 +124,6 @@ class OrderForm(forms.ModelForm):
         # following line needed to refresh widget copy of choice list
         self.fields['project_code'].widget.choices = self.fields['project_code'].choices
 
-        if 'inital' in kwargs:
-            _sub = str(kwargs.get('initial').get('submitter', None))
-            if _sub:
-                self.fields['submitter'].widget.attrs['data-search-text'] = _sub
-
 
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
