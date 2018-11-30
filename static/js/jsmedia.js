@@ -157,7 +157,7 @@ $(function(){
 
 //Automatically choose department and project code based on requester
 $(function autoChoose(){
-    if ($('.MSO')){
+    if ($('.classMSO')){
         $('#id_order-submitter').change(function() {
             var optionSelectedSub = $(this).find("option:selected");
             var valueSelectedSub = optionSelectedSub.val();
