@@ -93,7 +93,9 @@ class UserProfile(models.Model):
             (self.is_manager and self.department.number == '093098'))
 
     def data_text_search(self):
-        return self.employee_id + ' ' + self.first_name + ' ' + self.last_name
+        if self.employee_id:
+            return self.employee_id + ' ' + self.first_name + ' ' + self.last_name
+        return self.first_name + ' ' + self.last_name
 
 class UserFullName(User):
     class Meta:
