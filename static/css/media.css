@@ -157,10 +157,12 @@ h1 {
 
 .threeWeeks {
   background-color: #FEFE51;
+  display: none;
 }
 
 .oneWeek{
   background-color: #FE5B5B;
+  display: none;
 }
 
 .hidden{
