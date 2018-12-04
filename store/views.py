@@ -307,7 +307,7 @@ def edit_order(request, id):
 
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order)
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
