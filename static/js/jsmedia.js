@@ -132,12 +132,17 @@ function recurringAlert(){
 //Alert when recurring order will end soon
 function endingAlert(){
     if ($('.threeWeeks')) {
-        $('.recur3').show();
+        $('.recur3').removeClass('hidden');
     } else if ($('.oneWeek')){
-        $('.recur1').show();
+        $('.recur1').removeClass('hidden');
     } else {
-        $('.recur3').hide();
-        $('.recur1').hide();
+        if($('.hidden')){
+            console.log('where is the hidden class?')
+        }
+        else{
+            $('.recur3').addClass('.hidden');
+            $('.recur1').hide('.hidden');    
+        }
     }
 }
 
