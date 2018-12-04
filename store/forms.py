@@ -94,7 +94,7 @@ class OrderFormSelect(forms.Select):
                                                                     subindex=subindex, attrs=attrs)
         if option_dict['value']:
             user = UserProfile.objects.values().get(user=option_dict['value'])
-            option_dict['attrs']['data-text-search'] = user.employee_id + ' ' + user.first_name + ' ' + user.last_name
+            option_dict['attrs']['data-text-search'] = user
         return option_dict
 
 class OrderForm(forms.ModelForm):
