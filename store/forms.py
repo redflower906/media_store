@@ -93,7 +93,7 @@ class OrderFormSelect(forms.Select):
         option_dict = super(OrderFormSelect, self).create_option(name, value, label, selected, index,
                                                                     subindex=subindex, attrs=attrs)
         if option_dict['value']:
-            user = UserProfile.objects.values().get(id=option_dict['value'])
+            user = UserProfile.objects.values().get(user=option_dict['value'])
             option_dict['attrs']['data-text-search'] = user.data_text_search()
         return option_dict
 
