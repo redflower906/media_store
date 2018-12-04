@@ -92,6 +92,8 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
+    def data_text_search(self):
+        return self.employee_id + ' ' + self.first_name + ' ' + self.last_name
 
 class UserFullName(User):
     class Meta:

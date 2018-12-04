@@ -86,10 +86,21 @@ class DateInput(TextInput):
     input_type='date'
 
     
+class OrderFormSelect(forms.Select):
+
+    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
+
+        option_dict = super(OrderFormSelect, self).create_option(name, value, label, selected, index,
+                                                                    subindex=subindex, attrs=attrs)
+        if option_dict['value']:
+            user = UserProfile.objects.values().get(id=option_dict['value'])
+            option_dict['attrs']['data-text-search'] = user.data_text_search()
+        return option_dict
+
 class OrderForm(forms.ModelForm):
 
-    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class':'chosen-select',}))
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=forms.Select(attrs={'class': 'chosen-select'}))
+    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select',}))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
