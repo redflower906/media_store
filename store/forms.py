@@ -99,7 +99,7 @@ class OrderFormSelect(forms.Select):
 
 class OrderForm(forms.ModelForm):
 
-    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select',}))
+    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select sub',}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
     # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
     # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
