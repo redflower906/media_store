@@ -6,7 +6,7 @@
 {% load formset_tags %}
 {% load store_tags %}
 {% load static %}
-<script src="{% static 'js/order_edit.js' %}"></script> 
+{% comment %} <script src="{% static 'js/order_edit.js' %}"></script>  {% endcomment %}
 <script type="text/javascript">
     var inventory_groups = {{ signout_lists | safe}};
     window.onload = recurringAlert;

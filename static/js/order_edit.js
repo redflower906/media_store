@@ -24,7 +24,7 @@ function register_row(row){
     selected_inventory = inventory_select.val()
     inventory_select.empty()
     inventory_select.append("<option value=''> ---------- </option>");
-    // inventory_select.attr('disabled', 1)
+    inventory_select.attr('disabled', 1)
     if (selected_inventory){
         media_code = find_invdetails(selected_inventory).media_code
         media_select.val(media_code)
