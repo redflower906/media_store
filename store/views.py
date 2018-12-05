@@ -817,7 +817,7 @@ def create_signout(request):
         loc = False
         uname = False
     
-    q = Inventory.objects.get(
+    q = Inventory.objects.filter(
         Q(id=1245) | Q(id=1263))
 
     if request.method == "POST":
