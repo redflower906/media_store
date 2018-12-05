@@ -40,7 +40,8 @@ class Command(BaseCommand):
                     m_plain,
                     from_email,
                     [to],
-                    cc=[order.submitter.user_profile.email_address],)
+                    # cc=[order.req.user_profile.email_address],
+                    )
                     email.attach_alternative(m_html, "text/html")
                     email.send()
         subject,from_email,to = 'cron job successful!', 'harrisons1@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'

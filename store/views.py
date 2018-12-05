@@ -255,7 +255,9 @@ def create_order(request, copy_id=None):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[
+                # order_form.instance.submitter.user_profile.email_address, 
+               'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -308,7 +310,7 @@ def edit_order(request, id):
 
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={'submitter': request.user})
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order,)
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
