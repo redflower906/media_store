@@ -816,7 +816,7 @@ def create_signout(request):
     elif u == 17382:
         loc = '3E.265'
         uname = 3
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
+        q = forms.ModelChoiceField(Inventory.objects.filter(Q(id=1245) | Q(id=1263)))
     else:
         loc = False
         uname = False
@@ -827,7 +827,7 @@ def create_signout(request):
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, )
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
-        orderlineformset.fields['inventory'].queryset = q
+        orderlineformset.fields['inventory'] = q
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save(commit=False)
