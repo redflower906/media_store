@@ -125,6 +125,9 @@ class OrderForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
+        self.fields['submitter'].empty_label = "Select a submitter"
+        # following line needed to refresh widget copy of choice list
+        self.fields['submitter'].widget.choices = self.fields['submitter'].choices
         self.fields['department'].empty_label = "Select a department"
         # following line needed to refresh widget copy of choice list
         self.fields['department'].widget.choices = self.fields['department'].choices
