@@ -843,7 +843,7 @@ def create_signout(request):
     else:
             order_form = OrderForm(prefix='order', instance=order,)
             orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines', instance=order)
+                prefix='orderlines', instance=order, queryset=q)
 
 
 
