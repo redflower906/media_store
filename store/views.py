@@ -225,7 +225,7 @@ def create_order(request, copy_id=None):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-            'submitter': user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order)
 
@@ -281,7 +281,7 @@ def create_order(request, copy_id=None):
 
         else:
             order_form = OrderForm(prefix='order', instance=order, initial={
-            'submitter': user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order)
 
