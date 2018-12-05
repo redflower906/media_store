@@ -234,9 +234,10 @@ def create_order(request, copy_id=None):
             #   Some options:
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
-            order = order_form.save(commit=False)
-            order.submitter = user
-            order.save()
+            order = order_form.save()
+            # order = order_form.save(commit=False)
+            # order.submitter = user
+            # order.save()
             orderlineformset.save()
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
             subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
