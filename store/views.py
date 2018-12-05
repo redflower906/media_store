@@ -804,13 +804,13 @@ def create_signout(request):
     order = Order()
     user = request.user
 
-    if user == 17380:
+    if user == 'signout2':
         loc = '2E.233'
         uname = 2
-    elif user == 17381:
+    elif user == 'signout1':
         loc = '1E.390'
         uname = 1
-    elif user == 17382:
+    elif user == 'signout3':
         loc = '3E.265'
         uname = 3
     else:
