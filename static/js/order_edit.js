@@ -25,7 +25,10 @@ function register_row(row){
     inventory_select.empty()
     inventory_select.append("<option value=''> ---------- </option>");
     if($('.PC')){
-    inventory_select.attr('disabled', 1)
+        inventory_select.attr('disabled', 1)
+    }
+    else{
+        $('#id_' + prefix + 'inventory').removeAttr('disabled')
     }
     if (selected_inventory){
         media_code = find_invdetails(selected_inventory).media_code
