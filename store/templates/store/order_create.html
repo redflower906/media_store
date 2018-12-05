@@ -325,11 +325,13 @@
         });            
         $('#order_table tbody tr.dynamic-form').map(function (index, row){
             register_row($(row));        
-        });    
+        });   
     });
-   $(".chosen-select").chosen({search_contains:true});
-   $('.chosen-select sub').removeAttr('required');
-
+    $(".chosen-select").chosen({search_contains:true});
+    $('.remover').removeAttr('required');
+    if($('.remover')){
+        console.log('remover exists!')
+    }
 
 </script>
 
