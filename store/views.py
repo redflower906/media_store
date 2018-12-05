@@ -216,24 +216,25 @@ def __build_inventory_groups():
     return simplejson.dumps(inventory_lists)
 
 
-def __build_signout_groups(*args):
+def __build_signout_groups(q):
     """ build inventory lists grouped by mediatype.
 
         This data is used on the front-end to build mediatype and inventory dropdowns
     """
     signout_lists = {}
-    for type_val, display in MEDIA_CHOICES:
-        signout_choices = [{
-            'id': inv.id,
-            'desc': inv.inventory_text,
-            'container': inv.container,
-            'notes': inv.notes_inv,
-            'vol': inv.volume,
-            'cost': str(inv.cost),
-            'media_code': type_val
-        } for inv
-            in Inventory.objects.filter(media_type=type_val)]
-        signout_lists[type_val] = signout_choices
+    for a in q:
+        for type_val, display in MEDIA_CHOICES:
+            signout_choices = [{
+                'id': inv.id,
+                'desc': inv.inventory_text,
+                'container': inv.container,
+                'notes': inv.notes_inv,
+                'vol': inv.volume,
+                'cost': str(inv.cost),
+                'media_code': type_val
+            } for inv
+                in Inventory.objects.filter(media_type=type_val)]
+            signout_lists[type_val] = signout_choices
     return simplejson.dumps(signout_lists)
 
 @login_required(login_url='login')
@@ -808,18 +809,19 @@ def create_signout(request):
     if u == 17380:
         loc = '2E.233'
         uname = 2
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1262))
     elif u == 17381:
         loc = '1E.390'
         uname = 1
+        q = Inventory.objects.filter(Q(id=1267))
     elif u == 17382:
         loc = '3E.265'
         uname = 3
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
     else:
         loc = False
         uname = False
     
-    q = Inventory.objects.filter(
-        Q(id=1245) | Q(id=1263))
 
     if request.method == "POST":
 
