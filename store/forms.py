@@ -101,12 +101,10 @@ class OrderForm(forms.ModelForm):
 
     submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
-    # submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'))
-    # department = forms.ModelChoiceField(queryset=Department.objects.all().order_by('department_name'))
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
-        fields = ('department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'doc', 'notes_order','project_code')
+        fields = ('submitter', 'department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'doc', 'notes_order','project_code')
         labels = {
             'notes_order': 'Special Instructions'
         }
@@ -125,9 +123,9 @@ class OrderForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(OrderForm, self).__init__(*args, **kwargs)
-        # self.fields['submitter'].empty_label = "Select a submitter"
-        # # following line needed to refresh widget copy of choice list
-        # self.fields['submitter'].widget.choices = self.fields['submitter'].choices
+        self.fields['submitter'].empty_label = "Select a submitter"
+        # following line needed to refresh widget copy of choice list
+        self.fields['submitter'].widget.choices = self.fields['submitter'].choices
         self.fields['department'].empty_label = "Select a department"
         # following line needed to refresh widget copy of choice list
         self.fields['department'].widget.choices = self.fields['department'].choices
