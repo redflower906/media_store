@@ -826,7 +826,8 @@ def create_signout(request):
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, )
         orderlineformset = OrderLineInlineFormSet(
-            request.POST, prefix='orderlines', instance=order, queryset=q)
+            request.POST, prefix='orderlines', instance=order,)
+        orderlineformset.fields['inventory'].queryset = q
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save(commit=False)
@@ -843,7 +844,9 @@ def create_signout(request):
     else:
             order_form = OrderForm(prefix='order', instance=order,)
             orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines', instance=order, queryset=q)
+                prefix='orderlines', instance=order,)
+            orderlineformset.fields['inventory'].queryset = q
+
 
 
 
