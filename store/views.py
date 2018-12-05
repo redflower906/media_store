@@ -216,6 +216,26 @@ def __build_inventory_groups():
     return simplejson.dumps(inventory_lists)
 
 
+def __build_signout_groups(*args):
+    """ build inventory lists grouped by mediatype.
+
+        This data is used on the front-end to build mediatype and inventory dropdowns
+    """
+    signout_lists = {}
+    for type_val, display in MEDIA_CHOICES:
+        signout_choices = [{
+            'id': inv.id,
+            'desc': inv.inventory_text,
+            'container': inv.container,
+            'notes': inv.notes_inv,
+            'vol': inv.volume,
+            'cost': str(inv.cost),
+            'media_code': type_val
+        } for inv
+            in Inventory.objects.filter(media_type=type_val)]
+        signout_lists[type_val] = signout_choices
+    return simplejson.dumps(signout_lists)
+
 @login_required(login_url='login')
 def create_order(request, copy_id=None):
 
@@ -796,6 +816,9 @@ def create_signout(request):
     else:
         loc = False
         uname = False
+    
+    q = Inventory.objects.get(
+        Q(id=1245) | Q(id=1263))
 
     if request.method == "POST":
 
@@ -825,9 +848,10 @@ def create_signout(request):
     return render(request, 'store/signout_create.html', {
         'order_form' : order_form,
         'formset': orderlineformset,
-        'inventory_lists': __build_inventory_groups(),
+        # 'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'loc': loc,
         'uname': uname,
         'user': user,
+        'signout_lists': __build_signout_groups(q),
     })

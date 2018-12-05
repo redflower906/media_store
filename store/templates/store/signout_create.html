@@ -8,7 +8,7 @@
 {% load static %}
 <script src="{% static 'js/order_edit.js' %}"></script> 
 <script type="text/javascript">
-    var inventory_groups = {{ inventory_lists | safe}};
+    var inventory_groups = {{ signout_lists | safe}};
     window.onload = recurringAlert;
 </script>
 
