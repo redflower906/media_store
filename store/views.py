@@ -816,7 +816,7 @@ def create_signout(request):
     elif u == 17382:
         loc = '3E.265'
         uname = 3
-        q = forms.ModelChoiceField(Inventory.objects.filter(Q(id=1245) | Q(id=1263)))
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
     else:
         loc = False
         uname = False
