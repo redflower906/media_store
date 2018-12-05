@@ -6,7 +6,7 @@
 {% load formset_tags %}
 {% load store_tags %}
 {% load static %}
-{% comment %} <script src="{% static 'js/order_edit.js' %}"></script>  {% endcomment %}
+<script src="{% static 'js/signout_edit.js' %}"></script> 
 <script type="text/javascript">
     var inventory_groups = {{ signout_lists | safe}};
     window.onload = recurringAlert;
@@ -17,7 +17,7 @@
 {% if uname != False or user.is_staff is True%}
     <div class='row'>
         <div class='col-xs-12'>
-            <h2 class='classMSO'>Media Sign-out for {{loc}} {{q.values_list}}</h2>           
+            <h2 class='classMSO'>Media Sign-out for {{loc}}</h2>           
         </div>
     </div>
     <hr/>
