@@ -17,7 +17,7 @@
 {% if uname != False or user.is_staff is True%}
     <div class='row'>
         <div class='col-xs-12'>
-            <h2 class='classMSO'>Media Sign-out for {{loc}}</h2>           
+            <h2 class='classMSO'>Media Sign-out for {{loc}} {{q.values_list}}</h2>           
         </div>
     </div>
     <hr/>
@@ -107,7 +107,7 @@
                                     {{ hidden_field.errors }} 
                                     {{ hidden_field }}
                                     {% endfor %}
-                                    <td class='col text-center'>
+                                    {% comment %} <td class='col text-center'>
                                         <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
                                             {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
                                         <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
@@ -118,7 +118,7 @@
                                                 </option>
                                             {% endfor %}
                                         </select>
-                                    </td>
+                                    </td> {% endcomment %}
                                     <td class='col text-center'>
                                         {{ form.inventory.errors }}
                                         {{ form.inventory }}
