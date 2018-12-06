@@ -833,7 +833,7 @@ def create_signout(request):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save(commit=False)
             order.location = loc
-            order.is_recurring = 0
+            order.is_recurring = False
             # order.submitter = order.requester
             order.save()
             orderlineformset.save()
@@ -849,13 +849,9 @@ def create_signout(request):
             for form in orderlineformset:
                 form.fields['inventory'].queryset = q
 
-
-
-
     return render(request, 'store/signout_create.html', {
         'order_form' : order_form,
         'formset': orderlineformset,
-        # 'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'loc': loc,
         'uname': uname,
