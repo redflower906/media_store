@@ -829,6 +829,8 @@ def create_signout(request):
             request.POST, prefix='orderlines', instance=order,)
         for form in orderlineformset:
             form.fields['inventory'].queryset = q
+        order_form.clean()
+        orderlineformset.clean()
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save(commit=False)
