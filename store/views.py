@@ -707,12 +707,19 @@ def current_sign_outs (request):
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
     orders = Order.objects.all()
-    current = orders.filter(status__icontains='Billed').prefetch_related('orderline_set').filter(orderline__inventory=1263)
+    current = orders.filter(status__icontains='Complete').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
     billed = orders.filter(date_billed__isnull=True).prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
+
+    if today >= nextbill:
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
+        twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    days = (nextbill - today).days
 
     return render(request,
         'store/sign_out_view.html',{
@@ -721,6 +728,7 @@ def current_sign_outs (request):
         'current': current,
         'billed': billed,
         'orders': orders,
+        'days': days,
         })
 
 @login_required
@@ -835,11 +843,12 @@ def create_signout(request):
             order = order_form.save(commit=False)
             order.location = loc
             order.is_recurring = False
+            order.status = 'Complete'
             # order.submitter = order.requester
             order.save()
             orderlineformset.save()
             messages.success(request,
-            'Order {0} was successfully created.'.format(order_form.instance.id))
+            'Thank you for signing out food!')
             return HttpResponseRedirect('/signout/new')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
