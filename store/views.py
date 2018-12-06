@@ -845,7 +845,8 @@ def create_signout(request):
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
-            order_form = OrderForm(prefix='order', instance=order,)
+            order_form = OrderForm(prefix='order', instance=order,initial={
+            'location': loc})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order,)
             for form in orderlineformset:
