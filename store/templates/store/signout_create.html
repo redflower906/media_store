@@ -67,7 +67,7 @@
                 </tbody>
             </table>
         </div>
-        <div class='row'>
+        {% comment %} <div class='row hidden'>
             <div class='col-xs-2'>
                 {{ order_form.is_recurring.errors }}
                 {{ order_form.is_recurring }}
@@ -105,7 +105,7 @@
                 {{order_form.location.errors}}
                 {{order_form.location}}
             </div>
-        </div>
+        </div> {% endcomment %}
         <p>&nbsp;</p>
         </fieldset>
         <p>&nbsp;</p>
