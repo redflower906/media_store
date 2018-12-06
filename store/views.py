@@ -824,12 +824,12 @@ def create_signout(request):
 
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, )
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'location': loc})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order,)
         for form in orderlineformset:
             form.fields['inventory'].queryset = q
-
         if order_form.is_valid():
             messages.success(request, 'order_form is valid!')
         # if order_form.is_valid() and orderlineformset.is_valid():
