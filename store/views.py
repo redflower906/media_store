@@ -842,9 +842,6 @@ def create_signout(request):
         #     messages.success(request,
         #     'Order {0} was successfully created.'.format(order_form.instance.id))
         #     return HttpResponseRedirect('/signout/new')
-        elif orderlineformset.is_valid():
-            messages.success(request, 'orderlineformset is valid!')
-            
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
