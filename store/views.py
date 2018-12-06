@@ -829,19 +829,22 @@ def create_signout(request):
             request.POST, prefix='orderlines', instance=order,)
         for form in orderlineformset:
             form.fields['inventory'].queryset = q
-        order_form.clean()
-        orderlineformset.clean()
 
-        if order_form.is_valid() and orderlineformset.is_valid():
-            order = order_form.save(commit=False)
-            order.location = loc
-            order.is_recurring = False
-            # order.submitter = order.requester
-            order.save()
-            orderlineformset.save()
-            messages.success(request,
-            'Order {0} was successfully created.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/signout/new')
+        if order_form.is_valid():
+            messages.success(request, 'order_form is valid!')
+        # if order_form.is_valid() and orderlineformset.is_valid():
+        #     order = order_form.save(commit=False)
+        #     order.location = loc
+        #     order.is_recurring = False
+        #     # order.submitter = order.requester
+        #     order.save()
+        #     orderlineformset.save()
+        #     messages.success(request,
+        #     'Order {0} was successfully created.'.format(order_form.instance.id))
+        #     return HttpResponseRedirect('/signout/new')
+        elif orderlineformset.is_valid():
+            messages.success(request, 'orderlineformset is valid!')
+            
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
