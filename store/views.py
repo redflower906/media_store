@@ -820,6 +820,7 @@ def create_signout(request):
     else:
         loc = False
         uname = False
+        q = Inventory.objects.all()
     
 
     if request.method == "POST":
