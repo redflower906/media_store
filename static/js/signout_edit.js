@@ -9,7 +9,7 @@ function register_row(row){
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
     //register listeners to changes in the dropdowns
-    media_select.change(populate_inventory)
+    // media_select.change(populate_inventory)
     inventory_select.change(populate_vol_and_containers)
 
     //add django formset-style ids to container and vol p tags,
