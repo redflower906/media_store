@@ -1,9 +1,9 @@
 {% extends "store/base.html" %}
-{% if 'signout' not in user.username %}
+{% if 'signout' in user.username %}
+{% else %}    
     {% block navbar %}
     {% include "store/navbar.html"%}
     {% endblock %}
-{% else %}
 {% endif %}
 {% block content %}
 {% load formset_tags %}
