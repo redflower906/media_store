@@ -24,7 +24,7 @@
   </head>
   <body>
     <div class='container wrapper'>
-    {% if uname != False or user.is_staff is True %}
+    {% if uname != False %}
     {% else %}    
         {% block navbar %}
         {% include "store/navbar.html"%}
