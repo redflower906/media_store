@@ -1,5 +1,5 @@
 {% extends "store/base.html" %}
-{% if 'signout' in user.username %}
+{% if uname != False or user.is_staff is True %}
 {% else %}    
     {% block navbar %}
     {% include "store/navbar.html"%}
@@ -16,7 +16,7 @@
 </script>
 <hr/>
 <p>&nbsp;</p>
-{% if uname != False or user.is_staff is True%}
+{% if uname != False or user.is_staff is True %}
     <div class='row'>
         <div class='col-xs-12'>
             <h2 class='classMSO'>Media Sign-out for the {{user.first_name}}  {{user.last_name}}</h2>           
