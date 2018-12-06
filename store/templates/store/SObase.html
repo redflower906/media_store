@@ -23,8 +23,13 @@
     <![endif]-->
   </head>
   <body>
-    {% comment %} {% block navbar %}
-    {% endblock %} {% endcomment %}
+    <div class='container wrapper'>
+    {% if uname != False or user.is_staff is True %}
+    {% else %}    
+        {% block navbar %}
+        {% include "store/navbar.html"%}
+        {% endblock %}
+    {% endif %} 
     {% if messages %}
 
         {% for message in messages %} 

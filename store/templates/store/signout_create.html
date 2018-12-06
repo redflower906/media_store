@@ -1,10 +1,4 @@
 {% extends "store/SObase.html" %}
-{% if uname != False or user.is_staff is True %}
-{% else %}    
-    {% block navbar %}
-    {% include "store/navbar.html"%}
-    {% endblock %}
-{% endif %} 
 {% block content %}
 {% load formset_tags %}
 {% load store_tags %}
