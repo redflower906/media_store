@@ -1,7 +1,7 @@
 {% extends "store/base.html" %}
-{% block navbar %}
+{% comment %} {% block navbar %}
 {% include "store/navbar.html"%}
-{% endblock %}
+{% endblock %} {% endcomment %}
 {% block content %}
 {% load formset_tags %}
 {% load store_tags %}
@@ -11,13 +11,12 @@
     var inventory_groups = {{ signout_lists | safe}};
     window.onload = recurringAlert;
 </script>
-
 <hr/>
 <p>&nbsp;</p>
 {% if uname != False or user.is_staff is True%}
     <div class='row'>
         <div class='col-xs-12'>
-            <h2 class='classMSO'>Media Sign-out for {{loc}}</h2>           
+            <h2 class='classMSO'>Media Sign-out for the {{user.first_name}}  {{user.last_name}}</h2>           
         </div>
     </div>
     <hr/>
