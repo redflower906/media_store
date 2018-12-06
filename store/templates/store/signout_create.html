@@ -59,9 +59,40 @@
                             {{ order_form.department.errors }}
                             {{ order_form.department }}
                         </td>
+                        <td class='hidden'>
+                            {{ order_form.project_code.errors }}
+                            {{ order_form.project_code }}
+                        </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class='row hidden'>
+            <div class='col-xs-2'>
+                {{ order_form.is_recurring.errors }}
+                {{ order_form.is_recurring }}
+            </div>
+            <div class='col-xs-10' id='datepicker'>
+                <div class='col-xs-1'>
+                    <p><b>From:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_start }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>To:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_stop }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>How often:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.weeks.errors }}
+                    {{ order_form.weeks }}
+                </div>
+            </div>
         </div>
         <p>&nbsp;</p>
         </fieldset>
