@@ -846,6 +846,7 @@ def create_signout(request):
             order.location = loc
             order.is_recurring = False
             order.status = 'Complete'
+            order.notes_order = 'Signout {0}'.format(orderlineformset.instance.inventory.inventory_text)
             # order.submitter = order.requester
             order.save()
             orderlineformset.save()

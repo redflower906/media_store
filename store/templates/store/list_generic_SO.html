@@ -33,9 +33,18 @@
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
                     <td>{{orderform.instance.department.department_name}}</td> 
                     <!-- coldroom sign-out -->
+                    {% if orderforms == current %}
+                    <td>{{orderform.instance.date_created}}</td>
+                    <td>{{orderform.instance.location}}</td>
+                    <!-- coldroom signout billed -->
+                    {% elif orderforms == billed %}
+                    <td>{{orderform.instance.date_created}}</td>
+                    <td>{{orderform.instance.date_billed}}</td>
+                    {% else %}
                     <td>{{orderform.instance.department.number}}</td>
                     <td>{{orderform.instance.requester.user_profile.name}}</td>
                     <td>{{orderform.instance.date_created}}</td>
+                    {% endif %}
                     {% if orderforms == cancel %}
                     <td>{{orderform.instance.date_modified}}</td>
                         {% if orderform.instance.is_recurring %}
