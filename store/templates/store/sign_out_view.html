@@ -30,7 +30,7 @@
         </div>    
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=orders headers=headers1%}
+                {%include "store/list_generic.html" with orderforms=current headers=headers1%}
             </div>
         </div>
     </div>
@@ -42,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic.html" with orders=billed headers=headers2%}
+                {%include "store/list_generic.html" with orderforms=billed headers=headers2%}
             </div>
         </div>
     </div>    
