@@ -33,11 +33,11 @@
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
                     <td>{{orderform.instance.department.department_name}}</td> 
                     <!-- coldroom sign-out -->
-                    {% if orderforms == cornmeal %}
+                    {% if orderforms == current %}
                     <td>{{orderform.instance.date_created}}</td>
                     <td>{{orderform.instance.location}}</td>
                     <!-- coldroom signout billed -->
-                    {% elif orderforms == corn_b %}
+                    {% elif orderforms == billed %}
                     <td>{{orderform.instance.date_created}}</td>
                     <td>{{orderform.instance.date_billed}}</td>
                     {% else %}
@@ -152,7 +152,7 @@
                 {% endfor %}
             </tbody>
         {% else %}
-            <div><p>There are no orders at this time {{current.values_list}}.</p></div>        
+            <div><p>There are no orders at this time.</p></div>        
         {% endif %}    
     </table>
     <div class="pagination">
