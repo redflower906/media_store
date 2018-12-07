@@ -842,6 +842,7 @@ def create_signout(request):
         for form in orderlineformset:
             form.fields['inventory'].queryset = q
         if order_form.is_valid() and orderlineformset.is_valid():
+            orderlineformset.save()
             order = order_form.save(commit=False)
             order.location = loc
             order.is_recurring = False
@@ -849,7 +850,6 @@ def create_signout(request):
             order.notes_order = 'Signout {0}'.format(orderlineformset.instance.inventory.inventory_text)
             # order.submitter = order.requester
             order.save()
-            orderlineformset.save()
             messages.success(request,
             'Thank you for signing out food!')
             return HttpResponseRedirect('/signout/new')
