@@ -434,7 +434,7 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
-    if instance.status == 'Complete':
+    if instance.status == 'Complete' and instance.notes_order != 'Signout':
         domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
         context = Context({
             'id': instance.id,
