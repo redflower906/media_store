@@ -709,6 +709,7 @@ def current_sign_outs (request):
     orders = Order.objects.all()
     current = orders.filter(status__icontains='Complete').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
     billed = orders.filter(date_billed__isnull=True).prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
+    test = orders.prefetch_related('orderline_set').filter(orderline__inventory__id=1263)
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -729,6 +730,7 @@ def current_sign_outs (request):
         'billed': billed,
         'orders': orders,
         'days': days,
+        'test':test,
         })
 
 @login_required
