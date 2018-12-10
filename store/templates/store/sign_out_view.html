@@ -30,7 +30,7 @@
         </div>    
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic_SO.html" with orderforms=current headers=headers1%}
+                {%include "store/list_generic_SO.html" with orderforms=current pages=pagesCu headers=headers1%}
             </div>
         </div>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
@@ -43,7 +43,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/list_generic_SO.html" with orderforms=billed headers=headers2%}
+                {%include "store/list_generic_SO.html" with orderforms=billed pages=pagesBi headers=headers2%}
             </div>
         </div>
         <button type="submit" class="btn btn-primary pull-right">Submit</button>

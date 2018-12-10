@@ -571,9 +571,6 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-    var = Department.objects.all().values_list() #what is this? ~FIX~
-    print(var)
-
     return render(request,
         'store/order_view2.html',{
         'headers1': list(sort_headers1.headers()),
@@ -593,7 +590,6 @@ def view_order(request):
         'compNotBill':compNotBill,
         'compBill':compBill,
         'cancel': cancel,
-        'var':var,
         })
 
 def export_ordersCNB(request):
@@ -722,7 +718,7 @@ def current_sign_outs (request):
     days = (nextbill - today).days
 
     current_queryset = orders.filter(notes_order__icontains='signout').exclude(status__icontains='Canceled')
-    billed_queryset = orders.filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245)| Q(orderline__inventory__id=1262)| Q(orderline__inventory__id=1267))
+    billed_queryset = orders.filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed').filter(notes_order__icontains='signout')
 
  #pagination
     page = request.GET.get('page')
