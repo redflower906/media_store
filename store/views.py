@@ -710,9 +710,8 @@ def current_sign_outs (request):
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
     orders = Order.objects.all()
-    current_queryset = orders.filter(notes_order__icontains='signout')
-    billed_queryset = orders.filter(date_billed__isnull=False).prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245)| Q(orderline__inventory__id=1262)| Q(orderline__inventory__id=1267))
-    test = orders.prefetch_related('orderline_set').filter(orderline__inventory__id=1263)
+    current_queryset = orders.filter(notes_order__icontains='signout').exclude(status__icontains='Canceled')
+    billed_queryset = orders.filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245)| Q(orderline__inventory__id=1262)| Q(orderline__inventory__id=1267))
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -764,7 +763,6 @@ def current_sign_outs (request):
         'billed': billed,
         'orders': orders,
         'days': days,
-        'test':test,
         'pagesCu': pagesCu,
         'pagesBi': pagesBi,
         })

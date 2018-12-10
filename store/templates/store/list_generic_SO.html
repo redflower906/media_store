@@ -58,6 +58,7 @@
                                 </thead>
                                 <tr>
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
+                                    <td>{{orderform.instance.requester.user_profile.name}}</td>
                                     <td class='inv {{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
                                     <td>{{line.qty}}</td>

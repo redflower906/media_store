@@ -12,7 +12,6 @@
     </div>
 </div>
 {% endif %}
-<div>{{current.values_list}}</div>
 <ul class="nav nav-tabs">
         <li class="active">
           <a class="nav-link" data-toggle="tab" href="#current_corn">Current</a>
@@ -34,6 +33,7 @@
                 {%include "store/list_generic_SO.html" with orderforms=current headers=headers1%}
             </div>
         </div>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </div>
     <div role="tabpanel" class="tab-pane fade" id="billed_corn">
         <div class="row">
@@ -46,6 +46,7 @@
                 {%include "store/list_generic_SO.html" with orderforms=billed headers=headers2%}
             </div>
         </div>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </div>    
 </div>
 {% comment %} <a href="{% url 'export_orders' %}" class="btn btn-primary">data dump!</a> {% endcomment %}
