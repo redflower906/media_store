@@ -33,7 +33,6 @@
                     <td>{{orderform.instance.department.number}}</td>
                     <td>{{orderform.instance.requester.user_profile.name}}</td>
                     {% endif %}
-                    <!-- staff user -->                        
                     {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
                             {{ hidden_field }} 

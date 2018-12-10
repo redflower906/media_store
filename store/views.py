@@ -500,16 +500,15 @@ def view_order(request):
             x.delete()
 
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
-    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers1.get_order_by())
+    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').order_by(sort_headers1.get_order_by())
     #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
     recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
-    status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').exclude(orderline__inventory__id='686').order_by(sort_headers2.get_order_by())
-    compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').exclude(
-    orderline__inventory__id='686').order_by(sort_headers3.get_order_by())
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').exclude(
-    orderline__inventory__id='686').order_by(sort_headers4.get_order_by())
-    cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').exclude(
-    orderline__inventory__id='686').order_by(sort_headers5.get_order_by())
+    status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').order_by(sort_headers2.get_order_by())
+    compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').order_by(
+    sort_headers3.get_order_by())
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
+    sort_headers4.get_order_by())
+    cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').order_by(sort_headers5.get_order_by())
 
     #pagination
     page = request.GET.get('page')
@@ -711,8 +710,8 @@ def current_sign_outs (request):
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_CORN_B)
     orders = Order.objects.all()
-    current = orders.filter(status__icontains='Complete').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
-    billed = orders.filter(date_billed__isnull=True).prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245))
+    current_queryset = orders.filter(status__icontains='Complete').prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245)| Q(orderline__inventory__id=1262)| Q(orderline__inventory__id=1267))
+    billed_queryset = orders.filter(date_billed__isnull=False).prefetch_related('orderline_set').filter(Q(orderline__inventory__id=1263)| Q(orderline__inventory__id=1245)| Q(orderline__inventory__id=1262)| Q(orderline__inventory__id=1267))
     test = orders.prefetch_related('orderline_set').filter(orderline__inventory__id=1263)
 
     today = date.today()
@@ -726,6 +725,37 @@ def current_sign_outs (request):
         twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     days = (nextbill - today).days
 
+ #pagination
+    page = request.GET.get('page')
+    paginatorCu = Paginator(current_queryset, 50)
+    paginatorBi = Paginator(billed_queryset, 50)
+
+    try:
+        pagesCu = paginatorCu.page(page)
+        pagesBi = paginatorBi.page(page)
+    except PageNotAnInteger:
+        pagesCu = paginatorCu.page(1)
+        pagesBi = paginatorBi.page(1)
+    except EmptyPage:
+        pagesCu = paginatorCu.page(paginatorCu.num_pages)
+        pagesBi = paginatorBi.page(paginatorBi.num_pages)
+
+    pageCu_query = incomp_queryset.filter(id__in=[pageCu.id for pageCu in pagesCu])
+    pageBi_query = recur_queryset.filter(id__in=[pageBi.id for pageBi in pagesBi])
+    
+    current = OrderStatusFormSet(queryset=pageCu_query, prefix='current')
+    billed = OrderStatusFormSet(queryset=pageBi_query, prefix='billed')
+
+    if request.method == 'POST':
+        # for each order category, check to see if the form had been updated and save
+        order_formset = OrderStatusFormSet(request.POST, prefix='current')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='billed')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
     return render(request,
         'store/sign_out_view.html',{
         'headers1':list(sort_headers1.headers()),
@@ -735,6 +765,8 @@ def current_sign_outs (request):
         'orders': orders,
         'days': days,
         'test':test,
+        'pagesCu': pagesCu,
+        'pagesBi': pagesBi,
         })
 
 @login_required
