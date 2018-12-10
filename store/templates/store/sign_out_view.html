@@ -53,5 +53,19 @@
     </div>    
 </div>
 </form>
+<script>
+    $(function highlight(){
+        var date = moment();
+        $(this).find("[class^='date-stop']").each(function(){
+            var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+            var days = endDate.diff(date, 'days');
+            if( 21 >= days && days >= 7){
+                $(this).parent().addClass('threeWeeks');
+            } else if( 7 > days && days >= 0){
+                $(this).parent().addClass('oneWeek');
+            }
+        })
+    })
+</script>
 {% comment %} <a href="{% url 'export_orders' %}" class="btn btn-primary">data dump!</a> {% endcomment %}
 {% endblock %} 
