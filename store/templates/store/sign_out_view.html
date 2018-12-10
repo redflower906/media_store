@@ -3,6 +3,8 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
+{% load static %}
+
 <hr/>
 {% if days <= 4 %}
 <div class="panel panel-danger">
@@ -12,15 +14,16 @@
     </div>
 </div>
 {% endif %}
-<ul class="nav nav-tabs">
+<ul onload='highlight()' class="nav nav-tabs">
         <li class="active">
           <a class="nav-link" data-toggle="tab" href="#current_corn">Current</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#billed_corn">Last Billing Cycle</a>
         </li>
-
 </ul>
+<form method="post" action="" id="orderstatusform">
+{% csrf_token %}
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade-in active" id="current_corn">
         <div class="row">
@@ -49,5 +52,6 @@
         <button type="submit" class="btn btn-primary pull-right">Submit</button>
     </div>    
 </div>
+</form>
 {% comment %} <a href="{% url 'export_orders' %}" class="btn btn-primary">data dump!</a> {% endcomment %}
 {% endblock %} 
