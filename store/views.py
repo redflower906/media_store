@@ -691,17 +691,21 @@ def email_form(request, id):
 def current_sign_outs (request):
     ORDER_LIST_HEADERS_CORN = (
         ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
-        ('Date Submitted', 'date_submitted'),
+        ('Department to Bill', 'department__department_name'),
+        ('Date Submitted', 'date_created'),
         ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total'),
     )
 
     ORDER_LIST_HEADERS_CORN_B = (
         ('Order ID', 'order'),
-        ('Department to Bill', 'department_name'),
-        ('Date Submitted', 'date_submitted'),
-        ('Date Billed', 'date_billed'),
+        ('Department to Bill', 'department__department_name'),
+        ('Date Submitted', 'date_created'),
         ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total'),
+        ('Date Billed', 'date_billed'),
     )
 
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_CORN)
