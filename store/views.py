@@ -717,7 +717,7 @@ def current_sign_outs (request):
         twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     days = (nextbill - today).days
 
-    current_queryset = orders.filter(notes_order__icontains='signout').exclude(status__icontains='Canceled')
+    current_queryset = orders.filter(notes_order__icontains='signout').exclude(status__icontains='Canceled').exclude(status__icontains='Billed')
     billed_queryset = orders.filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed').filter(notes_order__icontains='signout')
 
  #pagination
