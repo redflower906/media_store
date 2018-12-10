@@ -54,18 +54,19 @@
 </div>
 </form>
 <script>
-    $(function highlight(){
-        var date = moment();
-        $(this).find("[class^='date-stop']").each(function(){
-            var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
-            var days = endDate.diff(date, 'days');
-            if( 21 >= days && days >= 7){
-                $(this).parent().addClass('threeWeeks');
-            } else if( 7 > days && days >= 0){
-                $(this).parent().addClass('oneWeek');
+    $(function(){
+        $('select').on('change', function(e){
+            $(e.target).removeClass();
+            $(e.target).addClass(e.target.value + ' form-control');
+            if($(this).closest('.koala').hasClass(e.target.value)){
+                if($(this).closest('.koala').hasClass('sdd')){
+                    $(this).closest('.koala').removeClass('sdd');
+                }
+            }else{
+                $(this).closest('.koala').addClass('sdd');
             }
-        })
-    })
+        });
+    });
 </script>
 {% comment %} <a href="{% url 'export_orders' %}" class="btn btn-primary">data dump!</a> {% endcomment %}
 {% endblock %} 
