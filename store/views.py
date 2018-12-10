@@ -740,8 +740,8 @@ def current_sign_outs (request):
         pagesCu = paginatorCu.page(paginatorCu.num_pages)
         pagesBi = paginatorBi.page(paginatorBi.num_pages)
 
-    pageCu_query = incomp_queryset.filter(id__in=[pageCu.id for pageCu in pagesCu])
-    pageBi_query = recur_queryset.filter(id__in=[pageBi.id for pageBi in pagesBi])
+    pageCu_query = current_queryset.filter(id__in=[pageCu.id for pageCu in pagesCu])
+    pageBi_query = billed_queryset.filter(id__in=[pageBi.id for pageBi in pagesBi])
     
     current = OrderStatusFormSet(queryset=pageCu_query, prefix='current')
     billed = OrderStatusFormSet(queryset=pageBi_query, prefix='billed')
