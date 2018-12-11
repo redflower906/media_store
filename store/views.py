@@ -811,6 +811,7 @@ class SearchListView(ListView):
     """
     model = Order
     paginate_by = 10
+    template_name = 'store/search.html'
 
     def get_queryset(self):
         user = self.request.user
@@ -826,7 +827,6 @@ class SearchListView(ListView):
             qs = qs.annotate(search=vector).filter(search=query)
             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
-        template_name = 'store/search.html'
 
         return qs
 
