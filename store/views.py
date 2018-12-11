@@ -826,6 +826,8 @@ class SearchListView(ListView):
             qs = qs.annotate(search=vector).filter(search=query)
             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
+        template_name = 'store/search.html'
+
         return qs
 
 
