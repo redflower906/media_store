@@ -823,7 +823,7 @@ class SearchListView(ListView):
         keywords = self.request.GET.get('q')
         if keywords:
             query = SearchQuery(keywords)
-            vector = SearchVector('submitter', 'requester', 'department__department_name', 'date_create', 'date_billed', 'orderline__inventory__inventory_text' )
+            vector = SearchVector('submitter__last_name', 'submitter__first_name', 'requester__last_name', 'requester__first_name', 'department', 'date_created', 'date_billed', 'orderline__inventory__inventory_text', )
             qs = qs.annotate(search=vector).filter(search=query)
             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
