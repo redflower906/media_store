@@ -1,6 +1,14 @@
-    <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
-      <button class="searchbutton" type="submit">
-        <i class="fa fa-search"></i>
-      </button>
-      <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
-    </form>
+{% extends "store/base.html" %}
+{% block navbar %}
+{% include "store/navbar.html" %}
+{% endblock %}
+{% block content %}
+
+  <form id="searchform" action="{% url 'search_list_view' %}" method="get" accept-charset="utf-8">
+    <button class="searchbutton" type="submit">
+      <i class="fa fa-search"></i>
+    </button>
+    <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+  </form>
+
+{% endblock %}

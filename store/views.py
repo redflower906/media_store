@@ -10,6 +10,7 @@ from django.db.models import Q, Sum
 from django.views import generic
 from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
+from django.contrib.postgres.search import SearchQuery, SearchRank, SearchVector
 from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from django.http import HttpResponseRedirect, HttpResponseBadRequest, HttpRequest, HttpResponse,  JsonResponse
@@ -804,28 +805,28 @@ def sign_outs_remainder(request):
         'inputVials': inputVials,
         })
 
-# class SearchListView(ListView):
-#     """
-#     Display a Blog List page filtered by the search query.
-#     """
-#     model = Order
-#     paginate_by = 10
-#     user = self.request.user
+class SearchListView(ListView):
+    """
+    Display a Blog List page filtered by the search query.
+    """
+    model = Order
+    paginate_by = 10
 
-#     def get_queryset(self):
-#         if user.userprofile.is_privileged is False:
-#             qs = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
-#         else:
-#             qs = Order.objects.all()
+    def get_queryset(self):
+        user = self.request.user
+        if user.userprofile.is_staff is False:
+            qs = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
+        else:
+            qs = Order.objects.all()
 
-#         keywords = self.request.GET.get('q')
-#         if keywords:
-#             query = SearchQuery(keywords)
-#             vector = SearchVector('submitter', 'requester', 'department__department_name', 'date_create', 'date_billed', 'orderline__inventory__inventory_text' )
-#             qs = qs.annotate(search=vector).filter(search=query)
-#             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
+        keywords = self.request.GET.get('q')
+        if keywords:
+            query = SearchQuery(keywords)
+            vector = SearchVector('submitter', 'requester', 'department__department_name', 'date_create', 'date_billed', 'orderline__inventory__inventory_text' )
+            qs = qs.annotate(search=vector).filter(search=query)
+            qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
-#         return qs test
+        return qs
 
 
 def ajax(request):
