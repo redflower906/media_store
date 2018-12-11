@@ -814,7 +814,7 @@ class SearchListView(ListView):
 
     def get_queryset(self):
         user = self.request.user
-        if user.user_profile.is_staff is False:
+        if user.is_staff is False:
             qs = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
         else:
             qs = Order.objects.all()
