@@ -62,7 +62,7 @@ urlpatterns = [
 
 
 ##Search
-    url(r'^order/search', SearchListView.as_view(), name='Search'),
+    url(r'^order/search', views.SearchListView.as_view(), name='Search'),
 
 ##email
     url(r'^(?P<id>[0-9]*)/email$', views.email_form, name='email'),
