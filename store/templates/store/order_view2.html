@@ -128,9 +128,7 @@ onload='highlight()' {% endcomment %}
 
         $('.recur3').addClass('hidden');
         $('.recur1').addClass('hidden');    
-        if ($('.threeWeeks')) {
-            $('.recur3').removeClass('hidden');
-        } else if ($('.oneWeek')){
+        if ($('.oneWeek')){
             $('.recur1').removeClass('hidden');
         } 
         $(this).find("[class^='inv']").each(function(){
