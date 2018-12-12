@@ -131,9 +131,10 @@ function recurringAlert(){
 
 //Alert when recurring order will end soon
 function endingAlert(){
-    if ($('.oogieboogie')) {
-        $('.recur3').removeClass('hidden');
-    } else if ($('tr.oneWeek')){
+    // if ($('.oogieboogie')){
+    //     $('.recur3').removeClass('hidden');
+    //} 
+    if ($('tr.oneWeek')){
         $('.recur1').removeClass('hidden');
     } else {
         $('.recur3').addClass('hidden');
