@@ -44,7 +44,7 @@
                         {% endif %}
                     <!-- recurring -->
                     {% elif orderforms == recur %}
-                    <td class='{{orderform.instance.is_recurring}}'>{{orderform.instance.due_date}}</td>
+                    <td class='recur{{orderform.instance.is_recurring}}'>{{orderform.instance.due_date}}</td>
                     <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td class='date-stop{{orderform.instance.id}}'>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     <!-- completed not billed -->
