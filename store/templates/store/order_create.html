@@ -43,20 +43,34 @@
 
     <fieldset>
         <legend>Who is creating this order?</legend>
-        <p>{{user.get_full_name}}</p>
-        <div class='hidden row'>
-            <table id='form_holder'>
-                <tbody class='col-xs-3'>
-                    <tr>
-                        <td>
-                            {{ order_form.submitter.errors }}
-                            {{ order_form.submitter }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
+        {% if user.is_staff is False %}
+            <p>{{user.get_full_name}}</p>
+            <div class='hidden row'>
+                <table id='form_holder'>
+                    <tbody class='col-xs-3'>
+                        <tr>
+                            <td>
+                                {{ order_form.submitter.errors }}
+                                {{ order_form.submitter }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class='row'>
+                <table id='form_holder'>
+                    <tbody class='col-xs-3'>
+                        <tr>
+                            <td>
+                                {{ order_form.submitter.errors }}
+                                {{ order_form.submitter }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </fieldset>
     <p>&nbsp;</p>
 
