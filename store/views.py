@@ -493,8 +493,7 @@ def view_order(request):
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
         twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     
-    # days = (nextbill - today).days
-    days = 3
+    days = (nextbill - today).days
 
     #delete canceled orders that were created over 31 days ago
     dates = Order.objects.all()
