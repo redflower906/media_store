@@ -136,13 +136,8 @@ function endingAlert(){
     } else if ($('.oneWeek')){
         $('.recur1').removeClass('hidden');
     } else {
-        if($('.hidden')){
-            console.log('where is the hidden class?')
-        }
-        else{
-            $('.recur3').addClass('.hidden');
-            $('.recur1').hide('.hidden');    
-        }
+        $('.recur3').addClass('.hidden');
+        $('.recur1').addClass('.hidden');    
     }
 }
 
