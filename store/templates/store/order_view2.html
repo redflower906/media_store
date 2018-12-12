@@ -6,9 +6,9 @@
 {% load static %}
 <hr/>
 
-<script type="text/javascript">
+{% comment %} <script type="text/javascript">
     window.onload = endingAlert;
-</script>
+</script> {% endcomment %}
 
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="panel panel-danger">
