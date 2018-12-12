@@ -131,7 +131,7 @@ function recurringAlert(){
 
 //Alert when recurring order will end soon
 function endingAlert(){
-    if ($('tr.threeWeeks')) {
+    if ($('.oogieboogie')) {
         $('.recur3').removeClass('hidden');
     } else if ($('tr.oneWeek')){
         $('.recur1').removeClass('hidden');
