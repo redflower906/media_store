@@ -6,9 +6,6 @@
 {% load static %}
 <hr/>
 
-{% comment %} <script type="text/javascript">
-    window.onload = highlight;
-</script> {% endcomment %}
 
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="panel panel-danger">
@@ -22,7 +19,7 @@
 <div class="alert alert-danger hidden recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
 {% comment %} 
 onload='highlight()' {% endcomment %}
-<ul onload = 'endingAlert()' class="nav nav-tabs">
+<ul class="nav nav-tabs">
     <li class="active">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
     </li>
@@ -116,7 +113,7 @@ onload='highlight()' {% endcomment %}
 </div>
 </form>
 {% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
-<script>
+<script type="text/javascript">
     $(function highlight(){
         if($('.recurTrue')){
             var date = moment();
@@ -153,6 +150,10 @@ onload='highlight()' {% endcomment %}
                 $(this).closest('.koala').addClass('sdd');
             }
         });
-    });
+    });    
+    
+    window.onload = endingAlert;
+
 </script>
+
 {% endblock %}
