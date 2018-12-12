@@ -136,8 +136,8 @@ function endingAlert(){
     } else if ($('.oneWeek')){
         $('.recur1').removeClass('hidden');
     } else {
-        $('.recur3').addClass('.hidden');
-        $('.recur1').addClass('.hidden');    
+        $('.recur3').addClass('hidden');
+        $('.recur1').addClass('hidden');    
     }
 }
 
