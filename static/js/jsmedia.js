@@ -130,17 +130,16 @@ function recurringAlert(){
 }
 
 //Alert when recurring order will end soon
-function endingAlert(){
-    // if ($('.oogieboogie')){
-    //     $('.recur3').removeClass('hidden');
-    //} 
-    if ($('tr.oneWeek')){
-        $('.recur1').removeClass('hidden');
-    } else {
-        $('.recur3').addClass('hidden');
-        $('.recur1').addClass('hidden');    
-    }
-}
+// function endingAlert(){
+//     if ($('.threeWeeks')) {
+//         $('.recur3').removeClass('hidden');
+//     } else if ($('.oneWeek')){
+//         $('.recur1').removeClass('hidden');
+//     } else {
+//         $('.recur3').addClass('hidden');
+//         $('.recur1').addClass('hidden');    
+//     }
+// }
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){

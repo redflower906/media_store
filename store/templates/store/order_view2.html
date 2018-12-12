@@ -115,17 +115,23 @@ onload='highlight()' {% endcomment %}
 {% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
 <script type="text/javascript">
     $(function highlight(){
-        if($('.recurTrue')){
-            var date = moment();
-            $(this).find("[class^='date-stop']").each(function(){
-                var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
-                var days = endDate.diff(date, 'days');
-                if( 21 >= days && days >= 7){
-                    $(this).parent().addClass('threeWeeks');
-                } else if( 7 > days && days >= 0){
-                    $(this).parent().addClass('oneWeek');
-                }
-            });
+        var date = moment();
+        $(this).find("[class^='date-stop']").each(function(){
+            var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+            var days = endDate.diff(date, 'days');
+            if( 21 >= days && days >= 7){
+                $(this).parent().addClass('threeWeeks');
+            } else if( 7 > days && days >= 0){
+                $(this).parent().addClass('oneWeek');
+            }
+        });
+        if ($('.threeWeeks')) {
+            $('.recur3').removeClass('hidden');
+        } else if ($('.oneWeek')){
+            $('.recur1').removeClass('hidden');
+        } else {
+            $('.recur3').addClass('hidden');
+            $('.recur1').addClass('hidden');    
         }
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
@@ -151,9 +157,6 @@ onload='highlight()' {% endcomment %}
             }
         });
     });    
-    
-    window.onload = endingAlert;
-
 </script>
 
 {% endblock %}
