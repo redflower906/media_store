@@ -6,9 +6,9 @@
 {% load static %}
 <hr/>
 
-{% comment %} <script type="text/javascript">
-    window.onload = endingAlert;
-</script> {% endcomment %}
+<script type="text/javascript">
+    window.onload = highlight;
+</script>
 
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="panel panel-danger">
@@ -20,9 +20,9 @@
 {% endif %}
 <div class="alert alert-warning hidden recur3" role='alert'>You have one or more orders that will end in 3 weeks. If you want to extend the end date, please edit the order(s).</div>
 <div class="alert alert-danger hidden recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
-
-
-<ul onload='highlight()' class="nav nav-tabs">
+{% comment %} 
+onload='highlight()' {% endcomment %}
+<ul class="nav nav-tabs">
     <li class="active">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
     </li>
