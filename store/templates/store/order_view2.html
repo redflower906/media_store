@@ -8,17 +8,11 @@
 
 
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
-<div class="panel panel-danger">
-    <div class="panel-heading" style="text-align: center">Warning</div>
-    <div class="panel-body" style="text-align: center">
-        <p>There are {{days}} until the next billing cycle.</p>
-    </div>
-</div>
+<div class="alert alert-warning" role='alert'>There are {{days}} until the next billing cycle.</div>
 {% endif %}
 <div class="alert alert-warning hidden recur3" role='alert'>You have one or more orders that will end in 3 weeks. If you want to extend the end date, please edit the order(s).</div>
 <div class="alert alert-danger hidden recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
-{% comment %} 
-onload='highlight()' {% endcomment %}
+
 <ul class="nav nav-tabs">
     <li class="active">
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
@@ -112,8 +106,9 @@ onload='highlight()' {% endcomment %}
     </div>
 </div>
 </form>
-{% comment %} highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
 <script type="text/javascript">
+
+//highlight changed status, if recurring order is ending soon, if order has custom order within {% endcomment %}
     $(function highlight(){
         var date = moment();
         $(this).find("[class^='date-stop']").each(function(){

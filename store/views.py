@@ -255,7 +255,7 @@ def create_order(request, copy_id=None):
             #   Some options:
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
-            
+
             # order = order_form.save(commit=False)
             # order.submitter = user
             # order.save()
@@ -492,6 +492,9 @@ def view_order(request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
         twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    
+    # days = (nextbill - today).days
+    days = 3
 
     #delete canceled orders that were created over 31 days ago
     dates = Order.objects.all()
@@ -592,6 +595,7 @@ def view_order(request):
         'compNotBill':compNotBill,
         'compBill':compBill,
         'cancel': cancel,
+        'days': days,
         })
 
 def export_ordersCNB(request):

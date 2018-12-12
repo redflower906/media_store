@@ -129,18 +129,6 @@ function recurringAlert(){
     }
 }
 
-//Alert when recurring order will end soon
-// function endingAlert(){
-//     if ($('.threeWeeks')) {
-//         $('.recur3').removeClass('hidden');
-//     } else if ($('.oneWeek')){
-//         $('.recur1').removeClass('hidden');
-//     } else {
-//         $('.recur3').addClass('hidden');
-//         $('.recur1').addClass('hidden');    
-//     }
-// }
-
 //Change all orders tagged as complete to billed
 function changeAllBill(){
     $('td.Complete').children().val('Billed');
@@ -152,8 +140,6 @@ $(function(){
         $(this).parent().siblings('.status').children().val('Canceled');
     });
 });
-
-
 
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
