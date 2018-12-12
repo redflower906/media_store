@@ -121,16 +121,16 @@ onload='highlight()' {% endcomment %}
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
                 $(this).parent().addClass('threeWeeks');
+                $('.recur3').removeClass('hidden');
             } else if( 7 > days && days >= 0){
                 $(this).parent().addClass('oneWeek');
+                $('.recur1').removeClass('hidden');
+            } else {
+                $('.recur3').addClass('hidden');
+                $('.recur1').addClass('hidden');  
             }
         });    
 
-        $('.recur3').addClass('hidden');
-        $('.recur1').addClass('hidden');    
-        if ($('.oneWeek')){
-            $('.recur1').removeClass('hidden');
-        } 
         $(this).find("[class^='inv']").each(function(){
             var orderInv = $(this).text();
             var lineCost = $(this).siblings('.linetotal').text();
