@@ -4,11 +4,19 @@
 {% endblock %}
 {% block content %}
 
-  <form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
-    <button class="searchbutton" type="submit">
-      <i class="fa fa-search"></i>
-    </button>
-    <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
-  </form>
+<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
+  <button class="searchbutton" type="submit">
+    <i class="fa fa-search"></i>
+  </button>
+  <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
+</form>
+
+<ul>
+{% for x in object_list %}
+  <li>{{ x.id }} - {{ x.submitter }} - {{ x.requester }}</li>
+{% empty %}
+  <li>No orders</li>
+{% endfor %}
+</ul>  
 
 {% endblock %}
