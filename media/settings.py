@@ -91,7 +91,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.postgres',
 #    'django_extensions',
     'jquery',
     'djangoformsetjs',
@@ -100,6 +99,8 @@ INSTALLED_APPS = [
     'import_export',
     'django_crontab',
     'djrichtextfield',
+    'django.contrib.postgres',
+
 ]
 
 MIDDLEWARE = [
