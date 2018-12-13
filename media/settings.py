@@ -99,7 +99,7 @@ INSTALLED_APPS = [
     'import_export',
     'django_crontab',
     'djrichtextfield',
-    'django.contrib.postgres',
+    # 'django.contrib.postgres',
 
 ]
 
