@@ -9,7 +9,7 @@
             {% csrf_token %}
             <div>
                 <table>
-                {{search_form}}
+                {{search_form.as_table}}
                 </table>
                 <div class='text-right', id='inventory-buttons'>
                     <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
