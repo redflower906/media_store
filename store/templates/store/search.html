@@ -3,18 +3,19 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
-
-<div class='row'>
-    <form method="POST" action="" class="post-form form-vertical">
-        {% csrf_token %}
-        <div>
-            <table>
-            {{search_form}}
-            </table>
-        </div>
-    <div class='text-right', id='inventory-buttons'>
-        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+<div class="post form">
+    <div class='row'>
+        <form method="POST" action="" class="post-form form-vertical">
+            {% csrf_token %}
+            <div>
+                <table>
+                {{search_form}}
+                </table>
+                <div class='text-right', id='inventory-buttons'>
+                    <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+                </div>            
+            </div>
+        </form>    
     </div>
-    </form>    
-    </div>
+</div>
 {% endblock %}
