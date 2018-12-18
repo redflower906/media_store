@@ -4,19 +4,18 @@
 {% endblock %}
 {% block content %}
 
-<form id="searchform" action="{% url 'search' %}" method="get" accept-charset="utf-8">
-  <button class="searchbutton" type="submit">
-    <i class="fa fa-search"></i>
-  </button>
-  <input class="searchfield" id="searchbox" name="q" type="text" placeholder="Search">
-</form>
-
-<ul>
-{% for x in object_list %}
-  <li>{{ x.id }} - {{ x.submitter }} - {{ x.requester }}</li>
-{% empty %}
-  <li>No orders</li>
-{% endfor %}
-</ul>  
-
+<div class='row'>
+    <form method="POST" action="" class="post-form form-vertical">
+        {% csrf_token %}
+        <div>
+            <table>
+            {{search_form}}
+            </table>
+        </div>
+        {% endif %}
+    <div class='text-right', id='inventory-buttons'>
+        <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
+    </div>
+    </form>    
+    </div>
 {% endblock %}

@@ -85,7 +85,7 @@ def item_model_formset_factory(extra):
 class DateInput(TextInput):
     input_type='date'
 
-    
+# create data_text_search attribute in option for submitter + requester dropdowns to allow barcode scan to work.    
 class OrderFormSelect(forms.Select):
 
     def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
@@ -249,3 +249,11 @@ Bottles_Vials,
 form=Bottles_VialsForm,
 extra=0,
 )
+
+DATE_CHOICES = ('Order Created', 'Order Completed', 'Order Billed')
+
+class OrderSearchForm(forms.Form):
+    date_type = forms.Select(choices=DATE_CHOICES, attrs={'class': 'form-control'}, required=False),
+    search_date_from = forms.DateInput(attrs={'class': 'datepicker form-control'}, required=False),
+    search_date_to = forms.DateInput(attrs={'class': 'datepicker form-control'}, required=False),
+    keyword = forms.CharField(attrs={'class': 'form-control'}, required=False),

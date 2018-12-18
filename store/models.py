@@ -92,6 +92,7 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
+#add 01 or 02 to end of employee id?
     def data_text_search(self):
         if self.employee_id:
             return self.employee_id + ' ' + self.first_name + ' ' + self.last_name
