@@ -876,7 +876,7 @@ def search(request):
         else:
             messages.error(request, "You didn't submit any dates or keywords to search")
     else:
-        search_form = OrderSearchForm()
+        search_form = OrderSearchForm(request.GET)
     return render(request, 'store/search.html', {
         'user': user,
         'search_form': search_form,
