@@ -5,7 +5,7 @@
 {% block content %}
 <div class="post form">
     <div class='row'>
-        <form method="POST" action="" class="post-form form-vertical">
+        <form method="post">
             {% csrf_token %}
             {% for hidden in search_form.hidden_fields %}
             {{ hidden }}
