@@ -7,9 +7,12 @@
     <div class='row'>
         <form method="POST" action="" class="post-form form-vertical">
             {% csrf_token %}
+            {% for hidden in search_form.hidden_fields %}
+            {{ hidden }}
+            {% endfor %}
             <div>
                 <table>
-                {{search_form.as_table}}
+                {{search_form.data_type}}
                 </table>
                 <div class='text-right', id='inventory-buttons'>
                     <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
