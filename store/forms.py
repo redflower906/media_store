@@ -253,7 +253,7 @@ extra=0,
 DATE_CHOICES = ('Order Created', 'Order Completed', 'Order Billed')
 
 class OrderSearchForm(forms.Form):
-    date_type = forms.Select(choices=DATE_CHOICES, attrs={'class': 'form-control'}, required=False),
-    search_date_from = forms.DateInput(attrs={'class': 'datepicker form-control'}, required=False),
-    search_date_to = forms.DateInput(attrs={'class': 'datepicker form-control'}, required=False),
-    keyword = forms.CharField(attrs={'class': 'form-control'}, required=False),
+    date_type = forms.Select(choices=DATE_CHOICES, attrs={'class': 'form-control','required':False}),
+    search_date_from = forms.DateInput(attrs={'class': 'datepicker form-control','required':False}),
+    search_date_to = forms.DateInput(attrs={'class': 'datepicker form-control','required':False}),
+    keyword = forms.CharField(attrs={'class': 'form-control','required':False}),
