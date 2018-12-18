@@ -875,8 +875,8 @@ def search(request):
             Q(project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
         else:
             messages.error(request, "You didn't submit any dates or keywords to search")
-    # else:
-    #     search_form = OrderSearchForm()
+    else:
+        search_form = OrderSearchForm()
     return render(request, 'store/search.html', {
         'user': user,
         'search_form': search_form,
