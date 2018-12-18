@@ -839,7 +839,7 @@ def search(request):
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
         report = Order.objects.all()
-
+    search_form = OrderSearchForm(request.GET)
     if request.method == 'POST':
         search_form = OrderSearchForm(request.POST)
         if search_form.is_valid():
@@ -878,8 +878,6 @@ def search(request):
                 messages.error(request, "You didn't submit any dates or keywords to search")
         else:
             messages.error(request, "invalid form")
-    else:
-        search_form = OrderSearchForm(request.GET)
     return render(request, 'store/search.html', {
         'user': user,
         'search_form': search_form,
