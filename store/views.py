@@ -880,7 +880,7 @@ def search(request):
         else:
             messages.error("invalid form")
     else:
-        search_form = OrderSearchForm(user)
+        search_form = OrderSearchForm(None)
     return render(request, 'store/search.html', {
         'user': user,
         'search_form': search_form,
