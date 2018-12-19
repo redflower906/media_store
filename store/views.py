@@ -881,11 +881,11 @@ def search(request):
             messages.error("invalid form")
     else:
         search_form = OrderSearchForm()
+        messages.error('not POST')
     return render(request, 'store/search.html', {
         'user': user,
         'search_form': search_form,
         'report': report,
-
     })
 
 
