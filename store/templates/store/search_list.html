@@ -48,7 +48,6 @@
                     {% endif %}
                     <td>{{report.instance.location}}</td>
                     <td class='{{report.instance.status}}'>{{report.instance.status}}</td>
-                    {% endif %}
                     <td class='ordertotal {{report.instance.id}}'>${{report.instance.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' report.instance.id %}" class="btn btn-default">Email</a>
