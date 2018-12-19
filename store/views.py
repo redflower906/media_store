@@ -834,6 +834,57 @@ def sign_outs_remainder(request):
 #         return qs
 
 def search(request):
+
+    ORDER_LIST_HEADERSCr = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Created', 'date_created'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+    ORDER_LIST_HEADERSCo = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Completed', 'date_complete'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERSB = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Billed', 'date_billed'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+    ORDER_LIST_HEADERSKey = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+
+    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERSCR)
+    sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERSCo)
+    sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERSB)
+    sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
+
     user = request.user
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
@@ -843,36 +894,36 @@ def search(request):
     if request.method == 'POST':
         form = OrderSearchForm(request.POST)
         if form.is_valid():
-            if search_form.instance.search_date_from and search_form.instance.search_keyword:
-                date_type = search_form.instance.date_type
-                date_from = search_form.instance.search_date_from
-                date_to = search_form.instance.search_date_to
-                keyword = search_form.instance.search_keyword
+            if form.instance.search_date_from and form.instance.search_keyword:
+                date_type = form.instance.date_type
+                date_from = form.instance.search_date_from
+                date_to = form.instance.search_date_to
+                keyword = form.instance.search_keyword
                 if date_type == 'Order Created':
-                    report = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    reportCr = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_created__range=[date_from, date_to])
                 elif date_type == 'Order Completed':
-                    report = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    reportCo = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_complete__range=[date_from, date_to])
                 else:
-                    report = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    reportB = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_billed__range=[date_from, date_to])
-            elif search_form.instance.search_date_from:
-                date_type = search_form.instance.date_type
-                date_from = search_form.instance.search_date_from
-                date_to = search_form.instance.search_date_to
+            elif form.instance.search_date_from:
+                date_type = form.instance.date_type
+                date_from = form.instance.search_date_from
+                date_to = form.instance.search_date_to
                 if date_type == 'Order Created':
-                    report = report.filter(date_created__range=[date_from, date_to])
+                    reportCr = report.filter(date_created__range=[date_from, date_to])
                 elif date_type == 'Order Completed':
-                    report = report.filter(date_complete__range=[date_from, date_to])
+                    reportCo = report.filter(date_complete__range=[date_from, date_to])
                 else:
-                    report = report.filter(date_billed__range=[date_from, date_to])
-            elif search_form.instance.search_keyword:
-                keyword = search_form.instance.search_keyword
-                report = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|
+                    reportB = report.filter(date_billed__range=[date_from, date_to])
+            elif form.instance.search_keyword:
+                keyword = form.instance.search_keyword
+                reportKey = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|
                 Q(project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
@@ -883,7 +934,14 @@ def search(request):
     return render(request, 'store/search.html', {
         'user': user,
         'form': form,
-        'report': report,
+        'reportCr': reportCr,
+        'reportCo': reportCo,
+        'reportB': reportB,
+        'reportKey': reportKey,
+        'headersCr': list(sort_headers1.headers()),
+        'headersCo': list(sort_headers2.headers()),
+        'headersB': list(sort_headers3.headers()),
+        'headersKey': list(sort_headers4.headers()),
     })
 
 

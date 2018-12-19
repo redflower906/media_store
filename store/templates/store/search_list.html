@@ -1,0 +1,126 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+
+<table class="table table-hover" id="order_table">
+        {{ reports.management_form }}
+        
+        {% if reports|length is not 0 %}
+            <thead>
+                <tr id="table_header">
+                    <th></th>
+                    {% table_header headers %}
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="searchable">
+                {% for report in reports %}
+                <tr class="order_{{report.instance.id}} koala {{report.instance.status}}">
+                    <td class="toggle_notes" >
+                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    </td>
+                    <!-- not staff -->
+                    {% if user.is_staff is False and report.instance.status == 'Submitted' or user.is_staff is True %}
+                    <td>
+                        <a href="{% url 'edit_order' report.instance.id %}">{{report.instance.id}}</a>
+                    </td>
+                    {% else %}
+                    <!-- order ID -->
+                    <td class='ordernum'>
+                        {{report.instance.id}}
+                    </td>
+                    {% endif %}
+                    {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
+                    <td>{{report.instance.department.department_name}}</td> 
+                    <td>{{report.instance.department.number}}</td>
+                    <td>{{report.instance.requester.user_profile.name}}</td>
+                    {% if reports == reportCr %}
+                    <td>{{report.instance.date_created}}</td>
+                    {% elif reports == reportCo %}
+                    <td>{{report.instance.date_complete}}</td>
+                    {% elif reports == reportB %}
+                    <td>{{report.instance.date_billed}}</td>
+                    {% endif %}
+                    {% if report.instance.is_recurring %}
+                    <td class='recur'>{{ report.instance.is_recurring|yesno:"Yes,No" }}</td>
+                    {% else %}
+                    <td>{{ report.instance.is_recurring|yesno:"Yes,No" }}</td>
+                    {% endif %}
+                    <td>{{report.instance.location}}</td>
+                    <td class='{{report.instance.status}}'>{{report.instance.status}}</td>
+                    {% endif %}
+                    <td class='ordertotal {{report.instance.id}}'>${{report.instance.order_total}}</td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'email' report.instance.id %}" class="btn btn-default">Email</a>
+                    </td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'copy_order' report.instance.id %}" class='btn btn-success'>Copy</a>
+                    </td>
+                    {% if report.instance.status == 'Submitted' and user.is_staff is False %}
+                    <td class="col-xs-1" id="center_columns">
+                        <!-- <a href="{% url 'delete_order' id=report.instance.id %}" class='btn btn danger'>Delete</a> -->
+                        <input type='submit' value='Cancel' class=" btn btn-danger cancelbtn">
+                    </td>
+                    {% endif %}
+                    <tr id="notes" class="collapse" role="text">                        
+                        <td colspan="10">
+                            <table class ='table'>
+                                {% if report.instance.orderline_set.all %}
+                                <thead>
+                                    <tr class='invclass' id="table_header">
+                                        <th>Submitter</th>
+                                        <th>Description</th>
+                                        {% if report.instance.is_recurring %}
+                                            <th>Last Complete Date</th>
+                                            <th>Last Billed Date</th>
+                                            <th>How Often</th>
+                                        {% endif %}
+                                        <th>Quantity</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                {% for line in report.instance.orderline_set.all %}                                
+                                </thead>
+                                <tr>
+                                    <td>{{report.instance.submitter.user_profile.name}}</td>
+                                    <td class='inv {{report.instance.id}}'>{{line.inventory.inventory_text}}</td>
+                                    <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
+                                    {% if report.instance.is_recurring %} 
+                                        <td>{{report.instance.date_complete}}</td>
+                                        <td>{{report.instance.date_billed}}</td>
+                                        <td>{{report.instance.get_weeks_display}}</td>
+                                    {% endif %}
+                                    <td>{{line.qty}}</td>
+                                    <td class = 'linetotal {{report.instance.id}}'>${{line.total}}</td>
+                    <td>{{report.instance.notes_order}}</td>
+                                {% endfor %}
+                                {% else %}
+                                    <div><p>There are no order details for this order.</p></div>
+                                    </tr>
+                                {% endif %}
+                            </table>                            
+                        </td>                              
+                    </tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% else %}
+            <div><p>No search results</p></div>        
+        {% endif %}    
+    </table>
+    {% comment %} <div class="pagination">
+        <span class="step-links">
+            {% if pages.has_previous %}
+                <a href="?page={{ pages.previous_page_number }}">previous</a>
+            {% endif %}
+    
+            <span class="current">
+                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+            </span>
+    
+            {% if pages.has_next %}
+                <a href="?page={{ pages.next_page_number }}">next</a>
+            {% endif %}
+        </span>
+    </div> {% endcomment %}
+{% endblock %} 
