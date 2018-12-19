@@ -921,7 +921,6 @@ def search(request):
                 else:
                     reports = report.filter(date_billed__range=[datefrom, dateto])
             elif keyword:
-                keyword = form.instance.search_keyword
                 reports = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|
                 Q(project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
             else:
