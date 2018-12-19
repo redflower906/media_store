@@ -34,11 +34,11 @@
                     <td>{{report.department.department_name}}</td> 
                     <td>{{report.department.number}}</td>
                     <td>{{report.requester.user_profile.name}}</td>
-                    {% if reports == reportCr %}
+                    {% if headers=headersCr %}
                     <td>{{report.date_created}}</td>
-                    {% elif reports == reportCo %}
+                    {% elif headers=headersCo %}
                     <td>{{report.date_complete}}</td>
-                    {% elif reports == reportB %}
+                    {% elif headers=headersB %}
                     <td>{{report.date_billed}}</td>
                     {% endif %}
                     {% if report.is_recurring %}
@@ -69,6 +69,14 @@
                                     <tr class='invclass' id="table_header">
                                         <th>Submitter</th>
                                         <th>Description</th>
+                                        <th>Date Submitted</th>
+                                        {% if report.status == 'Complete'%}
+                                            <th>Date Completed</th>
+                                        {% elif report.status == 'Billed' %}
+                                            <th>Date Billed</th>
+                                        {% elif report.status == 'Canceled' %}
+                                            <th>Date Canceled</th>
+                                        {% endif %}
                                         {% if report.is_recurring %}
                                             <th>Last Complete Date</th>
                                             <th>Last Billed Date</th>
@@ -84,6 +92,14 @@
                                     <td>{{report.submitter.user_profile.name}}</td>
                                     <td class='inv {{report.id}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
+                                    <td>{{report.date_created}}</td>
+                                    {% if report.status == 'Complete'%}
+                                        <td>{{report.date_complete}}</td>
+                                    {% elif report.status == 'Billed' %}
+                                        <td>{{report.date_billed}}</td>
+                                    {% elif report.status == 'Canceled' %}
+                                        <td>{{report.date_modified}}</td>
+                                    {% endif %}
                                     {% if report.is_recurring %} 
                                         <td>{{report.date_complete}}</td>
                                         <td>{{report.date_billed}}</td>
