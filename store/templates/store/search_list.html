@@ -11,8 +11,8 @@
                     <th></th>
                     {% table_header headers %}
                     <th></th>
-                </tr>
             </thead>
+            <tr>
             <tbody class="searchable">
                 {% for report in reports %}
                 <tr class="order_{{report.instance.id}} koala {{report.instance.status}}">
@@ -22,7 +22,7 @@
                     <!-- not staff -->
                     {% if user.is_staff is False and report.instance.status == 'Submitted' or user.is_staff is True %}
                     <td>
-                        <a href="{% url 'edit_order' report.instance.id %}">{{report.instance.id}}</a>
+                        <a href="{% url 'edit_order' report.instance.id %}">{{report.id}}</a>
                     </td>
                     {% else %}
                     <!-- order ID -->
