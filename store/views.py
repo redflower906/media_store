@@ -931,6 +931,7 @@ def search(request):
             messages.error(request, "invalid form")
     else:
         form = OrderSearchForm()
+        reports = ''
     return render(request, 'store/search.html', {
         'user': user,
         'form': form,
