@@ -13,22 +13,32 @@
     {% endfor %}
     <div>
         <table id='form_holder'>
-            <td>
-                {{form.date_type.errors}}
-                {{form.date_type}}
-            </td>
-            <td>
-                {{form.search_date_from.errors}}
-                {{form.search_date_from}}
-            </td>
-            <td>
-                {{form.search_date_to.errors}}
-                {{form.search_date_to}}
-            </td>
-            <td>
-                {{form.search_keyword.errors}}
-                {{form.search_keyword}}
-            </td>
+            <thead>
+                <tr>
+                    <th>Date Range</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Keyword</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td>
+                    {{form.date_type.errors}}
+                    {{form.date_type}}
+                </td>
+                <td>
+                    {{form.search_date_from.errors}}
+                    {{form.search_date_from}}
+                </td>
+                <td>
+                    {{form.search_date_to.errors}}
+                    {{form.search_date_to}}
+                </td>
+                <td>
+                    {{form.search_keyword.errors}}
+                    {{form.search_keyword}}
+                </td>
+            </tbody>
         </table>
         <div class='text-right', id='inventory-buttons'>
             <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>

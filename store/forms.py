@@ -277,6 +277,6 @@ class OrderSearchForm(forms.Form):
         )
     search_keyword = forms.CharField(
         required=False,
-        widget=forms.Textarea(attrs={'class':'form-control'}),
+        widget=forms.TextInput(attrs={'class':'form-control'}),
         label = 'Keyword Search',
         )
