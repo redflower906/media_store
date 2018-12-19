@@ -934,6 +934,7 @@ def search(request):
         form = OrderSearchForm()
         reports = ''
     return render(request, 'store/search.html', {
+        'date_type': date_type,
         'user': user,
         'form': form,
         'reports': reports,
