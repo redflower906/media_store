@@ -838,11 +838,11 @@ def search(request):
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
-        report = Order.objects.all()
+        report = Order.objects.all(id=441)
 
     if request.method == 'POST':
-        search_form = OrderSearchForm(request.POST)
-        if search_form.is_valid():
+        form = OrderSearchForm(request.POST)
+        if form.is_valid():
             pass
             # if search_form.instance.search_date_from and search_form.instance.search_keyword:
             #     date_type = search_form.instance.date_type
@@ -880,10 +880,10 @@ def search(request):
         else:
             messages.error("invalid form")
     else:
-        search_form = OrderSearchForm()
+        form = OrderSearchForm()
     return render(request, 'store/search.html', {
         'user': user,
-        'search_form': search_form,
+        'form': form,
         'report': report,
     })
 
