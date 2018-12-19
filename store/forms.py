@@ -264,20 +264,23 @@ class OrderSearchForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=DATE_CHOICES,
         label = 'Date Range'
-        ),
+        )
     search_date_from = forms.CharField(
         required=False,
         widget=forms.DateInput(attrs={'class': 'form-control'}),
-        label = 'From',
-        ),
+        label = 'From'
+        )
     search_date_to = forms.CharField(
         required=False,
         widget=forms.DateInput(attrs={'class': 'form-control'}),
-        label = 'To',
-        ),
+        label = 'To'
+        )
     search_keyword = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'class':'form-control'}),
         label = 'Keyword Search',
         help_text = 'Type in a keyword to search'
-        ),        
+        )
+
+class ContactForm(forms.Form):
+    subject = forms.CharField()
