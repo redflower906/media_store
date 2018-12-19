@@ -250,7 +250,11 @@ form=Bottles_VialsForm,
 extra=0,
 )
 
-DATE_CHOICES = ('Order Created', 'Order Completed', 'Order Billed')
+DATE_CHOICES = (
+    ('Order Created', 'Order Created'), 
+    ('Order Completed', 'Order Completed'), 
+    ('Order Billed', 'Order Billed'),
+    )
 
 class OrderSearchForm(forms.Form):
     date_type = forms.Select(choices=DATE_CHOICES, attrs={'class': 'form-control','required':False}),
