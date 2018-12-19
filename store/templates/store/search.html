@@ -20,14 +20,14 @@
     </div>
     <div class="row">
         <div class="col-xs-12">
-            {% if reportCr %}
-                {% include "store/search_list.html" with reports=reportCr headers=headersCr %}
-            {% elif reportCo %}
-                {% include "store/search_list.html" with reports=reportCo headers=headersCo %}
-            {% elif reportB %}
-                {% include "store/search_list.html" with reports=reportB headers=headersB %}
+            {% if form.instance.date_type == 'Date Created' %}
+                {% include "store/search_list.html" with headers=headersCr %}
+            {% elif form.instance.date_type == 'Date Completed' %}
+                {% include "store/search_list.html" with headers=headersCo %}
+            {% elif form.instance.date_type == 'Date Billed' %}
+                {% include "store/search_list.html" with headers=headersB %}
             {% else %}
-                {% include "store/search_list.html" with reports=reportKey headers=headersKey %}
+                {% include "store/search_list.html" with headers=headersKey %}
             {% endif %}
         </div>
     </div>

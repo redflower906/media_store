@@ -254,6 +254,7 @@ extra=0,
 class OrderSearchForm(forms.Form):
     
     DATE_CHOICES = (
+    ('Choose a Date Range', 'Choose a Date Range'),
     ('Order Created', 'Order Created'), 
     ('Order Completed', 'Order Completed'), 
     ('Order Billed', 'Order Billed'),
