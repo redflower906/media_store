@@ -14,8 +14,8 @@
     <div>
         <table id='form_holder'>
             <td>
-                {{search_form.search_date_from.errors}}
-                {{search_form.search_date_from}}
+                {% comment %} {{search_form.search_date_from.errors}} {% endcomment %}
+                {{search_form}}
             </td>
         </table>
         <div class='text-right', id='inventory-buttons'>
