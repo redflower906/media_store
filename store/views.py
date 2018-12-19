@@ -838,7 +838,7 @@ def search(request):
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
-        report = Order.objects.all(id=441)
+        report = Order.objects.get(id=441)
 
     if request.method == 'POST':
         form = OrderSearchForm(request.POST)
