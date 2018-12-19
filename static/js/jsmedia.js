@@ -56,8 +56,8 @@ $(function() {
     $( "#id_order-date_recurring_stop" ).datepicker({
         maxDate: "+3m",
     });
-    $('#datepicker_search_from').datepicker();
-    $('#datepicker_search_to').datepicker();        
+    $('#id_datepicker_search_from').datepicker();
+    $('#id_datepicker_search_to').datepicker();        
 });
 
 //jquery datepicker to show/hide based on radio selection
