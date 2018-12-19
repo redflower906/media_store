@@ -34,11 +34,11 @@
                     <td>{{report.department.department_name}}</td> 
                     <td>{{report.department.number}}</td>
                     <td>{{report.requester.user_profile.name}}</td>
-                    {% if headers=headersCr %}
+                    {% if headers==headersCr %}
                     <td>{{report.date_created}}</td>
-                    {% elif headers=headersCo %}
+                    {% elif headers==headersCo %}
                     <td>{{report.date_complete}}</td>
-                    {% elif headers=headersB %}
+                    {% elif headers==headersB %}
                     <td>{{report.date_billed}}</td>
                     {% endif %}
                     {% if report.is_recurring %}
