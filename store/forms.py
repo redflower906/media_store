@@ -257,9 +257,22 @@ DATE_CHOICES = (
     )
 
 class OrderSearchForm(forms.Form):
-    date_type = forms.Select(choices=DATE_CHOICES, attrs={'class': 'form-control','required':False}),
-    search_date_from = forms.DateInput(attrs={'class': 'form-control','required':False}),
-    search_date_to = forms.DateInput(attrs={'class': 'form-control','required':False}),
+    date_type = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=DATE_CHOICES,
+        label = 'Date Range'
+        ),
+    search_date_from = forms.CharField(
+        required=False,
+        widget=forms.DateInput(attrs={'class': 'form-control'}),
+        label = 'From',
+        ),
+    search_date_to = forms.CharField(
+        required=False,
+        widget=forms.DateInput(attrs={'class': 'form-control'}),
+        label = 'To',
+        ),
     search_keyword = forms.CharField(
         required=False,
         widget=forms.Textarea(attrs={'class':'form-control'}),
