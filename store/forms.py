@@ -279,8 +279,4 @@ class OrderSearchForm(forms.Form):
         required=False,
         widget=forms.Textarea(attrs={'class':'form-control'}),
         label = 'Keyword Search',
-        help_text = 'Type in a keyword to search'
         )
-
-class ContactForm(forms.Form):
-    subject = forms.CharField()
