@@ -5,7 +5,7 @@ import logging
 
 from django import forms
 from django.forms.extras.widgets import SelectDateWidget
-from django.forms.widgets import TextInput, HiddenInput, NumberInput
+from django.forms.widgets import TextInput, HiddenInput, NumberInput, DateInput, Select
 from .models import *
 from django.forms.models import inlineformset_factory,formset_factory,modelformset_factory
 from djangoformsetjs.utils import formset_media_js
