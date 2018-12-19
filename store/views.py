@@ -894,33 +894,32 @@ def search(request):
     if request.method == 'POST':
         form = OrderSearchForm(request.POST)
         if form.is_valid():
-            if form.instance.search_date_from and form.instance.search_keyword:
-                date_type = form.instance.date_type
-                date_from = form.instance.search_date_from
-                date_to = form.instance.search_date_to
-                keyword = form.instance.search_keyword
+            datefrom = form.cleaned_data.get('search_date_from')
+            keyword = form.cleaned_data.get('search_keyword')
+            if datefrom and keyword:
+                date_type = form.cleaned_data.get('date_type')
+                dateto = form.cleaned_data.get('search_date_to')
                 if date_type == 'Order Created':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
-                    date_created__range=[date_from, date_to])
+                    date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
-                    date_complete__range=[date_from, date_to])
+                    date_complete__range=[datefrom, dateto])
                 else:
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
-                    date_billed__range=[date_from, date_to])
-            elif form.instance.search_date_from:
-                date_type = form.instance.date_type
-                date_from = form.instance.search_date_from
-                date_to = form.instance.search_date_to
+                    date_billed__range=[datefrom, dateto])
+            elif datefrom:
+                date_type = form.cleaned_data.get('date_type')
+                dateto = form.cleaned_data.get('search_date_to')
                 if date_type == 'Order Created':
-                    reports = report.filter(date_created__range=[date_from, date_to])
+                    reports = report.filter(date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
-                    reports = report.filter(date_complete__range=[date_from, date_to])
+                    reports = report.filter(date_complete__range=[datefrom, dateto])
                 else:
-                    reports = report.filter(date_billed__range=[date_from, date_to])
+                    reports = report.filter(date_billed__range=[datefrom, dateto])
             elif form.instance.search_keyword:
                 keyword = form.instance.search_keyword
                 reports = report.prefetch_related('orderline_set').filter(Q(submitter__icontains=keyword)|Q(requester__icontains=keyword)|Q(notes_order__icontains=keyword)|
