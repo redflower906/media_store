@@ -880,7 +880,7 @@ def search(request):
         ('Order Total', 'order_total')
     )
 
-    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERSCR)
+    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERSCr)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERSCo)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERSB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
