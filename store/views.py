@@ -901,15 +901,15 @@ def search(request):
                 dateto = form.cleaned_data.get('search_date_to')
                 if date_type == 'Order Created':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__search=keyword)|Q(requester__search=keyword)|Q(notes_order__search=keyword)|Q(
-                    project_code__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
+                    project_code__hhmi_project_id__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
                     date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__search=keyword)|Q(requester__search=keyword)|Q(notes_order__search=keyword)|Q(
-                    project_code__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
+                    project_code__hhmi_project_id__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
                     date_complete__range=[datefrom, dateto])
                 else:
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__search=keyword)|Q(requester__search=keyword)|Q(notes_order__search=keyword)|Q(
-                    project_code__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
+                    project_code__hhmi_project_id__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword)).filter(
                     date_billed__range=[datefrom, dateto])
             elif datefrom:
                 date_type = form.cleaned_data.get('date_type')
@@ -922,7 +922,7 @@ def search(request):
                     reports = report.filter(date_billed__range=[datefrom, dateto])
             elif keyword:
                 reports = report.prefetch_related('orderline_set').filter(Q(submitter__search=keyword)|Q(requester__search=keyword)|Q(notes_order__search=keyword)|
-                Q(project_code__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword))
+                Q(project_code__hhmi_project_id__search=keyword)|Q(department__number__search=keyword)| Q(orderline__inventory__inventory_text__search=keyword))
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
         else:
