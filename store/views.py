@@ -945,7 +945,7 @@ def search(request):
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
             # to export   
-            if reports != '' and 'exportCSV' in request.POST:
+            if exportCSV:
                 response = HttpResponse(content_type='text/csv')
                 response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
                 writer = csv.writer(response)
