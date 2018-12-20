@@ -886,6 +886,8 @@ def search(request):
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
 
     user = request.user
+    reports = ''
+    date_type = ''
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
@@ -942,14 +944,24 @@ def search(request):
                 project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
+            # to export   
+            if reports != '' and 'exportCSV' in request.POST:
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
+                writer = csv.writer(response)
+                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
+
+                for report in e_reports:
+                    writer.writerow(report)
+
+                return response  
         else:
             messages.error(request, "invalid form")
-            reports = ''
-            date_type = ''
     else:
         form = OrderSearchForm()
-        reports = ''
-        date_type = ''
+
     return render(request, 'store/search.html', {
         'date_type': date_type,
         'user': user,

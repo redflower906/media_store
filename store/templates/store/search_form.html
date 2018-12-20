@@ -42,7 +42,10 @@
             </tbody>
         </table>
         <div class='text-right', id='inventory-buttons'>
-            <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
-        </div>            
+            <button class="save btn btn-primary pull-right" name='submit' type="submit" value="Submit">Submit</button>
+        </div>
+        <div class='text-left', id='inventory-buttons'>
+            <a href="{% url 'search_export' %}" name='exportCSV' class="btn btn-info">Export Search</a>
+        </div>             
     </div>
 </form>    
