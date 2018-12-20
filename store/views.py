@@ -898,7 +898,7 @@ def search(request):
             dateto = form.cleaned_data.get('search_date_to')
             keyword = form.cleaned_data.get('search_keyword')
             date_type = form.cleaned_data.get('date_type')
-            and_or = form.date_complete__range('and_or')
+            and_or = form.cleaned_data.get('and_or')
             if datefrom and keyword:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
