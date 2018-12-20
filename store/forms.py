@@ -287,7 +287,6 @@ class OrderSearchForm(forms.Form):
         label = 'Keyword Search',
         )
     and_or = forms.ChoiceField(
-        default=True,
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=BOOL_CHOICES,

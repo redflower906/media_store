@@ -892,7 +892,7 @@ def search(request):
         report = Order.objects.all()
 
     if request.method == 'POST':
-        form = OrderSearchForm(request.POST)
+        form = OrderSearchForm(request.POST, initial={'and_or': True})
         if form.is_valid():
             datefrom = form.cleaned_data.get('search_date_from')
             dateto = form.cleaned_data.get('search_date_to')
