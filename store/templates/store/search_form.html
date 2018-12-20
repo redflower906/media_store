@@ -6,7 +6,6 @@
         {{ hidden_field }}
     {% endfor %}
     <div>
-        <legend>All of these fields are optional</legend>
         <table id='form_holder'>
             <thead>
                 <tr>
@@ -42,12 +41,13 @@
             </tbody>
         </table>         
     </div>
+    <hr/>
     <div class='row'>
-        <div>
-            <button class="save btn btn-primary" type="submit" value="Submit">Submit</button>
+        <div class='col-xs-1'>
+            <button class="save btn btn-primary pull-right" type="submit" value="Submit">Submit</button>
         </div>
-        <div>
-            <button href="{% url 'search_export' %}" name='exportCSV' type='submit' class="btn btn-info">Export Search</button>
+        <div class='col-xs-1'>
+            <button href="{% url 'search_export' %}" name='exportCSV' type='submit' class="btn btn-info pull-right">Export Search</button>
         </div>
     </div>    
 </form>    
