@@ -899,8 +899,8 @@ def search(request):
             keyword = form.cleaned_data.get('search_keyword')
             date_type = form.cleaned_data.get('date_type')
             if datefrom and keyword:
-                datefrom = datetime.strptime(datefrom, '%Y-%m-%d')
-                dateto = datetime.strptime(dateto, '%Y-%m-%d')
+                datefrom = datetime.strftime(datefrom, '%Y-%m-%d')
+                dateto = datetime.strftime(dateto, '%Y-%m-%d')
                 if date_type == 'Order Created':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
@@ -917,8 +917,8 @@ def search(request):
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_billed__range=[datefrom, dateto])
             elif datefrom:
-                datefrom = datetime.strptime(datefrom, '%Y-%m-%d')
-                dateto = datetime.strptime(dateto, '%Y-%m-%d')
+                datefrom = datetime.strftime(datefrom, '%Y-%m-%d')
+                dateto = datetime.strftime(dateto, '%Y-%m-%d')
                 if date_type == 'Order Created':
                     reports = report.filter(date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
