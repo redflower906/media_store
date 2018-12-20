@@ -278,7 +278,7 @@ def create_order(request, copy_id=None):
                from_email,
                [to],
                cc=[
-                # order_form.instance.submitter.user_profile.email_address, 
+                order_form.instance.submitter.user_profile.email_address, 
                'mediafacility@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
@@ -895,10 +895,12 @@ def search(request):
         form = OrderSearchForm(request.POST)
         if form.is_valid():
             datefrom = form.cleaned_data.get('search_date_from')
+            dateto = form.cleaned_data.get('search_date_to')
             keyword = form.cleaned_data.get('search_keyword')
+            date_type = form.cleaned_data.get('date_type')
             if datefrom and keyword:
-                date_type = form.cleaned_data.get('date_type')
-                dateto = form.cleaned_data.get('search_date_to')
+                datefrom = datetime.datetime.strptime(datefrom, '%Y-%m-%d')
+                dateto = datetime.datetime.strptime(dateto, '%Y-%m-%d')
                 if date_type == 'Order Created':
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
@@ -915,8 +917,8 @@ def search(request):
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_billed__range=[datefrom, dateto])
             elif datefrom:
-                date_type = form.cleaned_data.get('date_type')
-                dateto = form.cleaned_data.get('search_date_to')
+                datefrom = datetime.datetime.strptime(datefrom, '%Y-%m-%d')
+                dateto = datetime.datetime.strptime(dateto, '%Y-%m-%d')
                 if date_type == 'Order Created':
                     reports = report.filter(date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
@@ -933,7 +935,6 @@ def search(request):
     else:
         form = OrderSearchForm()
         reports = ''
-        date_type = ''
     return render(request, 'store/search.html', {
         'date_type': date_type,
         'user': user,
