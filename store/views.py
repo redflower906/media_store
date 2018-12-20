@@ -933,6 +933,7 @@ def search(request):
     else:
         form = OrderSearchForm()
         reports = ''
+        date_type = ''
     return render(request, 'store/search.html', {
         'date_type': date_type,
         'user': user,
