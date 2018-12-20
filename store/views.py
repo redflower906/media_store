@@ -892,7 +892,7 @@ def search(request):
         report = Order.objects.all()
 
     if request.method == 'POST':
-        form = OrderSearchForm(request.POST, initial={'and_or': True})
+        form = OrderSearchForm(request.POST, initial={'and_or': 'AND'})
         if form.is_valid():
             datefrom = form.cleaned_data.get('search_date_from')
             dateto = form.cleaned_data.get('search_date_to')
@@ -902,25 +902,25 @@ def search(request):
             if datefrom and keyword:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
-                if (date_type == 'Order Created') and (and_or == True):
+                if (date_type == 'Order Created') and (and_or == 'AND'):
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_created__range=[datefrom, dateto])
-                elif (date_type == 'Order Created') and (and_or == False):
+                elif (date_type == 'Order Created') and (and_or == 'OR'):
                     reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
-                elif date_type == 'Order Completed'and (and_or == True):
+                elif date_type == 'Order Completed'and (and_or == 'AND'):
                     reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
                     date_complete__range=[datefrom, dateto])
-                elif date_type == 'Order Completed'and (and_or == False):
+                elif date_type == 'Order Completed'and (and_or == 'OR'):
                     reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))
-                elif date_type == 'Order Billed'and (and_or == False):
+                elif date_type == 'Order Billed'and (and_or == 'OR'):
                     reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                     requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
                     project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword))

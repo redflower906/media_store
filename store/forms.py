@@ -261,8 +261,8 @@ class OrderSearchForm(forms.Form):
     )
 
     BOOL_CHOICES = (
-        (True, 'AND'),
-        (False, 'OR'),
+        ('AND', 'AND'),
+        ('OR', 'OR'),
     )
 
     date_type = forms.ChoiceField(
