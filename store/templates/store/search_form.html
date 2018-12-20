@@ -22,15 +22,15 @@
                     {{form.date_type.errors}}
                     {{form.date_type}}
                 </td>
-                <td class='col-xs-2' id='datepicker_search_from'>
+                <td class='col-xs-1' id='datepicker_search_from'>
                     {{form.search_date_from.errors}}
                     {{form.search_date_from}}
                 </td>
-                <td class='col-xs-2' id='datepicker_search_from'>
+                <td class='col-xs-1' id='datepicker_search_from'>
                     {{form.search_date_to.errors}}
                     {{form.search_date_to}}
                 </td>
-                <td class='col-xs-2'>
+                <td class='col-xs-1'>
                     {{form.and_or.errors}}
                     {{form.and_or}}
                 </td>
@@ -40,12 +40,14 @@
                 </td>
                 <td class='col-xs-1'></td>
             </tbody>
-        </table>
-        <div class='text-right', id='inventory-buttons'>
-            <button class="save btn btn-primary pull-right" name='submit' type="submit" value="Submit">Submit</button>
-        </div>
-        <div class='text-left', id='inventory-buttons'>
-            <a href="{% url 'search_export' %}" name='exportCSV' class="btn btn-info">Export Search</a>
-        </div>             
+        </table>   
+        <div class='row'>
+            <div class='text-right', id='inventory-buttons'>
+                <button class="save btn btn-primary pull-right" name='submit' type="submit" value="Submit">Submit</button>
+            </div>
+            <div class='text-left', id='inventory-buttons'>
+                <a href="{% url 'search_export' %}" name='exportCSV' class="btn btn-info">Export Search</a>
+            </div>
+        </div>          
     </div>
 </form>    
