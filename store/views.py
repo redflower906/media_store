@@ -944,6 +944,8 @@ def search(request):
                messages.error(request, "You didn't submit any dates or keywords to search")
         else:
             messages.error(request, "invalid form")
+            reports = ''
+            date_type = ''
     else:
         form = OrderSearchForm()
         reports = ''
