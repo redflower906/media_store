@@ -833,7 +833,7 @@ def sign_outs_remainder(request):
 
 #         return qs
 
-def search(request, exportCSV):
+def search(request):
 
     ORDER_LIST_HEADERSCr = (
         ('Order ID', 'id'),
@@ -945,19 +945,16 @@ def search(request, exportCSV):
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
             # to export   
-            if exportCSV:
+            if 'exportCSV' in request.POST:
                 response = HttpResponse(content_type='text/csv')
                 response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
                 writer = csv.writer(response)
-                # writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
-                # e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
-                # 'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
+                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
 
-                # for report in e_reports:
-                #     writer.writerow(report)
-
-                for report in reports:
-                    writer.writerow([report['order_id']])
+                for report in e_reports:
+                    writer.writerow(report)
 
                 return response  
         else:
