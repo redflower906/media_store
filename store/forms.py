@@ -260,6 +260,11 @@ class OrderSearchForm(forms.Form):
     ('Order Billed', 'Order Billed'),
     )
 
+    BOOL_CHOICES = (
+        (True, 'AND'),
+        (False, 'OR'),
+    )
+
     date_type = forms.ChoiceField(
         required=False,
         widget=forms.Select(attrs={'class': 'form-control'}),
@@ -280,4 +285,10 @@ class OrderSearchForm(forms.Form):
         required=False,
         widget=forms.TextInput(attrs={'class':'form-control'}),
         label = 'Keyword Search',
+        )
+    and_or = forms.ChoiceField(
+        default=True,
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=BOOL_CHOICES,
         )

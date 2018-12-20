@@ -17,11 +17,11 @@
                 </tr>
             </thead>
             <tbody>
-                <td class='col-xs-2'>
+                <td class='col-xs-3'>
                     {{form.date_type.errors}}
                     {{form.date_type}}
                 </td>
-                <td clas='col-xs-2' id='datepicker_search_from'>
+                <td class='col-xs-2' id='datepicker_search_from'>
                     {{form.search_date_from.errors}}
                     {{form.search_date_from}}
                 </td>
@@ -29,10 +29,15 @@
                     {{form.search_date_to.errors}}
                     {{form.search_date_to}}
                 </td>
-                <td clas='col-xs-2'>
+                <td class='col-xs-2'>
+                    {{form.and_or.errors}}
+                    {{form.and_or}}
+                </td>
+                <td class='col-xs-2'>
                     {{form.search_keyword.errors}}
                     {{form.search_keyword}}
                 </td>
+                <td class='col-xs-1'></td>
             </tbody>
         </table>
         <div class='text-right', id='inventory-buttons'>
