@@ -268,12 +268,12 @@ class OrderSearchForm(forms.Form):
         )
     search_date_from = forms.CharField(
         required=False,
-        widget=forms.DateInput(attrs={'class': 'datepicker form-control'}),
+        widget=forms.DateInput(format=('%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'), attrs={'class': 'datepicker form-control'}),
         label = 'From'
         )
     search_date_to = forms.CharField(
         required=False,
-        widget=forms.DateInput(attrs={'class': 'datepicker form-control'}),
+        widget=forms.DateInput(format=('%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'), attrs={'class': 'datepicker form-control'}),
         label = 'To'
         )
     search_keyword = forms.CharField(
