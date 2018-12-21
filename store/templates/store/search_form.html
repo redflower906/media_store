@@ -1,4 +1,6 @@
+{% load static %}
 <script src="{% static 'js/jsmedia.js' %}"></script> 
+
 <form id='search_form' method="POST" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
     {{ search_form.non_field_errors }}
