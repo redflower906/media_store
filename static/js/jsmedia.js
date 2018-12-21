@@ -57,16 +57,34 @@ $(function() {
         maxDate: "+3m",
     });
     $('#id_search_date_from').datepicker();
-    $('#id_search_date_to').datepicker();        
+    $('#id_search_date_to').datepicker();
 });
 
 //make date_type required if there's anything in search_date_from
-$(document).ready(function(){
-    $('#id_search_date_from').keyup(function(){
-        console.log('there is text in search_date_from!')
-    });
-});
+$('#search_form').submit(function(){
+    if(($('#id_search_date_from').value) || ($('#id_search_date_to').value)){
+        if((($('#id_date_type').value)) && ($('#id_search_date_from').value) && ($('#id_search_date_to').value)){
+            console.log('all date values are good');
+            return true;
+        }
+        else{
+            console.log('missing date info');
+            $('#id_date_type').prop('required', true);
+            $('#id_search_date_from').prop('required', true);
+            $('#id_search_date_to').prop('required', true);
+            return false;
+        }
 
+    }
+    else if ($('#id_search_keyword').value) {
+        console.log('keyword value');
+        return true;
+    }
+    else {
+        console.log('something is wrong');
+        return false;
+    }
+})
 
 //jquery datepicker to show/hide based on radio selection
 $(function (){
