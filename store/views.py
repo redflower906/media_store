@@ -957,7 +957,8 @@ def search(request):
                 for report in e_reports:
                     writer.writerow(report)
 
-                return response  
+                return response
+            record_num = records.count()
         else:
             messages.error(request, "invalid form")
     else:
@@ -972,6 +973,7 @@ def search(request):
         'headersCo': list(sort_headers2.headers()),
         'headersB': list(sort_headers3.headers()),
         'headersKey': list(sort_headers4.headers()),
+        'record_num': record_num,
     })
 
 
