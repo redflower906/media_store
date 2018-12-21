@@ -84,7 +84,7 @@ $('#search_form').submit(function(){
         console.log('something is wrong');
         return false;
     }
-})
+});
 
 //jquery datepicker to show/hide based on radio selection
 $(function (){
