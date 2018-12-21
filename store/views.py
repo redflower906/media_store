@@ -958,7 +958,7 @@ def search(request):
                     writer.writerow(report)
 
                 return response
-            record_num = records.count()
+            record_num = reports.count()
         else:
             messages.error(request, "invalid form")
     else:
