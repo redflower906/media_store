@@ -61,28 +61,29 @@ $(function() {
 });
 
 //make date_type required if there's anything in search_date_from
-$('#search_form').submit(function(){
-    if(($('#id_search_date_from').value) || ($('#id_search_date_to').value)){
-        if((($('#id_date_type').value)) && ($('#id_search_date_from').value) && ($('#id_search_date_to').value)){
+$('#search_form').submit(function(event){
+    if(($('#id_search_date_from').val()) || ($('#id_search_date_to').val())){
+        console.log('first if works');
+        if(($('#id_date_type').val()) && ($('#id_search_date_from').val()) && ($('#id_search_date_to').val())){
             console.log('all date values are good');
-            return true;
+            return;
         }
         else{
             console.log('missing date info');
             $('#id_date_type').prop('required', true);
             $('#id_search_date_from').prop('required', true);
             $('#id_search_date_to').prop('required', true);
-            return false;
+            event.preventDefault();
         }
 
     }
-    else if ($('#id_search_keyword').value) {
+    else if ($('#id_search_keyword').val()) {
         console.log('keyword value');
-        return true;
+        return;
     }
     else {
         console.log('something is wrong');
-        return false;
+        event.preventDefault();
     }
 });
 
