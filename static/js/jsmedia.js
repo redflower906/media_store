@@ -60,6 +60,14 @@ $(function() {
     $('#id_search_date_to').datepicker();        
 });
 
+//make date_type required if there's anything in search_date_from
+$(document).ready(function(){
+    $('#id_search_date_from').keyup(function(){
+        console.log('there is text in search_date_from!')
+    });
+});
+
+
 //jquery datepicker to show/hide based on radio selection
 $(function (){
     var radio = $('input:checked').attr('id');
