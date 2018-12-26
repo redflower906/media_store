@@ -60,32 +60,32 @@ $(function() {
     $('#id_search_date_to').datepicker();
 });
 
-//make date_type required if there's anything in search_date_from
-$('#search_form').submit(function(event){
-    if(($('#id_search_date_from').val()) || ($('#id_search_date_to').val())){
-        console.log('first if works');
-        if(($('#id_date_type').val()) && ($('#id_search_date_from').val()) && ($('#id_search_date_to').val())){
-            console.log('all date values are good');
-            return;
-        }
-        else{
-            console.log('missing date info');
-            $('#id_date_type').prop('required', true);
-            $('#id_search_date_from').prop('required', true);
-            $('#id_search_date_to').prop('required', true);
-            event.preventDefault();
-        }
+// //make date_type required if there's anything in search_date_from
+// $('#search_form').on(submit, function(event){
+//     if(($('#id_search_date_from').val()) || ($('#id_search_date_to').val())){
+//         console.log('first if works');
+//         if(($('#id_date_type').val()) && ($('#id_search_date_from').val()) && ($('#id_search_date_to').val())){
+//             console.log('all date values are good');
+//             return;
+//         }
+//         else{
+//             console.log('missing date info');
+//             $('#id_date_type').prop('required', true);
+//             $('#id_search_date_from').prop('required', true);
+//             $('#id_search_date_to').prop('required', true);
+//             event.preventDefault();
+//         }
 
-    }
-    else if ($('#id_search_keyword').val()) {
-        console.log('keyword value');
-        return;
-    }
-    else {
-        console.log('something is wrong');
-        event.preventDefault();
-    }
-});
+//     }
+//     else if ($('#id_search_keyword').val()) {
+//         console.log('keyword value');
+//         return;
+//     }
+//     else {
+//         console.log('something is wrong');
+//         event.preventDefault();
+//     }
+// });
 
 //jquery datepicker to show/hide based on radio selection
 $(function (){

@@ -291,3 +291,19 @@ class OrderSearchForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=BOOL_CHOICES,
         )
+
+    def clean (self):
+        date_from = self.cleaned_data.get('search_date_from')
+
+        if date_from:
+            msg = forms.ValidationError("This field is required.")
+            self.add_error('date_type', msg)
+            self.add_error('search_date_to', msg)
+        else:
+            # Keep the database consistent. The user may have
+            # submitted a shipping_destination even if shipping
+            # was not selected
+            self.cleaned_data['date_type'] = ''
+            self.cleaned_data['search_date_to'] = ''
+
+        return self.cleaned_data
