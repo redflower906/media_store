@@ -294,16 +294,35 @@ class OrderSearchForm(forms.Form):
 
     def clean (self):
         date_from = self.cleaned_data.get('search_date_from')
+        date_to = self.cleaned_data.get('search_date_to')
+        date_type = self.cleaned_data.get('date_type')
+        keyword = self.cleaned_data.get('search_keyword')
+        msg = forms.ValidationError("This field is required.")
 
-        if date_from:
-            msg = forms.ValidationError("This field is required.")
+
+        if (date_from and date_to and date_type):
+            return self.cleaned_data
+        elif date_from and date_to:
             self.add_error('date_type', msg)
+        elif date_from and date_type:
             self.add_error('search_date_to', msg)
+        elif date_to and date_type:
+            self.add_error('search_date_from', msg)
+        elif date_to:
+            self.add_error('date_type', msg)
+            self.add_error('date_from', msg)
+        elif date_from:
+            self.add_error('date_type', msg)
+            self.add_error('date_to', msg)
+        elif date_type:
+            self.add_error('date_from', msg)
+            self.add_error('date_to', msg)
         else:
-            # Keep the database consistent. The user may have
-            # submitted a shipping_destination even if shipping
-            # was not selected
-            self.cleaned_data['date_type'] = ''
-            self.cleaned_data['search_date_to'] = ''
+            return self.cleaned_data
+            # # Keep the database consistent. The user may have
+            # # submitted a shipping_destination even if shipping
+            # # was not selected
+            # self.cleaned_data['date_type'] = ''
+            # self.cleaned_data['search_date_to'] = ''
 
         return self.cleaned_data
