@@ -936,11 +936,11 @@ def search(request):
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
                 if date_type == 'Order Created':
-                    reports = report.filter(date_created__range=[datefrom, dateto])
+                    reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
                 elif date_type == 'Order Completed':
-                    reports = report.filter(date_complete__range=[datefrom, dateto])
+                    reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
                 else:
-                    reports = report.filter(date_billed__range=[datefrom, dateto])
+                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
             elif keyword:
                 reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
                 requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
@@ -954,7 +954,7 @@ def search(request):
                 writer = csv.writer(response)
                 writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
                 e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
-                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
+                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location').distinct()
 
                 for report in e_reports:
                     writer.writerow(report)
