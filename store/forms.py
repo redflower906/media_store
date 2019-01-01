@@ -310,13 +310,13 @@ class OrderSearchForm(forms.Form):
             self.add_error('search_date_from', msg)
         elif date_to:
             self.add_error('date_type', msg)
-            self.add_error('date_from', msg)
+            self.add_error('search_date_from', msg)
         elif date_from:
             self.add_error('date_type', msg)
-            self.add_error('date_to', msg)
+            self.add_error('search_date_to', msg)
         elif date_type:
-            self.add_error('date_from', msg)
-            self.add_error('date_to', msg)
+            self.add_error('search_date_from', msg)
+            self.add_error('search_date_to', msg)
         else:
             return self.cleaned_data
             # # Keep the database consistent. The user may have
