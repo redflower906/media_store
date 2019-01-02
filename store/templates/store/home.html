@@ -5,8 +5,6 @@
 {% block content %}
 
 <head>
-    {% load wysiwyg %}
-    {% wysiwyg_setup %}
     {{ AForm.media }}
 </head>
 
@@ -18,7 +16,6 @@
         <div class="panel-body" id='AForm' style="text-align: center">
             {% csrf_token %}                  
             {{ AForm }}
-            {% wysiwyg_editor "AForm" %} 
         <button class="save btn btn-primary pull-right" type="submit" name='aform' value="Submit">Submit</button> 
         </div>
     </div>
@@ -29,7 +26,7 @@
             <div class="panel-heading" style="text-align: center">Announcements</div>
             <div class="panel-body" style="text-align: center">
                 {% csrf_token %}                  
-                {{ AForm.text }} 
+                {{ post.text }} 
             </div>
         </div>
     {% endif %}
