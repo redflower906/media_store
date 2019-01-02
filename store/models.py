@@ -21,6 +21,7 @@ import decimal
 from datetime import datetime, date, timedelta
 from dateutil import relativedelta
 from djrichtextfield.models import RichTextField
+from tinymce.models import HTMLField
 
 # Create your models here.
 
@@ -309,7 +310,7 @@ class OrderLine(models.Model):
     
 
 class Announcements(models.Model):
-   text = models.TextField()
+   text = HTMLField()
    show = models.BooleanField(default=False)
 
 
