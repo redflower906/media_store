@@ -99,6 +99,8 @@ INSTALLED_APPS = [
     'import_export',
     'django_crontab',
     'djrichtextfield',
+    'django_wysiwyg',
+    'django-tinymce',
 
 ]
 
@@ -141,6 +143,8 @@ CRONJOBS = [
     ('0 1 * * *', 'store.management.commands.recur_order_ending_soon.command'),
     ('0 1 * * *', 'store.management.commands.update_users.command', ['-v3'])
 ]
+
+DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
 DJRICHTEXTFIELD_CONFIG = {
     'js': ["//cdn.ckeditor.com/4.10.1/standard/ckeditor.js"],

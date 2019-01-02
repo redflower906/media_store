@@ -3,15 +3,18 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
+{% load wysiwyg %}
+{% wysiwyg_setup %}
 
 <hr/>
 {% if user.is_staff is True %}
 <form method="POST" action="" class="form-group">
     <div class="panel panel-danger">
         <div class="panel-heading" style="text-align: center">Announcements</div>
-        <div class="panel-body" style="text-align: center">
+        <div class="panel-body" id='tinymce' style="text-align: center">
             {% csrf_token %}                  
-            {{ AForm }} 
+            {{ AForm }}
+            {% wysiwyg_editor "tinymce" %} 
         <button class="save btn btn-primary pull-right" type="submit" name='aform' value="Submit">Submit</button> 
         </div>
     </div>
@@ -22,7 +25,7 @@
             <div class="panel-heading" style="text-align: center">Announcements</div>
             <div class="panel-body" style="text-align: center">
                 {% csrf_token %}                  
-                {{ post.text|linebreaks }} 
+                {{ post.text }} 
             </div>
         </div>
     {% endif %}
