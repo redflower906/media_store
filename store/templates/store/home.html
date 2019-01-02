@@ -16,7 +16,8 @@
         <div class="panel-body" id='tinymce' style="text-align: center">
             {% csrf_token %}                  
             {{ AForm }}
-            {% wysiwyg_editor "tinymce" %} 
+            <textarea id="foo"></textarea>
+            {% wysiwyg_editor "foo" %} 
         <button class="save btn btn-primary pull-right" type="submit" name='aform' value="Submit">Submit</button> 
         </div>
     </div>
