@@ -883,38 +883,39 @@ def search(request):
 
             if keyword:
                 keys = keyword.split(',')
+                keylen = len(keys)
+
 
             if datefrom and keyword:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
-                for key in keys:
-                    if (date_type == 'Order Submitted') and (and_or == 'AND'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(
-                        requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).filter(
-                        date_created__range=[datefrom, dateto]).distinct()
-                    elif (date_type == 'Order Submitted') and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])|Q(submitter__first_name__icontains=key)|Q(
-                        submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).distinct()
-                    elif date_type == 'Order Completed'and (and_or == 'AND'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(
-                        requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).filter(
-                        date_complete__range=[datefrom, dateto]).distinct()
-                    elif date_type == 'Order Completed'and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=key)|Q(
-                        submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).distinct()
-                    elif date_type == 'Order Billed'and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=key)|Q(
-                        submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).distinct()
-                    else:
-                        reports = report.prefetch_related('orderline_set').filter(Q(submitter__last_name__icontains=key)|Q(
-                        requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                        project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).filter(
-                        date_complete__range=[datefrom, dateto]).distinct()
+                if (date_type == 'Order Submitted') and (and_or == 'AND'):
+                    reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
+                    requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
+                    date_created__range=[datefrom, dateto]).distinct()
+                elif (date_type == 'Order Submitted') and (and_or == 'OR'):
+                    reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(
+                    submitter__last_name__icontains=keyword)|Q(requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).distinct()
+                elif date_type == 'Order Completed'and (and_or == 'AND'):
+                    reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
+                    requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
+                    date_complete__range=[datefrom, dateto]).distinct()
+                elif date_type == 'Order Completed'and (and_or == 'OR'):
+                    reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(
+                    submitter__last_name__icontains=keyword)|Q(requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).distinct()
+                elif date_type == 'Order Billed'and (and_or == 'OR'):
+                    reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=keyword)|Q(
+                    submitter__last_name__icontains=keyword)|Q(requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).distinct()
+                else:
+                    reports = report.prefetch_related('orderline_set').filter(Q(submitter__last_name__icontains=keyword)|Q(
+                    requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                    project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).filter(
+                    date_complete__range=[datefrom, dateto]).distinct()
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -925,10 +926,9 @@ def search(request):
                 else:
                     reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
             elif keyword:
-                for key in keys:
-                    reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(
-                    requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                    project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key)).distinct()
+                reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=keyword)|Q(submitter__last_name__icontains=keyword)|Q(
+                requester__last_name__icontains=keyword)|Q(requester__first_name__icontains=keyword)|Q(notes_order__icontains=keyword)|Q(
+                project_code__hhmi_project_id__icontains=keyword)|Q(department__number__icontains=keyword)| Q(orderline__inventory__inventory_text__icontains=keyword)).distinct()
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
             # to export   
