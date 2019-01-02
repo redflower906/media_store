@@ -202,7 +202,7 @@ class OrderLineInlineFormSet(
 
 class AnnouncementsForm(forms.ModelForm):
     
-    text = forms.CharField(widget=TinyMCE(attrs={'rows': 5, 'class':'form-control'}))
+    # text = forms.CharField(widget=TinyMCE(attrs={'rows': 5, 'class':'form-control'}))
 
 
     class Meta:
@@ -213,7 +213,7 @@ class AnnouncementsForm(forms.ModelForm):
             'show': 'Display'
         }
         widgets = {
-            # 'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
+            'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
         
