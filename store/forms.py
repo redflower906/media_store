@@ -296,7 +296,6 @@ class OrderSearchForm(forms.Form):
         date_from = self.cleaned_data.get('search_date_from')
         date_to = self.cleaned_data.get('search_date_to')
         date_type = self.cleaned_data.get('date_type')
-        keyword = self.cleaned_data.get('search_keyword')
         msg = forms.ValidationError("This field is required.")
 
 

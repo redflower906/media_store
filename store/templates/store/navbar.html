@@ -36,11 +36,10 @@
                 <li><a href='/signout/remainder'>Bottle/Vial Remainder</a></li>
               </ul>
             </li>
+            {% endif %}
             <li>
               <a href="/search">Search</a>
             </li>
-            {% endif %}
-
           </ul>
       <ul class="nav navbar-nav navbar-right" margin-right: 10>
       {% if user.is_authenticated %}
