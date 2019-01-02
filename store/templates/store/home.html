@@ -3,9 +3,9 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
-{% load wysiwyg %}
-{% wysiwyg_setup %}
 {% block extrahead %}
+    {% load wysiwyg %}
+    {% wysiwyg_setup %}
     {{ AForm.media }}
 {% endblock %}
 <hr/>
