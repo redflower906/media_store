@@ -73,13 +73,16 @@ urlpatterns = [
     url(r'^signout/remainder', views.sign_outs_remainder, name='remainder'),
     url(r'^signout/new', views.create_signout, name='create_signout'),
 
+#tiny mce?
+    url(r'^tinymce/', include('tinymce.urls')),
+
 
 
 #add link to dump to Resource Matrix here
 
 
 #Admin Interface
-#	url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
+	url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
 #	url(r'^order_delete', 'store_views.delete_order', name = 'delete_order')"""
 
 #services

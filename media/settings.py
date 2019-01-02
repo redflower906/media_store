@@ -100,7 +100,7 @@ INSTALLED_APPS = [
     'django_crontab',
     'djrichtextfield',
     'django_wysiwyg',
-    'django-tinymce',
+    'tinymce',
 
 ]
 
