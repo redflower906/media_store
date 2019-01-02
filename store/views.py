@@ -954,9 +954,9 @@ def search(request):
                 writer = csv.writer(response)
                 writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
                 e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
-                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location').distinct()
+                'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
 
-                for report in e_reports:
+                for report in e_reports.distinct():
                     writer.writerow(report)
 
                 return response
