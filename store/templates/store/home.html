@@ -5,7 +5,9 @@
 {% block content %}
 {% load wysiwyg %}
 {% wysiwyg_setup %}
-
+{% block extrahead %}
+    {{ AForm.media }}
+{% endblock %}
 <hr/>
 {% if user.is_staff is True %}
 <form method="POST" action="" class="form-group">
