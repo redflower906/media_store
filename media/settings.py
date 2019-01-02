@@ -98,7 +98,7 @@ INSTALLED_APPS = [
 #    'south',
     'import_export',
     'django_crontab',
-    'djrichtextfield',
+    # 'djrichtextfield',
     'django_wysiwyg',
     'tinymce',
 
