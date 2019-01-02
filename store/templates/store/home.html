@@ -3,21 +3,16 @@
 {% include "store/navbar.html" %}
 {% endblock %}
 {% block content %}
-{% block extrahead %}
-    {% load wysiwyg %}
-    {% wysiwyg_setup %}
-    {{ AForm.media }}
-{% endblock %}
+
 <hr/>
 {% if user.is_staff is True %}
 <form method="POST" action="" class="form-group">
     <div class="panel panel-danger">
         <div class="panel-heading" style="text-align: center">Announcements</div>
-        <div class="panel-body" id='tinymce' style="text-align: center">
+        <div class="panel-body" id='AForm' style="text-align: center">
             {% csrf_token %}                  
             {{ AForm }}
-            <textarea id="foo"></textarea>
-            {% wysiwyg_editor "foo" %} 
+            {% wysiwyg_editor "AForm" %} 
         <button class="save btn btn-primary pull-right" type="submit" name='aform' value="Submit">Submit</button> 
         </div>
     </div>
