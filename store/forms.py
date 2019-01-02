@@ -16,7 +16,7 @@ from django.db.models import Q
 from django.forms import ModelChoiceField, ChoiceField, widgets, ModelForm
 from django.utils import timezone
 from djrichtextfield.widgets import RichTextWidget
-from tinymce import TinyMCE
+from tinymce.widgets import TinyMCE
 
 logger = logging.getLogger('default')
 
