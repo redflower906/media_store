@@ -16,6 +16,7 @@ from django.db.models import Q
 from django.forms import ModelChoiceField, ChoiceField, widgets, ModelForm
 from django.utils import timezone
 from djrichtextfield.widgets import RichTextWidget
+from tinymce.widgets import TinyMCE
 
 logger = logging.getLogger('default')
 
@@ -200,6 +201,10 @@ class OrderLineInlineFormSet(
         self.initial = data
 
 class AnnouncementsForm(forms.ModelForm):
+    
+    text = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
+    
+
     class Meta:
         model = Announcements
         fields = ('text', 'show')
@@ -208,10 +213,10 @@ class AnnouncementsForm(forms.ModelForm):
             'show': 'Display'
         }
         widgets = {
-            'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
+            # 'text': forms.Textarea(attrs={'rows': 5, 'class':'form-control'}),
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
-        # text = forms.CharField(widget=RichTextWidget()) richtexteditor on hold ~FIX~
+        
 
 
 OrderStatusFormSet = modelformset_factory(
