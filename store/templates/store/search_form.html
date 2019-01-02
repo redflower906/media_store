@@ -46,6 +46,11 @@
     </div>
     <hr/>
     <div class='row'>
+        {% if reports|length is not 0 %}
+            <div class="form-group pull-right">
+                <input id="filter" type="text" class="form-control" placeholder="Search for...">
+            </div>
+        {% endif %}
         <div class='col-xs-1 pull-right'>
             <button class="save btn btn-primary" type="submit" value="Submit">Submit</button>
         </div>
