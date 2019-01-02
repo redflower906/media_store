@@ -202,8 +202,8 @@ class OrderLineInlineFormSet(
 
 class AnnouncementsForm(forms.ModelForm):
     
-    text = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-    
+    text = forms.CharField(widget=TinyMCE(attrs={'rows': 5, 'class':'form-control'}))
+
 
     class Meta:
         model = Announcements
