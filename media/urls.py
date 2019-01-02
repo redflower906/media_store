@@ -82,7 +82,7 @@ urlpatterns = [
 
 
 #Admin Interface
-	url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
+	# url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
 #	url(r'^order_delete', 'store_views.delete_order', name = 'delete_order')"""
 
 #services
