@@ -3,7 +3,9 @@
 {% load store_tags %}
 
 <hr/>
-{{keys}}
+{% for key in keys %}
+    {{key}}
+{% endfor %}
 <table class="table table-hover" id="order_table">
         {{ reports.management_form }}
         
