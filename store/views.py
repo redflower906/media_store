@@ -960,7 +960,6 @@ def search(request):
         'headersB': list(sort_headers3.headers()),
         'headersKey': list(sort_headers4.headers()),
         'record_num': record_num,
-        'keys': keys,
     })
 
 
