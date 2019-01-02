@@ -832,7 +832,7 @@ def sign_outs_remainder(request):
 #             qs = qs.annotate(rank=SearchRank(vector, query)).order_by('-rank')
 
 #         return qs
-
+@login_required
 def search(request):
 
     ORDER_LIST_HEADERSCr = (
