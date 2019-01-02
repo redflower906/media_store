@@ -4,6 +4,12 @@
 {% endblock %}
 {% block content %}
 
+<head>
+    {% load wysiwyg %}
+    {% wysiwyg_setup %}
+    {{ AForm.media }}
+</head>
+
 <hr/>
 {% if user.is_staff is True %}
 <form method="POST" action="" class="form-group">
