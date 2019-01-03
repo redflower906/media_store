@@ -687,6 +687,72 @@ def email_form(request, id):
         'order_info': order_info,
     })
 
+@login_required(login_url='login')
+def create_signout(request):
+
+    order = Order()
+    user = request.user
+    u = user.id
+
+    if u == 17380:
+        loc = '2E.233'
+        uname = 2
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1262))
+    elif u == 17381:
+        loc = '1E.390'
+        uname = 1
+        q = Inventory.objects.filter(Q(id=1267))
+    elif u == 17382:
+        loc = '3E.265'
+        uname = 3
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
+    else:
+        loc = False
+        uname = False
+        q = Inventory.objects.all()
+    
+
+    if request.method == "POST":
+
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'location': loc})
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order,)
+        for form in orderlineformset:
+            form.fields['inventory'].queryset = q
+        if order_form.is_valid() and orderlineformset.is_valid():
+            order = order_form.save(commit=False)
+            order.location = loc
+            order.is_recurring = False
+            order.status = 'Complete'
+            order.notes_order = 'Signout'
+            # order.submitter = order.requester
+            order.save()
+            orderlineformset.save()
+            messages.success(request,
+            'Thank you for signing out food!')
+            return HttpResponseRedirect('/signout/new')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+            order_form = OrderForm(prefix='order', instance=order,initial={
+            'location': loc})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order,)
+            for form in orderlineformset:
+                form.fields['inventory'].queryset = q
+
+    return render(request, 'store/signout_create.html', {
+        'order_form' : order_form,
+        'formset': orderlineformset,
+        'media_types': MEDIA_CHOICES,
+        'loc': loc,
+        'uname': uname,
+        'user': user,
+        'signout_lists': __build_signout_groups(),
+        'q': q,
+    })
+    
 @login_required
 def current_sign_outs (request):
     ORDER_LIST_HEADERS_CORN = (
@@ -975,68 +1041,3 @@ def ajax(request):
     dataOne = simplejson.loads(data)
     return JsonResponse(dataOne)
 
-@login_required(login_url='login')
-def create_signout(request):
-
-    order = Order()
-    user = request.user
-    u = user.id
-
-    if u == 17380:
-        loc = '2E.233'
-        uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1262))
-    elif u == 17381:
-        loc = '1E.390'
-        uname = 1
-        q = Inventory.objects.filter(Q(id=1267))
-    elif u == 17382:
-        loc = '3E.265'
-        uname = 3
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
-    else:
-        loc = False
-        uname = False
-        q = Inventory.objects.all()
-    
-
-    if request.method == "POST":
-
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-            'location': loc})
-        orderlineformset = OrderLineInlineFormSet(
-            request.POST, prefix='orderlines', instance=order,)
-        for form in orderlineformset:
-            form.fields['inventory'].queryset = q
-        if order_form.is_valid() and orderlineformset.is_valid():
-            order = order_form.save(commit=False)
-            order.location = loc
-            order.is_recurring = False
-            order.status = 'Complete'
-            order.notes_order = 'Signout'
-            # order.submitter = order.requester
-            order.save()
-            orderlineformset.save()
-            messages.success(request,
-            'Thank you for signing out food!')
-            return HttpResponseRedirect('/signout/new')
-        else:
-            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    else:
-            order_form = OrderForm(prefix='order', instance=order,initial={
-            'location': loc})
-            orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines', instance=order,)
-            for form in orderlineformset:
-                form.fields['inventory'].queryset = q
-
-    return render(request, 'store/signout_create.html', {
-        'order_form' : order_form,
-        'formset': orderlineformset,
-        'media_types': MEDIA_CHOICES,
-        'loc': loc,
-        'uname': uname,
-        'user': user,
-        'signout_lists': __build_signout_groups(),
-        'q': q,
-    })
