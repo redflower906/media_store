@@ -97,7 +97,7 @@ class UserProfile(models.Model):
     def data_text_search(self):
         if self.employee_id:
             if 'J' in self.employee_id:
-                 return 'hi!'
+                 return ';' + (self.employee_id.replace('J', '9')) + '01?' + ' ' + self.first_name + ' ' + self.last_name
             return ';' + self.employee_id + '01?' + ' ' + self.first_name + ' ' + self.last_name
         return self.first_name + ' ' + self.last_name
 
