@@ -101,7 +101,7 @@ class OrderFormSelect(forms.Select):
 class OrderForm(forms.ModelForm):
 
     submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
