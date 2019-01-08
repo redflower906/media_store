@@ -93,7 +93,7 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
-#add 01 or 02 to end of employee id?
+#assign barcode info to employee name
     def data_text_search(self):
         if self.employee_id:
             if 'J' in self.employee_id:

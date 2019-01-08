@@ -694,14 +694,14 @@ def create_signout(request):
     user = request.user
     u = user.id
 
-    if u == 17380:
-        loc = '2E.233'
-        uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1262))
-    elif u == 17381:
+    if u == 17381:
         loc = '1E.390'
         uname = 1
-        q = Inventory.objects.filter(Q(id=1267))
+        q = Inventory.objects.filter(Q(id=1267) | Q(id=1273) | Q(id=1270) | Q(id=1269) | Q(id=1268) | Q(id=1305) | Q(id=1303) | Q(id=1304) | Q(id=1272))
+    elif u == 17380:
+        loc = '2E.233'
+        uname = 2
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
     elif u == 17382:
         loc = '3E.265'
         uname = 3
