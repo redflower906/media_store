@@ -139,10 +139,10 @@ WSGI_APPLICATION = 'media.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-CRONJOBS = [
-    ('*/2 * * * *', 'store.management.commands.recur_order_ending_soon', '>> /opt/media_v1/recur_order_ending_soon.txt'),
-    ('0 1 * * *', 'store.management.commands.update_users.command', ['-v3'])
-]
+# CRONJOBS = [
+#     ('*/2 * * * *', 'store.management.commands.recur_order_ending_soon', '>> /opt/media_v1/recur_order_ending_soon.txt'),
+#     ('0 1 * * *', 'store.management.commands.update_users.command', ['-v3'])
+# ]
 
 DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
