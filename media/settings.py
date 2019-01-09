@@ -97,7 +97,7 @@ INSTALLED_APPS = [
 #    'hijack',
 #    'south',
     'import_export',
-    'django_crontab',
+    # 'django_crontab',
     # 'djrichtextfield',
     'django_wysiwyg',
     'tinymce',
@@ -139,10 +139,10 @@ WSGI_APPLICATION = 'media.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-CRONJOBS = [
-    ('*/5 * * * *', 'store.management.commands.recur_order_ending_soon'),
-    ('0 1 * * *', 'store.management.commands.update_users')
-]
+# CRONJOBS = [
+#     ('*/5 * * * *', 'store.management.commands.recur_order_ending_soon'),
+#     ('0 1 * * *', 'store.management.commands.update_users')
+# ]
 
 DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
