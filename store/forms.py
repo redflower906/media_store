@@ -98,11 +98,22 @@ class OrderFormSelect(forms.Select):
             option_dict['attrs']['data-text-search'] = user.data_text_search()
         return option_dict
 
+# class OrderFormDeptSelect(forms.Select):
+    
+#     def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
+
+#         option_dict = super(OrderFormDeptSelect, self).create_option(name, value, label, selected, index,
+#                                                                     subindex=subindex, attrs=attrs)
+#         if option_dict['value']:
+#             user = UserProfile.objects.get(user=option_dict['value'])
+#             option_dict['attrs']['data-text-search'] = user.data_text_search()
+#         return option_dict
+
 class OrderForm(forms.ModelForm):
 
     submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
-    project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}), required=False)
+    project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
         fields = ('submitter', 'department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'doc', 'notes_order','project_code')
@@ -110,7 +121,7 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'department': OrderFormSelect(attrs={'required': False, 'class': 'chosen-select'}),
+        'department': forms.Select(attrs={'required': False, 'class': 'chosen-select'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
