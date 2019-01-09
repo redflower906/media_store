@@ -133,3 +133,6 @@ website/admin
     go to users, if cronjob worked, should have date joined be today
 
 delete a few known people from database, then run cronjob at 12 am, tomorrow see if anyone was updated 7/18
+
+0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py recur_order_ending_soon
+0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py update_users

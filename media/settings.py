@@ -97,7 +97,7 @@ INSTALLED_APPS = [
 #    'hijack',
 #    'south',
     'import_export',
-    'django_crontab',
+    # 'django_crontab',
     # 'djrichtextfield',
     'django_wysiwyg',
     'tinymce',
