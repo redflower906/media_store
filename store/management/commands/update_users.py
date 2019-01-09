@@ -32,6 +32,9 @@ from django.db import transaction
 from django.db.utils import IntegrityError
 from django.utils.termcolors import colorize
 from django.db.models import Q
+from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+
 
 from store.models import UserProfile, Department
 from visitor_project_tracker.models import VisitingScientist
@@ -655,5 +658,14 @@ class Command(BaseCommand):
 
             for emp in visiting_scientists:
                 add_visitor(emp, in_workday)
+
+        subject,from_email,to = 'update_users successful!', 'root@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
+        m_plain = render_to_string('cron_successful.txt')
+        email =EmailMultiAlternatives(
+        subject,
+        m_plain,
+        from_email,
+        [to],)
+        email.send()
 
         return
