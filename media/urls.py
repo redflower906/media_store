@@ -21,6 +21,8 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.list import ListView
 from store.models import Order
 from store import views 
+admin.autodiscover()
+
 
 app_name = 'store'
 
@@ -33,17 +35,14 @@ urlpatterns = [
 
 #main views
     url(r'^$', views.home, name='home'),
-
     url(r'^admin/', include(admin.site.urls)),
     url(r'^store/', views.home, name='home'),
 #   url(r'^invalid', 'store_views.invalid_login'),
 #   url(r'^hijack/', include('hijack.urls')), #to hijack other users
 
 
-#user views
 ##Inventory
     url(r'^inventory/$', views.inventory, name='inventory'),
-#    $ allows you to build on the URL while using different views
     url(r'^inventory/new', views.create_item, name='new_item'),
     url(r'^inventory/(?P<id>[0-9]*)$', views.single_item, name='single_item'),
     url(r'^inventory/(?P<id>[0-9]*)/edit$', views.update_item, name='edit_single_item'),
@@ -75,18 +74,6 @@ urlpatterns = [
 
 #tiny mce?
     url(r'^tinymce/', include('tinymce.urls')),
-
-
-
-#add link to dump to Resource Matrix here
-
-
-#Admin Interface
-	# url(r'^admin_dashboard/$*', 'store_views.admin_dashboard', name = 'admin_dashboard'),
-#	url(r'^order_delete', 'store_views.delete_order', name = 'delete_order')"""
-
-#services
-#	url(r'^service/$', 'media')
 
 #Ajax calls
     url(r'^ajax', views.ajax, name='ajax'), #json for user department and project codes

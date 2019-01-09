@@ -1,1 +1,1 @@
-recur_order_ending_soon cron job ran today at 1 am!
+cron job ran today at 1 am!

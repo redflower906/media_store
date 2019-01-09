@@ -40,7 +40,7 @@ class Command(BaseCommand):
                     m_plain,
                     from_email,
                     [to],
-                    # cc=[order.req.user_profile.email_address],
+                    cc=[order.submitter.user_profile.email_address],
                     )
                     email.attach_alternative(m_html, "text/html")
                     email.send()
