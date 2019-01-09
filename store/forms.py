@@ -102,7 +102,7 @@ class OrderForm(forms.ModelForm):
 
     submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
-    project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
+    project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.OrderFormSelect(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
         fields = ('submitter', 'department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'doc', 'notes_order','project_code')
@@ -110,7 +110,7 @@ class OrderForm(forms.ModelForm):
             'notes_order': 'Special Instructions'
         }
         widgets={
-        'department': forms.Select(attrs={'required': False, 'class': 'chosen-select'}),
+        'department': forms.OrderFormSelect(attrs={'required': False, 'class': 'chosen-select'}),
         'is_recurring': forms.RadioSelect(choices=[
             (True, 'Yes'),
             (False, 'No')             
