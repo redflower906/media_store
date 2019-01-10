@@ -136,3 +136,4 @@ delete a few known people from database, then run cronjob at 12 am, tomorrow see
 
 0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py recur_order_ending_soon
 0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py update_users
+sudo service cron reload
