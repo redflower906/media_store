@@ -411,7 +411,6 @@ def view_order(request):
         ('Cost Center', 'department__number'),
         ('Requester', 'requester__last_name'),
         ('Submitted', 'date_created'),
-        ('', ''),
         ('Location', 'location'),
         ('Status', 'status'),
         ('Order Total', 'order_total')
