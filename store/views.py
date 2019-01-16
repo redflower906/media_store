@@ -543,7 +543,7 @@ def view_order(request):
 
     pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
     pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
-    pageCNB_query = compNotBill_queryset.filter(id__in=[p.id for p in pagesCNB])
+    pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
     pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
