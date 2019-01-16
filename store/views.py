@@ -413,7 +413,7 @@ def view_order(request):
         ('Submitted', 'date_created'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_RECUR = (
@@ -427,7 +427,7 @@ def view_order(request):
         ('End Date', 'date_recurring_stop'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CNB = (
@@ -440,7 +440,7 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CB = (
@@ -453,7 +453,7 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CAN = (
@@ -466,7 +466,7 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        # ('Order Total', 'order_total')
     )
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
@@ -695,17 +695,25 @@ def create_signout(request):
     u = user.id
 
     if u == 17381:
-        loc = '1E.390'
+        loc = '1E.372'
         uname = 1
         q = Inventory.objects.filter(Q(id=1267) | Q(id=1273) | Q(id=1270) | Q(id=1269) | Q(id=1268) | Q(id=1305) | Q(id=1303) | Q(id=1304) | Q(id=1272))
     elif u == 17380:
-        loc = '2E.233'
+        loc = '2E.267'
         uname = 2
         q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
     elif u == 17382:
-        loc = '3E.265'
-        uname = 3
+        loc = '3C.267'
+        uname = 3.1
         q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
+    elif u == 17622:
+        loc = '3W.248'
+        uname = 3.2
+        q = Inventory.objects.filter(Q(id=1269) | Q(id=1270) | Q(id=1267) | Q(id=1272) | Q(id=1273))
+    elif u == 17623:
+        loc = '3W.266'
+        uname = 3.3
+        q = Inventory.objects.filter(Q(id=1269) | Q(id=1270) | Q(id=1267) | Q(id=1272) | Q(id=1273))
     else:
         loc = False
         uname = False
