@@ -86,7 +86,7 @@ def item_model_formset_factory(extra):
 class DateInput(TextInput):
     input_type='date'
 
-# create data_text_search attribute in option for submitter + requester dropdowns to allow barcode scan to work.    
+# create data_text_search attribute in option for submitter + requester dropdowns to allow barcode scan/mag stripe reader to work.    
 class OrderFormSelect(forms.Select):
 
     def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
@@ -98,21 +98,11 @@ class OrderFormSelect(forms.Select):
             option_dict['attrs']['data-text-search'] = user.data_text_search()
         return option_dict
 
-# class OrderFormDeptSelect(forms.Select):
-    
-#     def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
-
-#         option_dict = super(OrderFormDeptSelect, self).create_option(name, value, label, selected, index,
-#                                                                     subindex=subindex, attrs=attrs)
-#         if option_dict['value']:
-#             user = UserProfile.objects.get(user=option_dict['value'])
-#             option_dict['attrs']['data-text-search'] = user.data_text_search()
-#         return option_dict
-
 class OrderForm(forms.ModelForm):
 
-    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
-    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
+    #allow full names in [first_name last_name] format and exclude signout names for sub+req. Only list existing project IDs (with JVS)
+    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).exclude(id=17622).exclude(id=17623).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
+    requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).exclude(id=17622).exclude(id=17623).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order

@@ -439,7 +439,7 @@ class SortHeaders(models.Model):
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete' and instance.notes_order != 'Signout':
-        domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+        domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
         context = Context({
             'id': instance.id,
             'location': instance.location,
@@ -508,14 +508,14 @@ def recurring_dates(sender, instance, *args, **kwargs):
         elif instance.weeks == '4':
             instance.due_date = instance.date_recurring_start + timedelta(days=28)
 
-class Search(models.Lookup):
-    lookup_name = 'search'
+# class Search(models.Lookup):
+#     lookup_name = 'search'
 
-    def as_mysql(self, compiler, connection):
-        lhs, lhs_params = self.process_lhs(compiler, connection)
-        rhs, rhs_params = self.process_rhs(compiler, connection)
-        params = lhs_params + rhs_params
-        return 'MATCH (%s) AGAINST (%s IN BOOLEAN MODE)' % (lhs, rhs), params
+#     def as_mysql(self, compiler, connection):
+#         lhs, lhs_params = self.process_lhs(compiler, connection)
+#         rhs, rhs_params = self.process_rhs(compiler, connection)
+#         params = lhs_params + rhs_params
+#         return 'MATCH (%s) AGAINST (%s IN BOOLEAN MODE)' % (lhs, rhs), params
 
-models.CharField.register_lookup(Search)
-models.TextField.register_lookup(Search)
+# models.CharField.register_lookup(Search)
+# models.TextField.register_lookup(Search)
