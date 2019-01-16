@@ -152,11 +152,13 @@
             {% if pages.has_previous %}
                 <a href="?page={{ pages.previous_page_number }}">previous</a>
             {% endif %}
-    
-            <span class="current">
-                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
-            </span>
-    
+            {% for i in pages.paginator.page_range %}
+                {% if pages.number == i %}
+                    <span class="current">
+                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                    </span>
+                {% endif %}
+            {% endfor %}
             {% if pages.has_next %}
                 <a href="?page={{ pages.next_page_number }}">next</a>
             {% endif %}
