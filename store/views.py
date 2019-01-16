@@ -518,7 +518,7 @@ def view_order(request):
     page = request.GET.get('page', 1)
     paginatorI = Paginator(incomp_queryset, 50)
     paginatorR = Paginator(recur_queryset, 50)
-    paginatorCNB = Paginator(compNotBill_queryset, 150)
+    paginatorCNB = Paginator(compNotBill_queryset, 10)
     paginatorCB = Paginator(compBill_queryset, 150)
     paginatorCAN = Paginator(cancel_queryset, 50)
 
@@ -543,7 +543,7 @@ def view_order(request):
 
     pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
     pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
-    pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
+    pageCNB_query = compNotBill_queryset.filter(id__in=[pagesCNB.id for pageCNB in pagesCNB])
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
     pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
