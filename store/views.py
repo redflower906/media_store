@@ -515,7 +515,7 @@ def view_order(request):
     cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').order_by(sort_headers5.get_order_by())
 
     #pagination
-    page = request.GET.get('page')
+    page = request.GET.get('page', 1)
     paginatorI = Paginator(incomp_queryset, 50)
     paginatorR = Paginator(recur_queryset, 50)
     paginatorCNB = Paginator(compNotBill_queryset, 10)
