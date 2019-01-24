@@ -452,7 +452,7 @@ def status_email(sender, instance, *args, **kwargs):
             'MediaStore Order #{0} Complete'.format(instance.id),
             m_plain,
             'mediafacility@janelia.hhmi.org',
-            [instance.requester.user_profile.email_address], 
+            [instance.requester.user_profile.email_address, instance.submitter.user_profile.email_address], 
             fail_silently=False,
             html_message=m_html,
         )
