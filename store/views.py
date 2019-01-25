@@ -603,9 +603,9 @@ def export_ordersCNB(request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="Complete_not_billed.csv"'
     writer = csv.writer(response)
-    writer.writerow(['Order_ID','Date_Created', 'Product', 'Qty', 'Price', 'Requester_Email'])
+    writer.writerow(['Order_ID','Date_Created', 'Date_Complete', 'Product', 'Qty', 'Price', 'Requester_Email'])
     compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
-    'id','date_created','orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost','requester__user_profile__email_address')
+    'id','date_created', 'date_complete', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost','requester__user_profile__email_address')
 
     for record in compNotBill:
         writer.writerow(record)            
