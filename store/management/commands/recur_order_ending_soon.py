@@ -26,7 +26,7 @@ class Command(BaseCommand):
                     number = 'one'
 
                 if (today_to_stop == 21) or (today_to_stop == 7):
-                    domain = 'mediastore.int.janelia.org/order/edit/{0}'.format(order.id)
+                    domain = 'mediastore.int.janelia.org'
                     subject,from_email,to = 'Recurring Media Store Order #{0} Ending Soon!'.format(order.id), 'mediafacility@janelia.hhmi.org', order.requester.user_profile.email_address 
                     context = Context({
                         'id': order.id,
