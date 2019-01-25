@@ -4,6 +4,7 @@ from django.template import Context, RequestContext
 from django.template.loader import render_to_string
 from dateutil import relativedelta
 from datetime import datetime, date
+from django.db.models import Q
 from store.models import Order
 
 class Command(BaseCommand):
@@ -15,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         today = date.today()
-        orders = Order.objects.all()
+        orders = Order.objects.filter(Q(status_icontains='Submitted')|Q(status_icontains='In Progress'))
         for order in orders:
             if order.date_recurring_stop:
                 today_to_stop = (order.date_recurring_stop - today).days
