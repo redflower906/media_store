@@ -162,7 +162,7 @@ function recurringAlert(){
 function changeAllBill(){
     var pageID = document.getElementById('pageId');
     $('td.Complete').children().val('Billed');
-    if ('Page' in pageID){
+    if ('.pages' in pageID){
         window.alert('Please hit the Change to Billed button again')
     }
     
@@ -172,7 +172,7 @@ function testing(){
     var pageID = document.getElementById('pageId');
     console.log(pageID)
     $('td.Complete').children().val('Billed');
-    if ('Page' in pageID){
+    if ('.pages' in pageID){
         window.alert('Please hit the Change to Billed button again')
     }
     
