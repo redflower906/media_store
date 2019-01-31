@@ -1010,8 +1010,8 @@ def search(request):
                 response = HttpResponse(content_type='text/csv')
                 response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
                 writer = csv.writer(response)
-                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
-                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'date_complete', 'date_billed', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
                 'orderline__qty', 'orderline__inventory__cost', 'notes_order','location')
 
                 for report in e_reports:
