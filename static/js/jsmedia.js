@@ -169,10 +169,8 @@ function changeAllBill(){
 };
 
 function testing(){
-    var pageID = document.getElementsByClassName('pages');
-    console.log(pageID)
     $('td.Complete').children().val('Billed');
-    if ('Page' in pageID){
+    if ($('.pages')){
         window.alert('Please hit the Change to Billed button again')
     }
     
