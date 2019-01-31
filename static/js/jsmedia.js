@@ -169,7 +169,7 @@ function changeAllBill(){
 };
 
 function testing(){
-    var pageID = document.getElementByClass('pages');
+    var pageID = document.getElementsByClassName('pages');
     console.log(pageID)
     $('td.Complete').children().val('Billed');
     if ('Page' in pageID){
