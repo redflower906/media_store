@@ -168,6 +168,16 @@ function changeAllBill(){
     
 };
 
+function testing(){
+    var pageID = document.getElementById('pageId');
+    console.log(pageID)
+    $('td.Complete').children().val('Billed');
+    if ('Page' in pageID){
+        window.alert('Please hit the Change to Billed button again')
+    }
+    
+};
+
 //User cancel an order
 $(function(){
     $('.cancelbtn').click(function(){
