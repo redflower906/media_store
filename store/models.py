@@ -463,6 +463,7 @@ def status_email(sender, instance, *args, **kwargs):
             order.id = None
             order.pk = None
             order.status = 'Submitted'
+            order.date_billed = None
             order.save()
             for ol in orderlines:
                 ol.pk = None
