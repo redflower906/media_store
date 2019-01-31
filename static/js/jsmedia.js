@@ -160,18 +160,9 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
-    var pageID = document.getElementById('pageId');
-    $('td.Complete').children().val('Billed');
-    if ('.pages' in pageID){
-        window.alert('Please hit the Change to Billed button again')
-    }
-    
-};
-
-function testing(){
     $('td.Complete').children().val('Billed');
     if ($('.pages')){
-        window.alert('Please hit the Change to Billed button again')
+        window.alert('Please hit the Change to Billed button again once the page reloads')
     }
     
 };
