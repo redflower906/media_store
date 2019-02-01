@@ -84,8 +84,6 @@
                                             <th>Date Canceled</th>
                                         {% endif %}
                                         {% if report.is_recurring %}
-                                            <th>Last Complete Date</th>
-                                            <th>Last Billed Date</th>
                                             <th>How Often</th>
                                         {% endif %}
                                         <th>Quantity</th>
@@ -107,8 +105,6 @@
                                         <td>{{report.date_modified}}</td>
                                     {% endif %}
                                     {% if report.is_recurring %} 
-                                        <td>{{report.date_complete}}</td>
-                                        <td>{{report.date_billed}}</td>
                                         <td>{{report.get_weeks_display}}</td>
                                     {% endif %}
                                     <td>{{line.qty}}</td>
