@@ -4,10 +4,9 @@
 {% load store_tags %}
 {% load static %}
 <script src="{% static 'js/signout_edit.js' %}"></script> 
-{% comment %} <script type="text/javascript">
+<script type="text/javascript">
     var inventory_groups = {{ signout_lists | safe}};
-    window.onload = recurringAlert;
-</script> {% endcomment %}
+</script>
 <hr/>
 <p>&nbsp;</p>
 {% if uname != False or user.is_staff is True %}
