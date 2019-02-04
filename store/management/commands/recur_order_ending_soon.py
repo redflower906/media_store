@@ -16,7 +16,7 @@ class Command(BaseCommand):
 
     def handle(self, **options):
         today = date.today()
-        orders = Order.objects.filter(Q(status__icontains='Submitted')|Q(status__icontains='In Progress'))
+        orders = Order.objects.filter(Q(status__icontains='Submitted')|Q(status__contains='In Progress'))
         for order in orders:
             if order.date_recurring_stop:
                 today_to_stop = (order.date_recurring_stop - today).days
