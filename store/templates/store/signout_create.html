@@ -4,10 +4,10 @@
 {% load store_tags %}
 {% load static %}
 <script src="{% static 'js/signout_edit.js' %}"></script> 
-<script type="text/javascript">
+{% comment %} <script type="text/javascript">
     var inventory_groups = {{ signout_lists | safe}};
     window.onload = recurringAlert;
-</script>
+</script> {% endcomment %}
 <hr/>
 <p>&nbsp;</p>
 {% if uname != False or user.is_staff is True %}
@@ -18,10 +18,6 @@
     </div>
     <hr/>
     <p>&nbsp;</p>
-
-    <div id="mapPrint">    
-        <img id="img" src="/static/images/2E.png">
-    </div>
 
     <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
