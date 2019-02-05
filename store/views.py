@@ -1121,6 +1121,7 @@ def search(request):
             for sora in keys:
                 q_object.add(Q(submitter__first_name__icontains=sora), q_object.connector)
             reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
+            sql = reports.query
 
                 # if datefrom and keyword:
                 #     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -1186,6 +1187,7 @@ def search(request):
         'keys': keys,
         'keylen': keylen,
         'key': key,
+        'sql:': sql,
     })
 
 
