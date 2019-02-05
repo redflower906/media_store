@@ -1119,7 +1119,7 @@ def search(request):
             keys = keyword.split(',')
             keylen = len(keys)
             q_object = Q(submitter__first_name__icontains=keys[0])
-            for sora in keys:
+            for sora in keys[1:]:
                 q_object.add(Q(submitter__first_name__icontains=sora), q_object.connector)
             reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
             sql = reports.query
