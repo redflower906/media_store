@@ -1114,13 +1114,13 @@ def search(request):
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
 
-            if keyword:
-                keys = keyword.split(',')
-                keylen = len(keys)
-                q_object = Q()
-                for sora in keys:
-                    q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
-                reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
+            # if keyword:
+            keys = keyword.split(',')
+            keylen = len(keys)
+            q_object = Q()
+            for sora in keys:
+                q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
+            reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
 
                 # if datefrom and keyword:
                 #     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -1141,18 +1141,18 @@ def search(request):
                 # else:
                 #     reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
 
-            elif datefrom:
-                datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
-                dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
-                if date_type == 'Order Created':
-                    reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
-                elif date_type == 'Order Completed':
-                    reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
-                else:
-                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
+            # elif datefrom:
+            #     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
+            #     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
+            #     if date_type == 'Order Created':
+            #         reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
+            #     elif date_type == 'Order Completed':
+            #         reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
+            #     else:
+            #         reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
 
-            else:
-               messages.error(request, "You didn't submit any dates or keywords to search")
+            # else:
+            #    messages.error(request, "You didn't submit any dates or keywords to search")
             # to export   
             if 'exportCSV' in request.POST:
                 response = HttpResponse(content_type='text/csv')
