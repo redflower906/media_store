@@ -1099,7 +1099,8 @@ def search(request):
     record_num = ''
     keys = ''
     keylen = 0
-    key = ''
+    key1 = ''
+    key2 = ''
     sql = ''
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
@@ -1119,11 +1120,10 @@ def search(request):
             keys = keyword.split(',')
             keylen = len(keys)
             q_object = Q()
-            q_object.add(Q(submitter__first_name__icontains='scarlett'), Q.OR)
-            q_object.add(Q(submitter__first_name__icontains='brian'), Q.OR)
-            # for sora in keys:
-            #     q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
-            #     key = sora
+            for sora in keys:
+                q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
+                key1 = sora[0]
+                key2 = sora[1]
             reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
             sql = reports.query
 
@@ -1190,7 +1190,8 @@ def search(request):
         'record_num': record_num,
         'keys': keys,
         'keylen': keylen,
-        'key': key,
+        'key1': key1,
+        'key2': key2,
         'sql:': sql,
     })
 
