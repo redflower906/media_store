@@ -1099,6 +1099,7 @@ def search(request):
     record_num = ''
     keys = ''
     keylen = 0
+    key = ''
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
@@ -1153,6 +1154,7 @@ def search(request):
                             id__icontains=sora) | Q(status__icontains=sora)).filter(date_complete__range=[datefrom, dateto]).distinct()   
 
                     else:
+                        key = sora
                         reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
                         requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
                         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
@@ -1202,6 +1204,7 @@ def search(request):
         'record_num': record_num,
         'keys': keys,
         'keylen': keylen,
+        'key': key,
     })
 
 
