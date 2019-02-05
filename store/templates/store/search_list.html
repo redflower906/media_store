@@ -119,13 +119,14 @@
                         </td>                              
                     </tr>
                 </tr>
-                keylen: {{keylen}}
+
                 {% endfor %}
             </tbody>
         {% else %}
             <div><p>No search results</p></div>        
         {% endif %}    
-    </table>
+    </table>                
+    keylen: {{keylen}}
     {% if record_num %}
     <div>
         <p>{{record_num}} found records</p>
