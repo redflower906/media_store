@@ -1145,7 +1145,7 @@ def search(request):
                         reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()   
 
                 else:
-                    reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
+                    reports = report.prefetch_related('orderline_set').filter(q_object)
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
