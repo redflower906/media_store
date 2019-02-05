@@ -1117,8 +1117,8 @@ def search(request):
             if keyword:
                 keys = keyword.split(',')
                 keylen = len(keys)
-                q_object = Q(submitter__first_name__icontains=keys[0])
-                for sora in keys[1:]:
+                q_object = Q()
+                for sora in keys:
                     q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
 
                 if datefrom and keyword:
