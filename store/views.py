@@ -841,9 +841,9 @@ def current_sign_outs (request):
 @login_required
 def sign_outs_remainder(request):
 
-    user = request.user
+    # user = request.user
     orders = Order.objects.all()
-    bv = Bottles_Vials.objects.all()
+    # bv = Bottles_Vials.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
@@ -1036,6 +1036,7 @@ def search(request):
         'headersKey': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
+        'keylen': keylen,
     })
 
 

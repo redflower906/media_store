@@ -136,18 +136,6 @@
                                     {{ hidden_field.errors }} 
                                     {{ hidden_field }}
                                     {% endfor %}
-                                    {% comment %} <td class='col text-center'>
-                                        <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
-                                            {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                                        <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
-                                            <option value=""> --------- </option>
-                                            {% for media_type, media_type_desc in media_types %}
-                                                <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
-                                                    {{media_type_desc}}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                    </td> {% endcomment %}
                                     <td class='col text-center'>
                                         {{ form.inventory.errors }}
                                         {{ form.inventory }}
