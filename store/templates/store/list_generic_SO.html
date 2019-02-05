@@ -11,6 +11,8 @@
                     <th></th>
                     {% table_header headers %}
                     <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody class="searchable">
@@ -29,9 +31,6 @@
                     <!-- coldroom signout billed -->
                     {% if orderforms == billed %}
                     <td>{{orderform.instance.date_billed}}</td>
-                    {% else %}
-                    <td>{{orderform.instance.department.number}}</td>
-                    <td>{{orderform.instance.requester.user_profile.name}}</td>
                     {% endif %}
                     {% for hidden_field in orderform.hidden_fields %} 
                             {{ hidden_field.errors }} 
