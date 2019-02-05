@@ -723,7 +723,7 @@ def create_signout(request):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-            'location': loc})
+            'location': loc, 'is_recurring': False, 'status': 'Complete', 'notes_order': 'Signout'})
         orderlineformset = OrderLineInlineFormSet(
             request.POST, prefix='orderlines', instance=order,)
         for form in orderlineformset:
