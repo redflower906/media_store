@@ -1124,8 +1124,8 @@ def search(request):
             # for sora in keys:
             #     q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
             for i in range(len(keys)):
-                key1 = keys[i]
-                key2 = i
+                key1 = keys[0]
+                key2 = keys[1]
 
 
             reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
