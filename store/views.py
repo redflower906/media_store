@@ -1119,7 +1119,7 @@ def search(request):
             keylen = len(keys)
             q_object = Q()
             for sora in keys:
-                q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
+                q_object.add(Q(submitter__first_name__icontains=sora), Q.AND)
             reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
 
                 # if datefrom and keyword:
