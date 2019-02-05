@@ -1122,11 +1122,11 @@ def search(request):
                 project_code__hhmi_project_id__icontains=keys[0])|Q(department__number__icontains=keys[0])| Q(orderline__inventory__inventory_text__icontains=keys[0]) | Q(
                 id__icontains=keys[0]) | Q(status__icontains=keys[0]))
 
-                for sora in keys:
+                for sora in keys[1:]:
                     q_object.add((Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
                     requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
                     project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                    id__icontains=sora) | Q(status__icontains=sora)), Q.OR)
+                    id__icontains=sora) | Q(status__icontains=sora)), q_object.connector)
 
                     if datefrom and keyword:
                         datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
