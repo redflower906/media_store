@@ -937,6 +937,7 @@ def search(request):
     date_type = ''
     record_num = ''
     keys = ''
+    keylen = ''
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
