@@ -1117,16 +1117,13 @@ def search(request):
             if keyword:
                 keys = keyword.split(',')
                 keylen = len(keys)
-                q_object = Q(submitter__first_name__icontains=keys[0])|Q(submitter__last_name__icontains=keys[0])|Q(
-                requester__last_name__icontains=keys[0])|Q(requester__first_name__icontains=keys[0])|Q(notes_order__icontains=keys[0])|Q(
-                project_code__hhmi_project_id__icontains=keys[0])|Q(department__number__icontains=keys[0])| Q(orderline__inventory__inventory_text__icontains=keys[0]) | Q(
-                id__icontains=keys[0]) | Q(status__icontains=keys[0])
+                q_object = Q()
 
                 for sora in keys:
                     q_object.add(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
                     requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
                     project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                    id__icontains=sora) | Q(status__icontains=sora), q_object.connector)
+                    id__icontains=sora) | Q(status__icontains=sora), q_object.OR)
 
                     if datefrom and keyword:
                         datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -1145,7 +1142,7 @@ def search(request):
                             reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()   
 
                     else:
-                        reports = report.prefetch_related('orderline_set').filter(q_objects).distinct()
+                        reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
