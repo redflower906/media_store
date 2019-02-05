@@ -707,7 +707,7 @@ def create_signout(request):
         uname = 3.1
         q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
     elif u == 17622:
-        loc = '3W.248'
+        loc = '3W ambient'
         uname = 3.2
         q = Inventory.objects.filter(Q(id=1269) | Q(id=1270) | Q(id=1267) | Q(id=1272) | Q(id=1273))
     elif u == 17623:
@@ -730,11 +730,7 @@ def create_signout(request):
             form.fields['inventory'].queryset = q
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save(commit=False)
-            # order.location = loc
-            # order.is_recurring = False
             order.status = 'Complete'
-            # order.notes_order = 'Signout'
-            # order.submitter = order.requester
             order.save()
             orderlineformset.save()
             messages.success(request,
