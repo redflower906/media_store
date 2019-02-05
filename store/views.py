@@ -1100,6 +1100,7 @@ def search(request):
     keys = ''
     keylen = 0
     key = ''
+    sql = ''
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
