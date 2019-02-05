@@ -1123,7 +1123,7 @@ def search(request):
             q_object.add(Q(submitter__first_name__icontains='scarlett'), Q.OR)
             # for sora in keys:
             #     q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
-            for i in range(len(keys)):
+            for sora in keys:
                 key1 = keys[0]
                 key2 = keys[1]
 
