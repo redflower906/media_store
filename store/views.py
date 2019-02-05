@@ -1119,46 +1119,43 @@ def search(request):
                 keylen = len(keys)
 
                 for sora in keys:
-                    if datefrom and keyword:
-                        datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
-                        dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
-                        if (date_type == 'Order Submitted') and (and_or == 'AND'):
-                            reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
-                            requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                            id__icontains=sora) | Q(status__icontains=sora)).filter(date_created__range=[datefrom, dateto]).distinct()
-                        elif (date_type == 'Order Submitted') and (and_or == 'OR'):
-                            reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
-                            submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                            id__icontains=sora) | Q(status__icontains=sora)).distinct()
-                        elif date_type == 'Order Completed'and (and_or == 'AND'):
-                            reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
-                            requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                                id__icontains=sora) | Q(status__icontains=sora)).filter(date_complete__range=[datefrom, dateto]).distinct()
-                        elif date_type == 'Order Completed'and (and_or == 'OR'):
-                            reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
-                            submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                            id__icontains=sora) | Q(status__icontains=sora)).distinct()
-                        elif date_type == 'Order Billed'and (and_or == 'OR'):
-                            reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
-                            submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                            id__icontains=sora) | Q(status__icontains=sora)).distinct()
-                        else:
-                            reports = report.prefetch_related('orderline_set').filter(Q(submitter__last_name__icontains=sora)|Q(
-                            requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                            project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                            id__icontains=sora) | Q(status__icontains=sora)).filter(date_complete__range=[datefrom, dateto]).distinct()   
+                    # if datefrom and keyword:
+                    #     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
+                    #     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
+                    #     if (date_type == 'Order Submitted') and (and_or == 'AND'):
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
+                    #         requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #         id__icontains=sora) | Q(status__icontains=sora)).filter(date_created__range=[datefrom, dateto]).distinct()
+                    #     elif (date_type == 'Order Submitted') and (and_or == 'OR'):
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
+                    #         submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #         id__icontains=sora) | Q(status__icontains=sora)).distinct()
+                    #     elif date_type == 'Order Completed'and (and_or == 'AND'):
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
+                    #         requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #             id__icontains=sora) | Q(status__icontains=sora)).filter(date_complete__range=[datefrom, dateto]).distinct()
+                    #     elif date_type == 'Order Completed'and (and_or == 'OR'):
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
+                    #         submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #         id__icontains=sora) | Q(status__icontains=sora)).distinct()
+                    #     elif date_type == 'Order Billed'and (and_or == 'OR'):
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|Q(submitter__first_name__icontains=sora)|Q(
+                    #         submitter__last_name__icontains=sora)|Q(requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #         id__icontains=sora) | Q(status__icontains=sora)).distinct()
+                    #     else:
+                    #         reports = report.prefetch_related('orderline_set').filter(Q(submitter__last_name__icontains=sora)|Q(
+                    #         requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
+                    #         project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
+                    #         id__icontains=sora) | Q(status__icontains=sora)).filter(date_complete__range=[datefrom, dateto]).distinct()   
 
-                    else:
-                        key = sora
-                        reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
-                        requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)|Q(notes_order__icontains=sora)|Q(
-                        project_code__hhmi_project_id__icontains=sora)|Q(department__number__icontains=sora)| Q(orderline__inventory__inventory_text__icontains=sora) | Q(
-                        id__icontains=sora) | Q(status__icontains=sora)).distinct()
+                    key = sora
+                    reports = report.prefetch_related('orderline_set').filter(Q(submitter__first_name__icontains=sora)|Q(submitter__last_name__icontains=sora)|Q(
+                    requester__last_name__icontains=sora)|Q(requester__first_name__icontains=sora)).distinct()
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
