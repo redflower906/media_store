@@ -1120,6 +1120,7 @@ def search(request):
             keys = keyword.split(',')
             keylen = len(keys)
             q_object = Q()
+            q_object.add(Q(submitter__first_name__icontains='scarlett'), Q.OR)
             # for sora in keys:
             #     q_object.add(Q(submitter__first_name__icontains=sora), Q.OR)
             for i in range(len(keys)):
