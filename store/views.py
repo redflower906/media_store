@@ -1118,7 +1118,7 @@ def search(request):
 
             # if keyword:
             keys = keyword.split(',')
-            keylen = len(keys)
+            keylen = ['scarlett', 'brian']
             q_object = Q()
             q_object.add(Q(submitter__first_name__icontains='scarlett'), Q.OR)
             for x in keys:
