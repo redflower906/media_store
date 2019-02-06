@@ -200,6 +200,12 @@
             
     </form>
     <script type="text/javascript">
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip({
+                placement : 'top'
+            });
+        });
+
         $(function () {
             $('#order_table tbody tr').formset({
                 prefix:'{{ formset.prefix }}',
