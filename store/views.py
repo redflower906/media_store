@@ -1116,8 +1116,10 @@ def search(request):
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
 
-            # if keyword:
-            keys1 = keyword.replace(' ', ',')
+            if ',' in keyword:
+                keys1 = keyword.replace(' ', '')
+            else:
+                keys1 = keyword.replace(' ', ',')
             keys = keys1.split(',')
             keylen = ['scarlett', 'brian']
             q_object = Q()
