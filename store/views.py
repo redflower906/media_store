@@ -988,9 +988,9 @@ def search(request):
                     elif date_type == 'Order Completed'and (and_or == 'OR'):
                         reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|q_object).distinct()
                     elif date_type == 'Order Billed'and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|q_object).distinct()
+                        reports = report.prefetch_related('orderline_set').filter(Q(date_billed__range=[datefrom, dateto])|q_object).distinct()
                     else:
-                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()            
+                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
                     reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
