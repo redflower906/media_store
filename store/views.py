@@ -1117,7 +1117,7 @@ def search(request):
             and_or = form.cleaned_data.get('and_or')
 
             # if keyword:
-            keys = keyword.split(',')
+            keys = ['scarlett', 'brian']
             keylen = len(keys)
             q_object = Q()
             q_object.add(Q(submitter__first_name__icontains='scarlett'), Q.OR)
