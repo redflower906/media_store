@@ -200,7 +200,9 @@
                                     <th class='col text-center'>Item</th>
                                     <th class='col text-center'>Container</th>
                                     <th class='col text-center'>Volume</th>
-                                    <th class='col text-center'>Qty</th>
+                                    <th class='col text-center'>
+                                        <a href='#' data-toggle='tooltip' title='(individual # vials)/100 or (individual # bottles)/25'>Qty</a>
+                                    </th>
                                     <th class='col text-center'>Location 
                                         <a data-toggle="modal" href="#mapmodal">?</a>    
                                     <!-- Modal -->
@@ -265,7 +267,7 @@
                                 <td class="col text-center inv_vol"> 
                                     <p> --------- </p>  
                                 </td>
-                                <td class='col'>
+                                <td class='col' data-toggle='tooltip' title='(individual # vials)/100 or (individual # bottles)/25'>
                                     {{ form.qty.errors }}
                                     {{ form.qty }}
                                 </td>
@@ -334,6 +336,12 @@
         
 </form>
 <script type="text/javascript">    
+
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({
+            placement : 'top'
+        });
+    });
 
     $(function () {
         $('#order_table tbody tr').formset({
