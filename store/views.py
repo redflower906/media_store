@@ -961,7 +961,7 @@ def search(request):
                 else:
                     keys1 = keyword.replace(' ', ',')
                 
-                if keys2:
+                if keys2 in locals():
                     keys = keys2.split(',')
                     for key in keys:
                         q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
