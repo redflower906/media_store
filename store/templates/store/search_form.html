@@ -1,5 +1,10 @@
 {% load static %}
-<script src="{% static 'js/jsmedia.js' %}"></script> 
+<script src="{% static 'js/jsmedia.js' %}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+</script> 
 
 <form id='search_form' method="POST" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
@@ -16,9 +21,7 @@
                     <th class='col-xs-2'>From</th>
                     <th class='col-xs-2'>To</th>
                     <th class='col-xs-2'></th>
-                    <th class='col-xs-2 tooltip'>Keywords
-                        <span class='tooltiptext'>Separate words with a comma or space for an OR search. Separate with a plus for an AND search</span>
-                    </th>
+                    <th class='col-xs-2' data-toggle='tooltip' data-placement='top' title="Separate words with ',' or ' ' for an OR search. Separate with '+' for an AND search.">Keywords</th>
                 </tr>
             </thead>
             <tbody>
