@@ -960,10 +960,9 @@ def search(request):
                 keys = keys1.split(',')
                 q_object = Q()
                 for key in keys:
-                    q_object.add(Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(
-                    requester__last_name__icontains=key)|Q(requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(
-                    project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(orderline__inventory__inventory_text__icontains=key) | Q(
-                    id__icontains=key) | Q(status__icontains=key)), Q.OR)
+                    q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
+                    requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
+                    orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.OR)
                 if datefrom:
                     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -982,7 +981,7 @@ def search(request):
                         
                 else:
                     reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
-                    
+
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
