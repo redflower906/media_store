@@ -955,7 +955,8 @@ def search(request):
 
             if keyword:
                 if '+' in keyword:
-                    keys2 = keyword.replace('+', ',')
+                    keys1 = keyword.replace('+', ',')
+                    keys2 = keys1.replace(' ', '')
                 elif ',' in keyword:
                     keys1 = keyword.replace(' ', '')
                     keys2 = ''
