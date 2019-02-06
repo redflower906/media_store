@@ -950,19 +950,29 @@ def search(request):
             keyword = form.cleaned_data.get('search_keyword')
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
+                
+            q_object = Q()
 
             if keyword:
-
-                if ',' in keyword:
+                if '+' in keyword:
+                    keys2 = keyword.replace('+', ',')
+                elif ',' in keyword:
                     keys1 = keyword.replace(' ', '')
                 else:
                     keys1 = keyword.replace(' ', ',')
-                keys = keys1.split(',')
-                q_object = Q()
-                for key in keys:
-                    q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
-                    requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
-                    orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.OR)
+                
+                if keys2:
+                    keys = keys2.split(',')
+                    for key in keys:
+                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
+                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
+                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.AND)
+                else:
+                    keys = keys1.split(',')
+                    for key in keys:
+                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
+                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
+                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.OR)
                 if datefrom:
                     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
