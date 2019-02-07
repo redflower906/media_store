@@ -348,6 +348,7 @@ class OrderSearchForm2(forms.Form):
     )
 
     FIELD_CHOICES = (
+        ('', 'Select a field'),
         ('order__notes_order', 'Order Notes'),
         ('inventory__inventory_text', 'Product'),
     )
