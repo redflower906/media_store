@@ -348,7 +348,6 @@ class OrderSearchForm2(forms.Form):
     )
 
     FIELD_CHOICES = (
-        ('', 'Select a field'),
         ('order__notes_order', 'Order Notes'),
         ('inventory__inventory_text', 'Product'),
     )
@@ -381,7 +380,11 @@ class OrderSearchForm2(forms.Form):
         )
     field_choice = forms.ChoiceField(
         required=False,
-        widget=forms.Select(attrs={'class': 'chosen-select', 'multiple': True}),
+        widget=forms.SelectMultiple(attrs={
+            'class': 'chosen-select', 
+            'multiple': True,
+            'placeholder': 'Choose one or more fields'
+        }),
         choices=FIELD_CHOICES,
     )
 
