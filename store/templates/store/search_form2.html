@@ -22,7 +22,7 @@
                     </th>
                     <th class='col-xs-2'>
                         Fields 
-                        <input type='checkbox' id='check' value='Select All'>Select All
+                        <label class='pull-right'> <input type='checkbox' id='check'>Select All</label>
                     </th>
                 </tr>
             </thead>
@@ -77,7 +77,10 @@
         });
     });
 
-    $(".chosen-select").chosen({search_contains:true});
+    $(".chosen-select").chosen({
+        search_contains:true,
+        placeholder_text_multiple: 'Select one or more fields',
+        });
 
     $('#check').click(function() {
         if($(this).prop('checked')){
