@@ -1189,7 +1189,7 @@ def searchtest(request):
     
     OL = OrderLine.objects.filter(order__submitter__first_name__icontains = 'Scarlett')
 
-    return render(request, 'store/search.html', {
+    return render(request, 'store/search2.html', {
         'date_type': date_type,
         'user': user,
         'form': form,

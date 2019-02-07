@@ -37,24 +37,24 @@
                     </td>
                     {% endif %}
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
-                    <td>{{report.department.department_name}}</td> 
-                    <td>{{report.department.number}}</td>
-                    <td>{{report.requester.user_profile.name}}</td>
+                    <td>{{report.order.department.department_name}}</td> 
+                    <td>{{report.order.department.number}}</td>
+                    <td>{{report.order.requester.user_profile.name}}</td>
                     {% if headers == headersCr %}
-                    <td>{{report.date_created}}</td>
+                    <td>{{report.order.date_created}}</td>
                     {% elif headers == headersCo %}
-                    <td>{{report.date_complete}}</td>
+                    <td>{{report.order.date_complete}}</td>
                     {% elif headers == headersB %}
-                    <td>{{report.date_billed}}</td>
+                    <td>{{report.order.date_billed}}</td>
                     {% endif %}
                     {% if report.is_recurring %}
-                    <td class='recur'>{{ report.is_recurring|yesno:"Yes,No" }}</td>
+                    <td class='recur'>{{ report.order.is_recurring|yesno:"Yes,No" }}</td>
                     {% else %}
-                    <td>{{ report.is_recurring|yesno:"Yes,No" }}</td>
+                    <td>{{ report.order.is_recurring|yesno:"Yes,No" }}</td>
                     {% endif %}
-                    <td>{{report.location}}</td>
-                    <td class='{{report.status}}'>{{report.status}}</td>
-                    <td class='ordertotal {{report.id}}'>${{report.order_total}}</td>
+                    <td>{{report.order.location}}</td>
+                    <td class='{{report.status}}'>{{report.order.status}}</td>
+                    <td class='ordertotal {{report.id}}'>${{report.order.order_total}}</td>
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' report.id %}" class="btn btn-default">Email</a>
                     </td>
@@ -70,51 +70,44 @@
                     <tr id="notes" class="collapse" role="text">                        
                         <td colspan="10">
                             <table class ='table'>
-                                {% if report.orderline_set.all %}
                                 <thead>
                                     <tr class='invclass' id="table_header">
                                         <th>Submitter</th>
                                         <th>Description</th>
                                         <th>Date Submitted</th>
-                                        {% if report.status == 'Complete'%}
+                                        {% if report.order.status == 'Complete'%}
                                             <th>Date Completed</th>
-                                        {% elif report.status == 'Billed' %}
+                                        {% elif report.order.status == 'Billed' %}
                                             <th>Date Billed</th>
-                                        {% elif report.status == 'Canceled' %}
+                                        {% elif report.order.status == 'Canceled' %}
                                             <th>Date Canceled</th>
                                         {% endif %}
-                                        {% if report.is_recurring %}
+                                        {% if report.order.is_recurring %}
                                             <th>How Often</th>
                                         {% endif %}
                                         <th>Quantity</th>
                                         <th>Cost</th>
                                         <th>Notes</th>
                                     </tr>
-                                {% for line in report.orderline_set.all %}                                
                                 </thead>
                                 <tr>
-                                    <td>{{report.submitter.user_profile.name}}</td>
-                                    <td class='inv {{report.id}}'>{{line.inventory.inventory_text}}</td>
+                                    <td>{{report.order.submitter.user_profile.name}}</td>
+                                    <td class='inv {{report.id}}'>{{report.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
-                                    <td>{{report.date_created}}</td>
-                                    {% if report.status == 'Complete'%}
-                                        <td>{{report.date_complete}}</td>
-                                    {% elif report.status == 'Billed' %}
-                                        <td>{{report.date_billed}}</td>
-                                    {% elif report.status == 'Canceled' %}
-                                        <td>{{report.date_modified}}</td>
+                                    <td>{{report.order.date_created}}</td>
+                                    {% if report.order.status == 'Complete'%}
+                                        <td>{{report.order.date_complete}}</td>
+                                    {% elif report.order.status == 'Billed' %}
+                                        <td>{{report.order.date_billed}}</td>
+                                    {% elif report.order.status == 'Canceled' %}
+                                        <td>{{report.order.date_modified}}</td>
                                     {% endif %}
-                                    {% if report.is_recurring %} 
-                                        <td>{{report.get_weeks_display}}</td>
+                                    {% if report.order.is_recurring %} 
+                                        <td>{{report.order.get_weeks_display}}</td>
                                     {% endif %}
-                                    <td>{{line.qty}}</td>
-                                    <td class = 'linetotal {{report.id}}'>${{line.total}}</td>
-                    <td>{{report.notes_order}}</td>
-                                {% endfor %}
-                                {% else %}
-                                    <div><p>There are no order details for this order.</p></div>
-                                    </tr>
-                                {% endif %}
+                                    <td>{{report.qty}}</td>
+                                    <td class = 'linetotal {{report.id}}'>${{report.total}}</td>
+                                    <td>{{report.order.notes_order}}</td>
                             </table>                            
                         </td>                              
                     </tr>
