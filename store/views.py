@@ -1098,9 +1098,9 @@ def searchtest(request):
     record_num = ''
     keys = ''
     if user.is_staff is False:
-        report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
+        report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
     else:
-        report = Order.objects.all()
+        report = OrderLine.objects.all()
 
     if request.method == 'POST':
         form = OrderSearchForm2(request.POST, initial={'and_or': 'AND'})
@@ -1127,43 +1127,43 @@ def searchtest(request):
                 if len(keys2) > 0:
                     keys = keys2.split(',')
                     for key in keys:
-                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
-                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
-                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.AND)
+                        q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
+                        order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(order__department__number__icontains=key)| Q(
+                        inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q.AND)
                 else:
                     keys = keys1.split(',')
                     for key in keys:
-                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
-                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
-                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.OR)
+                        q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
+                        order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(order__department__number__icontains=key)| Q(
+                        inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q.OR)
                 if datefrom:
                     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
                     if (date_type == 'Order Submitted') and (and_or == 'AND'):
-                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_created__range=[datefrom, dateto]).distinct()
+                        reports = report.filter(q_object).filter(order__date_created__range=[datefrom, dateto]).distinct()
                     elif (date_type == 'Order Submitted') and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])| q_object).distinct()
+                        reports = report.filter(Q(order__date_created__range=[datefrom, dateto])| q_object).distinct()
                     elif date_type == 'Order Completed'and (and_or == 'AND'):
-                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()
+                        reports = report.filter(q_object).filter(order__date_complete__range=[datefrom, dateto]).distinct()
                     elif date_type == 'Order Completed'and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|q_object).distinct()
+                        reports = report.filter(Q(order__date_complete__range=[datefrom, dateto])|q_object).distinct()
                     elif date_type == 'Order Billed'and (and_or == 'OR'):
-                        reports = report.prefetch_related('orderline_set').filter(Q(date_billed__range=[datefrom, dateto])|q_object).distinct()
+                        reports = report.filter(Q(order__date_billed__range=[datefrom, dateto])|q_object).distinct()
                     else:
-                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_billed__range=[datefrom, dateto]).distinct()            
+                        reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
+                    reports = report.filter(q_object).distinct()
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
                 if date_type == 'Order Created':
-                    reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
+                    reports = report.filter(order__date_created__range=[datefrom, dateto]).distinct()
                 elif date_type == 'Order Completed':
-                    reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
+                    reports = report.filter(order__date_complete__range=[datefrom, dateto]).distinct()
                 else:
-                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
+                    reports = report.filter(order__date_billed__range=[datefrom, dateto]).distinct()
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
