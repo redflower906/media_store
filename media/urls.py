@@ -63,7 +63,7 @@ urlpatterns = [
 ##Search
     url(r'^search$', views.search, name='search'),
     url(r'^search/csv$', views.search, name='search_export'),
-    url(r'^search2/csv$', views.searchtest, name='search_export2'),
+    url(r'^search2/csv$', views.searchtest, name='search2_export'),
     url(r'^search2$', views.searchtest, name='search2'),
 
 ##email

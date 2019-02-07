@@ -1075,6 +1075,7 @@ def searchtest(request):
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
             field_choice = form.cleaned_data.get('field_choice')
+            lookup=''
                 
             q_object = Q()
 
@@ -1170,6 +1171,7 @@ def searchtest(request):
         'record_num': record_num,
         'keys': keys,
         'field_choice': field_choice,
+        'lookup': lookup,
     })
 
           
