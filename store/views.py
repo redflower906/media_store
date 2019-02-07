@@ -1188,7 +1188,6 @@ def searchtest(request):
         form = OrderSearchForm()
     
     OL = OrderLine.objects.filter(order__submitter__first_name__icontains = 'Scarlett')
-    OLFN = OrderLine.objects.filter(order__submitter__name__icontains = 'Amanda')
 
     return render(request, 'store/search.html', {
         'date_type': date_type,
@@ -1202,7 +1201,6 @@ def searchtest(request):
         'record_num': record_num,
         'keys': keys,
         'OL': OL,
-        'OLFN': OLFN,
     })
 
           
