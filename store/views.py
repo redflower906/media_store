@@ -1140,9 +1140,9 @@ def searchtest(request):
                messages.error(request, "You didn't submit any dates or keywords to search")
             
             # to export   
-            if 'exportCSV' in request.POST:
+            if 'exportCSV2' in request.POST:
                 response = HttpResponse(content_type='text/csv')
-                response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
+                response['Content-Disposition'] = 'attachment; filename="search2_export.csv"'
                 writer = csv.writer(response)
                 writer.writerow(['Order_ID', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 
                 'Status', 'Special_Instructions', 'Location'])
