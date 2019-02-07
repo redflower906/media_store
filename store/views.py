@@ -1167,6 +1167,7 @@ def searchtest(request):
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
+            
             # to export   
             if 'exportCSV' in request.POST:
                 response = HttpResponse(content_type='text/csv')
@@ -1187,8 +1188,6 @@ def searchtest(request):
     else:
         form = OrderSearchForm()
     
-    OL = OrderLine.objects.filter(order__submitter__first_name__icontains = 'Scarlett')
-
     return render(request, 'store/search2.html', {
         'date_type': date_type,
         'user': user,
@@ -1200,7 +1199,6 @@ def searchtest(request):
         'headersKey': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
-        'OL': OL,
     })
 
           
