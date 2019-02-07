@@ -1073,7 +1073,7 @@ def searchtest(request):
             keyword = form.cleaned_data.get('search_keyword')
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
-            field_choices = form.cleaned_data.get('field_choice')
+            field_choice = form.cleaned_data.get('field_choice')
                 
             q_object = Q()
 
