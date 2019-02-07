@@ -21,13 +21,13 @@
 <div class="row">
     <div class="col-xs-12">
         {% if date_type == 'Date Created' %}
-            {% include "store/search_list.html" with headers=headersCr %}
+            {% include "store/search_list2.html" with headers=headersCr %}
         {% elif date_type == 'Date Completed' %}
-            {% include "store/search_list.html" with headers=headersCo %}
+            {% include "store/search_list2.html" with headers=headersCo %}
         {% elif date_type == 'Date Billed' %}
-            {% include "store/search_list.html" with headers=headersB %}
+            {% include "store/search_list2.html" with headers=headersB %}
         {% else %}
-            {% include "store/search_list.html" with headers=headersKey %}
+            {% include "store/search_list2.html" with headers=headersKey %}
         {% endif %}
     </div>
 </div>
