@@ -45,6 +45,7 @@
                     {{form.search_keyword}}
                 </td>
                 <td class='col-xs-4'>
+                    <input type='checkbox' id='check' value='Select All'>Select All
                     {{form.field_choice.errors}}
                     {{form.field_choice}}
                 </td>
@@ -75,5 +76,18 @@
     });
 
     $(".chosen-select").chosen({search_contains:true});
+
+    $('#check').click(function() {
+        if($(this).prop('checked')){
+            console.log('checked');
+            $('#first option').prop('selected', true);  
+            $('#first').trigger('chosen:updated');
+        }
+        else{
+            console.log('unchecked');
+            $('#first option').prop('selected', false);  
+            $('#first').trigger('chosen:updated');
+        }
+    });
     //to allow error message to show in page rather than in console.
 </script> 
