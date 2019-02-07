@@ -1040,6 +1040,165 @@ def search(request):
         'keys': keys,
     })
 
+def searchtest(request):
+    
+    ORDER_LIST_HEADERSCr = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Created', 'date_created'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+    ORDER_LIST_HEADERSCo = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Completed', 'date_complete'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERSB = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Billed', 'date_billed'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+    ORDER_LIST_HEADERSKey = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+
+    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERSCr)
+    sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERSCo)
+    sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERSB)
+    sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
+
+    user = request.user
+    reports = ''
+    date_type = ''
+    record_num = ''
+    keys = ''
+    if user.is_staff is False:
+        report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
+    else:
+        report = Order.objects.all()
+
+    if request.method == 'POST':
+        form = OrderSearchForm(request.POST, initial={'and_or': 'AND'})
+        if form.is_valid():
+            datefrom = form.cleaned_data.get('search_date_from')
+            dateto = form.cleaned_data.get('search_date_to')
+            keyword = form.cleaned_data.get('search_keyword')
+            date_type = form.cleaned_data.get('date_type')
+            and_or = form.cleaned_data.get('and_or')
+                
+            q_object = Q()
+
+            if keyword:
+                if '+' in keyword:
+                    keys1 = keyword.replace('+', ',')
+                    keys2 = keys1.replace(' ', '')
+                elif ',' in keyword:
+                    keys1 = keyword.replace(' ', '')
+                    keys2 = ''
+                else:
+                    keys1 = keyword.replace(' ', ',')
+                    keys2 = ''
+                
+                if len(keys2) > 0:
+                    keys = keys2.split(',')
+                    for key in keys:
+                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
+                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
+                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.AND)
+                else:
+                    keys = keys1.split(',')
+                    for key in keys:
+                        q_object.add((Q(submitter__first_name__icontains=key)|Q(submitter__last_name__icontains=key)|Q(requester__last_name__icontains=key)|Q(
+                        requester__first_name__icontains=key)|Q(notes_order__icontains=key)|Q(project_code__hhmi_project_id__icontains=key)|Q(department__number__icontains=key)| Q(
+                        orderline__inventory__inventory_text__icontains=key) | Q(id__icontains=key) | Q(status__icontains=key)), Q.OR)
+                if datefrom:
+                    datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
+                    dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
+                    if (date_type == 'Order Submitted') and (and_or == 'AND'):
+                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_created__range=[datefrom, dateto]).distinct()
+                    elif (date_type == 'Order Submitted') and (and_or == 'OR'):
+                        reports = report.prefetch_related('orderline_set').filter(Q(date_created__range=[datefrom, dateto])| q_object).distinct()
+                    elif date_type == 'Order Completed'and (and_or == 'AND'):
+                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()
+                    elif date_type == 'Order Completed'and (and_or == 'OR'):
+                        reports = report.prefetch_related('orderline_set').filter(Q(date_complete__range=[datefrom, dateto])|q_object).distinct()
+                    elif date_type == 'Order Billed'and (and_or == 'OR'):
+                        reports = report.prefetch_related('orderline_set').filter(Q(date_billed__range=[datefrom, dateto])|q_object).distinct()
+                    else:
+                        reports = report.prefetch_related('orderline_set').filter(q_object).filter(date_billed__range=[datefrom, dateto]).distinct()            
+                        
+                else:
+                    reports = report.prefetch_related('orderline_set').filter(q_object).distinct()
+
+            elif datefrom:
+                datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
+                dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
+                if date_type == 'Order Created':
+                    reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
+                elif date_type == 'Order Completed':
+                    reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
+                else:
+                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
+
+            else:
+               messages.error(request, "You didn't submit any dates or keywords to search")
+            # to export   
+            if 'exportCSV' in request.POST:
+                response = HttpResponse(content_type='text/csv')
+                response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
+                writer = csv.writer(response)
+                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Status', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'date_complete', 'date_billed', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
+                'orderline__qty', 'orderline__inventory__cost', 'status', 'notes_order','location')
+
+                for report in e_reports:
+                    writer.writerow(report)
+
+                return response
+            if reports:
+                record_num = reports.count()
+        else:
+            messages.error(request, "This form is invalid")
+    else:
+        form = OrderSearchForm()
+
+    return render(request, 'store/search.html', {
+        'date_type': date_type,
+        'user': user,
+        'form': form,
+        'reports': reports,
+        'headersCr': list(sort_headers1.headers()),
+        'headersCo': list(sort_headers2.headers()),
+        'headersB': list(sort_headers3.headers()),
+        'headersKey': list(sort_headers4.headers()),
+        'record_num': record_num,
+        'keys': keys,
+    })
 
           
 def ajax(request):
