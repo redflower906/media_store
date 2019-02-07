@@ -378,7 +378,7 @@ class OrderSearchForm2(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=BOOL_CHOICES,
         )
-    field_choice = forms.ChoiceField(
+    field_choice = forms.MultipleChoiceField(
         required=False,
         widget=forms.SelectMultiple(attrs={
             'class': 'chosen-select', 
