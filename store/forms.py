@@ -384,6 +384,7 @@ class OrderSearchForm2(forms.Form):
             'class': 'chosen-select', 
             'multiple': True,
             'placeholder': 'Choose one or more fields',
+            'id': 'fieldselect'
         }),
         choices=FIELD_CHOICES,
     )

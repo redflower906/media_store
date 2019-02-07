@@ -20,7 +20,10 @@
                         <a href='#' data-toggle='tooltip' title="Separate words with ',' or ' ' for an OR search. Separate with '+' for an AND search.">Keywords
                         </a>
                     </th>
-                    <th>Fields</th>
+                    <th class='col-xs-2'>
+                        Fields 
+                        <input type='checkbox' id='check' value='Select All'>Select All
+                    </th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +48,6 @@
                     {{form.search_keyword}}
                 </td>
                 <td class='col-xs-4'>
-                    <input type='checkbox' id='check' value='Select All'>Select All
                     {{form.field_choice.errors}}
                     {{form.field_choice}}
                 </td>
@@ -80,13 +82,13 @@
     $('#check').click(function() {
         if($(this).prop('checked')){
             console.log('checked');
-            $('#first option').prop('selected', true);  
-            $('#first').trigger('chosen:updated');
+            $('#fieldselect option').prop('selected', true);  
+            $('#fieldselect').trigger('chosen:updated');
         }
         else{
             console.log('unchecked');
-            $('#first option').prop('selected', false);  
-            $('#first').trigger('chosen:updated');
+            $('#fieldselect option').prop('selected', false);  
+            $('#fieldselect').trigger('chosen:updated');
         }
     });
     //to allow error message to show in page rather than in console.
