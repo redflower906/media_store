@@ -1077,7 +1077,6 @@ def searchtest(request):
             field_choice = form.cleaned_data.get('field_choice')
                 
             q_object = Q()
-            q_field = Q()
 
             if keyword:
                 if '+' in keyword:
@@ -1098,8 +1097,8 @@ def searchtest(request):
                     Q_bool = Q.OR
 
                 for key in keys:
-                    for field in field_choice:
-                        q_object.add(Q(field__icontains=key), Q_bool)
+                    for x in field_choice:
+                        q_object.add(Q(x__icontains=key), Q_bool)
                     # q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
                     # order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(
                     # order__department__number__icontains=key)| Q(inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q_bool)
