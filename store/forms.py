@@ -381,7 +381,7 @@ class OrderSearchForm2(forms.Form):
         )
     field_choice = forms.ChoiceField(
         required=False,
-        widget=forms.Select(attrs={'class': 'form-control'}),
+        widget=forms.Select(attrs={'class': 'chosen-select'}),
         choices=FIELD_CHOICES,
     )
 
