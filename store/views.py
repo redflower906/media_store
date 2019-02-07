@@ -1162,6 +1162,7 @@ def searchtest(request):
         'headers': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
+        'field_choice': field_choice,
     })
 
           
