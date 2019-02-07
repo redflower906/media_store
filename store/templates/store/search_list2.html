@@ -39,7 +39,8 @@
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
                     <td>{{report.order.department.department_name}}</td> 
                     <td>{{report.order.requester.user_profile.name}}</td>
-                    
+                    <td>{{report.inventory.inventory_text}}
+                    <td>{{report.qty}}
                     {% if report.is_recurring %}
                     <td class='recur'>{{ report.order.is_recurring|yesno:"Yes,No" }}</td>
                     {% else %}
@@ -47,7 +48,7 @@
                     {% endif %}
                     <td>{{report.order.location}}</td>
                     <td class='{{report.status}}'>{{report.order.status}}</td>
-                    <td class='linetotal {{report.order.id}}'>${{report.line_cost}}</td>
+                    <td class='linetotal {{report.order.id}}'>${{report.total}}</td>
                     <td class="col-xs-1" id="center_columns">
                         <a href="{% url 'email' report.id %}" class="btn btn-default">Email</a>
                     </td>
@@ -99,7 +100,7 @@
                                         <td>{{report.order.get_weeks_display}}</td>
                                     {% endif %}
                                     <td>{{report.qty}}</td>
-                                    <td class = 'ordertotal {{report.order.id}}'>${{report.order.total}}</td>
+                                    <td class = 'ordertotal {{report.order.id}}'>${{report.order.order_total}}</td>
                                     <td>{{report.order.notes_order}}</td>
                             </table>                            
                         </td>                              
