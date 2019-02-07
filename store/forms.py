@@ -347,9 +347,10 @@ class OrderSearchForm2(forms.Form):
         ('OR', 'OR'),
     )
 
-    # FIELD_CHOICES = (
-    #     ('')
-    # )
+    FIELD_CHOICES = (
+        ('order__notes_order', 'Order Notes'),
+        ('inventory__inventory_text', 'Product'),
+    )
 
     date_type = forms.ChoiceField(
         required=False,
@@ -377,6 +378,11 @@ class OrderSearchForm2(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         choices=BOOL_CHOICES,
         )
+    field_choice = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={'class': 'chosen-select'}),
+        choices=FIELD_CHOICES,
+    )
 
     def clean (self):
         date_from = self.cleaned_data.get('search_date_from')

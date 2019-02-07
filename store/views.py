@@ -1073,6 +1073,7 @@ def searchtest(request):
             keyword = form.cleaned_data.get('search_keyword')
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
+            field_choices = form.cleaned_data.get('field_choice')
                 
             q_object = Q()
 
@@ -1091,8 +1092,8 @@ def searchtest(request):
                     keys = keys2.split(',')
                     for key in keys:
                         q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
-                        order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(order__department__number__icontains=key)| Q(
-                        inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q.AND)
+                        order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(
+                        order__department__number__icontains=key)| Q(inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q.AND)
                 else:
                     keys = keys1.split(',')
                     for key in keys:
@@ -1136,9 +1137,11 @@ def searchtest(request):
                 response = HttpResponse(content_type='text/csv')
                 response['Content-Disposition'] = 'attachment; filename="search_export.csv"'
                 writer = csv.writer(response)
-                writer.writerow(['order_id', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 'Status', 'Special_Instructions', 'Location'])
-                e_reports = reports.values_list('id','requester__username', 'submitter__username', 'date_created', 'date_complete', 'date_billed', 'is_recurring', 'due_date', 'orderline__inventory__inventory_text', 
-                'orderline__qty', 'orderline__inventory__cost', 'status', 'notes_order','location')
+                writer.writerow(['Order_ID', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 
+                'Status', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('order__id','order__requester__username', 'order__submitter__username', 'order__date_created', 'order__date_complete', 
+                'order__date_billed', 'order__is_recurring', 'order__due_date', 'inventory__inventory_text', 'qty', 'inventory__cost', 'order__status', 'order__notes_order',
+                'order__location')
 
                 for report in e_reports:
                     writer.writerow(report)

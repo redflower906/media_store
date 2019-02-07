@@ -1,0 +1,76 @@
+{% load static %}
+{% comment %} <script src="{% static 'js/jsmedia.js' %}"></script> {% endcomment %}
+
+<form id='search_form' method="POST" action="" class="post-form form-horizontal" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ search_form.non_field_errors }}
+    {% for hidden_field in search_form.hidden_fields %}
+        {{ hidden_field.errors }}
+        {{ hidden_field }}
+    {% endfor %}
+    <div>
+        <table id='form_holder'>
+            <thead>
+                <tr>
+                    <th class='col-xs-3'>Date Range</th>
+                    <th class='col-xs-2'>From</th>
+                    <th class='col-xs-2'>To</th>
+                    <th class='col-xs-2'></th>
+                    <th class='col-xs-2'>
+                        <a href='#' data-toggle='tooltip' title="Separate words with ',' or ' ' for an OR search. Separate with '+' for an AND search.">Keywords
+                        </a>
+                    </th>
+                    <th>Fields</th>
+                </tr>
+            </thead>
+            <tbody>
+                <td class='col-xs-3'>
+                    {{form.date_type.errors}}
+                    {{form.date_type}}
+                </td>
+                <td class='col-xs-1' id='datepicker_search_from'>
+                    {{form.search_date_from.errors}}
+                    {{form.search_date_from}}
+                </td>
+                <td class='col-xs-1' id='datepicker_search_from'>
+                    {{form.search_date_to.errors}}
+                    {{form.search_date_to}}
+                </td>
+                <td class='col-xs-1'>
+                    {{form.and_or.errors}}
+                    {{form.and_or}}
+                </td>
+                <td class='col-xs-2'>
+                    {{form.search_keyword.errors}}
+                    {{form.search_keyword}}
+                </td>
+                <td class='col-xs-2'>
+                    {{form.field_choice.errors}}
+                    {{form.field_choice}}
+                <td class='col-xs-1'></td>
+            </tbody>
+        </table>         
+    </div>
+    <hr/>
+    <div class='row'>
+        {% comment %} {% if reports|length is not 0 %}
+            <div class="form-group pull-right">
+                <input id="filter" type="text" class="form-control" placeholder="Search for...">
+            </div>
+        {% endif %} {% endcomment %}
+        <div class='col-xs-1 pull-right'>
+            <button class="save btn btn-primary" type="submit" value="Submit">Submit</button>
+        </div>
+        <div class='col-xs-1 pull-right'>
+            <button href="{% url 'search_export' %}" name='exportCSV' type='submit' class="btn btn-info pull-right">Export Search</button>
+        </div>
+    </div>    
+</form>    
+
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip({
+            placement : 'top'
+        });
+    });
+</script> 
