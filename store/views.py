@@ -1152,7 +1152,7 @@ def searchtest(request):
         else:
             messages.error(request, "This form is invalid")
     else:
-        form = OrderSearchForm()
+        form = OrderSearchForm2()
     
     return render(request, 'store/search2.html', {
         'date_type': date_type,
