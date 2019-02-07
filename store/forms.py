@@ -331,3 +331,83 @@ class OrderSearchForm(forms.Form):
             # self.cleaned_data['search_date_to'] = ''
 
         return self.cleaned_data
+
+
+class OrderSearchForm2(forms.Form):
+        
+    DATE_CHOICES = (
+    ('', 'Select a Date Range'),
+    ('Order Submitted', 'Order Submitted'), 
+    ('Order Completed', 'Order Completed'), 
+    ('Order Billed', 'Order Billed'),
+    )
+
+    BOOL_CHOICES = (
+        ('AND', 'AND'),
+        ('OR', 'OR'),
+    )
+
+    # FIELD_CHOICES = (
+    #     ('')
+    # )
+
+    date_type = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=DATE_CHOICES,
+        label = 'Date Range'
+        )
+    search_date_from = forms.CharField(
+        required=False,
+        widget=forms.DateInput(format=('%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'), attrs={'class': 'datepicker form-control'}),
+        label = 'From'
+        )
+    search_date_to = forms.CharField(
+        required=False,
+        widget=forms.DateInput(format=('%Y-%m-%d', '%m/%d/%Y', '%m/%d/%y'), attrs={'class': 'datepicker form-control'}),
+        label = 'To'
+        )
+    search_keyword = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={'class':'form-control'}),
+        label = 'Keyword Search',
+        )
+    and_or = forms.ChoiceField(
+        required=False,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        choices=BOOL_CHOICES,
+        )
+
+    def clean (self):
+        date_from = self.cleaned_data.get('search_date_from')
+        date_to = self.cleaned_data.get('search_date_to')
+        date_type = self.cleaned_data.get('date_type')
+        msg = forms.ValidationError("This field is required.")
+
+
+        if (date_from and date_to and date_type):
+            return self.cleaned_data
+        elif date_from and date_to:
+            self.add_error('date_type', msg)
+        elif date_from and date_type:
+            self.add_error('search_date_to', msg)
+        elif date_to and date_type:
+            self.add_error('search_date_from', msg)
+        elif date_to:
+            self.add_error('date_type', msg)
+            self.add_error('search_date_from', msg)
+        elif date_from:
+            self.add_error('date_type', msg)
+            self.add_error('search_date_to', msg)
+        elif date_type:
+            self.add_error('search_date_from', msg)
+            self.add_error('search_date_to', msg)
+        else:
+            return self.cleaned_data
+            # # Keep the database consistent. The user may have
+            # # submitted a shipping_destination even if shipping
+            # # was not selected
+            # self.cleaned_data['date_type'] = ''
+            # self.cleaned_data['search_date_to'] = ''
+
+        return self.cleaned_data

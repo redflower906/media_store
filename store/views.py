@@ -1103,7 +1103,7 @@ def searchtest(request):
         report = Order.objects.all()
 
     if request.method == 'POST':
-        form = OrderSearchForm(request.POST, initial={'and_or': 'AND'})
+        form = OrderSearchForm2(request.POST, initial={'and_or': 'AND'})
         if form.is_valid():
             datefrom = form.cleaned_data.get('search_date_from')
             dateto = form.cleaned_data.get('search_date_to')
@@ -1186,6 +1186,9 @@ def searchtest(request):
             messages.error(request, "This form is invalid")
     else:
         form = OrderSearchForm()
+    
+    OL = OrderLine.objects.filter(order__submitter__first_name__icontains = 'Scarlett')
+    OLFN = OrderLine.objects.filter(order__submitter__name__icontains = 'Amanda')
 
     return render(request, 'store/search.html', {
         'date_type': date_type,
@@ -1198,6 +1201,8 @@ def searchtest(request):
         'headersKey': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
+        'OL': OL,
+        'OLFN': OLFN,
     })
 
           
