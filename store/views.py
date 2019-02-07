@@ -1059,7 +1059,8 @@ def searchtest(request):
     reports = ''
     date_type = ''
     record_num = ''
-    keys = ''
+    # keys = ''
+    field_choice=''
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
     else:
