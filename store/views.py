@@ -1042,54 +1042,16 @@ def search(request):
 
 def searchtest(request):
     
-    ORDER_LIST_HEADERSCr = (
-        ('Order ID', 'id'),
-        ('Department to Bill', 'department__department_name'),
-        ('Cost Center', 'department__number'),
-        ('Requester', 'requester__last_name'),
-        ('Date Created', 'date_created'),
-        ('Recurring', 'is_recurring'),
-        ('Location', 'location'),
-        ('Status', 'status'),
-        ('Order Total', 'order_total')
-    )
-    ORDER_LIST_HEADERSCo = (
-        ('Order ID', 'id'),
-        ('Department to Bill', 'department__department_name'),
-        ('Cost Center', 'department__number'),
-        ('Requester', 'requester__last_name'),
-        ('Date Completed', 'date_complete'),
-        ('Recurring', 'is_recurring'),
-        ('Location', 'location'),
-        ('Status', 'status'),
-        ('Order Total', 'order_total')
-    )
-
-    ORDER_LIST_HEADERSB = (
-        ('Order ID', 'id'),
-        ('Department to Bill', 'department__department_name'),
-        ('Cost Center', 'department__number'),
-        ('Requester', 'requester__last_name'),
-        ('Date Billed', 'date_billed'),
-        ('Recurring', 'is_recurring'),
-        ('Location', 'location'),
-        ('Status', 'status'),
-        ('Order Total', 'order_total')
-    )
     ORDER_LIST_HEADERSKey = (
-        ('Order ID', 'id'),
-        ('Department to Bill', 'department__department_name'),
-        ('Cost Center', 'department__number'),
+        ('Order ID', 'order__id'),
+        ('Department to Bill', 'order__department__department_name'),        
         ('Requester', 'requester__last_name'),
+        ('Description', 'order__inventory__inventory_text'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Order Total', 'order_total')
+        ('Item Cost', 'line_cost')
     )
-
-    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERSCr)
-    sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERSCo)
-    sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERSB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
 
     user = request.user
@@ -1193,10 +1155,7 @@ def searchtest(request):
         'user': user,
         'form': form,
         'reports': reports,
-        'headersCr': list(sort_headers1.headers()),
-        'headersCo': list(sort_headers2.headers()),
-        'headersB': list(sort_headers3.headers()),
-        'headersKey': list(sort_headers4.headers()),
+        'headers': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
     })
