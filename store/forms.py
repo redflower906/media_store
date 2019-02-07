@@ -383,7 +383,7 @@ class OrderSearchForm2(forms.Form):
         widget=forms.SelectMultiple(attrs={
             'class': 'chosen-select', 
             'multiple': True,
-            'placeholder': 'Choose one or more fields'
+            'placeholder': 'Choose one or more fields',
         }),
         choices=FIELD_CHOICES,
     )
