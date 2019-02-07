@@ -1047,10 +1047,11 @@ def searchtest(request):
         ('Department to Bill', 'order__department__department_name'),        
         ('Requester', 'requester__last_name'),
         ('Description', 'order__inventory__inventory_text'),
+        ('Qutantity', 'qty'),
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        ('Item Cost', 'line_cost')
+        ('Line Total', 'total')
     )
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERSKey)
 

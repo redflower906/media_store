@@ -79,7 +79,6 @@
                                         {% if report.order.is_recurring %}
                                             <th>How Often</th>
                                         {% endif %}
-                                        <th>Quantity</th>
                                         <th>Order Total</th>
                                         <th>Notes</th>
                                     </tr>
@@ -99,7 +98,6 @@
                                     {% if report.order.is_recurring %} 
                                         <td>{{report.order.get_weeks_display}}</td>
                                     {% endif %}
-                                    <td>{{report.qty}}</td>
                                     <td class = 'ordertotal {{report.order.id}}'>${{report.order.order_total}}</td>
                                     <td>{{report.order.notes_order}}</td>
                             </table>                            
