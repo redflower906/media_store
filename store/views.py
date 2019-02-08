@@ -1084,12 +1084,8 @@ def searchtest(request):
                 
 
             if keyword:
-                if ',' in keyword:
-                    keys1 = keyword.replace(' ', '')
-                else:
-                    keys1 = keyword.replace(' ', ',')
 
-                keys = keys1.split(',')
+                keys = keyword.split(',')
                 # if '+' in keyword:
                 #     keys1 = keyword.replace('+', ',')
                 #     keys2 = keys1.replace(' ', '')
