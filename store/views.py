@@ -1061,7 +1061,9 @@ def searchtest(request):
     record_num = ''
     keys = ''
     field_choice=''
-    lookup=''
+    lookup= ''            
+    q_object = Q()
+
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
     else:
@@ -1078,7 +1080,6 @@ def searchtest(request):
             field_choice = form.cleaned_data.get('field_choice')
             
                 
-            q_object = Q()
 
             if keyword:
                 if '+' in keyword:
@@ -1173,6 +1174,7 @@ def searchtest(request):
         'keys': keys,
         'field_choice': field_choice,
         'lookup': lookup,
+        'q_object': q_object,
     })
 
           
