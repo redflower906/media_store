@@ -1125,7 +1125,7 @@ def searchtest(request):
                         reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = report.filter(q_object).distinct()
+                    reports = report.filter(q_object)
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
