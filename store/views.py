@@ -1065,6 +1065,7 @@ def searchtest(request):
     field_choice=''
     lookup= ''            
     q_object = Q()
+    rep = OrderLine.objects.none()
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
@@ -1107,7 +1108,7 @@ def searchtest(request):
                     for x in field_choice:
                         lookup = '%s__icontains' % x
                         query = {lookup : key}
-                        report = OrderLine.objects.none() | OrderLine.objects.filter(**query)
+                        rep = rep | OrderLine.objects.filter(**query)
                     # q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
                     # order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(
                     # order__department__number__icontains=key)| Q(inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q_bool)
@@ -1130,7 +1131,7 @@ def searchtest(request):
                         reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = report.distinct()
+                    reports = rep.distinct()
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
