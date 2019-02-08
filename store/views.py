@@ -1081,7 +1081,7 @@ def searchtest(request):
             and_or = form.cleaned_data.get('and_or')
             field_choice = form.cleaned_data.get('field_choice')
                 
-            field_choice[:] = [('order__submitter__first_name', 'order__submitter__last_name') if x=='submitter' else x for x in field_choice]
+            field_choice[:] = ['order__submitter__first_name', 'order__submitter__last_name' if x=='submitter' else x for x in field_choice]
 
                 
 
