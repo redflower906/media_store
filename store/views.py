@@ -1039,6 +1039,7 @@ def search(request):
         'headersKey': list(sort_headers4.headers()),
         'record_num': record_num,
         'keys': keys,
+        'q_object': q_object,
     })
 
 def searchtest(request):
