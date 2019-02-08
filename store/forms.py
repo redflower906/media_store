@@ -350,6 +350,7 @@ class OrderSearchForm2(forms.Form):
     FIELD_CHOICES = (
         ('order__notes_order', 'Order Notes'),
         ('inventory__inventory_text', 'Product'),
+        ('order__id', 'Order ID')
     )
 
     date_type = forms.ChoiceField(
