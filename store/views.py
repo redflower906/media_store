@@ -1179,7 +1179,7 @@ def searchtest(request):
         'keys': keys,
         'field_choice': field_choice,
         'lookup': lookup,
-        'report': report,
+        'rep': rep,
     })
 
           
