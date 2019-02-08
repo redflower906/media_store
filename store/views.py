@@ -1153,10 +1153,10 @@ def searchtest(request):
                 response['Content-Disposition'] = 'attachment; filename="search2_export.csv"'
                 writer = csv.writer(response)
                 writer.writerow(['Order_ID', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 
-                'Status', 'Special_Instructions', 'Location', 'Line ID', 'Order_Total'])
+                'Status', 'Special_Instructions', 'Location', 'Line ID'])
                 e_reports = reports.values_list('order__id','order__requester__username', 'order__submitter__username', 'order__date_created', 'order__date_complete', 
                 'order__date_billed', 'order__is_recurring', 'order__due_date', 'inventory__inventory_text', 'qty', 'inventory__cost', 'order__status', 'order__notes_order',
-                'order__location', 'id', 'order__total')
+                'order__location', 'id')
 
                 for report in e_reports:
                     writer.writerow(report)
