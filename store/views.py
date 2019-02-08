@@ -1084,15 +1084,21 @@ def searchtest(request):
                 
 
             if keyword:
-                if '+' in keyword:
-                    keys1 = keyword.replace('+', ',')
-                    keys2 = keys1.replace(' ', '')
-                elif ',' in keyword:
+                if ',' in keyword:
                     keys1 = keyword.replace(' ', '')
-                    keys2 = ''
                 else:
                     keys1 = keyword.replace(' ', ',')
-                    keys2 = ''
+
+                keys = keys1.split(',')
+                # if '+' in keyword:
+                #     keys1 = keyword.replace('+', ',')
+                #     keys2 = keys1.replace(' ', '')
+                # elif ',' in keyword:
+                #     keys1 = keyword.replace(' ', '')
+                #     keys2 = ''
+                # else:
+                #     keys1 = keyword.replace(' ', ',')
+                #     keys2 = ''
                 
                 # if len(keys2) > 0:
                 #     keys = keys2.split(',')
@@ -1128,7 +1134,7 @@ def searchtest(request):
                         reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = report.filter(q_object)
+                    reports = report.filter(q_object).distinct()
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
