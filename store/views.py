@@ -1065,7 +1065,6 @@ def searchtest(request):
     field_choice=''
     lookup= ''            
     q_object = Q()
-    rep = OrderLine.objects.none()
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
@@ -1081,37 +1080,34 @@ def searchtest(request):
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
             field_choice = form.cleaned_data.get('field_choice')
-            
+                
+            field_choice[:] = [('order__submitter__first_name', 'order__submitter__last_name') if x=='submitter' else x for x in a ]
+
                 
 
             if keyword:
-
-                keys = keyword.split(',')
-                # if '+' in keyword:
-                #     keys1 = keyword.replace('+', ',')
-                #     keys2 = keys1.replace(' ', '')
-                # elif ',' in keyword:
-                #     keys1 = keyword.replace(' ', '')
-                #     keys2 = ''
-                # else:
-                #     keys1 = keyword.replace(' ', ',')
-                #     keys2 = ''
+                if '+' in keyword:
+                    keys1 = keyword.replace('+', ',')
+                    keys2 = keys1.replace(' ', '')
+                elif ',' in keyword:
+                    keys1 = keyword.replace(' ', '')
+                    keys2 = ''
+                else:
+                    keys1 = keyword.replace(' ', ',')
+                    keys2 = ''
                 
-                # if len(keys2) > 0:
-                #     keys = keys2.split(',')
-                #     Q_bool = Q.AND
-                # else:
-                #     keys = keys1.split(',')
-                #     Q_bool = Q.OR
+                if len(keys2) > 0:
+                    keys = keys2.split(',')
+                    Q_bool = Q.AND
+                else:
+                    keys = keys1.split(',')
+                    Q_bool = Q.OR
 
                 for key in keys:
                     for x in field_choice:
                         lookup = '%s__icontains' % x
                         query = {lookup : key}
-                        rep = rep | OrderLine.objects.filter(**query)
-                    # q_object.add((Q(order__submitter__first_name__icontains=key)|Q(order__submitter__last_name__icontains=key)|Q(order__requester__last_name__icontains=key)|Q(
-                    # order__requester__first_name__icontains=key)|Q(order__notes_order__icontains=key)|Q(order__project_code__hhmi_project_id__icontains=key)|Q(
-                    # order__department__number__icontains=key)| Q(inventory__inventory_text__icontains=key) | Q(order__id__icontains=key) | Q(order__status__icontains=key)), Q_bool)
+                        q_object.add(Q(**query), Q_bool)
 
                 if datefrom:
                     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -1131,7 +1127,7 @@ def searchtest(request):
                         reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = rep.distinct()
+                    reports = report.filter(q_object)
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -1152,11 +1148,11 @@ def searchtest(request):
                 response = HttpResponse(content_type='text/csv')
                 response['Content-Disposition'] = 'attachment; filename="search2_export.csv"'
                 writer = csv.writer(response)
-                writer.writerow(['Order_ID', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 
-                'Status', 'Special_Instructions', 'Location', 'Line ID'])
-                e_reports = reports.values_list('order__id','order__requester__username', 'order__submitter__username', 'order__date_created', 'order__date_complete', 
+                writer.writerow(['Order_ID', 'Line_ID', 'Requester', 'Submitter', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 'Product', 'Qty', 'Unit_Price', 
+                'Status', 'Special_Instructions', 'Location'])
+                e_reports = reports.values_list('order__id', 'id', 'order__requester__username', 'order__submitter__username', 'order__date_created', 'order__date_complete', 
                 'order__date_billed', 'order__is_recurring', 'order__due_date', 'inventory__inventory_text', 'qty', 'inventory__cost', 'order__status', 'order__notes_order',
-                'order__location', 'id')
+                'order__location')
 
                 for report in e_reports:
                     writer.writerow(report)
@@ -1178,8 +1174,6 @@ def searchtest(request):
         'record_num': record_num,
         'keys': keys,
         'field_choice': field_choice,
-        'lookup': lookup,
-        'rep': rep,
     })
 
           

@@ -348,9 +348,14 @@ class OrderSearchForm2(forms.Form):
     )
 
     FIELD_CHOICES = (
+        ('submitter', 'Submitter'),
+        ('requester', 'Requester'),
         ('order__notes_order', 'Order Notes'),
         ('inventory__inventory_text', 'Product'),
-        ('order__id', 'Order ID')
+        ('order__id', 'Order ID'),
+        ('order__department__number', 'Cost Center'),
+        ('order__project_code__hhmi_project_id', 'Project Code'),
+        ('order__status', 'Status'),
     )
 
     date_type = forms.ChoiceField(
