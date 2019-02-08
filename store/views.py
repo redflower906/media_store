@@ -936,7 +936,9 @@ def search(request):
     reports = ''
     date_type = ''
     record_num = ''
-    keys = ''
+    keys = ''            
+    q_object = Q()
+
     if user.is_staff is False:
         report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
     else:
@@ -951,7 +953,6 @@ def search(request):
             date_type = form.cleaned_data.get('date_type')
             and_or = form.cleaned_data.get('and_or')
                 
-            q_object = Q()
 
             if keyword:
                 if '+' in keyword:
