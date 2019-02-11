@@ -1181,6 +1181,7 @@ def searchtest(request):
         'keys': keys,
         'field_choice': field_choice,
         'Q_bool': Q_bool,
+        'q_object': q_object,
     })
 
           
