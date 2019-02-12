@@ -1069,6 +1069,8 @@ def searchtest(request):
     keys0=''
     keys3=''
     keys5=''
+    q_object1=Q()
+    q_object2=Q()
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
@@ -1096,28 +1098,6 @@ def searchtest(request):
 
             if keyword:
                 #change order, put if ',' elif '' first, then if '+' then within that if, do the for loops with Q.AND, then outside, else for loop again
-                # if ',' in keyword:
-                #     keys1 = keyword.replace(' ', '')
-                # elif ' ' in keyword:
-                #     keys1 = keyword.replace(' ', ',')
-
-                # if '+' in keyword:
-                #     keys1 = keyword.replace(' ', '')
-                #     keys2 = keys1.split('+')
-                #     keys = keys2.split(',')
-
-
-                # if '+' in keyword:
-                #     keys1 = keyword.replace(' ', '')
-                #     keys2 = keys1.split('+')
-                #     for string in keys2:
-                #         keys0 = string.split(',')
-                #         if ',' in string:
-                #             keys2.remove(string)
-                #     keys = keys2
-                #     keys.append(keys0)
-
-
                 if '+' in keyword:
                     if ',' in keyword:
                         keys1 = keyword.replace(' ', '')
@@ -1126,33 +1106,62 @@ def searchtest(request):
                             keys0 = string.split('+')
                             if '+' in string:
                                 keys2.remove(string)
-                        keys2.append(keys0)
+                            for key in keys0:
+                                for x in field_choice:
+                                    lookup = '%s__icontains' % x
+                                    query = {lookup : key}
+                                    q_object1.add(Q(**query), Q.AND)
+                            #keys2.append(keys0)
+                        for key in keys2:
+                            for x in field_choice:
+                                lookup = '%s__icontains' % x
+                                query = {lookup : key}
+                                q_object2.add(Q(**query), Q.OR)
+                        q_object = Q(q_object1|q_object2)
+                    
                     else:
                         keys1 = keyword.replace(' ', '')
                         keys2 = keys1.split('+')
 
-
-
-
-                elif ',' in keyword:
+                if ',' in keyword:
                     keys1 = keyword.replace(' ', '')
-                    keys2 = ''
-                else:
+                elif ' ' in keyword:
                     keys1 = keyword.replace(' ', ',')
-                    keys2 = ''
-                
-                if len(keys2) > 0:
-                    keys = keys2
-                    Q_bool = Q.AND
-                else:
-                    keys = keys1.split(',')
-                    Q_bool = Q.OR
 
-                for key in keys:
-                    for x in field_choice:
-                        lookup = '%s__icontains' % x
-                        query = {lookup : key}
-                        q_object.add(Q(**query), Q_bool)
+                # if '+' in keyword:
+                #     if ',' in keyword:
+                #         keys1 = keyword.replace(' ', '')
+                #         keys2 = keys1.split(',')
+                #         for string in keys2:
+                #             keys0 = string.split('+')
+                #             if '+' in string:
+                #                 keys2.remove(string)
+                #         keys2.append(keys0)
+                #     else:
+                #         keys1 = keyword.replace(' ', '')
+                #         keys2 = keys1.split('+')
+
+
+
+                # elif ',' in keyword:
+                #     keys1 = keyword.replace(' ', '')
+                #     keys2 = ''
+                # else:
+                #     keys1 = keyword.replace(' ', ',')
+                #     keys2 = ''
+                
+                # if len(keys2) > 0:
+                #     keys = keys2
+                #     Q_bool = Q.AND
+                # else:
+                #     keys = keys1.split(',')
+                #     Q_bool = Q.OR
+
+                # for key in keys:
+                #     for x in field_choice:
+                #         lookup = '%s__icontains' % x
+                #         query = {lookup : key}
+                #         q_object.add(Q(**query), Q_bool)
 
                 if datefrom:
                     datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
