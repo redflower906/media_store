@@ -1066,6 +1066,7 @@ def searchtest(request):
     lookup= ''            
     q_object = Q()
     Q_bool = ''
+    keys0=''
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
@@ -1111,7 +1112,7 @@ def searchtest(request):
                         keys0 = string.split(',')
                         if ',' in string:
                             string = 'delete'
-                    keys = keys2.append(keys0)
+                    keys = keys2
                     
 
 
@@ -1202,6 +1203,7 @@ def searchtest(request):
         'field_choice': field_choice,
         'Q_bool': Q_bool,
         'q_object': q_object,
+        'keys0': keys0,
     })
 
           
