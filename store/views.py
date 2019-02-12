@@ -1068,6 +1068,7 @@ def searchtest(request):
     Q_bool = ''
     keys0=''
     keys3=''
+    keys5=''
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
@@ -1114,6 +1115,11 @@ def searchtest(request):
                         keys0 = string.split(',')
                     keys = keys2
                     keys3 = keys2.append(keys0)
+                    for key in keys:
+                        if ',' in key:
+                            keys5 = keys4.remove(key)
+
+
                     
 
 
@@ -1206,6 +1212,7 @@ def searchtest(request):
         'q_object': q_object,
         'keys0': keys0,
         'keys3': keys3,
+        'keys5': keys5,
     })
 
           
