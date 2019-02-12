@@ -1110,7 +1110,8 @@ def searchtest(request):
                     for string in keys2:
                         keys0 = string.split(',')
                         if ',' in string:
-                            keys = keys2.remove(string).append(keys0)
+                            keys = keys2.remove(string)
+                            keys = keys.append(keys0)
                     
 
 
