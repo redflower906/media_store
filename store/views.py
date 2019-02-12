@@ -1111,7 +1111,7 @@ def searchtest(request):
                         keys0 = string.split(',')
                         if ',' in string:
                             string = 'delete'
-                    keys = keys2
+                    keys = keys2.append(keys0)
                     
 
 
