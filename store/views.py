@@ -1111,10 +1111,10 @@ def searchtest(request):
                     keys2 = keys1.split('+')
                     for string in keys2:
                         keys0 = string.split(',')
-                        if ',' in string:
-                            string = 'delete'
                     keys = keys2
-                    keys3 = keys.append(keys0)
+                    for thing in keys:
+                        if ',' in thing:
+                            thing = 'delete'
                     
 
 
