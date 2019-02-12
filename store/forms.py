@@ -242,7 +242,7 @@ class Bottles_VialsForm(forms.ModelForm):
         }
         widgets = {
             'item': forms.Select(choices=Bottles_Vials.ITEM_CHOICES, attrs={'class':'form-control', 'disabled':'disabled'}),
-            'amnt': forms.NumberInput(attrs={'class':' amnt form-control')
+            'amnt': forms.NumberInput(attrs={'class':' amnt form-control'})
         }
     
     def __init__(self, *args, **kwargs):
