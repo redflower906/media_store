@@ -1107,20 +1107,32 @@ def searchtest(request):
                 #     keys = keys2.split(',')
 
 
+                # if '+' in keyword:
+                #     keys1 = keyword.replace(' ', '')
+                #     keys2 = keys1.split('+')
+                #     for string in keys2:
+                #         keys0 = string.split(',')
+                #         if ',' in string:
+                #             keys2.remove(string)
+                #     keys = keys2
+                #     keys.append(keys0)
+
+
                 if '+' in keyword:
-                    keys1 = keyword.replace(' ', '')
-                    # keys = (l.split(',') for l in keys2.split('+') if l)
-                    keys2 = keys1.split('+')
-                    for string in keys2:
-                        keys0 = string.split(',')
-                        if ',' in string:
-                            keys2.remove(string)
-                    keys = keys2
-                    keys.append(keys0)
+                    if ',' in keyword:
+                        keys1 = keyword.replace(' ', '')
+                        keys2 = keys1.split(',')
+                        for string in keys2:
+                            keys0 = string.split('+')
+                            if '+' in string:
+                                keys2.remove(string)
+                        keys = keys2
+                        keys.append(keys0)
+                    else:
+                        keys1 = keyword.replace(' ', '')
+                        keys2 = keys1.split('+')
 
 
-
-                    
 
 
                 elif ',' in keyword:
