@@ -1113,11 +1113,11 @@ def searchtest(request):
                     keys2 = keys1.split('+')
                     for string in keys2:
                         keys0 = string.split(',')
+                        if ',' in string:
+                            keys2.remove(string)
                     keys = keys2
-                    keys3 = keys2.append(keys0)
-                    for key in keys:
-                        if ',' in key:
-                            keys5 = keys.remove(key)
+                    keys.append(keys0)
+
 
 
                     
