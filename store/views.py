@@ -1121,15 +1121,15 @@ def searchtest(request):
                 if '+' in keyword:
                     if ',' in keyword:
                         keys1 = keyword.replace(' ', '')
-                        keys = keys1.split(',')
-                        for string in keys:
+                        keys2 = keys1.split(',')
+                        for string in keys2:
                             keys0 = string.split('+')
                             if '+' in string:
-                                keys.remove(string)
-                        keys.append(keys0)
+                                keys2.remove(string)
+                        keys2.append(keys0)
                     else:
                         keys1 = keyword.replace(' ', '')
-                        keys = keys1.split('+')
+                        keys2 = keys1.split('+')
 
 
 
@@ -1142,7 +1142,7 @@ def searchtest(request):
                     keys2 = ''
                 
                 if len(keys2) > 0:
-                    # keys = keys2.split(',')
+                    keys = keys2
                     Q_bool = Q.AND
                 else:
                     keys = keys1.split(',')
