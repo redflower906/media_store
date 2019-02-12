@@ -145,7 +145,7 @@ class OrderLineInlineFormSet(
     inlineformset_factory(Order, OrderLine,
         fields=('qty', 'line_cost', 'inventory'),
         widgets={
-        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty'}),
+        'qty': NumInput(attrs={'min': '0', 'step': 'any', 'class': 'form-control col-centered line_calc line_qty', 'pattern': '[0-9*]'}),
         'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly':'readonly'}),
         'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
@@ -242,7 +242,7 @@ class Bottles_VialsForm(forms.ModelForm):
         }
         widgets = {
             'item': forms.Select(choices=Bottles_Vials.ITEM_CHOICES, attrs={'class':'form-control', 'disabled':'disabled'}),
-            'amnt': forms.NumberInput(attrs={'class':' amnt form-control', 'pattern': '[0-9*'})
+            'amnt': forms.NumberInput(attrs={'class':' amnt form-control')
         }
     
     def __init__(self, *args, **kwargs):
