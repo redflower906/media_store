@@ -1108,11 +1108,11 @@ def searchtest(request):
 
                 if '+' in keyword:
                     keys2 = keyword.replace(' ', '')
-                    keys = (l.split(',') for l in keys2.split('+') if l)
-                    # keys2 = keys1.split('+')
-                    # for string in keys2:
-                    #     keys0 = string.split(',')
-                    # keys = keys2
+                    # keys = (l.split(',') for l in keys2.split('+') if l)
+                    keys2 = keys1.split('+')
+                    for string in keys2:
+                        keys0 = string.split(',')
+                    keys = keys2
                     
 
 
