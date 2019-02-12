@@ -1105,8 +1105,8 @@ def searchtest(request):
 
 
                 if '+' in keyword:
-                    keys1 = keyword.replace(' ', '')
-                    keys = keys1.split('+')
+                    keys2 = keyword.replace(' ', '')
+                    keys = keys2.split('+')
                     # for string in keys2:
                     #     keys0 = string.split(',')
                     #     if ',' in string:
