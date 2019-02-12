@@ -1112,9 +1112,6 @@ def searchtest(request):
                     for string in keys2:
                         keys0 = string.split(',')
                     keys = keys2
-                    for thing in keys:
-                        if ',' in thing:
-                            thing = 'delete'
                     
 
 
