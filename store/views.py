@@ -1112,7 +1112,8 @@ def searchtest(request):
                     keys2 = keys1.split('+')
                     for string in keys2:
                         keys0 = string.split(',')
-                    keys = keys2.append(keys0)
+                    keys = keys2
+                    keys3 = keys2.append(keys0)
                     
 
 
