@@ -1231,8 +1231,8 @@ def searchtest(request):
         'Q_bool': Q_bool,
         'q_object': q_object,
         'keys0': keys0,
-        'keys3': keys3,
-        'keys5': keys5,
+        'q_object1': q_object1,
+        'q_object2': q_object2,
     })
 
           
