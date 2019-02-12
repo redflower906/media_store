@@ -1117,7 +1117,7 @@ def searchtest(request):
                     keys3 = keys2.append(keys0)
                     for key in keys:
                         if ',' in key:
-                            keys5 = keys4.remove(key)
+                            keys5 = keys.remove(key)
 
 
                     
