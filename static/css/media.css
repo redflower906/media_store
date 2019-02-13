@@ -317,6 +317,11 @@ tbody {
   vertical-align: middle;
   border-color: inherit
 }
+
+.qty {
+  height: 500px;
+}
+
 .sdd {
   background-color: lightcyan;
 }
