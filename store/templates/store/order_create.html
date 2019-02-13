@@ -431,7 +431,7 @@
                                 </tr>
                             </div>
                         </thead>
-                        <tbody>
+                        <tbody class='order_table'>
                             <div class='row'>
                             {% for form in formset %}
                             {% if form.non_field_errors %}
@@ -545,7 +545,7 @@
     });
 
     $(function () {
-        $('#order_table tbody tr').formset({
+        $('#order_table .order_table tr').formset({
             prefix:'{{ formset.prefix }}',
             addText:'Add Item',
             removeText: 'Delete',
