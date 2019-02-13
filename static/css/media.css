@@ -322,6 +322,10 @@ tbody {
   height: 500px;
 }
 
+#classTable{
+  height: 200px;
+}
+
 .sdd {
   background-color: lightcyan;
 }
