@@ -316,6 +316,8 @@ $(function(){
 })
 
 //show loader
-$(function showloader(){
-    $('#loader').show();
+$(function(){
+    $('#SOsubmit').onclick(function(){
+        $('#loader').show()
+    });
 })
