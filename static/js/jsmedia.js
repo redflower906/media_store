@@ -317,7 +317,7 @@ $(function(){
 
 //show loader
 function showloader() {
-    var x = document.getElementsByClassName("loader");
+    var x = document.getElementById("loader");
     if (x.style.display === "none") {
       x.style.display = "block";
     } else {
