@@ -701,7 +701,7 @@ def create_signout(request):
     elif u == 17380:
         loc = '2E.267'
         uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263))
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237))
     elif u == 17382:
         loc = '3C.267'
         uname = 3.1
