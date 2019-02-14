@@ -468,14 +468,9 @@
             
     </form>
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip({
-                placement : 'top'
-            });
-        });
 
         $(function () {
-            $('#order_table .order_table tbody tr').formset({
+            $('#order_table .order_table tr').formset({
                 prefix:'{{ formset.prefix }}',
                 addText:'Add Item',
                 removeText: 'Delete',
