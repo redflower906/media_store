@@ -1117,11 +1117,11 @@ def searchtest(request):
                                 lookup = '%s__icontains' % x
                                 query = {lookup : key}
                                 q_object2.add(Q(**query), Q.OR)
-                        q_object = Q(q_object1|q_object2)
-                    
                     else:
                         keys1 = keyword.replace(' ', '')
                         keys2 = keys1.split('+')
+                        
+                    q_object = Q(q_object1|q_object2)
 
                 if ',' in keyword:
                     keys1 = keyword.replace(' ', '')
