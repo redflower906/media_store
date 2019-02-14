@@ -317,7 +317,7 @@ $(function(){
 
 //show loader
 $(function(){
-    $('#SOsubmit').onclick(function(){
+    $('#SOsubmit').click(function(){
         $('#loader').show()
     });
 })
