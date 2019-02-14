@@ -1112,12 +1112,12 @@ def searchtest(request):
                                     query = {lookup : key}
                                     q_object1.add(Q(**query), Q.AND)
                             #keys2.append(keys0)
-                    for key in keys2:
-                        for x in field_choice:
-                            lookup = '%s__icontains' % x
-                            query = {lookup : key}
-                            q_object2.add(Q(**query), Q.OR)
-                    q_object = Q(q_object1|q_object2)
+                        for key in keys2:
+                            for x in field_choice:
+                                lookup = '%s__icontains' % x
+                                query = {lookup : key}
+                                q_object2.add(Q(**query), Q.OR)
+                        q_object = Q(q_object1|q_object2)
                     
                     else:
                         keys1 = keyword.replace(' ', '')
