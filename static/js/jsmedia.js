@@ -314,3 +314,13 @@ $(function(){
         console.log('inv = custom order');
     }
 })
+
+//show loader
+function showloader() {
+    var x = document.getElementsByClassName("loader");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
