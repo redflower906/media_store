@@ -98,6 +98,13 @@
         <p>&nbsp;</p>
         <fieldset>
             <legend>What would you like to order?</legend>
+            <div>
+                <ul>
+                    <li color='red'>
+                        If you want to order less than a tray or sleeve (a partial unit), please click 'QTY' below to see what decimal to input.
+                    </li>
+                </ul>
+            </div>
             {{ formset.non_form_errors }} 
             {% for hidden_field in formset.hidden_fields %} 
                 {{ hidden_field.errors }} 
