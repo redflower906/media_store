@@ -1116,12 +1116,18 @@ def searchtest(request):
                             for x in field_choice:
                                 lookup = '%s__icontains' % x
                                 query = {lookup : key}
-                                q_object2.add(Q(**query), Q.OR)
+                                q_object2.add(Q(**query), Q.OR)                    
+                        q_object = Q(q_object1|q_object2)
+
                     else:
                         keys1 = keyword.replace(' ', '')
                         keys2 = keys1.split('+')
-                        
-                    q_object = Q(q_object1|q_object2)
+                        for key in keys2:
+                            for x in field_choice:
+                                lookup = '%s__icontains' % x
+                                query = {lookup : key}
+                                q_object.add(Q(**query), Q.AND)
+
 
                 if ',' in keyword:
                     keys1 = keyword.replace(' ', '')
