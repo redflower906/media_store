@@ -855,8 +855,8 @@ def auto_bv_so(request):
     Sum('orderline__qty')).values())[0] 
     inputVials = Bottles_Vials.objects.get(item='1263')
 
-    remainderBottles = ''
-    remainderVials = ''
+    remainderBottles = 0
+    remainderVials = 0
 
     if currentBottles != None:
         remainderBottles = (inputBottles.amnt - currentBottles)
