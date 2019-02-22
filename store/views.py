@@ -898,14 +898,14 @@ def auto_bv_so(request):
             })
 
     return render(request,
-    'store/autoform.html',{
-    'order_form': order_form,
-    'formsetB': orderlineformsetB,
-    'formsetV': orderlineformsetV,
-    'user': user,
-    'remainderBottles': remainderBottles,
-    'remainderVials': remainderVials,
-    })
+        'store/autoform.html',{
+        'order_form': order_form,
+        'formsetB': orderlineformsetB,
+        'formsetV': orderlineformsetV,
+        'user': user,
+        'remainderBottles': remainderBottles,
+        'remainderVials': remainderVials,
+        })
 
 @login_required
 def sign_outs_remainder(request):
