@@ -896,11 +896,14 @@ def sign_outs_remainder(request):
     inputBottles = Bottles_Vials.objects.get(item='1245')
     inputVials = Bottles_Vials.objects.get(item='1263')
 
-    floatBottles = float(inputBottles.amnt)
-    floatVials = float(inputVials.amnt)
 
-    remainderVials = (inputBottles.amnt - inputVials.amnt)
     remainderBottles = ''
+    remainderVials = ''
+
+    if currentBottles != None:
+        remainderBottles = (inputBottles.amnt - currentBottles)
+    if currentVials != None:
+        remainderVials = (inputVials.amnt - currentVials)
 
 
     if request.method == "POST":
