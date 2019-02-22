@@ -904,7 +904,7 @@ def auto_bv_so(request):
     'formsetV': orderlineformsetV,
     'user': user,
     'remainderBottles': remainderBottles,
-    'remainderVials': remainderVials
+    'remainderVials': remainderVials,
     })
 
 @login_required
