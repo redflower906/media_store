@@ -234,8 +234,8 @@
                 </tr>
             </table>
         </div>
-        {{ formsetB.non_form_errors }} 
-        {% for hidden_field in formsetB.hidden_fields %} 
+        {{ formsetV.non_form_errors }} 
+        {% for hidden_field in formsetV.hidden_fields %} 
             {{ hidden_field.errors }} 
             {{ hidden_field }} 
         {% endfor %}
@@ -243,8 +243,8 @@
             <table id='form_holder'>
                 <tr>
                     <td style="padding:0" class="OrderLines">
-                        {{formsetB.management_form}}
-                        {{formsetB.media}}
+                        {{formsetV.management_form}}
+                        {{formsetV.media}}
                         <table id='order_table'>
                         <thead>
                             <div class='row'>
@@ -261,7 +261,7 @@
                         </thead>
                         <tbody class='order_table'>
                             <div class='row'>
-                            {% for form in formsetB %}
+                            {% for form in formsetV %}
                             {% if form.non_field_errors %}
                             <tr>
                                 <td colspan="6">
