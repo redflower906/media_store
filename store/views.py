@@ -900,7 +900,7 @@ def sign_outs_remainder(request):
     floatVials = float(inputVials.amnt)
 
     remainderVials = (inputBottles.amnt - inputVials.amnt)
-
+    remainderBottles = ''
 
 
     if request.method == "POST":
