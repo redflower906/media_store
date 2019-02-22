@@ -898,9 +898,9 @@ def sign_outs_remainder(request):
 
     inputVials = Bottles_Vials.objects.get(item='1263')
 
-    remainderBottles = (inputBottles.amnt.values() - currentBottles)
+    remainderBottles = type(inputBottles)
 
-    remainderVials = (inputVials.amnt.values() - currentVials)
+    remainderVials = type(inputVials)
 
 
 
