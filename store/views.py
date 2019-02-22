@@ -793,7 +793,7 @@ def current_sign_outs (request):
     days = (nextbill - today).days
 
     current_queryset = orders.filter(notes_order__icontains='signout').exclude(status__icontains='Canceled').exclude(status__icontains='Billed')
-    billed_queryset = orders.filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed').filter(notes_order__icontains='signout')
+    billed_queryset = orders.filter(notes_order__icontains='signout').filter(date_billed__isnull=False).exclude(status__icontains='Canceled').filter(date_billed__range=[twobills, today]).order_by('-date_billed')
 
  #pagination
     page = request.GET.get('page')
@@ -839,11 +839,51 @@ def current_sign_outs (request):
         })
 
 @login_required
+def auto_bv_so(request):
+    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
+    Sum('orderline__qty')).values())[0]
+    inputBottles = Bottles_Vials.objects.get(item='1245')
+    remainderBottles = (inputBottles - currentBottles)
+
+    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[today, nextbill]).aggregate(
+    Sum('orderline__qty')).values())[0] 
+    inputVials = Bottles_Vials.objects.get(item='1263')
+    remainderVials = (inputVials - currentVials)
+
+    if request.method == 'POST':
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout'})
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order,)
+        for form in orderlineformset:
+            form.fields['inventory'].queryset = q
+        if order_form.is_valid() and orderlineformset.is_valid():
+            order = order_form.save(commit=False)
+            order.status = 'Complete'
+            order.save()
+            orderlineformset.save()
+            messages.success(request,
+            'An order placed to the Fly Facility for the remainder of cornmeal bottles and vials has been successfully placed')
+            return HttpResponseRedirect('/signout/view')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+            order_form = OrderForm(prefix='order', instance=order,initial={
+            'location': loc, 'is_recurring': False, 'notes_order': 'Signout'})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order,)
+            for form in orderlineformset:
+                form.fields['inventory'].queryset = q
+
+    return render(request,
+    'store/sign_out_view.html',{
+    'something': something,
+    })
+
+@login_required
 def sign_outs_remainder(request):
 
-    # user = request.user
     orders = Order.objects.all()
-    # bv = Bottles_Vials.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)    
@@ -857,6 +897,12 @@ def sign_outs_remainder(request):
     inputBottles = Bottles_Vials.objects.get(item='1245')
 
     inputVials = Bottles_Vials.objects.get(item='1263')
+
+    remainderBottles = (inputBottles - currentBottles)
+
+    remainderVials = (inputVials - currentVials)
+
+
 
     if request.method == "POST":
         formset = B_VFormSet(request.POST)
@@ -877,6 +923,8 @@ def sign_outs_remainder(request):
         'formset': formset,
         'inputBottles': inputBottles,
         'inputVials': inputVials,
+        'remainderBottles': remainderBottles,
+        'remainderVials': remainderVials,
         })
 
 @login_required
@@ -1098,21 +1146,21 @@ def searchtest(request):
 
             if keyword:
                 #change order, put if ',' elif '' first, then if '+' then within that if, do the for loops with Q.AND, then outside, else for loop again
-                if '+' in keyword:
+                if '+' in keyword: #'s+d, k'
                     if ',' in keyword:
-                        keys1 = keyword.replace(' ', '')
-                        keys2 = keys1.split(',')
+                        keys1 = keyword.replace(' ', '') #'s+d,k'
+                        keys2 = keys1.split(',') #['s+d']['k']
                         for string in keys2:
-                            keys0 = string.split('+')
+                            keys0 = string.split('+') #keys0=['s']['d'] keys2=['s+d']['k']
                             if '+' in string:
-                                keys2.remove(string)
-                            for key in keys0:
+                                keys2.remove(string) #keys2=['k']
+                            for key in keys0: #['s']['d']
                                 for x in field_choice:
                                     lookup = '%s__icontains' % x
                                     query = {lookup : key}
                                     q_object1.add(Q(**query), Q.AND)
                             #keys2.append(keys0)
-                        for key in keys2:
+                        for key in keys2: #['k']
                             for x in field_choice:
                                 lookup = '%s__icontains' % x
                                 query = {lookup : key}
