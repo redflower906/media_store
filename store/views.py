@@ -890,18 +890,16 @@ def sign_outs_remainder(request):
     
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
-
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[today, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
 
     inputBottles = Bottles_Vials.objects.get(item='1245')
-
     inputVials = Bottles_Vials.objects.get(item='1263')
 
-    remainderBottles = float(inputBottles.amnt)
+    floatBottles = float(inputBottles.amnt)
+    floatVials = float(inputVials.amnt)
 
-    remainderVials1 = float(inputVials.amnt)
-    remainderVials = (remainderVials1-remainderBottles)
+    remainderVials = (inputBottles.amnt - inputVials.amnt)
 
 
 
