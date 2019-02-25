@@ -136,23 +136,6 @@
         </div>
     </fieldset>
     <p>&nbsp;</p>
-{% comment %} NEED TO SET UP STAFF DOWNLOAD, I DON'T THINK IT CAN BE DONE CORRECTLY UNTIL WE HAVE THE SERVER RUNNING {% endcomment %}
-    <fieldset>
-        <legend>Recipe Upload</legend>
-        <div class='row'>
-            {% comment %} <div class='col-xs-2'>
-            {{ order_form.doc.errors }}
-            {{ order_form.doc}}
-            </div>  {% endcomment %}
-            <div class="email">
-                <p><a href="mailto:mediafacility@janelia.hhmi.org">Email</a> us if you have a custom recipe.
-                </p>
-                <p>&nbsp;</p>
-                <p>&nbsp;</p>
-            </div> 
-        </div>
-    </fieldset>
-    <p>&nbsp;</p>
 
     <fieldset>
         <legend>What would you like to order?</legend>
@@ -234,76 +217,6 @@
                 </tr>
             </table>
         </div>
-        {% comment %} {{ formsetV.non_form_errors }} 
-        {% for hidden_field in formsetV.hidden_fields %} 
-            {{ hidden_field.errors }} 
-            {{ hidden_field }} 
-        {% endfor %}
-        <div class='row'>
-            <table id='form_holder'>
-                <tr>
-                    <td style="padding:0" class="OrderLines">
-                        {{formsetV.management_form}}
-                        <table id='order_table'>
-                        <thead>
-                            <div class='row'>
-                                <tr>
-                                    <th class='col text-center'>Media Type</th>
-                                    <th class='col text-center'>Item</th>
-                                    <th class='col text-center'>Container</th>
-                                    <th class='col text-center'>Volume</th>
-                                    <th class='col text-center'>Qty</th>
-                                    <th class='col text-center'>Location</th>                               
-                                    <th class='col text-center'>Cost</th>
-                                </tr>
-                            </div>
-                        </thead>
-                        <tbody class='order_table'>
-                            <div class='row'>
-                            {% for form in formsetV %}
-                            {% if form.non_field_errors %}
-                            <tr>
-                                <td colspan="6">
-                                    {{ form.non_field_errors }}
-                                </td>
-                            </tr>
-                            {% endif %}
-                            <tr>
-                                {% for hidden_field in form.hidden_fields %} 
-                                {{ hidden_field.errors }} 
-                                {{ hidden_field }}
-                                {% endfor %}
-                                <td class='col text-center'>
-                                    {{ form.inventory.errors }}
-                                    {{ form.inventory }}
-                                </td>
-                                <td class="col text-center inv_container">
-                                    {{form.instance.inventory.container}}
-                                </td>
-                                <td class="col text-center inv_vol"> 
-                                    {{form.instance.inventory.volume}}  
-                                </td>
-                                <td class='col'>
-                                    {{ form.qty.errors }}
-                                    {{ form.qty }}
-                                </td>
-                                <td class='col text-center'>
-                                    {{ order_form.location.errors }}
-                                    {{order_form.location}}
-                                </td>
-                                <td class='col text-center'>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                            </tr>                            
-                            {% endfor %}
-                            </div>                        
-                        </tbody>
-                        </table>                
-                    </td>                    
-                </tr>
-            </table>
-        </div> {% endcomment %}
     </fieldset>
 
     <fieldset>          
