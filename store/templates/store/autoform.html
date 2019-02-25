@@ -234,7 +234,7 @@
                 </tr>
             </table>
         </div>
-        {{ formsetV.non_form_errors }} 
+        {% comment %} {{ formsetV.non_form_errors }} 
         {% for hidden_field in formsetV.hidden_fields %} 
             {{ hidden_field.errors }} 
             {{ hidden_field }} 
@@ -244,7 +244,6 @@
                 <tr>
                     <td style="padding:0" class="OrderLines">
                         {{formsetV.management_form}}
-                        {% comment %} {{formsetV.media}} {% endcomment %}
                         <table id='order_table'>
                         <thead>
                             <div class='row'>
@@ -300,7 +299,7 @@
                             {% endfor %}
                             </div>                        
                         </tbody>
-                        </table>                
+                        </table>                 {% endcomment %}
                     </td>                    
                 </tr>
             </table>
