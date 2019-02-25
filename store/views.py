@@ -875,7 +875,7 @@ def auto_bv_so(request):
             order.status = 'Complete'
             order.save()
             orderlineformsetB.save()
-            orderlineformsetV.save()
+            # orderlineformsetV.save()
             messages.success(request,
             'An order placed to the Fly Facility for the remainder of cornmeal bottles and vials has been successfully placed')
             return HttpResponseRedirect('/signout/view')
