@@ -14,24 +14,6 @@
 <hr/>
 <p>&nbsp;</p>
 
-<div class='row'>
-    <div class='col-xs-12'>
-    {% if copy_id %}
-    <h2>Create a new order based on order {{copy_id}}</h2>    
-    {% elif order_form.instance.id %}
-    <h2>Edit order {{order_form.instance.id}}</h2>        
-    {% else %}
-    <h2>Create a new order</h2>
-    {% endif %}
-    </div>
-</div>
-<hr/>
-<p>&nbsp;</p>
-
-<div id="mapPrint">    
-    <img id="img" src="/static/images/2E.png">
-</div>
-
 <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
     {{ order_form.non_field_errors }}
@@ -139,15 +121,8 @@
 
     <fieldset>
         <legend>What would you like to order?</legend>
-        <div>
-            <ul>
-                <li style='color:red'>
-                    If you want to order less than a tray or sleeve (a partial unit), please click 'Qty' below to see what decimal to input.
-                </li>
-            </ul>
-        </div>
-        {{ formsetB.non_form_errors }} 
-        {% for hidden_field in formsetB.hidden_fields %} 
+        {{ formset.non_form_errors }} 
+        {% for hidden_field in formset.hidden_fields %} 
             {{ hidden_field.errors }} 
             {{ hidden_field }} 
         {% endfor %}
@@ -155,8 +130,8 @@
             <table id='form_holder'>
                 <tr>
                     <td style="padding:0" class="OrderLines">
-                        {{formsetB.management_form}}
-                        {% comment %} {{formsetB.media}} {% endcomment %}
+                        {{formset.management_form}}
+                        {{formset.media}}
                         <table id='order_table'>
                         <thead>
                             <div class='row'>
@@ -173,7 +148,7 @@
                         </thead>
                         <tbody class='order_table'>
                             <div class='row'>
-                            {% for form in formsetB %}
+                            {% for form in formset %}
                             {% if form.non_field_errors %}
                             <tr>
                                 <td colspan="6">
