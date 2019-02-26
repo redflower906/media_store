@@ -849,7 +849,6 @@ def auto_bv_so (request):
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     data= [
         {'qty':5,},
-        {'qty':70,},
     ]
 
     if today >= nextbill:
