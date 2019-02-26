@@ -846,7 +846,7 @@ def auto_bv_so (request):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
-    
+
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
@@ -868,7 +868,7 @@ def auto_bv_so (request):
     bottles = Inventory.objects.get(id=1245)
     vials = Inventory.objects.get(id=1263)
 
-    line_costB = bottles.cost * remainderBottles
+    line_costB = bottles.cost
     line_costV = vials.cost * remainderVials
 
     if currentBottles != None:
