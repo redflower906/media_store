@@ -844,6 +844,26 @@ def auto_bv_so (request):
 
     order = Order()
     user = request.user
+    today = date.today()
+    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
+    Sum('orderline__qty')).values())[0]
+    inputBottles = Bottles_Vials.objects.get(item='1245')
+
+    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[today, nextbill]).aggregate(
+    Sum('orderline__qty')).values())[0] 
+    inputVials = Bottles_Vials.objects.get(item='1263')
+
+    remainderBottles = 0
+    remainderVials = 0
+
+    if currentBottles != None:
+        remainderBottles = (inputBottles.amnt - currentBottles)
+    if currentVials != None:
+        remainderVials = (inputVials.amnt - currentVials)
+
 
     if request.method == "POST":
 
@@ -874,6 +894,10 @@ def auto_bv_so (request):
         'inventory_lists': __build_inventory_groups(),
         'media_types': MEDIA_CHOICES,
         'user': user,
+        'remainderBottles': remainderBottles,
+        'remainderVials': remainderVials,
+        'currentBottles': currentBottles,
+        'currentVials': currentVials,
     })
 
 @login_required

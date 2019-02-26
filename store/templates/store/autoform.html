@@ -16,7 +16,10 @@
 <p>&nbsp;</p>
 <hr/>
 <p>&nbsp;</p>
-
+<p>CB: {{currentBottles}}</p>
+<p>CV: {{currentVials}}</p>
+<p>RB: {{remainderBottles}}</p>
+<p>RV: {{remainderVials}}</p>
 <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
     {{ order_form.non_field_errors }}
