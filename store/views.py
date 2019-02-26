@@ -868,17 +868,13 @@ def auto_bv_so (request):
     bottles = Inventory.objects.get(id=1245)
     vials = Inventory.objects.get(id=1263)
 
-    line_costB = bottles.cost
-    line_costV = (vials.cost * remainderVials)
-
-    bcost = type(bottles.cost)
-    br = type(remainderBottles)
-
     if currentBottles != None:
         remainderBottles = (inputBottles.amnt - currentBottles)
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
+    line_costB = bottles.cost * remainderBottles
+    line_costV = (vials.cost * remainderVials)
 
     if request.method == "POST":
 
@@ -919,8 +915,6 @@ def auto_bv_so (request):
         'line_costV': line_costV,
         'today': today,
         'nextbill': nextbill,
-        'bcost': bcost,
-        'br': br,
     })
 
 @login_required
