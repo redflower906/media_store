@@ -9,8 +9,11 @@
 <script src="{% static 'js/order_edit.js' %}"></script> 
 <script type="text/javascript">
     var inventory_groups = {{ inventory_lists | safe}};
+    window.onload = recurringAlert;
 </script>
 
+<hr/>
+<p>&nbsp;</p>
 <hr/>
 <p>&nbsp;</p>
 
@@ -24,18 +27,34 @@
 
     <fieldset>
         <legend>Who is creating this order?</legend>
-        <div class='row'>
-            <table id='form_holder'>
-                <tbody class='col-xs-3'>
-                    <tr>
-                        <td>
-                            {{ order_form.submitter.errors }}
-                            {{ order_form.submitter }}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        {% if user.is_staff is False %}
+            <p>{{user.get_full_name}}</p>
+            <div class='hidden row'>
+                <table id='form_holder'>
+                    <tbody class='col-xs-3'>
+                        <tr>
+                            <td>
+                                {{ order_form.submitter.errors }}
+                                {{ order_form.submitter }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class='row'>
+                <table id='form_holder'>
+                    <tbody class='col-xs-3'>
+                        <tr>
+                            <td>
+                                {{ order_form.submitter.errors }}
+                                {{ order_form.submitter }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
     </fieldset>
     <p>&nbsp;</p>
 
@@ -117,10 +136,17 @@
             </div>
         </div>
     </fieldset>
-    <p>&nbsp;</p>
+    <p>&nbsp;</p>   
 
     <fieldset>
         <legend>What would you like to order?</legend>
+        <div>
+            <ul>
+                <li style='color:red'>
+                    If you want to order less than a tray or sleeve (a partial unit), please click 'Qty' below to see what decimal to input.
+                </li>
+            </ul>
+        </div>
         {{ formset.non_form_errors }} 
         {% for hidden_field in formset.hidden_fields %} 
             {{ hidden_field.errors }} 
@@ -162,14 +188,26 @@
                                 {{ hidden_field }}
                                 {% endfor %}
                                 <td class='col text-center'>
+                                    <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
+                                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
+                                        <option value=""> --------- </option>
+                                        {% for media_type, media_type_desc in media_types %}
+                                            <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
+                                                {{media_type_desc}}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </td>
+                                <td class='col text-center'>
                                     {{ form.inventory.errors }}
                                     {{ form.inventory }}
                                 </td>
                                 <td class="col text-center inv_container">
-                                    {{form.instance.inventory.container}}
+                                    <p> --------- </p>
                                 </td>
                                 <td class="col text-center inv_vol"> 
-                                    {{form.instance.inventory.volume}}  
+                                    <p> --------- </p>  
                                 </td>
                                 <td class='col'>
                                     {{ form.qty.errors }}
@@ -179,14 +217,21 @@
                                     {{ order_form.location.errors }}
                                     {{order_form.location}}
                                 </td>
+                                {% if user.is_staff is True %}
+                                <td class='col text-center staff' id='id_cost'>
+                                    {{ form.line_cost.errors }}
+                                    {{ form.line_cost }}
+                                </td>
+                                {% else %}
                                 <td class='col text-center'>
                                     {{ form.line_cost.errors }}
                                     {{ form.line_cost }}
                                 </td>
+                                {% endif %}
                             </tr>                            
                             {% endfor %}
                             </div>                        
-                        </tbody>                        
+                        </tbody>
                         </table>                
                     </td>                    
                 </tr>
