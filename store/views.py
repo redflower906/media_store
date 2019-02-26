@@ -838,8 +838,46 @@ def current_sign_outs (request):
         'pagesBi': pagesBi,
         })
 
+
+@login_required(login_url='login')
+def auto_bv_so (request):
+
+    order = Order()
+    user = request.user
+
+    if request.method == "POST":
+
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order)
+
+        if order_form.is_valid() and orderlineformset.is_valid():
+            order_form.save()
+            orderlineformset.save()
+            messages.success(request,
+            'Order {0} was successfully created.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/signout/view')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+
+        else:
+            order_form = OrderForm(prefix='order', instance=order, initial={
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order)
+
+
+    return render(request, 'store/autoform.html', {
+        'order_form' : order_form,
+        'formset': orderlineformset,
+        'inventory_lists': __build_inventory_groups(),
+        'media_types': MEDIA_CHOICES,
+        'user': user,
+    })
+
 @login_required
-def auto_bv_so(request):
+def auto_bv_so1(request):
     user = request.user
     order = Order()
     orders = Order.objects.all()
