@@ -871,6 +871,9 @@ def auto_bv_so (request):
     line_costB = bottles.cost
     line_costV = (vials.cost * remainderVials)
 
+    bcost = type(bottles.cost)
+    br = type(remainderBottles)
+
     if currentBottles != None:
         remainderBottles = (inputBottles.amnt - currentBottles)
     if currentVials != None:
@@ -916,6 +919,8 @@ def auto_bv_so (request):
         'line_costV': line_costV,
         'today': today,
         'nextbill': nextbill,
+        'bcost': bcost,
+        'br': br,
     })
 
 @login_required
