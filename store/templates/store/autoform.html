@@ -17,7 +17,7 @@
 <p>LCV: {{line_costV}}</p>
 
 <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
-    <div class='hidden'>
+    <div class=''>
         {% csrf_token %}
         {{ order_form.non_field_errors }}
         {% for hidden_field in order_form.hidden_fields %}
