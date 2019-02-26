@@ -162,24 +162,24 @@ class OrderLineInlineFormSet(
             # Don't bother validating the formset unless each form is valid on its own
             return
 
-        # if not self.have_minimum():
-        #     raise forms.ValidationError(
-        #         "Please include at least one Order Line.")
+        if not self.have_minimum():
+            raise forms.ValidationError(
+                "Please include at least one Order Line.")
 
         # if not self.total_is_positive_nonzero():
         #     raise forms.ValidationError(
         #         "Total cost must be greater than zero")
         
-    # def have_minimum(self):
-    #     line_count = 0
-    #     for form in self:
-    #         if form.is_valid():
-    #             deleted = form.cleaned_data.get('DELETE')
-    #             if deleted == False:
-    #                 line_count = 1
-    #     if line_count < 1:
-    #         return False
-    #     return True
+    def have_minimum(self):
+        line_count = 0
+        for form in self:
+            if form.is_valid():
+                deleted = form.cleaned_data.get('DELETE')
+                if deleted == False:
+                    line_count = 1
+        if line_count < 1:
+            return False
+        return True
 
     def total_is_positive_nonzero(self):
         total = 0
@@ -200,6 +200,8 @@ class OrderLineInlineFormSet(
                  'inventory': ol.inventory.id} for ol in orderlines]
         self.extra = len(orderlines)
         self.initial = data
+
+    #def remainder_data(self, )
 
 class AnnouncementsForm(forms.ModelForm):
     

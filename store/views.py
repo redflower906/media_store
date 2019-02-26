@@ -846,13 +846,14 @@ def auto_bv_so (request):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
-
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    data= [
+        {'qty':5,},
+        {'qty':70,},
+    ]
 
     if today >= nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
@@ -879,13 +880,15 @@ def auto_bv_so (request):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-        'submitter': user, 'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder', 'status': 'Complete'})
+        'submitter': user, 'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder',})
         orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, initial = [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
         {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
         ])
 
         if order_form.is_valid() and orderlineformset.is_valid():
+            order_form.save(commit=False)
+            order_form.status = 'Complete'
             order_form.save()
             orderlineformset.save()
             messages.success(request,
@@ -915,6 +918,7 @@ def auto_bv_so (request):
         'line_costV': line_costV,
         'today': today,
         'nextbill': nextbill,
+        'data':data,
     })
 
 @login_required
