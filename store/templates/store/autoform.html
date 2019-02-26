@@ -137,8 +137,6 @@
                                 <div class='row'>
                                     <tr>
                                         <th class='col text-center'>Item</th>
-                                        <th class='col text-center'>Container</th>
-                                        <th class='col text-center'>Volume</th>
                                         <th class='col text-center'>Qty</th>
                                         <th class='col text-center'>Location</th>                               
                                         <th class='col text-center'>Cost</th>
@@ -170,14 +168,13 @@
                                     </td>
                                     <td class='col text-center'>
                                         {{ order_form.location.errors }}
-                                        {{order_form.location}}
+                                        {{ order_form.location }}
                                     </td>
                                     <td class='col text-center'>
                                         {{ form.line_cost.errors }}
                                         {{ form.line_cost }}
                                     </td>
                                 </tr>                            
-                                {% endfor %}
                                 </div>                        
                             </tbody>
                             </table>                
