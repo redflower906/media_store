@@ -873,7 +873,7 @@ def auto_bv_so (request):
 
     line_costB = bottles.cost * remainderBottles
     line_costV = (vials.cost * remainderVials)
-    
+
     data= [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
         {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},

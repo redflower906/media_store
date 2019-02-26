@@ -149,7 +149,7 @@ class OrderLineInlineFormSet(
         'line_cost': NumInput(attrs={'step': 'any', 'class': 'form-control col-centered line_calc line_cost', 'readonly':'readonly'}),
         'inventory': forms.Select(attrs={'class': 'form-control'}),
         },
-        extra=2, can_delete=True
+        extra=1, can_delete=True
         )):
 
 
