@@ -869,9 +869,10 @@ def auto_bv_so (request):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-            'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformset = OrderLineInlineFormSet(
-            request.POST, prefix='orderlines', instance=order)
+        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
+        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, initial = [
+        {'inventory': 1245, 'qty': remainderBottles,}
+        ])
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order_form.save()
@@ -885,8 +886,9 @@ def auto_bv_so (request):
     else:
         order_form = OrderForm(prefix='order', instance=order, initial={
         'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformset = OrderLineInlineFormSet(
-            prefix='orderlines', instance=order)
+        orderlineformset = OrderLineInlineFormSet(prefix='orderlines', instance=order, initial = [
+        {'inventory': 1245, 'qty': remainderBottles,}
+        ])
 
 
     return render(request, 'store/autoform.html', {
