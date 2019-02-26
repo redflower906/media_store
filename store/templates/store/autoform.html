@@ -29,21 +29,6 @@
 
         <fieldset>
             <legend>Who is creating this order?</legend>
-            {% if user.is_staff is False %}
-                <p>{{user.get_full_name}}</p>
-                <div class='hidden row'>
-                    <table id='form_holder'>
-                        <tbody class='col-xs-3'>
-                            <tr>
-                                <td>
-                                    {{ order_form.submitter.errors }}
-                                    {{ order_form.submitter }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
                 <div class='row'>
                     <table id='form_holder'>
                         <tbody class='col-xs-3'>
@@ -56,7 +41,6 @@
                         </tbody>
                     </table>
                 </div>
-            {% endif %}
         </fieldset>
         <p>&nbsp;</p>
 
@@ -187,29 +171,7 @@
                 </table>
             </div>
         </fieldset>
-
-        <fieldset>          
-            <div class='row'>
-                    <div class = 'col-xs-3'>
-                        <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
-                    </div>
-                    <div class='col-xs-offset-6 col-xs-2 text-right'>
-                        <p><strong>Total</strong></p>
-                        <p class="aggregate_total">
-                        {{order_form.instance.total | currency}}</p>
-                    </div>
-            </div>
-        </fieldset>
-            <p>&nbsp;</p>
-            <fieldset>
-                <legend>Special Instructions</legend>
-                <div class='row'>
-                    <div class='col-xs-2'>
-                    {{ order_form.notes_order.errors }}
-                    {{ order_form.notes_order}}
-                    </div>
-                </div>
-            </fieldset>           
+            <p>&nbsp;</p>          
             <div class='row'>
             <hr/>
                 <p></p>
