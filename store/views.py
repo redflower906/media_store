@@ -861,11 +861,11 @@ def auto_bv_so (request):
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
 
-        else:
-            order_form = OrderForm(prefix='order', instance=order, initial={
-            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
-            orderlineformset = OrderLineInlineFormSet(
-                prefix='orderlines', instance=order)
+    else:
+        order_form = OrderForm(prefix='order', instance=order, initial={
+        'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+        orderlineformset = OrderLineInlineFormSet(
+            prefix='orderlines', instance=order)
 
 
     return render(request, 'store/autoform.html', {
