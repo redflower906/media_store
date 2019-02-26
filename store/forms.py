@@ -202,6 +202,7 @@ class OrderLineInlineFormSet(
 
     def remainder_data(self, data):
         self.extra = len(data)
+        self.data = data
         self.initial = data
 
 
