@@ -6,11 +6,6 @@
 {% load formset_tags %}
 {% load store_tags %}
 {% load static %}
-<script src="{% static 'js/order_edit.js' %}"></script> 
-<script type="text/javascript">
-    var inventory_groups = {{ inventory_lists | safe}};
-    window.onload = recurringAlert;
-</script>
 
 <hr/>
 <p>&nbsp;</p>
@@ -20,7 +15,7 @@
 <p>CV: {{currentVials}}</p>
 <p>RB: {{remainderBottles}}</p>
 <p>RV: {{remainderVials}}</p>
-<div class='hidden'>
+<div class=''>
     <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
         {{ order_form.non_field_errors }}
@@ -258,33 +253,6 @@
             
     </form>
 </div>
-<script type="text/javascript">    
-
-    $(document).ready(function(){
-        $('[data-toggle="tooltip"]').tooltip({
-            placement : 'top'
-        });
-    });
-
-    $(function () {
-        $('#order_table .order_table tr').formset({
-            prefix:'{{ formset.prefix }}',
-            addText:'Add Item',
-            removeText: 'Delete',
-            addCssClass:'btn btn-default',
-            deleteCssClass:'btn btn-danger',
-            added: register_row,
-            removed: deregister_row
-        });            
-        $('#order_table tbody tr.dynamic-form').map(function (index, row){
-            register_row($(row));        
-        });   
-    });
-    $(".chosen-select").chosen({search_contains:true});
-    //to allow error message to show in page rather than in console.
-    $('.remover').removeAttr('required'); 
-
-</script>
 
 <p>&nbsp;</p>
 {% endblock %}

@@ -896,8 +896,6 @@ def auto_bv_so (request):
     return render(request, 'store/autoform.html', {
         'order_form' : order_form,
         'formset': orderlineformset,
-        'inventory_lists': __build_inventory_groups(),
-        'media_types': MEDIA_CHOICES,
         'user': user,
         'remainderBottles': remainderBottles,
         'remainderVials': remainderVials,
