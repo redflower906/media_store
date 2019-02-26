@@ -870,7 +870,7 @@ def auto_bv_so (request):
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
         'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, extra=2, initial = [
+        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, initial = [
         {'inventory': 1245, 'qty': remainderBottles,},
         {'inventory': 1263, 'qty': remainderVials,},
         ])
