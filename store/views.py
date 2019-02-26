@@ -909,6 +909,8 @@ def auto_bv_so (request):
         'currentVials': currentVials,
         'line_costB': line_costB,
         'line_costV': line_costV,
+        'today': today,
+        'nextbill': nextbill,
     })
 
 @login_required
