@@ -880,10 +880,10 @@ def auto_bv_so (request):
     ]
     if request.method == "POST":
 
-        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+        order_form = OrderForm(request.POST, prefix='order', instance=order, initial={
         'submitter': user, 'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder',})
-        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines')
-        orderlineformset.remainder_data(data)
+        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', data=data,)
+
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order_form.save(commit=False)
@@ -899,8 +899,7 @@ def auto_bv_so (request):
     else:
         order_form = OrderForm(prefix='order', instance=order, initial={
         'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
-        orderlineformset.remainder_data(data)
+        orderlineformset = OrderLineInlineFormSet(prefix='orderlines', data=data)
 
 
     return render(request, 'store/autoform.html', {
