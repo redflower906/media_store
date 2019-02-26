@@ -882,14 +882,14 @@ def auto_bv_so (request):
 
         order_form = OrderForm(request.POST, prefix='order', instance=order, initial={
         'submitter': user, 'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder',})
-        orderlineform = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order)
-        orderlineformset = orderlineform.remainder_data(data)
+        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order)
+        orderlineformset.remainder_data(data)
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order_form.save(commit=False)
             order_form.status = 'Complete'
             order_form.save()
-            orderlineformset.save()
+            orderlineformset.save(data)
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/signout/view')
