@@ -846,8 +846,13 @@ def auto_bv_so (request):
     user = request.user
     orders = Order.objects.all()
     today = date.today()
+    
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+
+    if today >= nextbill:
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
@@ -912,66 +917,6 @@ def auto_bv_so (request):
         'today': today,
         'nextbill': nextbill,
     })
-
-@login_required
-def auto_bv_so1(request):
-    user = request.user
-    order = Order()
-    orders = Order.objects.all()
-    today = date.today()
-    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-
-    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[today, nextbill]).aggregate(
-    Sum('orderline__qty')).values())[0]
-    inputBottles = Bottles_Vials.objects.get(item='1245')
-
-    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[today, nextbill]).aggregate(
-    Sum('orderline__qty')).values())[0] 
-    inputVials = Bottles_Vials.objects.get(item='1263')
-
-    remainderBottles = 0
-    remainderVials = 0
-
-    if currentBottles != None:
-        remainderBottles = (inputBottles.amnt - currentBottles)
-    if currentVials != None:
-        remainderVials = (inputVials.amnt - currentVials)
-
-    if request.method == 'POST':
-        order_form = OrderForm(request.POST, prefix='order', instance=order, initial={
-        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformsetB = OrderLineInlineFormSet(request.POST, prefix='orderlineB', instance=order, initial ={
-        'inventory': 1245, 'qty': remainderBottles})
-        # orderlineformsetV = OrderLineInlineFormSet(request.POST, prefix='orderlineV', instance=order, initial ={
-        # 'inventory': 1263, 'qty': remainderVials})
-        if order_form.is_valid() and orderlineformsetB.is_valid():
-            order = order_form.save(commit=False)
-            order.status = 'Complete'
-            order.save()
-            orderlineformsetB.save()
-            # orderlineformsetV.save()
-            messages.success(request,
-            'An order placed to the Fly Facility for the remainder of cornmeal bottles and vials has been successfully placed')
-            return HttpResponseRedirect('/signout/view')
-        else:
-            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
-    else:
-        order_form = OrderForm(request.POST, prefix='order', instance=order, initial={
-        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformsetB = OrderLineInlineFormSet(request.POST, prefix='orderlineB', instance=order, initial ={
-        'inventory': 1245, 'qty': remainderBottles})
-        # orderlineformsetV = OrderLineInlineFormSet(request.POST, prefix='orderlineV', instance=order, initial ={
-        # 'inventory': 1263, 'qty': remainderVials})
-
-    return render(request,
-        'store/autoform.html',{
-        'order_form': order_form,
-        'formset': orderlineformsetB,
-        'user': user,
-        'remainderBottles': remainderBottles,
-        'remainderVials': remainderVials,
-        })
 
 @login_required
 def sign_outs_remainder(request):
