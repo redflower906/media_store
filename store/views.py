@@ -848,7 +848,8 @@ def auto_bv_so (request):
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     data= [
-        {'qty':5,},
+        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
+        {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
     ]
 
     if today >= nextbill:
@@ -880,10 +881,8 @@ def auto_bv_so (request):
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
         'submitter': user, 'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder',})
-        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, initial = [
-        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
-        {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
-        ])
+        orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines')
+        orderlineformset.remainder_data(data)
 
         if order_form.is_valid() and orderlineformset.is_valid():
             order_form.save(commit=False)
@@ -899,10 +898,8 @@ def auto_bv_so (request):
     else:
         order_form = OrderForm(prefix='order', instance=order, initial={
         'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
-        orderlineformset = OrderLineInlineFormSet(prefix='orderlines', instance=order, initial = [
-        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
-        {'inventory': 1263, 'qty': remainderVials, 'line_cost': line_costV,},
-        ])
+        orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+        orderlineformset.remainder_data(data)
 
 
     return render(request, 'store/autoform.html', {

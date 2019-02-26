@@ -201,7 +201,10 @@ class OrderLineInlineFormSet(
         self.extra = len(orderlines)
         self.initial = data
 
-    #def remainder_data(self, )
+    def remainder_data(self, data):
+        self.extra = len(data)
+        self.initial = data
+
 
 class AnnouncementsForm(forms.ModelForm):
     
