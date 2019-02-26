@@ -204,9 +204,6 @@ class OrderLineInlineFormSet(
         self.extra = len(data)
         self.initial = data
 
-    def has_changed(self, data):
-        if data:
-            return True
 
 
 class AnnouncementsForm(forms.ModelForm):
