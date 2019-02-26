@@ -847,10 +847,7 @@ def auto_bv_so (request):
     orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    data= [
-        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
-        {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
-    ]
+
 
     if today >= nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
@@ -876,7 +873,11 @@ def auto_bv_so (request):
 
     line_costB = bottles.cost * remainderBottles
     line_costV = (vials.cost * remainderVials)
-
+    
+    data= [
+        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
+        {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
+    ]
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
