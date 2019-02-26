@@ -15,6 +15,8 @@
 <p>CV: {{currentVials}}</p>
 <p>RB: {{remainderBottles}}</p>
 <p>RV: {{remainderVials}}</p>
+<p>LCB: {{line_costB}}</p>
+<p>LCV: {{line_costV}}</p>
 <div class=''>
     <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
         {% csrf_token %}
@@ -224,12 +226,5 @@
             
     </form>
 </div>
-
-<script>
-    $(function (){
-        var cur_quantity = $('#id_' + prefix + 'qty').val()
-        $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
-    })
-</script>
 <p>&nbsp;</p>
 {% endblock %}
