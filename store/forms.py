@@ -138,12 +138,6 @@ class OrderForm(forms.ModelForm):
         # following line needed to refresh widget copy of choice list
         self.fields['project_code'].widget.choices = self.fields['project_code'].choices
 
-    def has_changed(self, *args, **kwargs):
-        if self.instance.pk is None:
-            return True
-        return super(OrderForm, self).has_changed(*args, **kwargs)
-
-
 
 # inspired by: https://gist.github.com/nspo/cd26ae2716332234757d2c3b1f815fc2
 class OrderLineInlineFormSet(
@@ -210,6 +204,9 @@ class OrderLineInlineFormSet(
         self.extra = len(data)
         self.initial = data
 
+    def has_changed(self, data):
+        if data:
+            return True
 
 
 class AnnouncementsForm(forms.ModelForm):
