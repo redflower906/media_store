@@ -879,7 +879,7 @@ def auto_bv_so (request):
     if request.method == "POST":
 
         order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
-        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
+        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
         orderlineformset = OrderLineInlineFormSet(request.POST, prefix='orderlines', instance=order, initial = [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
         {'inventory': 1263, 'qty': remainderVials,'line_cost': line_costV,},
@@ -896,7 +896,7 @@ def auto_bv_so (request):
 
     else:
         order_form = OrderForm(prefix='order', instance=order, initial={
-        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
+        'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.233', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
         orderlineformset = OrderLineInlineFormSet(prefix='orderlines', instance=order, initial = [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
         {'inventory': 1263, 'qty': remainderVials, 'line_cost': line_costV,},
