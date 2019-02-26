@@ -20,266 +20,244 @@
 <p>CV: {{currentVials}}</p>
 <p>RB: {{remainderBottles}}</p>
 <p>RV: {{remainderVials}}</p>
-<form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ order_form.non_field_errors }}
-    {% for hidden_field in order_form.hidden_fields %}
-        {{ hidden_field.errors }}
-        {{ hidden_field }}
-    {% endfor %}
-
-    <fieldset>
-        <legend>Who is creating this order?</legend>
-        {% if user.is_staff is False %}
-            <p>{{user.get_full_name}}</p>
-            <div class='hidden row'>
-                <table id='form_holder'>
-                    <tbody class='col-xs-3'>
-                        <tr>
-                            <td>
-                                {{ order_form.submitter.errors }}
-                                {{ order_form.submitter }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        {% else %}
-            <div class='row'>
-                <table id='form_holder'>
-                    <tbody class='col-xs-3'>
-                        <tr>
-                            <td>
-                                {{ order_form.submitter.errors }}
-                                {{ order_form.submitter }}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        {% endif %}
-    </fieldset>
-    <p>&nbsp;</p>
-
-    <fieldset>
-        <legend>Who is paying?</legend>
-        <div>
-            <ul>
-                <li>
-                   The order requester must belong to the <b>department</b> being billed. If the order creator and requester 
-                   are different, please specify who should receive the order in the <b>special instructions</b> box below.
-                </li>
-            </ul>
-        </div>
-    <div class='row'>
-        <table id='form_holder'>
-            <thead>
-                <tr>
-                    <th>Requester</th>
-                    <th>Department</th>
-                    <th>Project Code</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        {{ order_form.requester.errors }}
-                        {{ order_form.requester }}
-                    </td>
-                    <td>
-                        {{ order_form.department.errors }}
-                        {{ order_form.department }}
-                    </td>
-                    <td class='PC'>
-                        {{ order_form.project_code.errors }}
-                        {{ order_form.project_code }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <p>&nbsp;</p>
-    </fieldset>
-    <fieldset>
-        <legend>Is this a recurring order?</legend>
-        <div>
-            <ul>
-                <li>
-                    Recurring orders can only be set for a maximum of three months at a time. 
-                    You will receive an email notifying you at three weeks and again at one week before the order end date. 
-                    If you need to extend the amount of time, please edit the existing order.
-                </li>
-            </ul>
-        </div>
-        <div class='row'>
-            <div class='col-xs-2'>
-                {{ order_form.is_recurring.errors }}
-                {{ order_form.is_recurring }}
-            </div>
-            <div class='col-xs-10' id='datepicker'>
-                <div class='col-xs-1'>
-                    <p><b>From:</b></p>
-                </div>
-                <div class='col-xs-3'>
-                    {{ order_form.date_recurring_start }}
-                </div>
-                <div class='col-xs-1'>
-                    <p><b>To:</b></p>
-                </div>
-                <div class='col-xs-3'>
-                    {{ order_form.date_recurring_stop }}
-                </div>
-                <div class='col-xs-1'>
-                    <p><b>How often:</b></p>
-                </div>
-                <div class='col-xs-3'>
-                    {{ order_form.weeks.errors }}
-                    {{ order_form.weeks }}
-                </div>
-            </div>
-        </div>
-    </fieldset>
-    <p>&nbsp;</p>   
-
-    <fieldset>
-        <legend>What would you like to order?</legend>
-        <div>
-            <ul>
-                <li style='color:red'>
-                    If you want to order less than a tray or sleeve (a partial unit), please click 'Qty' below to see what decimal to input.
-                </li>
-            </ul>
-        </div>
-        {{ formset.non_form_errors }} 
-        {% for hidden_field in formset.hidden_fields %} 
-            {{ hidden_field.errors }} 
-            {{ hidden_field }} 
+<div class='hidden'>
+    <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ order_form.non_field_errors }}
+        {% for hidden_field in order_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
         {% endfor %}
-        <div class='row'>
-            <table id='form_holder'>
-                <tr>
-                    <td style="padding:0" class="OrderLines">
-                        {{formset.management_form}}
-                        {{formset.media}}
-                        <table id='order_table'>
-                        <thead>
-                            <div class='row'>
-                                <tr>
-                                    <th class='col text-center'>Media Type</th>
-                                    <th class='col text-center'>Item</th>
-                                    <th class='col text-center'>Container</th>
-                                    <th class='col text-center'>Volume</th>
-                                    <th class='col text-center'>Qty</th>
-                                    <th class='col text-center'>Location</th>                               
-                                    <th class='col text-center'>Cost</th>
-                                </tr>
-                            </div>
-                        </thead>
-                        <tbody class='order_table'>
-                            <div class='row'>
-                            {% for form in formset %}
-                            {% if form.non_field_errors %}
+
+        <fieldset>
+            <legend>Who is creating this order?</legend>
+            {% if user.is_staff is False %}
+                <p>{{user.get_full_name}}</p>
+                <div class='hidden row'>
+                    <table id='form_holder'>
+                        <tbody class='col-xs-3'>
                             <tr>
-                                <td colspan="6">
-                                    {{ form.non_field_errors }}
+                                <td>
+                                    {{ order_form.submitter.errors }}
+                                    {{ order_form.submitter }}
                                 </td>
                             </tr>
-                            {% endif %}
-                            <tr>
-                                {% for hidden_field in form.hidden_fields %} 
-                                {{ hidden_field.errors }} 
-                                {{ hidden_field }}
-                                {% endfor %}
-                                <td class='col text-center'>
-                                    <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
-                                        {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
-                                    <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
-                                        <option value=""> --------- </option>
-                                        {% for media_type, media_type_desc in media_types %}
-                                            <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
-                                                {{media_type_desc}}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </td>
-                                <td class='col text-center'>
-                                    {{ form.inventory.errors }}
-                                    {{ form.inventory }}
-                                </td>
-                                <td class="col text-center inv_container">
-                                    <p> --------- </p>
-                                </td>
-                                <td class="col text-center inv_vol"> 
-                                    <p> --------- </p>  
-                                </td>
-                                <td class='col'>
-                                    {{ form.qty.errors }}
-                                    {{ form.qty }}
-                                </td>
-                                <td class='col text-center'>
-                                    {{ order_form.location.errors }}
-                                    {{order_form.location}}
-                                </td>
-                                {% if user.is_staff is True %}
-                                <td class='col text-center staff' id='id_cost'>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                                {% else %}
-                                <td class='col text-center'>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                                {% endif %}
-                            </tr>                            
-                            {% endfor %}
-                            </div>                        
                         </tbody>
-                        </table>                
-                    </td>                    
-                </tr>
+                    </table>
+                </div>
+            {% else %}
+                <div class='row'>
+                    <table id='form_holder'>
+                        <tbody class='col-xs-3'>
+                            <tr>
+                                <td>
+                                    {{ order_form.submitter.errors }}
+                                    {{ order_form.submitter }}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </fieldset>
+        <p>&nbsp;</p>
+
+        <fieldset>
+            <legend>Who is paying?</legend>
+        <div class='row'>
+            <table id='form_holder'>
+                <thead>
+                    <tr>
+                        <th>Requester</th>
+                        <th>Department</th>
+                        <th>Project Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ order_form.requester.errors }}
+                            {{ order_form.requester }}
+                        </td>
+                        <td>
+                            {{ order_form.department.errors }}
+                            {{ order_form.department }}
+                        </td>
+                        <td class='PC'>
+                            {{ order_form.project_code.errors }}
+                            {{ order_form.project_code }}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-    </fieldset>
-
-    <fieldset>          
-        <div class='row'>
-                <div class = 'col-xs-3'>
-                    <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
-                </div>
-                <div class='col-xs-offset-6 col-xs-2 text-right'>
-                    <p><strong>Total</strong></p>
-                    <p class="aggregate_total">
-                    {{order_form.instance.total | currency}}</p>
-                </div>
-        </div>
-    </fieldset>
         <p>&nbsp;</p>
+        </fieldset>
         <fieldset>
-            <legend>Special Instructions</legend>
+            <legend>Is this a recurring order?</legend>
             <div class='row'>
                 <div class='col-xs-2'>
-                {{ order_form.notes_order.errors }}
-                {{ order_form.notes_order}}
+                    {{ order_form.is_recurring.errors }}
+                    {{ order_form.is_recurring }}
+                </div>
+                <div class='col-xs-10' id='datepicker'>
+                    <div class='col-xs-1'>
+                        <p><b>From:</b></p>
+                    </div>
+                    <div class='col-xs-3'>
+                        {{ order_form.date_recurring_start }}
+                    </div>
+                    <div class='col-xs-1'>
+                        <p><b>To:</b></p>
+                    </div>
+                    <div class='col-xs-3'>
+                        {{ order_form.date_recurring_stop }}
+                    </div>
+                    <div class='col-xs-1'>
+                        <p><b>How often:</b></p>
+                    </div>
+                    <div class='col-xs-3'>
+                        {{ order_form.weeks.errors }}
+                        {{ order_form.weeks }}
+                    </div>
                 </div>
             </div>
-        </fieldset>           
-        <div class='row'>
-        <hr/>
-            <p></p>
-            <div class='col-xs-11'>
-                <a href='/' class="btn btn-danger">Cancel</a>
+        </fieldset>
+        <p>&nbsp;</p>   
+
+        <fieldset>
+            <legend>What would you like to order?</legend>
+            {{ formset.non_form_errors }} 
+            {% for hidden_field in formset.hidden_fields %} 
+                {{ hidden_field.errors }} 
+                {{ hidden_field }} 
+            {% endfor %}
+            <div class='row'>
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="OrderLines">
+                            {{formset.management_form}}
+                            {{formset.media}}
+                            <table id='order_table'>
+                            <thead>
+                                <div class='row'>
+                                    <tr>
+                                        <th class='col text-center'>Media Type</th>
+                                        <th class='col text-center'>Item</th>
+                                        <th class='col text-center'>Container</th>
+                                        <th class='col text-center'>Volume</th>
+                                        <th class='col text-center'>Qty</th>
+                                        <th class='col text-center'>Location</th>                               
+                                        <th class='col text-center'>Cost</th>
+                                    </tr>
+                                </div>
+                            </thead>
+                            <tbody class='order_table'>
+                                <div class='row'>
+                                {% for form in formset %}
+                                {% if form.non_field_errors %}
+                                <tr>
+                                    <td colspan="6">
+                                        {{ form.non_field_errors }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    {% for hidden_field in form.hidden_fields %} 
+                                    {{ hidden_field.errors }} 
+                                    {{ hidden_field }}
+                                    {% endfor %}
+                                    <td class='col text-center'>
+                                        <!-- django.jquery.formset appears to need DELETE field in a td tag to work -->
+                                            {% if form.instance.pk %}{{ form.DELETE }}{% endif %}
+                                        <select name='{{form.prefix}}-mediatype' id='{{form.prefix}}-mediatype' class='form-control'>
+                                            <option value=""> --------- </option>
+                                            {% for media_type, media_type_desc in media_types %}
+                                                <option value="{{media_type}}" {% if form.instance.inventory.media_type == media_type %} selected {% endif %}>
+                                                    {{media_type_desc}}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </td>
+                                    <td class='col text-center'>
+                                        {{ form.inventory.errors }}
+                                        {{ form.inventory }}
+                                    </td>
+                                    <td class="col text-center inv_container">
+                                        <p> --------- </p>
+                                    </td>
+                                    <td class="col text-center inv_vol"> 
+                                        <p> --------- </p>  
+                                    </td>
+                                    <td class='col'>
+                                        {{ form.qty.errors }}
+                                        {{ form.qty }}
+                                    </td>
+                                    <td class='col text-center'>
+                                        {{ order_form.location.errors }}
+                                        {{order_form.location}}
+                                    </td>
+                                    {% if user.is_staff is True %}
+                                    <td class='col text-center staff' id='id_cost'>
+                                        {{ form.line_cost.errors }}
+                                        {{ form.line_cost }}
+                                    </td>
+                                    {% else %}
+                                    <td class='col text-center'>
+                                        {{ form.line_cost.errors }}
+                                        {{ form.line_cost }}
+                                    </td>
+                                    {% endif %}
+                                </tr>                            
+                                {% endfor %}
+                                </div>                        
+                            </tbody>
+                            </table>                
+                        </td>                    
+                    </tr>
+                </table>
             </div>
-            <div class="col-xs-1">
-                {% if order_form.instance.id %}
-                <input class='btn btn-primary' type='submit' value='Update Order' name='submit'>
-                {% else %}
-                <input class='btn btn-primary' type='submit' value='Complete Order' name='submit'>
-                {% endif %}
+        </fieldset>
+
+        <fieldset>          
+            <div class='row'>
+                    <div class = 'col-xs-3'>
+                        <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
+                    </div>
+                    <div class='col-xs-offset-6 col-xs-2 text-right'>
+                        <p><strong>Total</strong></p>
+                        <p class="aggregate_total">
+                        {{order_form.instance.total | currency}}</p>
+                    </div>
             </div>
-        </div>
-        
-</form>
+        </fieldset>
+            <p>&nbsp;</p>
+            <fieldset>
+                <legend>Special Instructions</legend>
+                <div class='row'>
+                    <div class='col-xs-2'>
+                    {{ order_form.notes_order.errors }}
+                    {{ order_form.notes_order}}
+                    </div>
+                </div>
+            </fieldset>           
+            <div class='row'>
+            <hr/>
+                <p></p>
+                <div class='col-xs-11'>
+                    <a href='/' class="btn btn-danger">Cancel</a>
+                </div>
+                <div class="col-xs-1">
+                    {% if order_form.instance.id %}
+                    <input class='btn btn-primary' type='submit' value='Update Order' name='submit'>
+                    {% else %}
+                    <input class='btn btn-primary' type='submit' value='Complete Order' name='submit'>
+                    {% endif %}
+                </div>
+            </div>
+            
+    </form>
+</div>
 <script type="text/javascript">    
 
     $(document).ready(function(){
