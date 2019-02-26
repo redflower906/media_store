@@ -869,7 +869,7 @@ def auto_bv_so (request):
     vials = Inventory.objects.get(id=1263)
 
     line_costB = bottles.cost
-    line_costV = vials.cost * remainderVials
+    line_costV = (vials.cost * remainderVials)
 
     if currentBottles != None:
         remainderBottles = (inputBottles.amnt - currentBottles)
@@ -899,8 +899,8 @@ def auto_bv_so (request):
         order_form = OrderForm(prefix='order', instance=order, initial={
         'submitter': user,'requester': 16020, 'department': 191, 'location': '2E.267', 'is_recurring': False, 'notes_order': 'Signout Remainder'})
         orderlineformset = OrderLineInlineFormSet(prefix='orderlines', instance=order, initial = [
-        {'inventory': 1245, 'qty': remainderBottles,},
-        {'inventory': 1263, 'qty': remainderVials,},
+        {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
+        {'inventory': 1263, 'qty': remainderVials, 'line_cost': line_costV,},
         ])
 
 
