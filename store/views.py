@@ -844,6 +844,7 @@ def auto_bv_so (request):
 
     order = Order()
     user = request.user
+    orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
