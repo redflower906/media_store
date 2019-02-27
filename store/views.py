@@ -20,6 +20,7 @@ from django.core.mail import send_mail, EmailMessage, EmailMultiAlternatives
 from django.core import serializers
 from dateutil import relativedelta
 from datetime import datetime, date
+from decimal import Decimal
 from .forms import *
 from .models import *
 from .resources import *
@@ -873,8 +874,8 @@ def auto_bv_so (request):
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
-    line_costB = bottles.cost * remainderBottles
-    line_costV = (vials.cost * remainderVials)
+    line_costB = Decimal(bottles.cost * remainderBottles)
+    line_costV = Decimal(vials.cost * remainderVials)
 
     data= [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
