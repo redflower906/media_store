@@ -873,7 +873,7 @@ def auto_bv_so (request):
 
 
     if currentBottles != None:
-        remainderBottles = (inputBottles.amnt - currentBottles)
+        remainderBottles = inputBottles.amnt
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
