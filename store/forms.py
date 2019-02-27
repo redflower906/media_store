@@ -168,6 +168,7 @@ class OrderLineInlineFormSet(
         # if not self.total_is_positive_nonzero():
         #     raise forms.ValidationError(
         #         "Total cost must be greater than zero")
+
         
     def have_minimum(self):
         line_count = 0
@@ -202,7 +203,9 @@ class OrderLineInlineFormSet(
 
     def remainder_data(self, data):
         self.extra = len(data)
-        self.data = data
+        self.initial = data
+        changed_data = super().has_changed()
+        return bool(self.initial or changed_data)
     
     # def has_changed(self):
     #     changed_data = super().has_changed()
