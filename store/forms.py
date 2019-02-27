@@ -202,11 +202,11 @@ class OrderLineInlineFormSet(
 
     def remainder_data(self, data):
         self.extra = len(data)
-        self.initial = data
+        self.data = data
     
-    def has_changed(self):
-        changed_data = super().has_changed()
-        return bool(self.initial or changed_data)
+    # def has_changed(self):
+    #     changed_data = super().has_changed()
+    #     return bool(self.initial or changed_data)
 
 
 

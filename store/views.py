@@ -889,7 +889,7 @@ def auto_bv_so (request):
             order_form.save(commit=False)
             order_form.status = 'Complete'
             order_form.save()
-            orderlineformset.save(data)
+            orderlineformset.save()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/signout/view')
