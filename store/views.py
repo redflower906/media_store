@@ -874,8 +874,8 @@ def auto_bv_so (request):
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
-    line_costB = Decimal(bottles.cost * remainderBottles)
-    line_costV = Decimal(vials.cost * remainderVials)
+    line_costB = round((bottles.cost * remainderBottles), 2)
+    line_costV = round((vials.cost * remainderVials), 2)
 
     data= [
         {'inventory': 1245, 'qty': remainderBottles, 'line_cost': line_costB,},
