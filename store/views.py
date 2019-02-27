@@ -855,12 +855,12 @@ def auto_bv_so (request):
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
 
-    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[lastbill, nextbill]).aggregate(
+    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).exclude(status='Canceled').filter(date_created__range=[lastbill, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
 
     inputBottles = Bottles_Vials.objects.get(item='1245')
 
-    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[lastbill, nextbill]).aggregate(
+    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).exclude(status='Canceled').filter(date_created__range=[lastbill, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0] 
 
     inputVials = Bottles_Vials.objects.get(item='1263')
@@ -873,7 +873,7 @@ def auto_bv_so (request):
 
 
     if currentBottles != None:
-        remainderBottles = inputBottles.amnt
+        remainderBottles = (inputBottles.amnt - currentBottles)
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
