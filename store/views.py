@@ -857,10 +857,12 @@ def auto_bv_so (request):
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[lastbill, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
+
     inputBottles = Bottles_Vials.objects.get(item='1245')
 
     currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[lastbill, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0] 
+
     inputVials = Bottles_Vials.objects.get(item='1263')
 
     remainderBottles = 0
@@ -868,6 +870,7 @@ def auto_bv_so (request):
 
     bottles = Inventory.objects.get(id=1245)
     vials = Inventory.objects.get(id=1263)
+
 
     if currentBottles != None:
         remainderBottles = (inputBottles.amnt - currentBottles)
@@ -911,6 +914,8 @@ def auto_bv_so (request):
         'order_form' : order_form,
         'formset': orderlineformset,
         'user': user,
+        'inputBottles': inputBottles,
+        'inputVials': inputVials,
         'remainderBottles': remainderBottles,
         'remainderVials': remainderVials,
         'currentBottles': currentBottles,
