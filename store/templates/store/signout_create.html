@@ -483,13 +483,13 @@
                 register_row($(row));        
             });    
         });
-    $(".chosen-select").chosen({search_contains:true});
-    //to allow error message to show in page rather than in console.
-    $('.remover').removeAttr('required'); 
+        $(".chosen-select").chosen({search_contains:true});
+        //to allow error message to show in page rather than in console.
+        $('.remover').removeAttr('required'); 
 
-    $(function (){
-        $('.alert-success').delay(20).fadeOut();
-    });
+        setTimeout(function(){
+            $('.alert-success').hide();
+        }, 20);
 
     </script>
 
