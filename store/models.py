@@ -473,6 +473,8 @@ def status_email(sender, instance, *args, **kwargs):
             order.refresh_from_db()            
 
         instance.date_complete = date.today()
+    elif instance.status == 'Submitted' and instance.notes_order == 'Signout':
+        instance.status = 'Complete'
 
     if instance.status == 'Billed':
         today = date.today()
