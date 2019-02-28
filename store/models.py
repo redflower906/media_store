@@ -474,6 +474,9 @@ def status_email(sender, instance, *args, **kwargs):
 
         instance.date_complete = date.today()
 
+    elif instance.status == 'Submitted' and instance.notes_order == 'Signout':
+        instance.status == 'Complete'
+
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -510,14 +513,3 @@ def recurring_dates(sender, instance, *args, **kwargs):
         elif instance.weeks == '4':
             instance.due_date = instance.date_recurring_start + timedelta(days=28)
 
-# class Search(models.Lookup):
-#     lookup_name = 'search'
-
-#     def as_mysql(self, compiler, connection):
-#         lhs, lhs_params = self.process_lhs(compiler, connection)
-#         rhs, rhs_params = self.process_rhs(compiler, connection)
-#         params = lhs_params + rhs_params
-#         return 'MATCH (%s) AGAINST (%s IN BOOLEAN MODE)' % (lhs, rhs), params
-
-# models.CharField.register_lookup(Search)
-# models.TextField.register_lookup(Search)

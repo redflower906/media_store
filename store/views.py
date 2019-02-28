@@ -892,10 +892,7 @@ def auto_bv_so (request):
 
 
         if order_form.is_valid() and orderlineformset.is_valid():
-            order_form.save(commit=False)
-            order = order_form
-            order.status = 'Complete'
-            order.save()       
+            order_form.save()   
             orderlineformset.remainder_data(data)
             orderlineformset.save()
             messages.success(request,
