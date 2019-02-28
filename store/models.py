@@ -510,6 +510,3 @@ def recurring_dates(sender, instance, *args, **kwargs):
         elif instance.weeks == '4':
             instance.due_date = instance.date_recurring_start + timedelta(days=28)
     
-    if instance.status == 'Submitted' and instance.notes_order == 'Signout':
-        instance.status == 'Complete'
-
