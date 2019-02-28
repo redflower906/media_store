@@ -474,9 +474,6 @@ def status_email(sender, instance, *args, **kwargs):
 
         instance.date_complete = date.today()
 
-    elif instance.status == 'Submitted' and instance.notes_order == 'Signout':
-        instance.status == 'Complete'
-
     if instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
@@ -512,4 +509,7 @@ def recurring_dates(sender, instance, *args, **kwargs):
             instance.due_date = instance.date_recurring_start + timedelta(days=21)            
         elif instance.weeks == '4':
             instance.due_date = instance.date_recurring_start + timedelta(days=28)
+    
+    if instance.status == 'Submitted' and instance.notes_order == 'Signout':
+        instance.status == 'Complete'
 
