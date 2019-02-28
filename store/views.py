@@ -896,7 +896,7 @@ def auto_bv_so (request):
             orderlineformset.remainder_data(data)
             orderlineformset.save()
             messages.success(request,
-            'Order {0} was successfully created.'.format(order_form.instance.id), extra_tags='success')
+            'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/signout/view')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
