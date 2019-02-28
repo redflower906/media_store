@@ -873,7 +873,7 @@ def auto_bv_so (request):
 
 
     if currentBottles != None:
-        remainderBottles = (inputBottles.amnt - currentBottles)
+        remainderBottles = inputBottles.amnt - currentBottles
     if currentVials != None:
         remainderVials = (inputVials.amnt - currentVials)
 
@@ -892,9 +892,10 @@ def auto_bv_so (request):
 
 
         if order_form.is_valid() and orderlineformset.is_valid():
-            order = order_form.save(commit=False)
+            order_form.save(commit=False)
+            order = order_form
             order.status = 'Complete'
-            order.save()        
+            order.save()       
             orderlineformset.remainder_data(data)
             orderlineformset.save()
             messages.success(request,
