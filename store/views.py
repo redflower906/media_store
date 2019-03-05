@@ -912,8 +912,6 @@ def auto_bv_so (request):
         'order_form' : order_form,
         'formset': orderlineformset,
         'user': user,
-        'inputBottles': inputBottles,
-        'inputVials': inputVials,
         'remainderBottles': remainderBottles,
         'remainderVials': remainderVials,
         'currentBottles': currentBottles,

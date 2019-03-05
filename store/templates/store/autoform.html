@@ -11,8 +11,6 @@
 
 <p>CB: {{currentBottles}}</p>
 <p>CV: {{currentVials}}</p>
-<p>IB: {{inputBottles}}</p>
-<p>IV: {{inputVials}}</p>
 <p>RB: {{remainderBottles}}</p>
 <p>RV: {{remainderVials}}</p>
 <p>LCB: {{line_costB}}</p>
@@ -22,7 +20,7 @@
 <p>nextbill: {{nextbill}}</p>
 
 <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
-    <div class=''>
+    <div class='hidden'>
         {% csrf_token %}
         {{ order_form.non_field_errors }}
         {% for hidden_field in order_form.hidden_fields %}
