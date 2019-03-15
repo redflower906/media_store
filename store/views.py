@@ -320,6 +320,87 @@ def create_order(request, copy_id=None):
     })
 
 @login_required(login_url='login')
+def upload_test(request, copy_id=None):
+
+    order = Order()
+    user = request.user
+
+    if request.method == "POST":
+
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order)
+
+        if order_form.is_valid() and orderlineformset.is_valid():
+            # TODO for Scarlett and Amanda: decide desired behavior for date_submitted.
+            #   Some options:
+            #       only set on create (but this is the same as date_created...)--handle in model
+            #       update on edit or create only set on create--handle in model
+
+            # order = order_form.save(commit=False)
+            # order.submitter = user
+            # order.save()
+            order_form.save()
+            orderlineformset.save()
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+            subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            context = Context({
+                'id': order_form.instance.id,
+                'location': order_form.instance.location,
+                'c_or_e': 'created',            
+                'upload': order_form.instance.doc,
+                'domain': domain,
+            })
+            m_plain = render_to_string('create_email.txt', context.flatten())
+            m_html = render_to_string('create_email.html', context.flatten())
+            email =EmailMultiAlternatives(
+               subject,
+               m_plain,
+               from_email,
+               [to],
+               cc=[
+                order_form.instance.submitter.user_profile.email_address, 
+               'mediafacility@janelia.hhmi.org'],
+            )
+            email.attach_alternative(m_html, "text/html")
+            email.send()
+            messages.success(request,
+            'Order {0} was successfully created.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/order/view')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+
+        if copy_id:
+            try:
+                order = Order.objects.get(pk=copy_id)
+            except Order.DoesNotExist:
+                messages.error(
+                    request, 'Could not find order #{} for copy. Order does not exist.'.format(copy_id))
+                return HttpResponseRedirect('/order/view')
+            order_form = OrderForm(prefix='order', instance=order)
+            orderlineformset = OrderLineInlineFormSet(prefix='orderlines')
+            orderlineformset.copy_orderline_data(order)
+
+        else:
+            order_form = OrderForm(prefix='order', instance=order, initial={
+            'submitter': request.user, 'requester': request.user, 'department': user.user_profile.department, 'project_code': user.user_profile.hhmi_project_id})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order)
+
+
+
+    return render(request, 'store/order_create_upload_test.html', {
+        'copy_id' : copy_id,
+        'order_form' : order_form,
+        'formset': orderlineformset,
+        'inventory_lists': __build_inventory_groups(),
+        'media_types': MEDIA_CHOICES,
+        'user': user,
+    })
+
+@login_required(login_url='login')
 def edit_order(request, id):
     #TODO: Need to check if user is permitted to edit this order. Otherwise, should create a
     # new order/view/{id} view and template, and redirect the user there if they are allowed to view
@@ -341,7 +422,7 @@ def edit_order(request, id):
             order = order_form.save()
             orderlineformset.save()
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            subject,from_email,to = 'MediaStore Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            subject,from_email,to = 'ALERT - MediaStore Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
             context = Context({
                 'id': order_form.instance.id,
                 'location': order_form.instance.location,

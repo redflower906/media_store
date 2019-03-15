@@ -249,7 +249,7 @@ class Order(models.Model):
     date_recurring_stop = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=30, blank=False, null=False, choices=LOCATION_CHOICES)
     status = models.CharField(max_length=30, blank=False, null=False, default='Submitted', choices=STATUS_CHOICES)
-    doc = models.FileField(upload_to='documents', null=True, blank=True)
+    doc = models.FileField(upload_to=user_directory_path, null=True, blank=True)
     # doc = models.FileField(upload_to='/groups/sciserv/home/coffmans', null=True, blank=True)
     days_since_bill = models.IntegerField(blank=True, null=True) #delete when i get the chance (after work) ~FIX~
     weeks = models.CharField(max_length=30, blank=True, null=True, choices=WEEK_CHOICES)
