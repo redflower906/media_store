@@ -50,6 +50,7 @@ urlpatterns = [
 
 ##orders
     url(r'^order/new', views.create_order, name='create_order'),
+    url(r'^order/uploadtest', views.upload_test, name='upload_test'),
     url(r'^order/edit/(?P<id>[0-9]*)$', views.edit_order, name='edit_order'),
     url(r'^order/copy/(?P<copy_id>[0-9]*)$', views.create_order, name='copy_order'),
     url(r'^order/view', views.view_order, name='view_order'),

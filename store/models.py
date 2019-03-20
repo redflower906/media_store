@@ -122,6 +122,7 @@ MEDIA_CHOICES = (
     #('','---------'),
     ('Agar','Agar'),
     ('Antibiotics','Antibiotics'),
+    ('BDSC', 'Fly Food - BDSC'),
     ('Cornmeal Food','Fly Food - Cornmeal'),
     ('Dextrose Food','Fly Food - Dextrose'),
     ('Power Food','Fly Food - Power'),
