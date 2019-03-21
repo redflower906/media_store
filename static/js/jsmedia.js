@@ -300,6 +300,7 @@ $(function autoChoose(){
 //         });
 //     });
 // });
+
 //remove readonly attribute if orderlines-0-inventory is 'custom order'
 $(function(){
     // $('#id_orderlines-0-inventory').change(function(){
@@ -315,4 +316,9 @@ $(function(){
     $('#SOsubmit').click(function(){
         $('#loader').show()
     });
+});
+
+//reset form
+$(function ResetForm(){
+    $('#order_form')[0].reset();
 })
