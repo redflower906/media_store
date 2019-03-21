@@ -318,4 +318,11 @@ $(function(){
     });
 });
 
+//reset form
+$(function ResetForm(){
+    document.getElementById("order_form").reset();
+    $(".chosen-select").val('').trigger("chosen:updated");
+    console.log('ResetForm!');
+});
+
 
