@@ -459,7 +459,7 @@
             <hr/>
                 <p></p>
                 <div class='col-xs-10'>
-                    <input type="button" onclick='ResetForm()' value="Cancel" class="btn btn-danger">
+                    <input type="button" onclick='document.getElementById("order_form").reset()' value="Cancel" class="btn btn-danger">
                 </div>
                 <div class="col-xs-2">
                     <input id='SOsubmit' class='btn btn-primary pull-right' type='submit' value='Complete Order' name='submit'>
@@ -490,12 +490,6 @@
         setTimeout(function(){
             $('.alert-success').hide();
             }, 15000);
-
-        //reset form
-        ResetForm(function(){
-            document.getElementById("order_form").reset();
-            console.log('calling ResetForm()');
-        });
 
     </script>
 
