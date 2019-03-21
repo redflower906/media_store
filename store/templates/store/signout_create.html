@@ -492,8 +492,8 @@
             }, 15000);
 
         //reset form
-        $(function ResetForm(){
-            $('#order_form')[0].reset();
+        ResetForm(function(){
+            document.getElementById("order_form").reset();
             console.log('calling ResetForm()');
         });
 
