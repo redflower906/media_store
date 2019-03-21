@@ -319,10 +319,12 @@ $(function(){
 });
 
 //reset form
-$(function ResetForm(){
-    document.getElementById("order_form").reset();
-    $(".chosen-select").val('').trigger("chosen:updated");
-    console.log('ResetForm!');
+$(function(){
+    $('#resetform').click(function(){
+        document.getElementById("order_form").reset();
+        $(".chosen-select").val('').trigger("chosen:updated");
+        console.log('ResetForm!');   
+    });
 });
 
 
