@@ -321,4 +321,5 @@ $(function(){
 //reset form
 $(function ResetForm(){
     $('#order_form')[0].reset();
+    console.log('calling ResetForm()')
 })
