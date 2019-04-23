@@ -354,7 +354,7 @@ def add_employee(emp, **kwargs):
     user.set_password(gen_pw())
 
     # determine if the user should still be active
-    if emp['ACTIVEFLAG'] == 'Y':
+    if emp['ACTIVEFLAG'] == 'Y' or emp['TERMINATIONDATE'] is None:
         user.is_active  = True
     else:
         user.is_active  = False
