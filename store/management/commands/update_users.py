@@ -353,11 +353,11 @@ def add_employee(emp, **kwargs):
     user.username   = determine_username(emp)
     user.set_password(gen_pw())
 
-    # determine if the user should still be active
-    # if emp['ACTIVEFLAG'] == 'Y' or emp['TERMINATIONDATE'] is None:
-    #     user.is_active  = True
-    # else:
-    #     user.is_active  = False
+    determine if the user should still be active
+    if emp['ACTIVEFLAG'] == 'Y':
+        user.is_active  = True
+    else:
+        user.is_active  = False
 
     try:
         user.save()
@@ -589,21 +589,21 @@ def add_visitor(emp, in_workday):
 
 #     return
 
-def deactivate_users_missing_from_workday(all_employees, in_workday):
+# def deactivate_users_missing_from_workday(all_employees, in_workday):
 
-    # get all the User Profiles
-    user_profiles = UserProfile.objects.all().order_by('last_name')
+#     # get all the User Profiles
+#     user_profiles = UserProfile.objects.all().order_by('last_name')
 
-    for profile in user_profiles:
-        if profile.employee_id and not profile.employee_id in in_workday:
-            if profile.is_active is True or profile.user.is_active is True:
-                profile.is_active = False
-                profile.save()
-                profile.user.is_active = False
-                profile.user.save()
-                message(u"Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
-                user_debug(profile)
-    return in_workday
+#     for profile in user_profiles:
+#         if profile.employee_id and not profile.employee_id in in_workday:
+#             if profile.is_active is True or profile.user.is_active is True:
+#                 profile.is_active = False
+#                 profile.save()
+#                 profile.user.is_active = False
+#                 profile.user.save()
+#                 message(u"Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
+#                 user_debug(profile)
+#     return in_workday
 
 
 
