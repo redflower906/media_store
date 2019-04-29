@@ -613,7 +613,7 @@ class Command(BaseCommand):
 
     def add_arguments (self, parser):
         parser.add_argument('EMPLOYEEID', nargs='?', type=str)
-        args = parser.parse_args() # added to debug workday issue
+        # args = parser.parse_args() # added to debug workday issue
 
     def handle(self, *args, **options):
         global VERBOSITY
@@ -621,11 +621,11 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        if args:
-            emp_id = args[0] # added to debug workday issue
+        # if args:
+        #     emp_id = args[0] # added to debug workday issue
 
-        # if options['EMPLOYEEID']:
-        #     emp_id = options['EMPLOYEEID']
+        if options['EMPLOYEEID']:
+            emp_id = options['EMPLOYEEID']
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
