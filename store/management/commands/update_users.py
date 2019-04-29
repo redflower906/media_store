@@ -589,21 +589,21 @@ def add_visitor(emp, in_workday):
 
 #     return
 
-# def deactivate_users_missing_from_workday(all_employees, in_workday):
+def deactivate_users_missing_from_workday(all_employees, in_workday):
+    message('deactivate_users_missing_from_workday', 'error')
+    # get all the User Profiles
+    user_profiles = UserProfile.objects.all().order_by('last_name')
 
-#     # get all the User Profiles
-#     user_profiles = UserProfile.objects.all().order_by('last_name')
-
-#     for profile in user_profiles:
-#         if profile.employee_id and not profile.employee_id in in_workday:
-#             if profile.is_active is True or profile.user.is_active is True:
-#                 profile.is_active = False
-#                 profile.save()
-#                 profile.user.is_active = False
-#                 profile.user.save()
-#                 message(u"Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
-#                 user_debug(profile)
-#     return in_workday
+    for profile in user_profiles:
+        if profile.employee_id and not profile.employee_id in in_workday:
+            # if profile.is_active is True or profile.user.is_active is True:
+                # profile.is_active = False
+                # profile.save()
+                # profile.user.is_active = False
+                # profile.user.save()
+                message(u"Employee {0.first_name}, {0.last_name} ({0.employee_id}) not active in workday within the last 30 days. Marked inactive.\n".format(profile), 'error')
+                user_debug(profile)
+    return in_workday
 
 
 
@@ -613,6 +613,7 @@ class Command(BaseCommand):
 
     def add_arguments (self, parser):
         parser.add_argument('EMPLOYEEID', nargs='?', type=str)
+        args = parser.parse_args() # added to debug workday issue
 
     def handle(self, *args, **options):
         global VERBOSITY
@@ -620,8 +621,11 @@ class Command(BaseCommand):
 
         emp_id = None
 
-        if options['EMPLOYEEID']:
-            emp_id = options['EMPLOYEEID']
+        if args:
+            emp_id = args[0] # added to debug workday issue
+
+        # if options['EMPLOYEEID']:
+        #     emp_id = options['EMPLOYEEID']
 
         # get an array of dicts each containing the following details
         #'WORKERTYPE', 'LEGACYDEPTID', 'EMPLOYEEID', 'FIRSTNAME', 'LASTNAME', 'MGRLASTNAME',
