@@ -353,7 +353,7 @@ def add_employee(emp, **kwargs):
     user.username   = determine_username(emp)
     user.set_password(gen_pw())
 
-    determine if the user should still be active
+    #determine if the user should still be active
     if emp['ACTIVEFLAG'] == 'Y':
         user.is_active  = True
     else:
@@ -632,9 +632,9 @@ class Command(BaseCommand):
         for emp in all_employees:
             in_workday[emp['EMPLOYEEID']] = True
 
-        if not emp_id:
-            deactivate_users_missing_from_workday(all_employees, in_workday)
-            # cleanup_missing_user_profiles()
+        # if not emp_id:
+        #     deactivate_users_missing_from_workday(all_employees, in_workday)
+        #     # cleanup_missing_user_profiles()
 
         managers = {}
 
