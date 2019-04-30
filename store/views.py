@@ -779,11 +779,12 @@ def create_signout(request):
     if u == 17381:
         loc = '1E.372'
         uname = 1
-        q = Inventory.objects.filter(Q(id=1267) | Q(id=1273) | Q(id=1270) | Q(id=1269) | Q(id=1268) | Q(id=1305) | Q(id=1303) | Q(id=1304) | Q(id=1272))
+        q = Inventory.objects.filter(Q(id=1267) | Q(id=1273)  | Q(id=1351) | Q(id=1352) | Q(id=1270) | Q(id=1353) | Q(id=1269) | Q(id=1268) | Q(id=1305) | Q(id=1303) | Q(id=1304)
+        | Q(id=1272))
     elif u == 17380:
         loc = '2E.267'
         uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237))
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237) | Q(id=1365))
     elif u == 17915:
         loc = '3C.267'
         uname = 3.1
@@ -795,7 +796,7 @@ def create_signout(request):
     elif u == 17623:
         loc = '3W.266'
         uname = 3.3
-        q = Inventory.objects.filter(Q(id=1269) | Q(id=1270) | Q(id=1267) | Q(id=1272) | Q(id=1273))
+        q = Inventory.objects.filter(Q(id=1237) | Q(id=1365))
     else:
         loc = False
         uname = False
