@@ -209,6 +209,9 @@ $(function autoChoose(){
             });
         });
         $('#id_order-submitter').change(function() {
+            if($('#id_order-requester').find("option:selected").val()){
+                console.log('requester!')
+            }
             var optionSelectedSub = $(this).find("option:selected");
             var valueSelectedSub = optionSelectedSub.val();
             var submitter_name = optionSelectedSub.text();
