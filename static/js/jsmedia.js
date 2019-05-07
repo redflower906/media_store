@@ -211,7 +211,7 @@ $(function autoChoose(){
             var req = $('#id_order-requester').find("option:selected").text()
         }
         $('#id_order-submitter').change(function() {
-            if(req = 'Fly  Light'){
+            if(req == 'Fly  Light'){
                 console.log('fly light!')
             }
             else{
