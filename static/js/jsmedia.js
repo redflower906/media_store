@@ -178,6 +178,35 @@ $(function(){
 $(function autoChoose(){
     var url = String(window.location.href);
     if (url == 'http://mediastore.int.janelia.org/signout/new'){
+        //if loc = 3C.229
+        $('#id_order-requester').change(function() {
+            var optionSelected = $(this).find("option:selected");
+            var valueSelected = optionSelected.val();
+            var requester_name = optionSelected.text();
+            $.ajax({
+            url: '/ajax',
+            data: {
+                'id': valueSelected,
+                'name': requester_name
+            },
+            dataType: 'json',
+            success: function(data){
+                if (data.r_id) {
+                    $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
+
+                    if(data.p_id){
+                        $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
+                    }
+                    else{
+                        $("#id_order-project_code").val('').trigger("chosen:updated");                    
+                    }
+                }
+                else{
+                    $("#id_order-department").val('').trigger("chosen:updated");
+                }
+            },
+            });
+        });
         $('#id_order-submitter').change(function() {
             var optionSelectedSub = $(this).find("option:selected");
             var valueSelectedSub = optionSelectedSub.val();
@@ -209,35 +238,7 @@ $(function autoChoose(){
             });
         });
         
-        $('#id_order-requester').change(function() {
-            var optionSelected = $(this).find("option:selected");
-            var valueSelected = optionSelected.val();
-            var requester_name = optionSelected.text();
-            $.ajax({
-            url: '/ajax',
-            data: {
-                'id': valueSelected,
-                'name': requester_name
-            },
-            dataType: 'json',
-            success: function(data){
-                if (data.r_id) {
-                    $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
 
-                    if(data.p_id){
-                        $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
-                    }
-                    else{
-                        $("#id_order-project_code").val('').trigger("chosen:updated");                    
-                    }
-                }
-                else{
-                    $("#id_order-department").val('').trigger("chosen:updated");
-                }
-            },
-            });
-        });
-        
     }
     else{
         $('#id_order-requester').change(function() {
