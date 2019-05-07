@@ -176,7 +176,6 @@ $(function(){
 
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
-    console.log('should print...');
     var url = String(window.location.href);
     if (url == 'http://mediastore.int.janelia.org/signout/new'){
         console.log($('#id_order-requester').val());
@@ -211,7 +210,7 @@ $(function autoChoose(){
         });
         $('#id_order-submitter').change(function() {
             if($('#id_order-requester').find("option:selected").val()){
-                var request = $('#id_order-requester').find("option:selected").val();
+                var request = $('#id_order-requester_chosen').child('.chosen-single').val();
                 console.log('requester!');
                 console.log(request);
             }
