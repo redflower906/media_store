@@ -178,7 +178,6 @@ $(function(){
 $(function autoChoose(){
     var url = String(window.location.href);
     if (url == 'http://mediastore.int.janelia.org/signout/new'){
-        console.log($('#id_order-requester').val());
         //if loc = 3C.229
         $('#id_order-requester').change(function() {
             var optionSelected = $(this).find("option:selected");
@@ -210,6 +209,7 @@ $(function autoChoose(){
         });
         $('#id_order-submitter').change(function() {
             if($('#id_order-requester').find("option:selected").val()){
+                console.log($('#id_order-requester').find("option:selected").text())
             }
             else{
                 var optionSelectedSub = $(this).find("option:selected");
