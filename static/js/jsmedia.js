@@ -208,12 +208,12 @@ $(function autoChoose(){
             });
         });
         if($('#id_order-requester').find("option:selected").val()){
-            var req = $('#id_order-requester').find("option:selected").text()
-            console.log(req)
+            var req = $('#id_order-requester').find("option:selected").text();
+            console.log(req);
         }
         $('#id_order-submitter').change(function() {
-            if(req == ' Fly Light'){
-                console.log('fly light!')
+            if(req == 'Fly  Light'){
+                console.log('fly light!');
             }
             else{
                 var optionSelectedSub = $(this).find("option:selected");
