@@ -210,7 +210,7 @@ $(function autoChoose(){
         });
         $('#id_order-submitter').change(function() {
             if($('#id_order-requester').find("option:selected").val()){
-                var request = $('#id_order-requester_chosen').children('.chosen-single').val();
+                var request = $('#id_order-requester_chosen').children('.chosen-single').text();
                 console.log('requester!');
                 console.log(request);
             }
