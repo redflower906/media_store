@@ -178,6 +178,7 @@ $(function(){
 $(function autoChoose(){
     var url = String(window.location.href);
     if (url == 'http://mediastore.int.janelia.org/signout/new'){
+        console.log($('#id_order-requester').val());
         //if loc = 3C.229
         $('#id_order-requester').change(function() {
             var optionSelected = $(this).find("option:selected");
