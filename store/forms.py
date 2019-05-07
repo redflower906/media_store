@@ -101,7 +101,7 @@ class OrderFormSelect(forms.Select):
 class OrderForm(forms.ModelForm):
 
     #allow full names in [first_name last_name] format and exclude signout names for sub+req. Only list existing project IDs (with JVS)
-    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).exclude(id=17622).exclude(id=17623).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
+    submitter = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=18004).exclude(id=17381).exclude(id=17380).exclude(id=17382).exclude(id=17622).exclude(id=17623).order_by('last_name'), widget=OrderFormSelect(attrs={'class':'chosen-select remover'}))
     requester = forms.ModelChoiceField(queryset=UserFullName.objects.all().exclude(id=17381).exclude(id=17380).exclude(id=17382).exclude(id=17622).exclude(id=17623).order_by('last_name'), widget=OrderFormSelect(attrs={'class': 'chosen-select'}))
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
