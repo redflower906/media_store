@@ -211,40 +211,42 @@ $(function autoChoose(){
             if($('#id_order-requester').find("option:selected").val()){
                 var reqText = $('#id_order-requester').find("option:selected").text();
                 console.log(reqText);
-            }
-            else{
-                var optionSelectedSub = $(this).find("option:selected");
-                var valueSelectedSub = optionSelectedSub.val();
-                var submitter_name = optionSelectedSub.text();
-                $.ajax({
-                url: '/ajax',
-                data: {
-                    'id': valueSelectedSub,
-                    'name': submitter_name
-                },
-                dataType: 'json',
-                success: function(data){
-                    if (data.r_id) {
-                        $('#id_order-requester').val(data['r_id']).trigger("chosen:updated");
-                        $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
+                var reqInc = reqText.includes('Light')
+                if(reqInc == True){
 
-                        if(data.p_id){
-                            $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
+                }
+                else{
+                    var optionSelectedSub = $(this).find("option:selected");
+                    var valueSelectedSub = optionSelectedSub.val();
+                    var submitter_name = optionSelectedSub.text();
+                    $.ajax({
+                    url: '/ajax',
+                    data: {
+                        'id': valueSelectedSub,
+                        'name': submitter_name
+                    },
+                    dataType: 'json',
+                    success: function(data){
+                        if (data.r_id) {
+                            $('#id_order-requester').val(data['r_id']).trigger("chosen:updated");
+                            $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
+
+                            if(data.p_id){
+                                $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
+                            }
+                            else{
+                                $("#id_order-project_code").val('').trigger("chosen:updated");                    
+                            }
                         }
                         else{
-                            $("#id_order-project_code").val('').trigger("chosen:updated");                    
+                            $('#id_order-requester').val('').trigger("chosen:updated");
+                            $("#id_order-department").val('').trigger("chosen:updated");
                         }
-                    }
-                    else{
-                        $('#id_order-requester').val('').trigger("chosen:updated");
-                        $("#id_order-department").val('').trigger("chosen:updated");
-                    }
-                },
-                });
+                    },
+                    });
+                }
             }
-        });
-        
-
+        });       
     }
     else{
         $('#id_order-requester').change(function() {
