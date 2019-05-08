@@ -476,7 +476,7 @@ def status_email(sender, instance, *args, **kwargs):
                     ol.save()
                 order.refresh_from_db()            
 
-            instance.date_complete = date.today()
+        instance.date_complete = date.today()
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
         instance.status = 'Complete'
 
