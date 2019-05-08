@@ -212,6 +212,7 @@ $(function autoChoose(){
                 var reqText = $('#id_order-requester').find("option:selected").text();
                 console.log(reqText);
                 var reqInc = reqText.includes('Light');
+                console.log(reqInc);
                 if(reqInc){
 
                 }
