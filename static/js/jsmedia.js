@@ -211,8 +211,8 @@ $(function autoChoose(){
             if($('#id_order-requester').find("option:selected").val()){
                 var reqText = $('#id_order-requester').find("option:selected").text();
                 console.log(reqText);
-                var reqInc = reqText.includes('Light')
-                if(reqInc == True){
+                var reqInc = reqText.includes('Light');
+                if(reqInc){
 
                 }
                 else{
@@ -242,7 +242,7 @@ $(function autoChoose(){
                             $('#id_order-requester').val('').trigger("chosen:updated");
                             $("#id_order-department").val('').trigger("chosen:updated");
                         }
-                    },
+                    }
                     });
                 }
             }
