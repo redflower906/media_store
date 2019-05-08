@@ -207,13 +207,10 @@ $(function autoChoose(){
             },
             });
         });
-        if($('#id_order-requester').find("option:selected").val()){
-            var reqText = $('#id_order-requester').find("option:selected").text();
-            console.log(reqText);
-        }
         $('#id_order-submitter').change(function() {
-            if(reqText == 'Fly  Light'){
-                console.log('fly light!');
+            if($('#id_order-requester').find("option:selected").val()){
+                var reqText = $('#id_order-requester').find("option:selected").text();
+                console.log(reqText);
             }
             else{
                 var optionSelectedSub = $(this).find("option:selected");
