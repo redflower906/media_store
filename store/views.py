@@ -823,7 +823,7 @@ def create_signout(request):
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
             order_form = OrderForm(prefix='order', instance=order,initial={
-            'location': loc, 'is_recurring': False, 'notes_order': loc + ' Signout'})
+            'location': loc, 'is_recurring': False, 'notes_order': 'Signout' + loc})
             orderlineformset = OrderLineInlineFormSet(
                 prefix='orderlines', instance=order,)
             for form in orderlineformset:
