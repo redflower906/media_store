@@ -440,7 +440,9 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
-    if instance.status == 'Complete' and not 'Signout' in instance.notes_order:
+    if instance.status == 'Complete' and 'Signout' in instance.notes_order:
+        print('nothing!')
+    elif instance.status == 'Complete':
         domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
         context = Context({
             'id': instance.id,
