@@ -441,42 +441,40 @@ class SortHeaders(models.Model):
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete':
-        if instance.notes_order != None:
-            words_in_notes = instance.notes_order.split()
-            if 'Signout' not in words_in_notes:
-                print('none')
-            else:
-                domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
-                context = Context({
-                    'id': instance.id,
-                    'location': instance.location,
-                    'domain': domain,
-                })        
-                m_plain = render_to_string('complete_email.txt', context.flatten())
-                m_html = render_to_string('complete_email.html', context.flatten())
+        if instance.notes_order != None and 'Signout' not in instance.notes_order:
+            print('none')
+        else:
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
+            context = Context({
+                'id': instance.id,
+                'location': instance.location,
+                'domain': domain,
+            })        
+            m_plain = render_to_string('complete_email.txt', context.flatten())
+            m_html = render_to_string('complete_email.html', context.flatten())
 
-                send_mail(
-                    'MediaStore Order #{0} Complete'.format(instance.id),
-                    m_plain,
-                    'mediafacility@janelia.hhmi.org',
-                    [instance.requester.user_profile.email_address, instance.submitter.user_profile.email_address], 
-                    fail_silently=False,
-                    html_message=m_html,
-                )
+            send_mail(
+                'MediaStore Order #{0} Complete'.format(instance.id),
+                m_plain,
+                'mediafacility@janelia.hhmi.org',
+                [instance.requester.user_profile.email_address, instance.submitter.user_profile.email_address], 
+                fail_silently=False,
+                html_message=m_html,
+            )
 
-                if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
-                    order = Order.objects.get(pk=instance.id)
-                    orderlines = OrderLine.objects.filter(order=instance.id)
-                    order.id = None
-                    order.pk = None
-                    order.status = 'Submitted'
-                    order.date_billed = None
-                    order.save()
-                    for ol in orderlines:
-                        ol.pk = None
-                        ol.order = order
-                        ol.save()
-                    order.refresh_from_db()            
+            if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
+                order = Order.objects.get(pk=instance.id)
+                orderlines = OrderLine.objects.filter(order=instance.id)
+                order.id = None
+                order.pk = None
+                order.status = 'Submitted'
+                order.date_billed = None
+                order.save()
+                for ol in orderlines:
+                    ol.pk = None
+                    ol.order = order
+                    ol.save()
+                order.refresh_from_db()            
 
         instance.date_complete = date.today()
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
