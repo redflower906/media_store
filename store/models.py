@@ -464,19 +464,19 @@ def status_email(sender, instance, *args, **kwargs):
                     html_message=m_html,
                 )
 
-                if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
-                    order = Order.objects.get(pk=instance.id)
-                    orderlines = OrderLine.objects.filter(order=instance.id)
-                    order.id = None
-                    order.pk = None
-                    order.status = 'Submitted'
-                    order.date_billed = None
-                    order.save()
-                    for ol in orderlines:
-                        ol.pk = None
-                        ol.order = order
-                        ol.save()
-                    order.refresh_from_db()            
+        if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
+            order = Order.objects.get(pk=instance.id)
+            orderlines = OrderLine.objects.filter(order=instance.id)
+            order.id = None
+            order.pk = None
+            order.status = 'Submitted'
+            order.date_billed = None
+            order.save()
+            for ol in orderlines:
+                ol.pk = None
+                ol.order = order
+                ol.save()
+            order.refresh_from_db()            
 
         instance.date_complete = date.today()
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
