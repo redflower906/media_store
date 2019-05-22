@@ -440,7 +440,22 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
-    if instance.status == 'Complete':
+    if instance.status == 'Complete':        
+        
+        if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
+            order = Order.objects.get(pk=instance.id)
+            orderlines = OrderLine.objects.filter(order=instance.id)
+            order.id = None
+            order.pk = None
+            order.status = 'Submitted'
+            order.date_billed = None
+            order.save()
+            for ol in orderlines:
+                ol.pk = None
+                ol.order = order
+                ol.save()
+            order.refresh_from_db() 
+
         if instance.notes_order != None:
             words_in_notes = instance.notes_order.split()
             if 'Signout ' not in words_in_notes:
@@ -464,22 +479,9 @@ def status_email(sender, instance, *args, **kwargs):
                     html_message=m_html,
                 )
 
-        if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
-            order = Order.objects.get(pk=instance.id)
-            orderlines = OrderLine.objects.filter(order=instance.id)
-            order.id = None
-            order.pk = None
-            order.status = 'Submitted'
-            order.date_billed = None
-            order.save()
-            for ol in orderlines:
-                ol.pk = None
-                ol.order = order
-                ol.save()
-            order.refresh_from_db()            
-
         instance.date_complete = date.today()
-    elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
+
+    if instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
         instance.status = 'Complete'
 
     if instance.status == 'Billed':
