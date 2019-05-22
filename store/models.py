@@ -456,7 +456,9 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.save()
             order.refresh_from_db()    
 
-        if instance.notes_order is not 'Signout':
+        if instance.notes_order == 'Signout':
+            print('nothing')
+        else:
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
             context = Context({
                 'id': instance.id,
