@@ -458,7 +458,7 @@ def status_email(sender, instance, *args, **kwargs):
 
         elif instance.notes_order != None:
             words_in_notes = instance.notes_order.split()
-            if 'Signout ' not in words_in_notes:
+            if 'Signout ' in words_in_notes:
                 print('none')
             else:
                 domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
