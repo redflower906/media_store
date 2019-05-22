@@ -456,26 +456,26 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.save()
             order.refresh_from_db()    
 
-        if instance.notes_order == 'Signout':
-            print('nothing')
-        else:
-            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
-            context = Context({
-                'id': instance.id,
-                'location': instance.location,
-                'domain': domain,
-            })        
-            m_plain = render_to_string('complete_email.txt', context.flatten())
-            m_html = render_to_string('complete_email.html', context.flatten())
+        # if instance.notes_order == 'Signout':
+        #     print('nothing')
+        # else:
+        #     domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
+        #     context = Context({
+        #         'id': instance.id,
+        #         'location': instance.location,
+        #         'domain': domain,
+        #     })        
+        #     m_plain = render_to_string('complete_email.txt', context.flatten())
+        #     m_html = render_to_string('complete_email.html', context.flatten())
 
-            send_mail(
-                'MediaStore Order #{0} Complete'.format(instance.id),
-                m_plain,
-                'mediafacility@janelia.hhmi.org',
-                [instance.requester.user_profile.email_address, instance.submitter.user_profile.email_address], 
-                fail_silently=False,
-                html_message=m_html,
-            )
+        #     send_mail(
+        #         'MediaStore Order #{0} Complete'.format(instance.id),
+        #         m_plain,
+        #         'mediafacility@janelia.hhmi.org',
+        #         [instance.requester.user_profile.email_address, instance.submitter.user_profile.email_address], 
+        #         fail_silently=False,
+        #         html_message=m_html,
+        #     )
 
         instance.date_complete = date.today()
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
