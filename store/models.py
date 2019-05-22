@@ -454,9 +454,9 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.pk = None
                 ol.order = order
                 ol.save()
-            order.refresh_from_db() 
+            order.refresh_from_db()    
 
-        if instance.notes_order != None:
+        elif instance.notes_order != None:
             words_in_notes = instance.notes_order.split()
             if 'Signout ' not in words_in_notes:
                 print('none')
@@ -480,8 +480,7 @@ def status_email(sender, instance, *args, **kwargs):
                 )
 
         instance.date_complete = date.today()
-
-    if instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
+    elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
         instance.status = 'Complete'
 
     if instance.status == 'Billed':
