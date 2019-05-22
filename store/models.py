@@ -483,7 +483,7 @@ def status_email(sender, instance, *args, **kwargs):
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
         instance.status = 'Complete'
 
-    if instance.status == 'Billed':
+    elif instance.status == 'Billed':
         today = date.today()
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
