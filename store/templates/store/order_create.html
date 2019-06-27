@@ -617,8 +617,8 @@
         });   
     });
     $(".chosen-select").chosen({search_contains:true});
-    $(".dept chosen-select").attr('disabled', true).trigger("chosen:updated");
-    
+    $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
+
     //to allow error message to show in page rather than in console.
     $('.remover').removeAttr('required'); 
 
