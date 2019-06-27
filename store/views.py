@@ -782,7 +782,7 @@ def create_signout(request):
         q = Inventory.objects.filter(Q(id=1267) | Q(id=1273)  | Q(id=1351) | Q(id=1352) | Q(id=1270) | Q(id=1353) | Q(id=1269) | Q(id=1268) | Q(id=1367) | Q(id=1366) | Q(id=1305)
         | Q(id=1303) | Q(id=1304) | Q(id=1272) | Q(id=1276) | Q(id=1277)).order_by('media_type')
     elif u == 17380:
-        loc = '2E.267'
+        loc = '2E.233'
         uname = 2
         q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237) | Q(id=1365)).order_by('media_type')
     elif u == 17915:
