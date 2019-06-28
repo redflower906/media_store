@@ -889,7 +889,7 @@ def SO_test(request):
             orderlineformset.save()
             messages.success(request,
             'Thank you for signing out food! Your order number is {0}, please email the media facility with this order number if you need to edit or cancel this order.'.format(order_form.instance.id))
-            return HttpResponseRedirect('/signout/newtest')
+            return HttpResponseRedirect('/signout/testnew')
         else:
             messages.error(request, 'There was a problem saving your order. Please review the errors below.')
     else:
