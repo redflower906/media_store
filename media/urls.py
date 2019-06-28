@@ -13,6 +13,8 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))"""
 
+#IF MAKING A TEST PAGE MAKE SURE THE URL DOESN'T START THE SAME WAY THE REAL PAGE DOES, OR IT WILL JUST KEEP RELOADING THE REAL PAGE
+
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
