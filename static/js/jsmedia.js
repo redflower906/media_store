@@ -295,6 +295,7 @@ $(function autoChoose(){
             success: function(data){
                 if (data.r_id) {
                     $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
+                    $('#id-dept=show').val(data['d_id']);
 
                     if(data.p_id){
                         $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
@@ -305,6 +306,8 @@ $(function autoChoose(){
                 }
                 else{
                     $("#id_order-department").val('').trigger("chosen:updated");
+                    $('#id-dept=show').val('no dept');
+
                 }
             },
             });
