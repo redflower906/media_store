@@ -173,7 +173,9 @@ $(function(){
         $(this).parent().siblings('.status').children().val('Canceled');
     });
 });
-
+$(function(){
+    console.log($('#changeDept').children())
+});
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
     var url = String(window.location.href);

@@ -45,8 +45,10 @@
                         {{ order_form.requester.errors }}
                         {{ order_form.requester }}
                     </td>
-                    <td>
-                        <p id='id-dept-show'>No department selected</p>
+                    <td id='changeDept'>
+                        {{ order_form.department.errors }}
+                        {{ order_form.department }}
+                        {% comment %} <p id='id-dept-show'>No department selected</p> {% endcomment %}
                     </td>
                 </tr>
             </tbody>
