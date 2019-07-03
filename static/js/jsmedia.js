@@ -175,7 +175,7 @@ $(function(){
 });
 
 $(function(){
-    $('#changeDept').find('#id_order-department').replaceWith('replaced')
+    $('#changeDept').find('#id_order-department').attr('id', 'replaced')
 });
 
 //Automatically choose department and project code based on requester or submitter
