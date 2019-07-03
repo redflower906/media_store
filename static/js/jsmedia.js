@@ -174,9 +174,9 @@ $(function(){
     });
 });
 
-// $(function(){
-//     $('#changeDept').find('.chosen-select').attr('id', 'id-dept-show');
-// });
+$(function(){
+    $('#changeDept').find('.chosen-select').attr('id', 'id-dept-show');
+});
 
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
