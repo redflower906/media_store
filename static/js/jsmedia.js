@@ -173,9 +173,11 @@ $(function(){
         $(this).parent().siblings('.status').children().val('Canceled');
     });
 });
+
 $(function(){
-    console.log($('#changeDept').children())
+    $('#changeDept').find('#id_order-department').replaceWith('replaced')
 });
+
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
     var url = String(window.location.href);
