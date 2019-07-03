@@ -121,6 +121,7 @@ class OrderForm(forms.ModelForm):
         'date_recurring_stop': forms.DateInput(attrs={'class': 'datepicker form-control'}),
         'weeks': forms.Select(choices=Order.WEEK_CHOICES, attrs={'required': False, 'class': 'form-control'}),
         'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 
+        'doc': forms.FileInput(attrs={'required': False}),
         }
 
     def __init__(self, *args, **kwargs):
