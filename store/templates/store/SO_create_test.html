@@ -9,495 +9,502 @@
 </script>
 <hr/>
 <p>&nbsp;</p>
-<div class='row'>
-    <div class='col-xs-12'>
-        <h2 class='classMSO'>Media Sign-out TEST!!!!!</h2>           
-    </div>
-</div>
-<hr/>
-<p>&nbsp;</p>
-
-<form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ order_form.non_field_errors }}
-    {% for hidden_field in order_form.hidden_fields %}
-        {{ hidden_field.errors }}
-        {{ hidden_field }}
-    {% endfor %}
-
-    <fieldset>
+{% if uname != False or user.is_staff is True %}
     <div class='row'>
-        <table id='form_holder'>
-            <thead>
-                <tr>
-                    <th>Who are you?</th>
-                    <th>Who is the food for?</th>
-                    <th>Dept?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        {{ order_form.submitter.errors }}
-                        {{ order_form.submitter }}
-                    </td>
-                    <td>
-                        {{ order_form.requester.errors }}
-                        {{ order_form.requester }}
-                    </td>
-                    <td id='changeDept'>
-                        {{ order_form.department.errors }}
-                        {{ order_form.department }}
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class='row hidden'>
-        <div class='col-xs-2'>
-            {{ order_form.department.errors }}
-            {{ order_form.department }}
-        </div>
-        <div class='col-xs-2'>
-            {{ order_form.is_recurring.errors }}
-            {{ order_form.is_recurring }}
-        </div>
-        <div class='col-xs-10' id='datepicker'>
-            <div class='col-xs-1'>
-                <p><b>From:</b></p>
-            </div>
-            <div class='col-xs-3'>
-                {{ order_form.date_recurring_start }}
-            </div>
-            <div class='col-xs-1'>
-                <p><b>To:</b></p>
-            </div>
-            <div class='col-xs-3'>
-                {{ order_form.date_recurring_stop }}
-            </div>
-            <div class='col-xs-1'>
-                <p><b>How often:</b></p>
-            </div>
-            <div class='col-xs-3'>
-                {{ order_form.weeks.errors }}
-                {{ order_form.weeks }}
-            </div>
-        </div>
-        <div class='col-xs-2'>
-            {{ order_form.notes_order.errors }}
-            {{ order_form.notes_order}}
-        </div>
-        <div >
-            {{ order_form.project_code.errors }}
-            {{ order_form.project_code }}
-        </div>
-        <div>
-            {{order_form.location.errors}}
-            {{order_form.location}}
+        <div class='col-xs-12'>
+            <h2 class='classMSO'>Media Sign-out for the {{user.first_name}}  {{user.last_name}}: {{loc}}</h2>           
         </div>
     </div>
+    <hr/>
     <p>&nbsp;</p>
-    </fieldset>
-    <div class='loader' id='loader'></div>
-    <p>&nbsp;</p>
-    <fieldset>
-        <legend>What would you like to order?</legend>
-        <div>
-            <ul>
-                <li style='color:red'>
-                    If you want to order less than a tray or sleeve (a partial unit), please click 'Qty' below to see what decimal to input.
-                </li>
-            </ul>
-        </div>
-        {{ formset.non_form_errors }} 
-        {% for hidden_field in formset.hidden_fields %} 
-            {{ hidden_field.errors }} 
-            {{ hidden_field }} 
+
+    <form id='order_form' method="post" action="" class="post-form form-horizontal" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ order_form.non_field_errors }}
+        {% for hidden_field in order_form.hidden_fields %}
+            {{ hidden_field.errors }}
+            {{ hidden_field }}
         {% endfor %}
+
+        <fieldset>
         <div class='row'>
             <table id='form_holder'>
-                <tr>
-                    <td style="padding:0" class="OrderLines">
-                        {{formset.management_form}}
-                        {{formset.media}}
-                        <table id='order_table'>
-                        <thead>
-                            <div class='row'>
-                                <tr>
-                                    <th class='col text-center'>Media</th>
-                                    <th class='col text-center'>Container</th>
-                                    <th class='col text-center'>Volume</th>
-                                    <th class='col text-center'>
-                                        <a data-toggle="modal" href="#qtymodal">Qty</a>
-                                    <div class="modal fade" id="qtymodal" tabindex="-1" role="dialog" aria-labelledby="qtymodalTitle" aria-hidden="true">
-                                        <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="qtymodalTitle"><b>Partial Unit Reference Table</b></h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>
-                                            <div class="modal-body"> 
-                                                <div class="col-xs-4">
-                                                    <h2 class="sub-header">Vials</h2>
-                                                    <div class='table-responsive'>
-                                                        <table id="classTable" class="table table-bordered table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th># Signed Out</th>
-                                                                    <th>Input for 'QTY'</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>.01</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>.05</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>25</td>
-                                                                    <td>.25</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>50</td>
-                                                                    <td>.50</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>75</td>
-                                                                    <td>.75</td>
-                                                                <tr>
-                                                                    <td>100</td>
-                                                                    <td>1</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <h2 class="sub-header">Bottles</h2>
-                                                    <div class='table-responsive'>
-                                                        <table id="classTable" class="table table-bordered table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th># Signed Out</th>
-                                                                    <th>Input for 'QTY'</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>.04</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>.08</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>.12</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>4</td>
-                                                                    <td>.16</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>.2</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>6</td>
-                                                                    <td>.24</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>7</td>
-                                                                    <td>.28</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>8</td>
-                                                                    <td>.32</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>9</td>
-                                                                    <td>.36</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>10</td>
-                                                                    <td>.4</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>11</td>
-                                                                    <td>.44</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>12</td>
-                                                                    <td>.48</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>13</td>
-                                                                    <td>.52</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>14</td>
-                                                                    <td>.56</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>15</td>
-                                                                    <td>.6</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>16</td>
-                                                                    <td>.64</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>17</td>
-                                                                    <td>.68</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>18</td>
-                                                                    <td>.72</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>19</td>
-                                                                    <td>.76</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>20</td>
-                                                                    <td>.8</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>21</td>
-                                                                    <td>.84</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>22</td>
-                                                                    <td>.88</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>23</td>
-                                                                    <td>.92</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>24</td>
-                                                                    <td>.96</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>25</td>
-                                                                    <td>1</td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <h2 class="sub-header">Plates</h2>
-                                                    <div class='table-responsive'>
-                                                        <table id="classTable" class="table table-bordered table-sm">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th># Signed Out</th>
-                                                                    <th>Input for 'QTY'</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>.05</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>2</td>
-                                                                    <td>.1</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>3</td>
-                                                                    <td>.15</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>4</td>
-                                                                    <td>.2</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>5</td>
-                                                                    <td>.25</td>
-                                                                <tr>
-                                                                    <td>6</td>
-                                                                    <td>.3</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>7</td>
-                                                                    <td>.35</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>8</td>
-                                                                    <td>.4</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>9</td>
-                                                                    <td>.45</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>10</td>
-                                                                    <td>.5</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>11</td>
-                                                                    <td>.55</td>
-                                                                <tr>
-                                                                    <td>12</td>
-                                                                    <td>.6</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>13</td>
-                                                                    <td>.65</td>
-                                                                <tr>
-                                                                    <td>14</td>
-                                                                    <td>.7</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>15</td>
-                                                                    <td>.75</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>16</td>
-                                                                    <td>.8</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>17</td>
-                                                                    <td>.85</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>18</td>
-                                                                    <td>.9</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>19</td>
-                                                                    <td>.95</td>
-                                                                <tr>
-                                                                    <td>20</td>
-                                                                    <td>1</td>
-                                                                </tr>                                                                    
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class='modal-footer'>
-                                            </div>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </th>
-                                    <th class='col text-center'>Cost</th>
-                                </tr>
-                            </div>
-                        </thead>
-                        <tbody class='order_table'>
-                            <div class='row'>
-                            {% for form in formset %}
-                            {% if form.non_field_errors %}
-                            <tr>
-                                <td colspan="6">
-                                    {{ form.non_field_errors }}
-                                </td>
-                            </tr>
-                            {% endif %}
-                            <tr>
-                                {% for hidden_field in form.hidden_fields %} 
-                                {{ hidden_field.errors }} 
-                                {{ hidden_field }}
-                                {% endfor %}
-                                <td class='col text-center'>
-                                    {{ form.inventory.errors }}
-                                    {{ form.inventory }}
-                                </td>
-                                <td class="col text-center inv_container">
-                                    <p> --------- </p>
-                                </td>
-                                <td class="col text-center inv_vol"> 
-                                    <p> --------- </p>  
-                                </td>
-                                <td class='col'>
-                                    {{ form.qty.errors }}
-                                    {{ form.qty }}
-                                </td>
-                                {% if user.is_staff is True %}
-                                <td class='col text-center staff' id='id_cost'>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                                {% else %}
-                                <td class='col text-center'>
-                                    {{ form.line_cost.errors }}
-                                    {{ form.line_cost }}
-                                </td>
-                                {% endif %}
-                            </tr>                            
-                            {% endfor %}
-                            </div>                        
-                        </tbody>
-                        </table>                
-                    </td>                    
-                </tr>
+                <thead>
+                    <tr>
+                        <th>Who are you?</th>
+                        <th>Who is the food for?</th>
+                        <th>Dept?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ order_form.submitter.errors }}
+                            {{ order_form.submitter }}
+                        </td>
+                        <td>
+                            {{ order_form.requester.errors }}
+                            {{ order_form.requester }}
+                        </td>
+                        <td id='changeDept'>
+                            {{ order_form.department.errors }}
+                            {{ order_form.department }}
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
-    </fieldset>
-
-    <fieldset>          
-        <div class='row'>
-                <div class = 'col-xs-3'>
-                    <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
-                </div>
-                <div class='col-xs-offset-6 col-xs-2 text-right'>
-                    <p><strong>Total</strong></p>
-                    <p class="aggregate_total">
-                    {{order_form.instance.total | currency}}</p>
-                </div>
-        </div>
-    </fieldset>
-        <p>&nbsp;</p>         
-        <div class='row'>
-        <hr/>
-            <p></p>
-            <div class='col-xs-10'>
-                <input type="button" id='resetform' value="Cancel" class="btn btn-danger">
+        <div class='row hidden'>
+            <div class='col-xs-2'>
+                {{ order_form.department.errors }}
+                {{ order_form.department }}
             </div>
-            <div class="col-xs-2">
-                <input id='SOsubmit' class='btn btn-primary pull-right' type='submit' value='Complete Order' name='submit'>
+            <div class='col-xs-2'>
+                {{ order_form.is_recurring.errors }}
+                {{ order_form.is_recurring }}
+            </div>
+            <div class='col-xs-10' id='datepicker'>
+                <div class='col-xs-1'>
+                    <p><b>From:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_start }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>To:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.date_recurring_stop }}
+                </div>
+                <div class='col-xs-1'>
+                    <p><b>How often:</b></p>
+                </div>
+                <div class='col-xs-3'>
+                    {{ order_form.weeks.errors }}
+                    {{ order_form.weeks }}
+                </div>
+            </div>
+            <div class='col-xs-2'>
+                {{ order_form.notes_order.errors }}
+                {{ order_form.notes_order}}
+            </div>
+            <div >
+                {{ order_form.project_code.errors }}
+                {{ order_form.project_code }}
+            </div>
+            <div>
+                {{order_form.location.errors}}
+                {{order_form.location}}
             </div>
         </div>
-        
-</form>
-<script type="text/javascript">
+        <p>&nbsp;</p>
+        </fieldset>
+        <div class='loader' id='loader'></div>
+        <p>&nbsp;</p>
+        <fieldset>
+            <legend>What would you like to order?</legend>
+            <div>
+                <ul>
+                    <li style='color:red'>
+                        If you want to order less than a tray or sleeve (a partial unit), please click 'Qty' below to see what decimal to input.
+                    </li>
+                </ul>
+            </div>
+            {{ formset.non_form_errors }} 
+            {% for hidden_field in formset.hidden_fields %} 
+                {{ hidden_field.errors }} 
+                {{ hidden_field }} 
+            {% endfor %}
+            <div class='row'>
+                <table id='form_holder'>
+                    <tr>
+                        <td style="padding:0" class="OrderLines">
+                            {{formset.management_form}}
+                            {{formset.media}}
+                            <table id='order_table'>
+                            <thead>
+                                <div class='row'>
+                                    <tr>
+                                        <th class='col text-center'>Media</th>
+                                        <th class='col text-center'>Container</th>
+                                        <th class='col text-center'>Volume</th>
+                                        <th class='col text-center'>
+                                            <a data-toggle="modal" href="#qtymodal">Qty</a>
+                                        <div class="modal fade" id="qtymodal" tabindex="-1" role="dialog" aria-labelledby="qtymodalTitle" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="qtymodalTitle"><b>Partial Unit Reference Table</b></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                                </div>
+                                                <div class="modal-body"> 
+                                                    <div class="col-xs-4">
+                                                        <h2 class="sub-header">Vials</h2>
+                                                        <div class='table-responsive'>
+                                                            <table id="classTable" class="table table-bordered table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th># Signed Out</th>
+                                                                        <th>Input for 'QTY'</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>.01</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>5</td>
+                                                                        <td>.05</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>25</td>
+                                                                        <td>.25</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>50</td>
+                                                                        <td>.50</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>75</td>
+                                                                        <td>.75</td>
+                                                                    <tr>
+                                                                        <td>100</td>
+                                                                        <td>1</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <h2 class="sub-header">Bottles</h2>
+                                                        <div class='table-responsive'>
+                                                            <table id="classTable" class="table table-bordered table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th># Signed Out</th>
+                                                                        <th>Input for 'QTY'</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>.04</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>.08</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>.12</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>.16</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>5</td>
+                                                                        <td>.2</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>6</td>
+                                                                        <td>.24</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>7</td>
+                                                                        <td>.28</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>8</td>
+                                                                        <td>.32</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>9</td>
+                                                                        <td>.36</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>10</td>
+                                                                        <td>.4</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>11</td>
+                                                                        <td>.44</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>12</td>
+                                                                        <td>.48</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>13</td>
+                                                                        <td>.52</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>14</td>
+                                                                        <td>.56</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>15</td>
+                                                                        <td>.6</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>16</td>
+                                                                        <td>.64</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>17</td>
+                                                                        <td>.68</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>18</td>
+                                                                        <td>.72</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>19</td>
+                                                                        <td>.76</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>20</td>
+                                                                        <td>.8</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>21</td>
+                                                                        <td>.84</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>22</td>
+                                                                        <td>.88</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>23</td>
+                                                                        <td>.92</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>24</td>
+                                                                        <td>.96</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>25</td>
+                                                                        <td>1</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <h2 class="sub-header">Plates</h2>
+                                                        <div class='table-responsive'>
+                                                            <table id="classTable" class="table table-bordered table-sm">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th># Signed Out</th>
+                                                                        <th>Input for 'QTY'</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td>1</td>
+                                                                        <td>.05</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>2</td>
+                                                                        <td>.1</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>3</td>
+                                                                        <td>.15</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>4</td>
+                                                                        <td>.2</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>5</td>
+                                                                        <td>.25</td>
+                                                                    <tr>
+                                                                        <td>6</td>
+                                                                        <td>.3</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>7</td>
+                                                                        <td>.35</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>8</td>
+                                                                        <td>.4</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>9</td>
+                                                                        <td>.45</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>10</td>
+                                                                        <td>.5</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>11</td>
+                                                                        <td>.55</td>
+                                                                    <tr>
+                                                                        <td>12</td>
+                                                                        <td>.6</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>13</td>
+                                                                        <td>.65</td>
+                                                                    <tr>
+                                                                        <td>14</td>
+                                                                        <td>.7</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>15</td>
+                                                                        <td>.75</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>16</td>
+                                                                        <td>.8</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>17</td>
+                                                                        <td>.85</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>18</td>
+                                                                        <td>.9</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>19</td>
+                                                                        <td>.95</td>
+                                                                    <tr>
+                                                                        <td>20</td>
+                                                                        <td>1</td>
+                                                                    </tr>                                                                    
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class='modal-footer'>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </th>
+                                        <th class='col text-center'>Cost</th>
+                                    </tr>
+                                </div>
+                            </thead>
+                            <tbody class='order_table'>
+                                <div class='row'>
+                                {% for form in formset %}
+                                {% if form.non_field_errors %}
+                                <tr>
+                                    <td colspan="6">
+                                        {{ form.non_field_errors }}
+                                    </td>
+                                </tr>
+                                {% endif %}
+                                <tr>
+                                    {% for hidden_field in form.hidden_fields %} 
+                                    {{ hidden_field.errors }} 
+                                    {{ hidden_field }}
+                                    {% endfor %}
+                                    <td class='col text-center'>
+                                        {{ form.inventory.errors }}
+                                        {{ form.inventory }}
+                                    </td>
+                                    <td class="col text-center inv_container">
+                                        <p> --------- </p>
+                                    </td>
+                                    <td class="col text-center inv_vol"> 
+                                        <p> --------- </p>  
+                                    </td>
+                                    <td class='col'>
+                                        {{ form.qty.errors }}
+                                        {{ form.qty }}
+                                    </td>
+                                    {% if user.is_staff is True %}
+                                    <td class='col text-center staff' id='id_cost'>
+                                        {{ form.line_cost.errors }}
+                                        {{ form.line_cost }}
+                                    </td>
+                                    {% else %}
+                                    <td class='col text-center'>
+                                        {{ form.line_cost.errors }}
+                                        {{ form.line_cost }}
+                                    </td>
+                                    {% endif %}
+                                </tr>                            
+                                {% endfor %}
+                                </div>                        
+                            </tbody>
+                            </table>                
+                        </td>                    
+                    </tr>
+                </table>
+            </div>
+        </fieldset>
 
-    $(function () {
-        $('#order_table .order_table tr').formset({
-            prefix:'{{ formset.prefix }}',
-            addText:'Add Item',
-            removeText: 'Delete',
-            addCssClass:'btn btn-default',
-            deleteCssClass:'btn btn-danger',
-            added: register_row,
-            removed: deregister_row
-        });            
-        $('#order_table tbody tr.dynamic-form').map(function (index, row){
-            register_row($(row));        
-        });    
-    });
-    $(".chosen-select").chosen({search_contains:true});
-    $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
+        <fieldset>          
+            <div class='row'>
+                    <div class = 'col-xs-3'>
+                        <!-- <input id='add_order_line' class='btn btn-default' type='button' value="Add Item" /> -->
+                    </div>
+                    <div class='col-xs-offset-6 col-xs-2 text-right'>
+                        <p><strong>Total</strong></p>
+                        <p class="aggregate_total">
+                        {{order_form.instance.total | currency}}</p>
+                    </div>
+            </div>
+        </fieldset>
+            <p>&nbsp;</p>         
+            <div class='row'>
+            <hr/>
+                <p></p>
+                <div class='col-xs-10'>
+                    <input type="button" id='resetform' value="Cancel" class="btn btn-danger">
+                </div>
+                <div class="col-xs-2">
+                    <input id='SOsubmit' class='btn btn-primary pull-right' type='submit' value='Complete Order' name='submit'>
+                </div>
+            </div>
+            
+    </form>
+    <script type="text/javascript">
+
+        $(function () {
+            $('#order_table .order_table tr').formset({
+                prefix:'{{ formset.prefix }}',
+                addText:'Add Item',
+                removeText: 'Delete',
+                addCssClass:'btn btn-default',
+                deleteCssClass:'btn btn-danger',
+                added: register_row,
+                removed: deregister_row
+            });            
+            $('#order_table tbody tr.dynamic-form').map(function (index, row){
+                register_row($(row));        
+            });    
+        });
+        $(".chosen-select").chosen({search_contains:true});
+        $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
 
 
-    //to allow error message to show in page rather than in console.
-    $('.remover').removeAttr('required'); 
+        //to allow error message to show in page rather than in console.
+        $('.remover').removeAttr('required'); 
 
-    setTimeout(function(){
-        $('.alert-success').hide();
-        }, 15000);
+        setTimeout(function(){
+            $('.alert-success').hide();
+            }, 15000);
 
-</script>
-
-<p>&nbsp;</p>
+    </script>
+    <p>&nbsp;</p>
+{% else %}    
+    <div class='row'>
+        <div class='col-xs-12'>
+            <h2>Please use media sign-out tablets to sign out food.</h2>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}
