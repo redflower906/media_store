@@ -55,10 +55,10 @@
             </table>
         </div>
         <div class='row hidden'>
-            <div class='col-xs-2'>
+            {% comment %} <div class='col-xs-2'>
                 {{ order_form.department.errors }}
                 {{ order_form.department }}
-            </div>
+            </div> {% endcomment %}
             <div class='col-xs-2'>
                 {{ order_form.is_recurring.errors }}
                 {{ order_form.is_recurring }}
@@ -488,7 +488,7 @@
             });    
         });
         $(".chosen-select").chosen({search_contains:true});
-        $("#id-dept-show").prop('disabled', true).trigger("chosen:updated");
+        //$("#id-dept-show").prop('disabled', true).trigger("chosen:updated");
 
 
         //to allow error message to show in page rather than in console.
