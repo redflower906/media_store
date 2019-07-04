@@ -174,9 +174,9 @@ $(function(){
     });
 });
 
-// $(function(){
-//     $('#changeDept').find('.chosen-select').attr('id', 'id-dept-show');
-// });
+$(function(){
+    $('#changeDept').find('.chosen-select').attr('id', 'id-dept-show');
+});
 
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
@@ -299,6 +299,7 @@ $(function autoChoose(){
             success: function(data){
                 if (data.r_id) {
                     $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
+                    $("#id-dept-show").val(data['d_id']).trigger("chosen:updated");
 
                     if(data.p_id){
                         $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
@@ -309,6 +310,7 @@ $(function autoChoose(){
                 }
                 else{
                     $("#id_order-department").val('').trigger("chosen:updated");
+                    $("#id-dept-show").val('').trigger("chosen:updated");
 
                 }
             },
