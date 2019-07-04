@@ -77,7 +77,7 @@ urlpatterns = [
     url(r'^signout/remainder', views.sign_outs_remainder, name='remainder'),
     url(r'^signout/new', views.create_signout, name='create_signout'),
     url(r'^signout/remtest', views.auto_bv_so, name='remtest'),    
-    url(r'^signout/testnew', views.SO_test, name='SO_test'),
+    #url(r'^signout/testnew', views.SO_test, name='SO_test'),
 
 #tiny mce?
     url(r'^tinymce/', include('tinymce.urls')),
