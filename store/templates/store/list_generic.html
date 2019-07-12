@@ -148,6 +148,8 @@
     <div class="pagination">
 
         <span id='pageId' class="step-links">
+            {{pages.number}}
+            {{pages.paginator.page_range}}
             {% if pages.has_previous %}
                 <span class='pages'>
                     <a href="?page={{ pages.previous_page_number }}">previous</a>
