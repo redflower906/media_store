@@ -148,8 +148,6 @@
     <div class="pagination">
 
         <span id='pageId' class="step-links">
-            {% comment %} Regular Django pagination won't work because the views aren't separate pages, they're tabs within the same page. So clicking next affects all tabs. So it will 
-            default to the smallest list. if the smallest list has 3 pages, 1-2 or 1-3 should work, but anything over 2 or 3 will send all tabs to the last page. {% endcomment %}
             {% if pages.has_previous %}
                 <span class='pages'>
                     <a href="?page={{ pages.previous_page_number }}">previous</a>
