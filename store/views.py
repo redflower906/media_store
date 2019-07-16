@@ -794,36 +794,42 @@ def testing_view_order(request):
 
     #pagination
     page = request.GET.get('page')
-    paginatorI = Paginator(incomp_queryset, 50)
-    paginatorR = Paginator(recur_queryset, 50)
-    paginatorCNB = Paginator(compNotBill_queryset, 200)
-    paginatorCB = Paginator(compBill_queryset, 200)
-    paginatorCAN = Paginator(cancel_queryset, 50)
+    numList = []
+
+    i_len = incomp_queryset.len().append(numList)
+    r_len = recur_queryset.len().append(numList)
+    cnb_len = compNotBill_queryset.len().append(numList)
+    cb_len = compBill_queryset.len().append(numList)
+    can_len = cancel_queryset.len().append(numList)
+
+    if numList.len() > 0:
+        maxNum = max(numList)
+    else:
+        maxNum = 0
+
+    if maxNum == i_len:
+        paginator = Paginator(incomp_queryset, 50)
+    elif maxNum == r_len:
+        paginator = Paginator(recur_queryset, 50)
+    elif maxNum == cnb_len:
+        paginator = Paginator(compNotBill_queryset, 50)
+    elif maxNum == cb_len:
+        paginator = Paginator(compBill_queryset, 50)
+    else:
+        paginator = Paginator(cancel_queryset, 50)
 
     try:
-        pagesI = paginatorI.page(page)
-        pagesR = paginatorR.page(page)
-        pagesCNB = paginatorCNB.page(page)
-        pagesCB = paginatorCB.page(page)
-        pagesCAN = paginatorCAN.page(page)
+        pages = paginator.page(page)
     except PageNotAnInteger:
-        pagesI = paginatorI.page(1)
-        pagesR = paginatorR.page(1)
-        pagesCNB = paginatorCNB.page(1)
-        pagesCB = paginatorCB.page(1)
-        pagesCAN = paginatorCAN.page(1)
+        pages = paginator.page(1)
     except EmptyPage:
-        pagesI = paginatorI.page(paginatorI.num_pages)
-        pagesR = paginatorR.page(paginatorR.num_pages)
-        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
-        pagesCB = paginatorCB.page(paginatorCB.num_pages)
-        pagesCAN = paginatorCAN.page(paginatorCAN.num_pages)
+        pages = paginator.page(paginator.num_pages)
 
-    pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
-    pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
-    pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
-    pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
-    pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
+    pageI_query = incomp_queryset.filter(id__in=[page.id for page in pages])
+    pageR_query = recur_queryset.filter(id__in=[page.id for page in pages])
+    pageCNB_query = compNotBill_queryset.filter(id__in=[page.id for page in pages])
+    pageCB_query = compBill_queryset.filter(id__in=[page.id for page in pages])
+    pageCAN_query = cancel_queryset.filter(id__in=[page.id for page in pages])
     
     incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
     recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
