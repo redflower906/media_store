@@ -796,24 +796,24 @@ def testing_view_order(request):
     page = request.GET.get('page')
     numList = []
 
-    i_len = incomp_queryset.len().append(numList)
-    r_len = recur_queryset.len().append(numList)
-    cnb_len = compNotBill_queryset.len().append(numList)
-    cb_len = compBill_queryset.len().append(numList)
-    can_len = cancel_queryset.len().append(numList)
+    i_count = incomp_queryset.count().append(numList)
+    r_count = recur_queryset.count().append(numList)
+    cnb_count = compNotBill_queryset.count().append(numList)
+    cb_count = compBill_queryset.count().append(numList)
+    can_count = cancel_queryset.count().append(numList)
 
     if numList.len() > 0:
         maxNum = max(numList)
     else:
         maxNum = 0
 
-    if maxNum == i_len:
+    if maxNum == i_count:
         paginator = Paginator(incomp_queryset, 50)
-    elif maxNum == r_len:
+    elif maxNum == r_count:
         paginator = Paginator(recur_queryset, 50)
-    elif maxNum == cnb_len:
+    elif maxNum == cnb_count:
         paginator = Paginator(compNotBill_queryset, 50)
-    elif maxNum == cb_len:
+    elif maxNum == cb_count:
         paginator = Paginator(compBill_queryset, 50)
     else:
         paginator = Paginator(cancel_queryset, 50)
