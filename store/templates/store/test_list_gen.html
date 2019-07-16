@@ -153,10 +153,10 @@
                     <a href="?page={{ pages.previous_page_number }}">previous</a>
                 </span>
             {% endif %}
-            {% for i in specpages.paginator.page_range %}
+            {% for i in specPage.paginator.page_range %}
                 {% if specpages.number == i %}
                     <span class="current">
-                        Page {{ specpages.number }} of {{ specpages.paginator.num_pages }}.
+                        Page {{ specPage.number }} of {{ specPage.paginator.num_pages }}.
                     </span>
                 {% endif %}
             {% endfor %}
