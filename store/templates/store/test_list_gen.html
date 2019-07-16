@@ -154,7 +154,7 @@
                 </span>
             {% endif %}
             {% for i in specPage.paginator.page_range %}
-                {% if specpages.number == i %}
+                {% if specPage.number == i %}
                     <span class="current">
                         Page {{ specPage.number }} of {{ specPage.paginator.num_pages }}.
                     </span>
