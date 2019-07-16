@@ -804,7 +804,7 @@ def testing_view_order(request):
 
     numList.extend((i_count, r_count, cnb_count, cb_count, can_count))
 
-    if numList.len() > 0:
+    if len(numList) > 0:
         maxNum = max(numList)
     else:
         maxNum = 0
