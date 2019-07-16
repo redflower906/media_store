@@ -679,6 +679,202 @@ def view_order(request):
         'days': days,
         })
 
+
+@login_required
+def testing_view_order(request):
+
+    ORDER_LIST_HEADERS_INCOMP = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Submitted', 'date_created'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        # ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERS_RECUR = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Submitted', 'date_created'),
+        ('Due Date', 'due_date'),
+        ('Start Date', 'date_recurring_start'),
+        ('End Date', 'date_recurring_stop'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        # ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERS_CNB = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Submitted', 'date_created'),
+        ('Date Complete', 'date_complete'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        # ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERS_CB = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Submitted', 'date_created'),
+        ('Date Billed', 'date_billed'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        # ('Order Total', 'order_total')
+    )
+
+    ORDER_LIST_HEADERS_CAN = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Submitted', 'date_created'),
+        ('Canceled', 'date_modified'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        # ('Order Total', 'order_total')
+    )
+    sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
+    sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
+    sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
+    sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
+    sort_headers5 = SortHeaders(request, ORDER_LIST_HEADERS_CAN)
+
+
+    user = request.user
+    
+    # if user is not staff, only show orders where user is requester OR submitter. eventually add manager to view all department/lab orders ~FIX~
+    if user.is_staff is False:
+        orders = Order.objects.preferred_order().filter(Q(submitter=user)|Q(requester=user))
+    else:
+        orders = Order.objects.preferred_order().all()
+
+    today = date.today()
+    nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
+
+    if today >= nextbill:
+        nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
+        twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    
+    days = (nextbill - today).days
+
+    #delete canceled orders that were created over 31 days ago
+    dates = Order.objects.all()
+    for x in dates:
+        dc = x.date_created
+        days_to_delete = (today-dc).days
+        if x.status == 'Canceled' and days_to_delete > 31:
+            x.delete()
+
+    incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
+    status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').order_by(sort_headers1.get_order_by())
+    #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
+    recur_queryset = orders.filter(is_recurring=True).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
+    status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').order_by(sort_headers2.get_order_by())
+    compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').order_by(
+    sort_headers3.get_order_by())
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
+    sort_headers4.get_order_by())
+    cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').order_by(sort_headers5.get_order_by())
+
+    #pagination
+    page = request.GET.get('page')
+    paginatorI = Paginator(incomp_queryset, 50)
+    paginatorR = Paginator(recur_queryset, 50)
+    paginatorCNB = Paginator(compNotBill_queryset, 200)
+    paginatorCB = Paginator(compBill_queryset, 200)
+    paginatorCAN = Paginator(cancel_queryset, 50)
+
+    try:
+        pagesI = paginatorI.page(page)
+        pagesR = paginatorR.page(page)
+        pagesCNB = paginatorCNB.page(page)
+        pagesCB = paginatorCB.page(page)
+        pagesCAN = paginatorCAN.page(page)
+    except PageNotAnInteger:
+        pagesI = paginatorI.page(1)
+        pagesR = paginatorR.page(1)
+        pagesCNB = paginatorCNB.page(1)
+        pagesCB = paginatorCB.page(1)
+        pagesCAN = paginatorCAN.page(1)
+    except EmptyPage:
+        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesR = paginatorR.page(paginatorR.num_pages)
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+        pagesCB = paginatorCB.page(paginatorCB.num_pages)
+        pagesCAN = paginatorCAN.page(paginatorCAN.num_pages)
+
+    pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
+    pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
+    pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
+    pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
+    pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
+    
+    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
+    cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
+
+    if request.method == 'POST':
+        # for each order category, check to see if the form had been updated and save
+        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+        order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
+        if order_formset.has_changed() and order_formset.is_valid():
+            order_formset.save()
+
+    return render(request,
+        'store/test_order_view.html',{
+        'headers1': list(sort_headers1.headers()),
+        'headers2': list(sort_headers2.headers()),
+        'headers3': list(sort_headers3.headers()),
+        'headers4': list(sort_headers4.headers()),
+        'headers5': list(sort_headers5.headers()),
+        'user': user,
+        'orders': orders,
+        'pagesI': pagesI,
+        'pagesR': pagesR,
+        'pagesCNB': pagesCNB,
+        'pagesCB': pagesCB,
+        'pagesCAN': pagesCAN,
+        'incomp':incomp,
+        'recur':recur,
+        'compNotBill':compNotBill,
+        'compBill':compBill,
+        'cancel': cancel,
+        'days': days,
+        })
+
 def export_ordersCNB(request):
     
     orders = Order.objects.all()

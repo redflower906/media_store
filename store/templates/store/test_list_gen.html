@@ -1,0 +1,170 @@
+{% extends "store/empty_base.html" %}
+{% block content %}
+{% load store_tags %}
+
+    <table class="table table-hover" id="order_table">
+        {{ orderforms.management_form }}
+        
+        {% if orderforms|length is not 0 %}
+            <thead>
+                <tr id="table_header">
+                    <th></th>
+                    {% table_header headers %}
+                    <th>Order Total</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody class="searchable">
+                {% for orderform in orderforms %}
+                <tr class="order_{{orderform.instance.id}} koala {{orderform.instance.status}}">
+                    <td class="toggle_notes" >
+                        <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                    </td>
+                    <!-- not staff -->
+                    {% if user.is_staff is False and orderform.instance.status == 'Submitted' or user.is_staff is True %}
+                    <td>
+                        <a href="{% url 'edit_order' orderform.instance.id %}">{{orderform.instance.id}}</a>
+                    </td>
+                    {% else %}
+                    <!-- order ID -->
+                    <td class='ordernum'>
+                        {{orderform.instance.id}}
+                    </td>
+                    {% endif %}
+                    {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
+                    <td>{{orderform.instance.department.department_name}}</td> 
+                    <td>{{orderform.instance.department.number}}</td>
+                    <td>{{orderform.instance.requester.user_profile.name}}</td>
+                    <td>{{orderform.instance.date_created}}</td>
+                    {% if orderforms == cancel %}
+                    <td>{{orderform.instance.date_modified}}</td>
+                        {% if orderform.instance.is_recurring %}
+                        <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% else %}
+                        <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% endif %}
+                    <!-- recurring -->
+                    {% elif orderforms == recur %}
+                    <td class='recur{{orderform.instance.is_recurring}}'>{{orderform.instance.due_date}}</td>
+                    <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
+                    <td class='date-stop{{orderform.instance.id}}'>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
+                    <!-- completed not billed -->
+                    {% elif orderforms == compNotBill%}
+                    <td>{{orderform.instance.date_complete}}</td>
+                        {% if orderform.instance.is_recurring %}
+                        <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% else %}
+                        <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% endif %}
+                    <!-- why??? -->
+                    {% elif orderforms == incomp %}     
+                    {% else %}
+                        {% if orderforms == compBill %}
+                        <td>{{orderform.instance.date_billed}}</td>
+                        {% endif %}
+                        {% if orderform.instance.is_recurring %}
+                        <td class='recur'>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% else %}
+                        <td>{{ orderform.instance.is_recurring|yesno:"Yes,No" }}</td>
+                        {% endif %}
+                    {% endif %}                
+                    <td>{{orderform.instance.location}}</td>
+                    <!-- staff user -->                        
+                    {% for hidden_field in orderform.hidden_fields %} 
+                            {{ hidden_field.errors }} 
+                            {{ hidden_field }} 
+                    {% endfor %}
+                    {% if user.is_staff is True %}
+                        <td class='status {{orderform.instance.status}}'>
+                            {{orderform.status.errors}}
+                            {{orderform.status}}
+                        </td>
+                    {% else %}
+                    {% comment %} customer: can't change status {% endcomment %}
+                    <td class='{{orderform.instance.status}}'>{{orderform.instance.status}}</td>
+                    <td style='display:none;' class='status {{orderform.instance.status}}'>
+                            {{orderform.status.errors}}
+                            {{orderform.status}}
+                    </td>
+                    {% endif %}
+                    <td class='ordertotal {{orderform.instance.id}}'>${{orderform.instance.order_total}}</td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'email' orderform.instance.id %}" class="btn btn-default">Email</a>
+                    </td>
+                    <td class="col-xs-1" id="center_columns">
+                        <a href="{% url 'copy_order' orderform.instance.id %}" class='btn btn-success'>Copy</a>
+                    </td>
+                    {% if orderform.instance.status == 'Submitted' and user.is_staff is False %}
+                    <td class="col-xs-1" id="center_columns">
+                        <!-- <a href="{% url 'delete_order' id=orderform.instance.id %}" class='btn btn danger'>Delete</a> -->
+                        <input type='submit' value='Cancel' class=" btn btn-danger cancelbtn">
+                    </td>
+                    {% endif %}
+                    <tr id="notes" class="collapse" role="text">                        
+                        <td colspan="10">
+                            <table class ='table'>
+                                {% if orderform.instance.orderline_set.all %}
+                                <thead>
+                                    <tr class='invclass' id="table_header">
+                                        <th>Submitter</th>
+                                        <th>Description</th>
+                                        {% if orderforms == recur %}
+                                            <th>Last Complete Date</th>
+                                            <th>How Often</th>
+                                        {% endif %}
+                                        <th>Quantity</th>
+                                        <th>Cost</th>
+                                        <th>Notes</th>
+                                    </tr>
+                                {% for line in orderform.instance.orderline_set.all %}                                
+                                </thead>
+                                <tr>
+                                    <td>{{orderform.instance.submitter.user_profile.name}}</td>
+                                    <td class='inv {{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
+                                    <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
+                                    {% if orderforms == recur %} 
+                                        <td>{{orderform.instance.date_complete}}</td>
+                                        <td>{{orderform.instance.get_weeks_display}}</td>
+                                    {% endif %}
+                                    <td>{{line.qty}}</td>
+                                    <td class = 'linetotal {{orderform.instance.id}}'>${{line.total}}</td>
+                    <td>{{orderform.instance.notes_order}}</td>
+                                {% endfor %}
+                                {% else %}
+                                    <div><p>There are no order details for this order.</p></div>
+                                    </tr>
+                                {% endif %}
+                            </table>                            
+                        </td>                              
+                    </tr>
+                </tr>
+                {% endfor %}
+            </tbody>
+        {% else %}
+            <div><p>There are no orders at this time.</p></div>        
+        {% endif %}    
+    </table>
+    <div class="pagination">
+
+        <span id='pageId' class="step-links">
+            {% if pages.has_previous %}
+                <span class='pages'>
+                    <a href="?page={{ pages.previous_page_number }}">previous</a>
+                </span>
+            {% endif %}
+            {% for i in pages.paginator.page_range %}
+                {% if pages.number == i %}
+                    <span class="current">
+                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                    </span>
+                {% endif %}
+            {% endfor %}
+            {% if pages.has_next %}
+                <span class='pages'>
+                    <a href="?page={{ pages.next_page_number }}">next</a>
+                </span>
+            {% endif %}
+        </span>
+    </div>
+{% endblock %} 

@@ -56,6 +56,7 @@ urlpatterns = [
     url(r'^order/edit/(?P<id>[0-9]*)$', views.edit_order, name='edit_order'),
     url(r'^order/copy/(?P<copy_id>[0-9]*)$', views.create_order, name='copy_order'),
     url(r'^order/view', views.view_order, name='view_order'),
+    url(r'^order/test_view', views.testing_view_order, name='testing_view_order'),
     url(r'^order', views.view_order, name='view_order'),
     url(r'^export/csv/complete$', views.export_ordersCNB, name='export_ordersCNB'),
     url(r'^export/csv/progress$', views.export_ordersIP, name='export_ordersIP'),

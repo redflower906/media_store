@@ -1,0 +1,161 @@
+{% extends "store/base.html" %} 
+{% block navbar %} 
+{% include "store/navbar.html" %}
+{% endblock %} 
+{% block content %}
+{% load static %}
+<hr/>
+
+
+{% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
+<div class="alert alert-danger" role='alert'>There are {{days}} days until the next billing cycle.</div>
+{% endif %}
+<div class="alert alert-warning hidden recur3" role='alert'>You have one or more orders that will end in 3 weeks. If you want to extend the end date, please edit the order(s).</div>
+<div class="alert alert-danger hidden recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
+
+<ul class="nav nav-tabs">
+    <li class="active">
+        <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" data-toggle="tab" href="#can">Canceled</a>
+    </li>
+    <li class="form-group pull-right">                    
+        <input id="filter" type="text" class="form-control" placeholder="Search for...">
+    </li>
+</ul>
+
+<form method="post" action="" id="orderstatusform">
+{% csrf_token %}
+<div class="tab-content">
+    <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Submitted/In-Progress Orders</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=incomp pages=pagesI headers=headers1%}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Recurring Orders</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=recur pages=pagesR headers=headers2%}
+            </div>
+        </div>
+        {% if user.is_staff is True %}
+        <a href="{% url 'export_ordersIP' %}" name='data' class="btn btn-info">Export In Progress</a>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Complete, Not Billed</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=compNotBill pages=pagesCNB headers=headers3%}
+            </div>
+        </div>
+        {% if user.is_staff is True %}
+        <a href="{% url 'export_ordersCNB' %}" name='data' class="btn btn-info">Export Billing Data</a>
+        <button type='submit' class="btn btn-warning" onclick="changeAllBill()">Change to billed</button>
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="complete_billed">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Complete and Billed</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=compBill pages=pagesCB headers=headers4%}
+            </div>
+        </div>
+    </div>
+    <div role="tabpanel" class="tab-pane fade" id="can">
+        <div class="row">
+            <div class="col-xs-12">
+                <h3>Canceled</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 workorder_list">
+                {%include "store/list_generic.html" with orderforms=cancel pages=pagesCAN headers=headers5%}
+            </div>
+        </div>
+        {% if user.is_staff is True %}
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
+    </div>
+</div>
+</form>
+<script type="text/javascript">
+
+//highlight changed status, if recurring order is ending soon, if order has custom order within
+    $(function highlight(){
+        var date = moment();
+        $(this).find("[class^='date-stop']").each(function(){
+            var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+            var days = endDate.diff(date, 'days');
+            if( 21 >= days && days >= 7){
+                $(this).parent().addClass('threeWeeks');
+            } else if( 7 > days && days >= 0){
+                $(this).parent().addClass('oneWeek');
+            } 
+        });    
+        //show alert for recurring order ending in either 3 or 1 week(s)
+        if ($('.threeWeeks').length){
+            $('.recur3').removeClass('hidden');
+        } else {
+            $('.recur3').addClass('hidden');
+        }
+        if ($('.oneWeek').length){
+            $('.recur1').removeClass('hidden');
+        } else {
+            $('.recur1').addClass('hidden');
+        }
+
+        $(this).find("[class^='inv']").each(function(){
+            var orderInv = $(this).text();
+            var lineCost = $(this).siblings('.linetotal').text();
+            if(orderInv == 'Custom Order' && lineCost == '$1.00'){
+                $(this).css({'color':'red', 'font-weight':'bold'});
+                $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
+                $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'});
+            }
+        });
+    });
+
+    $(function(){
+        $('select').on('change', function(e){
+            $(e.target).removeClass();
+            $(e.target).addClass(e.target.value + ' form-control');
+            if($(this).closest('.koala').hasClass(e.target.value)){
+                if($(this).closest('.koala').hasClass('sdd')){
+                    $(this).closest('.koala').removeClass('sdd');
+                }
+            }else{
+                $(this).closest('.koala').addClass('sdd');
+            }
+        });
+    });    
+</script>
+
+{% endblock %}
