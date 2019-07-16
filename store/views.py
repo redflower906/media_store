@@ -833,11 +833,11 @@ def testing_view_order(request):
     pageCB_query = compBill_queryset.filter(id__in=[page.id for page in pages])
     pageCAN_query = cancel_queryset.filter(id__in=[page.id for page in pages])
     
-    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
-    cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
+    incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
+    cancel = OrderStatusFormSet(queryset=cancel_queryset, prefix='cancel')
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
