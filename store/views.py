@@ -802,7 +802,7 @@ def testing_view_order(request):
     cb_count = compBill_queryset.count()
     can_count = cancel_queryset.count()
 
-    numList.extend(i_count, r_count, cnb_count, cb_count, can_count)
+    numList.extend((i_count, r_count, cnb_count, cb_count, can_count))
 
     if numList.len() > 0:
         maxNum = max(numList)
