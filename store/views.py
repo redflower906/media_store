@@ -827,17 +827,42 @@ def testing_view_order(request):
     except EmptyPage:
         pages = paginator.page(paginator.num_pages)
 
-    pageI_query = incomp_queryset.filter(id__in=[page.id for page in pages])
-    pageR_query = recur_queryset.filter(id__in=[page.id for page in pages])
-    pageCNB_query = compNotBill_queryset.filter(id__in=[page.id for page in pages])
-    pageCB_query = compBill_queryset.filter(id__in=[page.id for page in pages])
-    pageCAN_query = cancel_queryset.filter(id__in=[page.id for page in pages])
+    paginatorI = Paginator(incomp_queryset, 50)
+    paginatorR = Paginator(recur_queryset, 50)
+    paginatorCNB = Paginator(compNotBill_queryset, 200)
+    paginatorCB = Paginator(compBill_queryset, 200)
+    paginatorCAN = Paginator(cancel_queryset, 50)
+
+    try:
+        pagesI = paginatorI.page(page)
+        pagesR = paginatorR.page(page)
+        pagesCNB = paginatorCNB.page(page)
+        pagesCB = paginatorCB.page(page)
+        pagesCAN = paginatorCAN.page(page)
+    except PageNotAnInteger:
+        pagesI = paginatorI.page(1)
+        pagesR = paginatorR.page(1)
+        pagesCNB = paginatorCNB.page(1)
+        pagesCB = paginatorCB.page(1)
+        pagesCAN = paginatorCAN.page(1)
+    except EmptyPage:
+        pagesI = paginatorI.page(paginatorI.num_pages)
+        pagesR = paginatorR.page(paginatorR.num_pages)
+        pagesCNB = paginatorCNB.page(paginatorCNB.num_pages)
+        pagesCB = paginatorCB.page(paginatorCB.num_pages)
+        pagesCAN = paginatorCAN.page(paginatorCAN.num_pages)
+
+    pageI_query = incomp_queryset.filter(id__in=[pageI.id for pageI in pagesI])
+    pageR_query = recur_queryset.filter(id__in=[pageR.id for pageR in pagesR])
+    pageCNB_query = compNotBill_queryset.filter(id__in=[pageCNB.id for pageCNB in pagesCNB])
+    pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
+    pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
-    incomp = OrderStatusFormSet(queryset=incomp_queryset, prefix='incomp')
-    recur = OrderStatusFormSet(queryset=recur_queryset, prefix='recur')
-    compNotBill = OrderStatusFormSet(queryset=compNotBill_queryset, prefix='compNotBill')
-    compBill = OrderStatusFormSet(queryset=compBill_queryset, prefix='compBill')
-    cancel = OrderStatusFormSet(queryset=cancel_queryset, prefix='cancel')
+    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
+    cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
