@@ -814,9 +814,9 @@ def testing_view_order(request):
     elif maxNum == r_count:
         paginator = Paginator(recur_queryset, 50)
     elif maxNum == cnb_count:
-        paginator = Paginator(compNotBill_queryset, 50)
+        paginator = Paginator(compNotBill_queryset, 200)
     elif maxNum == cb_count:
-        paginator = Paginator(compBill_queryset, 50)
+        paginator = Paginator(compBill_queryset, 200)
     else:
         paginator = Paginator(cancel_queryset, 50)
 
@@ -902,6 +902,11 @@ def testing_view_order(request):
         'compBill':compBill,
         'cancel': cancel,
         'days': days,
+        'pagesI': pagesI,
+        'pagesR': pagesR,
+        'pagesCNB': pagesCNB,
+        'pagesCB': pagesCB,
+        'pagesCAN': pagesCAN,
         })
 
 def export_ordersCNB(request):
