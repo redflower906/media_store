@@ -796,11 +796,13 @@ def testing_view_order(request):
     page = request.GET.get('page')
     numList = []
 
-    i_count = incomp_queryset.count().append(numList)
-    r_count = recur_queryset.count().append(numList)
-    cnb_count = compNotBill_queryset.count().append(numList)
-    cb_count = compBill_queryset.count().append(numList)
-    can_count = cancel_queryset.count().append(numList)
+    i_count = incomp_queryset.count()
+    r_count = recur_queryset.count()
+    cnb_count = compNotBill_queryset
+    cb_count = compBill_queryset.count()
+    can_count = cancel_queryset.count()
+
+    numList.extend(i_count, r_count, cnb_count, cb_count, can_count)
 
     if numList.len() > 0:
         maxNum = max(numList)
