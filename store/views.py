@@ -798,7 +798,7 @@ def testing_view_order(request):
 
     i_count = incomp_queryset.count()
     r_count = recur_queryset.count()
-    cnb_count = compNotBill_queryset
+    cnb_count = compNotBill_queryset.count()
     cb_count = compBill_queryset.count()
     can_count = cancel_queryset.count()
 
