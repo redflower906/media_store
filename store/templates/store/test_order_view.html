@@ -6,7 +6,7 @@
 {% load static %}
 <hr/>
 
-
+<b>THIS IS THE TEST VIEW</b>
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="alert alert-danger" role='alert'>There are {{days}} days until the next billing cycle.</div>
 {% endif %}
