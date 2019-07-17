@@ -156,8 +156,11 @@
             {% for i in pages.paginator.page_range %}
                 {% if pages.number == i %}
                     <span class="current">
-                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}. specPage = {{specPage}} DOES THIS PRINT??
+                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}. 
                     </span>
+                    <div class={{specPage}}>
+                        specPage = {{specPage}} DOES THIS PRINT??
+                    </div>
                 {% endif %}
             {% endfor %}
             {% if pages.has_next %}
