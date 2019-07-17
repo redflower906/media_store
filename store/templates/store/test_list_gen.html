@@ -148,7 +148,7 @@
     <div class="pagination">
 
         <span id='pageId' class="step-links">
-            {% if specPage.has_previous %}
+            {% if pages.has_previous %}
                 <span class='pages'>
                     <a href="?page={{ pages.previous_page_number }}">previous</a>
                 </span>
@@ -160,7 +160,7 @@
                     </span>
                 {% endif %}
             {% endfor %}
-            {% if specPage.has_next %}
+            {% if pages.has_next %}
                 <span class='pages'>
                     <a href="?page={{ pages.next_page_number }}">next</a>
                 </span>
