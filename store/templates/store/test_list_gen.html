@@ -148,19 +148,20 @@
     <div class="pagination">
 
         <span id='pageId' class="step-links">
-            {% if specPage.has_previous %}
+            {% if pages.has_previous %}
                 <span class='pages'>
                     <a href="?page={{ pages.previous_page_number }}">previous</a>
                 </span>
             {% endif %}
-            {% for i in specPage.specPaginator.page_range %}
-                {% if specPage.number == i %}
+            {% for i in pages.paginator.page_range %}
+                {% if pages.number == i %}
                     <span class="current">
-                        Page {{ specPage.number }} of {{ specPage.specPaginator.num_pages }}.
+                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                        specPage = {{specPage.number}}
                     </span>
                 {% endif %}
             {% endfor %}
-            {% if specPage.has_next %}
+            {% if pages.has_next %}
                 <span class='pages'>
                     <a href="?page={{ pages.next_page_number }}">next</a>
                 </span>
