@@ -156,8 +156,7 @@
             {% for i in pages.paginator.page_range %}
                 {% if pages.number == i %}
                     <span class="current">
-                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
-                        {{specPage.paginator.num_pages}} 
+                        Page {{ specPage.number }} of {{ specPage.nator.num_pages }}.
                     </span>
                 {% endif %}
             {% endfor %}
@@ -171,6 +170,7 @@
     <script type="text/javascript">
     // temp pagination fix
         $(function(){
+            console.log('1. is this working at all?');
             var arr = []
             $('.pagination').each(function(){
                 var pag = $('.pagination').attr('id');

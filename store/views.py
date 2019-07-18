@@ -907,6 +907,11 @@ def testing_view_order(request):
         'pagesCNB': pagesCNB,
         'pagesCB': pagesCB,
         'pagesCAN': pagesCAN,
+        'paginatorI': paginatorI,
+        'paginatorR': paginatorR,
+        'paginatorCNB': paginatorCNB,
+        'paginatorCB': paginatorCB,
+        'paginatorCAN': paginatorCAN,
         })
 
 def export_ordersCNB(request):
