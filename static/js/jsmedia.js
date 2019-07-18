@@ -389,13 +389,3 @@ $(function(){
     });
 });
 
-// temp pagination fix
-$(function(){
-    var arr = []
-    $('.pagination').each(function(){
-        var pag = $('.pagination').attr('id');
-        arr.push(pag);
-    });
-    console.log(arr);
-    console.log('is this working at all?')
-})
