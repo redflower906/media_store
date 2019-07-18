@@ -145,7 +145,7 @@
             <div><p>There are no orders at this time.</p></div>        
         {% endif %}    
     </table>
-    <div class="pagination">
+    <div class="pagination" id='{{specPage.paginator.num_pages}}'>
 
         <span id='pageId' class="step-links">
             {% if pages.has_previous %}
