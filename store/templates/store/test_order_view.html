@@ -162,6 +162,7 @@
         var arr = [];
         console.log($('.pagination').attr('id'));
         $('.pagination').each(function(){
+            $('.pagination').addClass(index);
             var pag = $('.pagination').attr('id');
             arr.push(pag);
             
