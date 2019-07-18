@@ -159,14 +159,19 @@
 
     // temp pagination fix
     $(function(){
-        var arr = [];
-        console.log($('.pagination').attr('id'));
+        var totalArr = [];
+        var currentArr = []
         $('.pagination').each(function(){
-            var pag = $(this).attr('id');
-            arr.push(pag);
+            var tPag = $(this).attr('id');
+            totalArr.push(tPag);
             
         });
-        console.log(arr);
+        $('.current').each(function(){
+            var cPag = $(this).attr('id');
+            currentArr.push(cPag);
+        })
+        console.log(totalArr);
+        console.log(currentArr);
     });   
 </script>
 
