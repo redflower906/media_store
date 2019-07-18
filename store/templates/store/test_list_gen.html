@@ -156,7 +156,8 @@
             {% for i in pages.paginator.page_range %}
                 {% if pages.number == i %}
                     <span class="current">
-                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}. 
+                        Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                        {{specPage.paginator.num_pages}} 
                     </span>
                 {% endif %}
             {% endfor %}
@@ -176,7 +177,7 @@
                 arr.push(pag);
             });
             console.log(arr);
-            console.log('is this working at all?')
+            console.log('is this working at all?');
         })
     </script>
 {% endblock %} 
