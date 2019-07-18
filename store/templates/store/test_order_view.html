@@ -110,6 +110,7 @@
 
 //highlight changed status, if recurring order is ending soon, if order has custom order within
     $(function highlight(){
+        console.log('highlight function');
         var date = moment();
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
@@ -144,6 +145,7 @@
     });
 
     $(function(){
+        console.log('add koala function');
         $('select').on('change', function(e){
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value + ' form-control');
