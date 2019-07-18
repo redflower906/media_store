@@ -160,18 +160,14 @@
     // temp pagination fix
     $(function(){
         var totalArr = [];
-        var currentArr = []
         $('.pagination').each(function(){
             var tPag = $(this).attr('id');
             totalArr.push(tPag);
             
         });
-        $('.current').each(function(){
-            var cPag = $(this).attr('id');
-            currentArr.push(cPag);
-        })
+        var curr =  $('.current').attr('id');
+        console.log(curr);
         console.log(totalArr);
-        console.log(currentArr);
     });   
 </script>
 
