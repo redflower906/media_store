@@ -907,6 +907,7 @@ def testing_view_order(request):
         'pagesCNB': pagesCNB,
         'pagesCB': pagesCB,
         'pagesCAN': pagesCAN,
+        'page': page,
         })
 
 def export_ordersCNB(request):

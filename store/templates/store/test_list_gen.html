@@ -157,6 +157,7 @@
                 {% if pages.number == i %}
                     <span class="current" id='{{specPage.number}}'>
                         Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
+                        {{page}}
                     </span>
                 {% endif %}
             {% endfor %}
