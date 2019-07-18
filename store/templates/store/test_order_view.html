@@ -42,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=incomp specPage=pagesI headers=headers1%}
+                {%include "store/test_list_gen.html" with orderforms=incomp label='incomp' specPage=pagesI headers=headers1%}
             </div>
         </div>
         <div class="row">
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=recur specPage=pagesR headers=headers2%}
+                {%include "store/test_list_gen.html" with orderforms=recur label='recur' specPage=pagesR headers=headers2%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -68,7 +68,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=compNotBill specPage=pagesCNB headers=headers3%}
+                {%include "store/test_list_gen.html" with orderforms=compNotBill label='CNB' specPage=pagesCNB headers=headers3%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=compBill specPage=pagesCB headers=headers4%}
+                {%include "store/test_list_gen.html" with orderforms=compBill label='CB' specPage=pagesCB headers=headers4%}
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=cancel specPage=pagesCAN headers=headers5%}
+                {%include "store/test_list_gen.html" with orderforms=cancel label='CAN' specPage=pagesCAN headers=headers5%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -165,14 +165,10 @@
             totalArr.push(tPag);
             
         });
-        var tI = totalArr[0];
-        var tCNB = totalArr[2];
-        console.log(tI);
-        console.log(tCNB);
         var curr =  $('.current').attr('id');
-
         console.log(curr);
         console.log(totalArr);
+        if curr > 
     });   
 </script>
 
