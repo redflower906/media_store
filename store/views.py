@@ -1250,9 +1250,9 @@ def sign_outs_remainder(request):
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
         twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
-    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[twobills, today]).filter(status__icontains='Complete').aggregate(
+    currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[lastbill, today]).filter(status__icontains='Complete').aggregate(
     Sum('orderline__qty')).values())[0]
-    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[twobills, today]).filter(status__icontains='Complete').aggregate(
+    currentVials = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1263).filter(date_created__range=[lastbill, today]).filter(status__icontains='Complete').aggregate(
     Sum('orderline__qty')).values())[0]
 
     inputBottles = Bottles_Vials.objects.get(item='1245')
