@@ -567,13 +567,13 @@ def view_order(request):
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-    twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
 
-    if today >= nextbill:
+    if today > nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
-        twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
+        # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     
     days = (nextbill - today).days
 
@@ -592,7 +592,7 @@ def view_order(request):
     status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').order_by(sort_headers2.get_order_by())
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').order_by(
     sort_headers3.get_order_by())
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[lastbill, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
     sort_headers4.get_order_by())
     cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').order_by(sort_headers5.get_order_by())
 
@@ -763,13 +763,13 @@ def testing_view_order(request):
 
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-    twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
 
-    if today >= nextbill:
+    if today > nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
-        twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '28','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
+        # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     
     days = (nextbill - today).days
 
@@ -788,7 +788,7 @@ def testing_view_order(request):
     status__icontains='Canceled').exclude(date_recurring_stop__lt = today).prefetch_related('orderline_set').order_by(sort_headers2.get_order_by())
     compNotBill_queryset = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).order_by('date_complete').prefetch_related('orderline_set').order_by(
     sort_headers3.get_order_by())
-    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[twobills, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
+    compBill_queryset = orders.filter(status__icontains='Billed').filter(date_billed__range=[lastbill, today]).order_by('-date_billed').prefetch_related('orderline_set').order_by(
     sort_headers4.get_order_by())
     cancel_queryset = orders.filter(status__icontains='Canceled').order_by('date_created').prefetch_related('orderline_set').order_by(sort_headers5.get_order_by())
 
@@ -1161,12 +1161,12 @@ def auto_bv_so (request):
     orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
 
     if today >= nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '24','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).exclude(status='Canceled').filter(date_created__range=[lastbill, nextbill]).aggregate(
     Sum('orderline__qty')).values())[0]
@@ -1242,12 +1242,12 @@ def sign_outs_remainder(request):
     orders = Order.objects.all()
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
 
     if today > nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
         # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[lastbill, today]).filter(status__icontains='Complete').aggregate(
