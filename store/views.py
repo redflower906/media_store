@@ -1287,6 +1287,9 @@ def sign_outs_remainder(request):
         'inputVials': inputVials,
         'remainderBottles': remainderBottles,
         'remainderVials': remainderVials,
+        'today': today,
+        'nextbill': nextbill,
+        'lastbill': lastbill,
         })
 
 @login_required
