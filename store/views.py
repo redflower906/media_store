@@ -814,9 +814,9 @@ def testing_view_order(request):
     elif maxNum == r_count:
         paginator = Paginator(recur_queryset, 50)
     elif maxNum == cnb_count:
-        paginator = Paginator(compNotBill_queryset, 200)
+        paginator = Paginator(compNotBill_queryset, 50)
     elif maxNum == cb_count:
-        paginator = Paginator(compBill_queryset, 200)
+        paginator = Paginator(compBill_queryset, 50)
     else:
         paginator = Paginator(cancel_queryset, 50)
 
@@ -1243,12 +1243,10 @@ def sign_outs_remainder(request):
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
     lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
-    # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
 
     if today > nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
         lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-        # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
 
     currentBottles = list(orders.prefetch_related('orderline_set').filter(orderline__inventory=1245).filter(date_created__range=[lastbill, today]).filter(status__icontains='Complete').aggregate(
     Sum('orderline__qty')).values())[0]
