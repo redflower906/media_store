@@ -168,12 +168,17 @@
             totalArr.push(tPag);
             if(curr < tPag){
                 $(this).text('Page ' + curr + ' of ' + tPag);
-                $('.pages prev').hide();
-            } else if(curr == tPag){
+                $('span.pages prev').hide();
+            } else if(curr == tPag && cur == 1){
                 $(this).text('Page ' + curr + ' of ' + tPag);
+                $('span.pages next').hide();
+                $('span.pages prev').hide();
+            } else if(curr == tPag){
+                $(this).text('Page ' + tPag + ' of ' + tPag);
+                $('span.pages next').hide();
             } else{
                 $(this).text('Page ' + tPag + ' of ' + tPag);
-                $('.pages next').hide();
+                $('span.pages next').hide();
             };
         });
         console.log(totalArr);
