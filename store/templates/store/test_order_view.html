@@ -42,7 +42,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=incomp label='incomp' specPage=pagesI headers=headers1%}
+                {%include "store/test_list_gen.html" with orderforms=incomp label='incomp' specPages=pagesI headers=headers1%}
             </div>
         </div>
         <div class="row">
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=recur label='recur' specPage=pagesR headers=headers2%}
+                {%include "store/test_list_gen.html" with orderforms=recur label='recur' specPages=pagesR headers=headers2%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -68,7 +68,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=compNotBill label='CNB' specPage=pagesCNB headers=headers3%}
+                {%include "store/test_list_gen.html" with orderforms=compNotBill label='CNB' specPages=pagesCNB headers=headers3%}
             </div>
         </div>
         {% if user.is_staff is True %}
@@ -85,7 +85,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=compBill label='CB' specPage=pagesCB headers=headers4%}
+                {%include "store/test_list_gen.html" with orderforms=compBill label='CB' specPages=pagesCB headers=headers4%}
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
         </div>
         <div class="row">
             <div class="col-xs-12 workorder_list">
-                {%include "store/test_list_gen.html" with orderforms=cancel label='CAN' specPage=pagesCAN headers=headers5%}
+                {%include "store/test_list_gen.html" with orderforms=cancel label='CAN' specPages=pagesCAN headers=headers5%}
             </div>
         </div>
         {% if user.is_staff is True %}
