@@ -7,6 +7,7 @@
         
         {% if orderforms|length is not 0 %}
             <thead>
+            {{specPage}}
                 <tr id="table_header">
                     <th></th>
                     {% table_header headers %}
@@ -145,7 +146,7 @@
             <div><p>There are no orders at this time.</p></div>        
         {% endif %}    
     </table>
-    <div class="pagination" id='{{specPage.paginator.num_pages}}'>
+    <div class="pagination" id='{{pages.number}}'>
 
         <span id='pageId' class="step-links">
             {% if pages.has_previous %}
@@ -155,7 +156,7 @@
             {% endif %}
             {% for i in pages.paginator.page_range %}
                 {% if pages.number == i %}
-                    <span class="current{{label}}" id='{{pages.number}}'>
+                    <span class="current{{label}}" id='{{specPage.paginator.num_pages}}'>
                         Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
                         {{page}}
                     </span>
