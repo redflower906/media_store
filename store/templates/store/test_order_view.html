@@ -163,6 +163,7 @@
         var curr =  $('.pagination').attr('id');
         $('.current').each(function(){
             var tPag = $(this).attr('id');
+            console.log('current:' + curr;)
             console.log(tPag);
             totalArr.push(tPag);
             if (curr < tPag){
@@ -170,7 +171,6 @@
                 $('.current').text('eyyyyy');
             };
         });
-        console.log(curr);
         console.log(totalArr);
     });   
 </script>
