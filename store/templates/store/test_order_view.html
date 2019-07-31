@@ -166,10 +166,14 @@
             console.log('current:' + curr);
             console.log(tPag);
             totalArr.push(tPag);
-            if (curr <= tPag){
+            if(curr < tPag){
                 $(this).text('Page ' + curr + ' of ' + tPag);
-            }else{
+                $('.pages prev').hide();
+            } else if(curr == tPag){
+                $(this).text('Page ' + curr + ' of ' + tPag);
+            } else{
                 $(this).text('Page ' + tPag + ' of ' + tPag);
+                $('.pages next').hide();
             };
         });
         console.log(totalArr);
