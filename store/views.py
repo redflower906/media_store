@@ -830,8 +830,8 @@ def testing_view_order(request):
 
     paginatorI = Paginator(incomp_queryset, 50)
     paginatorR = Paginator(recur_queryset, 50)
-    paginatorCNB = Paginator(compNotBill_queryset, 200)
-    paginatorCB = Paginator(compBill_queryset, 200)
+    paginatorCNB = Paginator(compNotBill_queryset, 50)
+    paginatorCB = Paginator(compBill_queryset, 50)
     paginatorCAN = Paginator(cancel_queryset, 50)
 
     try:
