@@ -160,12 +160,12 @@
     // temp pagination fix
     $(function(){
         var totalArr = [];
-        $('.pagination').each(function(){
+        $('.current').each(function(){
             var tPag = $(this).attr('id');
             totalArr.push(tPag);
             
         });
-        var curr =  $('.current').attr('id');
+        var curr =  $('.pagination').attr('id');
         console.log(curr);
         console.log(totalArr);
         if (curr > totalArr[i]){
