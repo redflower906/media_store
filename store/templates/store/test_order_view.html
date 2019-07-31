@@ -165,8 +165,8 @@
             var tPag = $(this).attr('id');
             console.log(tPag);
             totalArr.push(tPag);
-            if (curr > tPag){
-                console.log('curr>tpag');
+            if (curr < tPag){
+                console.log('curr<tpag');
             };
         });
         console.log(curr);
