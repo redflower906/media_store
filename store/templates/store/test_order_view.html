@@ -169,6 +169,7 @@
             if(curr < tPag){
                 $(this).text('Page ' + curr + ' of ' + tPag);
                 $('span.prev').hide();
+                $('span.next').show();
                 console.log('curr<tpag');
             } else if(curr == tPag && tPag == 1){
                 $(this).text('Page ' + curr + ' of ' + tPag);
@@ -178,10 +179,12 @@
             } else if(curr == tPag){
                 $(this).text('Page ' + tPag + ' of ' + tPag);
                 $('span.next').hide();
+                $('span.prev').show();
                 console.log('curr==tpag');
             } else{
                 $(this).text('Page ' + tPag + ' of ' + tPag);
                 $('span.next').hide();
+                $('span.prev').show();
                 console.log('curr>tpag');
             };
         });
