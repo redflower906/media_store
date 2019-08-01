@@ -168,24 +168,25 @@
             totalArr.push(tPag);
             if(curr < tPag){
                 $(this).text('Page ' + curr + ' of ' + tPag);
-                $('span.prev').hide();
-                $('span.next').show();
+                $(this).siblings('.prev').hide();
+                $(this).siblings('.next').show();
+                //$('span.prev').hide();
+                //$('span.next').show();
                 console.log('curr<tpag');
             } else if(curr == tPag && tPag == 1){
                 $(this).text('Page ' + curr + ' of ' + tPag);
+                $(this).siblings('.next').hide();
+                $(this).siblings('.prev').hide();
                 //$('span.next').hide();
-                $('span.prev').hide();
+                //$('span.prev').hide();
                 console.log('curr=tpag&&tpag==1');
-            } else if(curr == tPag){
-                $(this).text('Page ' + tPag + ' of ' + tPag);
-                $('span.next').hide();
-                $('span.prev').show();
-                console.log('curr==tpag');
             } else{
                 $(this).text('Page ' + tPag + ' of ' + tPag);
-                $('span.next').hide();
-                $('span.prev').show();
-                console.log('curr>tpag');
+                $(this).siblings('.next').hide();
+                $(this).siblings('.prev').show();
+                //$('span.next').hide();
+                //$('span.prev').show();
+                console.log('curr>tpag or curr==tpag');
             };
         });
         console.log(totalArr);
