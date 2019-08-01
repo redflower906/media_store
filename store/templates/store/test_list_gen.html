@@ -158,12 +158,13 @@
                 {% if pages.number == i %}
                     <span class="current {{label}}" id='{{specPages.paginator.num_pages}}'>
                         Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
-                        pages.next_page_number: {{pages.next_page_number}}
-                        specPages.next_page_number: {{specPages.next_page_number}}
+
                     </span>
                 {% endif %}
             {% endfor %}
             {% if pages.has_next %}
+                pages.next_page_number: {{pages.next_page_number}}
+                specPages.next_page_number: {{specPages.next_page_number}}
                 <span class='pages next'>
                     <a href="?page={{ pages.next_page_number }}">next</a>
                 </span>
