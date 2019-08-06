@@ -164,21 +164,26 @@
             var tPag = $(this).attr('id');
             console.log('current:' + curr);
             console.log('tpag:' + tPag);
-            if(curr > tPag){
-                $(this).text('Page ' + curr + ' of ' + tPag);
+            if(tpag == 1){
+                $(this).text('Page ' + tpag + ' of ' + tPag);
                 $(this).siblings('.prev').hide();
-                $(this).siblings('.next').show();
-                console.log('curr>tpag');
-            } else if(curr == tPag && tPag == 1){
-                $(this).text('Page ' + curr + ' of ' + tPag);
                 $(this).siblings('.next').hide();
+                console.log('tpag=1');
+            } else if(curr == 1){
+                $(this).text('Page ' + curr + ' of ' + tPag);
+                $(this).siblings('.next').show();
                 $(this).siblings('.prev').hide();
-                console.log('curr=tpag&&tpag==1');
-            } else{
+                console.log('curr=1');
+            } else if(curr == tpag){
                 $(this).text('Page ' + tPag + ' of ' + tPag);
                 $(this).siblings('.next').hide();
                 $(this).siblings('.prev').show();
-                console.log('curr<tpag or curr==tpag');
+                console.log('curr==tpag');
+            } else {
+                $(this).text('Page ' + curr + ' of ' + tPag);
+                $(this).siblings('.next').show();
+                $(this).siblings('.prev').show();
+                console.log('curr<tpag');
             };
         });
     });   
