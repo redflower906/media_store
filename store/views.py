@@ -1419,7 +1419,7 @@ def search(request):
                 elif date_type == 'Order Completed':
                     reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
                 else: #billed
-                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()[:950]
+                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()[:999]
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
@@ -1440,6 +1440,7 @@ def search(request):
                 return response
             if reports:
                 record_num = reports.count()
+        else:
             messages.error(request, "This form is invalid")
     else:
         form = OrderSearchForm()
