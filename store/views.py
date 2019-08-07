@@ -1620,6 +1620,17 @@ def searchtest(request):
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
+
+            #pagination
+            page = request.GET.get('page', 1)
+
+            paginator = Paginator(reports, 500)
+            try:
+                nums = paginator.page(page)
+            except PageNotAnInteger:
+                nums = paginator.page(1)
+            except EmptyPage:
+                nums = paginator.page(paginator.num_pages)
             
             # to export   
             if 'exportCSV2' in request.POST:
@@ -1657,6 +1668,7 @@ def searchtest(request):
         'keys0': keys0,
         'q_object1': q_object1,
         'q_object2': q_object2,
+        'nums': nums,
     })
 
           

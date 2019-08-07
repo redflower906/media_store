@@ -121,19 +121,25 @@ Q: {{q_object}}
         <p>{{record_num}} found records</p>
     </div>
     {% endif %}
-    {% comment %} <div class="pagination">
-        <span class="step-links">
-            {% if pages.has_previous %}
-                <a href="?page={{ pages.previous_page_number }}">previous</a>
+    {% if nums.has_other_pages %}
+        <ul class="pagination">
+        {% if nums.has_previous %}
+            <li><a href="?page={{ nums.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in users.paginator.page_range %}
+            {% if nums.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
             {% endif %}
-    
-            <span class="current">
-                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
-            </span>
-    
-            {% if pages.has_next %}
-                <a href="?page={{ pages.next_page_number }}">next</a>
-            {% endif %}
-        </span>
-    </div> {% endcomment %}
+        {% endfor %}
+        {% if nums.has_next %}
+            <li><a href="?page={{ nums.next_page_number }}">&raquo;</a></li>
+        {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+        </ul>
+    {% endif %}
 {% endblock %} 
