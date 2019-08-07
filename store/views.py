@@ -1455,6 +1455,8 @@ def search(request):
         'record_num': record_num,
         'keys': keys,
         'q_object': q_object,
+        'datefrom': datefrom,
+        'dateto': dateto,
     })
 
 def searchtest(request):

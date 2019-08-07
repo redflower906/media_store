@@ -4,6 +4,11 @@
 
 <hr/>
 {{q_object}}
+{% if date_type %}
+    {{date_type}}
+    {{datefrom}}
+    {{dateto}}
+{% endif %}
 {% comment %} {% for key in keys %}
     <div>
         {{key}}
