@@ -1428,7 +1428,7 @@ def search(request):
 
             #pagination because querysets > 1000 break the server
             page = request.GET.get('page', 1)
-            paginator = Paginatoor(reports, 900)
+            paginator = Paginator(reports, 900)
             try:
                 lines = paginator.page(page)
             except PageNotAnInteger:
