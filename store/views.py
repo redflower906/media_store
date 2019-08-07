@@ -1350,8 +1350,7 @@ def search(request):
     user = request.user
     reports = ''
     date_type = ''
-    datefrom = ''
-    dateto = ''
+    lines = ''
     record_num = ''
     keys = ''            
     q_object = Q()
