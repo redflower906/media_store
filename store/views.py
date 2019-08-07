@@ -1419,7 +1419,7 @@ def search(request):
                 elif date_type == 'Order Completed':
                     reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
                 else: #billed
-                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()[:999]
+                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()[:980]
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
