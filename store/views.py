@@ -1489,6 +1489,7 @@ def searchtest(request):
     keys5=''
     q_object1=Q()
     q_object2=Q()
+    nums=''
 
     if user.is_staff is False:
         report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
