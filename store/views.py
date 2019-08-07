@@ -1350,7 +1350,6 @@ def search(request):
     user = request.user
     reports = ''
     date_type = ''
-    lines = ''
     record_num = ''
     keys = ''            
     q_object = Q()
@@ -1419,21 +1418,12 @@ def search(request):
                     reports = report.filter(date_created__range=[datefrom, dateto]).distinct()
                 elif date_type == 'Order Completed':
                     reports = report.filter(date_complete__range=[datefrom, dateto]).distinct()
-                else:
-                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct()
+                else: #billed
+                    reports = report.filter(date_billed__range=[datefrom, dateto]).distinct().iterator()
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
 
-            #pagination because querysets > 1000 break the server
-            page = request.GET.get('page', 1)
-            paginator = Paginator(reports, 900)
-            try:
-                lines = paginator.page(page)
-            except PageNotAnInteger:
-                lines = paginator.page(1)
-            except EmptyPage:
-                lines = paginator.page(paginator.num_pages)
 
             # to export   
             if 'exportCSV' in request.POST:
@@ -1467,7 +1457,6 @@ def search(request):
         'record_num': record_num,
         'keys': keys,
         'q_object': q_object,
-        'lines': lines,
 
     })
 
