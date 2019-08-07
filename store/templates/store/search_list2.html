@@ -128,7 +128,7 @@ Q: {{q_object}}
         {% else %}
             <li class="disabled"><span>&laquo;</span></li>
         {% endif %}
-        {% for i in users.paginator.page_range %}
+        {% for i in nums.paginator.page_range %}
             {% if nums.number == i %}
             <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
             {% else %}
