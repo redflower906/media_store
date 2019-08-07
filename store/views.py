@@ -1439,8 +1439,7 @@ def search(request):
 
                 return response
             if reports:
-                record_num = reports.count()
-        else:
+                record_num = len(list(reports))
             messages.error(request, "This form is invalid")
     else:
         form = OrderSearchForm()
