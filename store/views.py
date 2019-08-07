@@ -1623,7 +1623,7 @@ def searchtest(request):
                messages.error(request, "You didn't submit any dates or keywords to search")
 
             #pagination
-            page = request.GET.get('page', 1)
+            page = request.GET.get('page')
 
             paginator = Paginator(reports, 500)
             try:
