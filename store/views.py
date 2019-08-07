@@ -1425,6 +1425,17 @@ def search(request):
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
+
+            #pagination because querysets > 1000 break the server
+            page = request.GET.get('page', 1)
+            paginator = Paginatoor(reports, 900)
+            try:
+                lines = paginator.page(page)
+            except PageNotAnInteger:
+                lines = paginator.page(1)
+            except EmptyPage:
+                lines = paginator.page(paginator.num_pages)
+
             # to export   
             if 'exportCSV' in request.POST:
                 response = HttpResponse(content_type='text/csv')
@@ -1457,8 +1468,8 @@ def search(request):
         'record_num': record_num,
         'keys': keys,
         'q_object': q_object,
-        'datefrom': datefrom,
-        'dateto': dateto,
+        'lines': lines,
+
     })
 
 def searchtest(request):

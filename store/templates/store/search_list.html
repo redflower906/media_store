@@ -4,11 +4,7 @@
 
 <hr/>
 {{q_object}}
-{% if date_type %}
-    {{date_type}}
-    {{datefrom}}
-    {{dateto}}
-{% endif %}
+
 {% comment %} {% for key in keys %}
     <div>
         {{key}}
@@ -137,19 +133,25 @@
         <p>{{record_num}} found records</p>
     </div>
     {% endif %}
-    {% comment %} <div class="pagination">
-        <span class="step-links">
-            {% if pages.has_previous %}
-                <a href="?page={{ pages.previous_page_number }}">previous</a>
+    {% if lines.has_other_pages %}
+        <ul class="pagination">
+            {% if lines.has_previous %}
+            <li><a href="?page={{ lines.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&laquo;</span></li>
             {% endif %}
-    
-            <span class="current">
-                Page {{ pages.number }} of {{ pages.paginator.num_pages }}.
-            </span>
-    
-            {% if pages.has_next %}
-                <a href="?page={{ pages.next_page_number }}">next</a>
+            {% for i in lines.paginator.page_range %}
+            {% if lines.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+            {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
             {% endif %}
-        </span>
-    </div> {% endcomment %}
+            {% endfor %}
+            {% if lines.has_next %}
+            <li><a href="?page={{ lines.next_page_number }}">&raquo;</a></li>
+            {% else %}
+            <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+    {% endif %}
 {% endblock %} 
