@@ -121,7 +121,7 @@ Q: {{q_object}}
         <p>{{record_num}} found records</p>
     </div>
     {% endif %}
-    <div class="pagination">
+    {% comment %} <div class="pagination">
         <span class="step-links">
             {% if nums.has_previous %}
                 <a href="?page={{ nums.previous_page_number }}">previous</a>
@@ -135,5 +135,5 @@ Q: {{q_object}}
                 <a href="?page={{ nums.next_page_number }}">next</a>
             {% endif %}
         </span>
-    </div>
+    </div> {% endcomment %}
 {% endblock %} 
