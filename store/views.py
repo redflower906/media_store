@@ -1618,8 +1618,8 @@ def searchtest(request):
                     reports = Order.objects.filter(date_complete__range=[datefrom, dateto])
                 else: #billed
                     reports = Order.objects.filter(date_billed__range=[datefrom, dateto])
-            else:
-               messages.error(request, "You didn't submit any dates or keywords to search")
+        else:
+            messages.error(request, "You didn't submit any dates or keywords to search")
 
         if user.is_staff is False:
             reports = reports.filter(Q(submitter=user)|Q(requester=user))
