@@ -26,7 +26,7 @@ Q: {{q_object}}
             <tr>
             <tbody class="searchable">
                 {% for report in reports%}
-                {% for line in reports.orderline_set.all %}
+                {% for line in report.orderline_set.all %}
                 <tr class="order_{{report.order.id}} koala {{report.order.status}}">
                     <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
