@@ -1613,11 +1613,11 @@ def searchtest(request):
                 dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
 
                 if date_type == 'Order Created':
-                    reports = report.filter(order__date_created__range=[datefrom, dateto]).distinct()
+                    reports = Order.objects.filter(date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
                     reports = report.filter(order__date_complete__range=[datefrom, dateto]).distinct()
                 else: #billed
-                    reports = OrderLine.objects.filter(order__date_billed__range=[datefrom, dateto])
+                    reports = report.filter(order__date_billed__range=[datefrom, dateto])
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
