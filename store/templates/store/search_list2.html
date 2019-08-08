@@ -8,6 +8,7 @@
 Q1:{{q_object1}}
 Q2:{{q_object2}}
 Q: {{q_object}}
+reports: {{reports}}
 {% comment %} {% for key in keys %}
     <div>
         {{key}}
@@ -25,7 +26,7 @@ Q: {{q_object}}
             </thead>
             <tr>
             <tbody class="searchable">
-                {% for report in reports and line in reports.orderline_set.all%}
+                {% for report in reports%}
                 <tr class="order_{{report.order.id}} koala {{report.order.status}}">
                     <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
