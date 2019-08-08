@@ -25,7 +25,7 @@ Q: {{q_object}}
             </thead>
             <tr>
             <tbody class="searchable">
-                {% for report in reports %}
+                {% for report in reports and line in reports.orderline_set.all%}
                 <tr class="order_{{report.order.id}} koala {{report.order.status}}">
                     <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
@@ -38,13 +38,13 @@ Q: {{q_object}}
                     {% else %}
                     <!-- order ID -->
                     <td class='ordernum'>
-                        {{report.order.id}}
+                        {{report.id}}
                     </td>
                     {% endif %}
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
                     <td>{{report.order.department.department_name}}</td> 
                     <td>{{report.order.requester.user_profile.name}}</td>
-                    <td>{{report.inventory.inventory_text}}
+                    <td>{{line.inventory.inventory_text}}
                     <td>{{report.qty}}
                     {% if report.is_recurring %}
                     <td class='recur'>{{ report.order.is_recurring|yesno:"Yes,No" }}</td>
