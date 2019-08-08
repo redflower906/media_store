@@ -1619,6 +1619,8 @@ def searchtest(request):
 
         if user.is_staff is False:
             reports = reports.filter(Q(submitter=user)|Q(requester=user))
+        
+        reports = reports.prefetch_related('orderline_set')
 
 
             # #pagination
