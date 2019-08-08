@@ -8,7 +8,6 @@
 Q1:{{q_object1}}
 Q2:{{q_object2}}
 Q: {{q_object}}
-reports: {{reports}}
 {% comment %} {% for key in keys %}
     <div>
         {{key}}
@@ -27,6 +26,7 @@ reports: {{reports}}
             <tr>
             <tbody class="searchable">
                 {% for report in reports%}
+                {% for line in reports.orderline_set.all %}
                 <tr class="order_{{report.order.id}} koala {{report.order.status}}">
                     <td class="toggle_notes" >
                         <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
@@ -43,8 +43,8 @@ reports: {{reports}}
                     </td>
                     {% endif %}
                     {% comment %} add manager name to department name? ~FIX~ {% endcomment %}
-                    <td>{{report.order.department.department_name}}</td> 
-                    <td>{{report.order.requester.user_profile.name}}</td>
+                    <td>{{report.department.department_name}}</td> 
+                    <td>{{report.requester.user_profile.name}}</td>
                     <td>{{line.inventory.inventory_text}}
                     <td>{{report.qty}}
                     {% if report.is_recurring %}
@@ -110,7 +110,7 @@ reports: {{reports}}
                         </td>                              
                     </tr>
                 </tr>
-
+                {% endfor %}
                 {% endfor %}
             </tbody>
         {% else %}
