@@ -1615,9 +1615,9 @@ def searchtest(request):
                 if date_type == 'Order Created':
                     reports = Order.objects.filter(date_created__range=[datefrom, dateto])
                 elif date_type == 'Order Completed':
-                    reports = report.filter(order__date_complete__range=[datefrom, dateto]).distinct()
+                    reports = Order.objects.filter(date_complete__range=[datefrom, dateto])
                 else: #billed
-                    reports = report.filter(order__date_billed__range=[datefrom, dateto])
+                    reports = Order.objects.filter(date_billed__range=[datefrom, dateto])
 
             else:
                messages.error(request, "You didn't submit any dates or keywords to search")
