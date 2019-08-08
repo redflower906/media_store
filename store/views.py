@@ -1491,10 +1491,6 @@ def searchtest(request):
     q_object2=Q()
     nums=''
 
-    if user.is_staff is False:
-        report = OrderLine.objects.filter(Q(order__submitter=user)|Q(order__requester=user))
-    else:
-        report = OrderLine.objects.all()
 
     if request.method == 'POST':
         form = OrderSearchForm2(request.POST, initial={'and_or': 'AND'})
@@ -1507,11 +1503,11 @@ def searchtest(request):
             field_choice = form.cleaned_data.get('field_choice')
 
             if 'submitter' in field_choice:
-                field_choice.append('order__submitter__last_name')
+                field_choice.append('submitter__last_name')
             if 'requester' in field_choice:
-                field_choice.append('order__requester__last_name')
-            field_choice[:] = ['order__submitter__first_name' if x=='submitter' else x for x in field_choice]
-            field_choice[:] = ['order__requester__first_name' if x=='requester' else x for x in field_choice]
+                field_choice.append('requester__last_name')
+            field_choice[:] = ['submitter__first_name' if x=='submitter' else x for x in field_choice]
+            field_choice[:] = ['requester__first_name' if x=='requester' else x for x in field_choice]
 
                 
 
@@ -1593,20 +1589,20 @@ def searchtest(request):
                     dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
 
                     if (date_type == 'Order Submitted') and (and_or == 'AND'):
-                        reports = report.filter(q_object).filter(order__date_created__range=[datefrom, dateto]).distinct()
+                        reports = Order.objects.filter(q_object).filter(date_created__range=[datefrom, dateto]).distinct()
                     elif (date_type == 'Order Submitted') and (and_or == 'OR'):
-                        reports = report.filter(Q(order__date_created__range=[datefrom, dateto])| q_object).distinct()
+                        reports = Order.objects.filter(Q(date_created__range=[datefrom, dateto])| q_object).distinct()
                     elif date_type == 'Order Completed'and (and_or == 'AND'):
-                        reports = report.filter(q_object).filter(order__date_complete__range=[datefrom, dateto]).distinct()
+                        reports = Order.objects.filter(q_object).filter(date_complete__range=[datefrom, dateto]).distinct()
                     elif date_type == 'Order Completed'and (and_or == 'OR'):
-                        reports = report.filter(Q(order__date_complete__range=[datefrom, dateto])|q_object).distinct()
+                        reports = Order.objects.filter(Q(date_complete__range=[datefrom, dateto])|q_object).distinct()
                     elif date_type == 'Order Billed'and (and_or == 'OR'):
-                        reports = report.filter(Q(order__date_billed__range=[datefrom, dateto])|q_object).distinct()
+                        reports = Order.objects.filter(Q(date_billed__range=[datefrom, dateto])|q_object).distinct()
                     else:
-                        reports = report.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
+                        reports = Order.objects.filter(q_object).filter(order__date_billed__range=[datefrom, dateto]).distinct()            
                         
                 else:
-                    reports = report.filter(q_object)
+                    reports = Order.objects.filter(q_object)
 
             elif datefrom:
                 datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
