@@ -48,7 +48,7 @@ if DEBUG:
     }
 
 
-ALLOWED_HOSTS = ['mediastore', 'mediastore.int.janelia.org', 'localhost']
+ALLOWED_HOSTS = ['mediastore', 'mediastore.int.janelia.org', 'localhost', '127.0.0.1']
 
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
