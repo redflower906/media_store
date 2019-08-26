@@ -565,14 +565,15 @@ def view_order(request):
     else:
         orders = Order.objects.preferred_order().all()
 
+    #have to give leeway for billing a few days before the 25th
     today = date.today()
     nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date()
-    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
+    lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '23','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-2)
 
     if today > nextbill:
         nextbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '25','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=1)
-        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date()
+        lastbill = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '23','%Y-%m-%d' ).date()
         # twobills = datetime.strptime(str(today.year) + '-' + str(today.month) + '-' + '26','%Y-%m-%d' ).date() + relativedelta.relativedelta(months=-1)
     
     days = (nextbill - today).days
