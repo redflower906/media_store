@@ -88,6 +88,9 @@
                 {%include "store/list_generic.html" with orderforms=compBill pages=pagesCB headers=headers4%}
             </div>
         </div>
+        {% if user.is_staff is True %}
+        <button type="submit" class="btn btn-primary pull-right">Submit</button>
+        {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="can">
         <div class="row">
