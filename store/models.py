@@ -497,20 +497,20 @@ def status_email(sender, instance, *args, **kwargs):
         #DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
 
     if instance.is_recurring:
-        if instance.date_created <= instance.date_recurring_start:
+        if date.today() <= instance.date_recurring_start:
             instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
         else:
             if instance.weeks == '1':
-                first_date = instance.date_created + timedelta(days=7)
+                first_date = date.today() + timedelta(days=7)
                 instance.due_date = first_date - timedelta(days=first_date.weekday())
             elif instance.weeks == '2':
-                first_date = instance.date_created + timedelta(days=14)
+                first_date = date.today() + timedelta(days=14)
                 instance.due_date = first_date - timedelta(days=first_date.weekday())
             elif instance.weeks == '3':
-                first_date = instance.date_created + timedelta(days=21)
+                first_date = date.today() + timedelta(days=21)
                 instance.due_date = first_date - timedelta(days=first_date.weekday())            
             elif instance.weeks == '4':
-                first_date = instance.date_created + timedelta(days=28)
+                first_date = date.today() + timedelta(days=28)
                 instance.due_date = first_date - timedelta(days=first_date.weekday())
 
 
