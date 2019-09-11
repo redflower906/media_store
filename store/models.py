@@ -503,9 +503,8 @@ class ProjectModelChoiceField(ModelChoiceField):
 
 @receiver(post_save, sender=Order)
 def recurring_dates(sender, instance, *args, **kwargs):
-
+    instance.due_date = date.today()
     if instance.is_recurring:
-        instance.due_date = date.today()
         if instance.date_created <= instance.date_recurring_start:
             instance.due_date = instance.date_created + timedelta(days=7)
             #instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
