@@ -503,22 +503,24 @@ class ProjectModelChoiceField(ModelChoiceField):
 
 @receiver(post_save, sender=Order)
 def recurring_dates(sender, instance, *args, **kwargs):
-    instance.due_date = date.today()
-    if instance.is_recurring:
-        if instance.date_created <= instance.date_recurring_start:
-            instance.due_date = instance.date_created + timedelta(days=7)
-            #instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
-        else:
-            if instance.weeks == '1':
-                first_date = instance.date_created + timedelta(days=7)
-                instance.due_date = first_date - timedelta(days=first_date.weekday())
-            elif instance.weeks == '2':
-                first_date = instance.date_created + timedelta(days=14)
-                instance.due_date = first_date - timedelta(days=first_date.weekday())
-            elif instance.weeks == '3':
-                first_date = instance.date_created + timedelta(days=21)
-                instance.due_date = first_date - timedelta(days=first_date.weekday())            
-            elif instance.weeks == '4':
-                first_date = instance.date_created + timedelta(days=28)
-                instance.due_date = first_date - timedelta(days=first_date.weekday())
+    order = Order.objects.get(pk=instance.id)
+    order.due_date = date.today()
+    # if instance.is_recurring:
+    #     if instance.date_created <= instance.date_recurring_start:
+    #         instance.due_date = instance.date_created + timedelta(days=7)
+    #         #instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
+    #     else:
+    #         if instance.weeks == '1':
+    #             first_date = instance.date_created + timedelta(days=7)
+    #             instance.due_date = first_date - timedelta(days=first_date.weekday())
+    #         elif instance.weeks == '2':
+    #             first_date = instance.date_created + timedelta(days=14)
+    #             instance.due_date = first_date - timedelta(days=first_date.weekday())
+    #         elif instance.weeks == '3':
+    #             first_date = instance.date_created + timedelta(days=21)
+    #             instance.due_date = first_date - timedelta(days=first_date.weekday())            
+    #         elif instance.weeks == '4':
+    #             first_date = instance.date_created + timedelta(days=28)
+    #             instance.due_date = first_date - timedelta(days=first_date.weekday())
+    order.save()
     
