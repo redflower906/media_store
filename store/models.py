@@ -440,8 +440,6 @@ class SortHeaders(models.Model):
 
 @receiver(pre_save, sender=Order)
 def status_email(sender, instance, *args, **kwargs):
-    if instance.is_recurring:
-        instance.due_date = date.today()
     if instance.status == 'Complete':        
         
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
