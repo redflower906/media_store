@@ -114,20 +114,16 @@
 //highlight changed status, if recurring order is ending soon, if order has custom order within
     $(function highlight(){
         var date = moment();
+        console.log(date);
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
-            console.log('endDate: 'endDate);
             var days = endDate.diff(date, 'days');
-            console.log('days: 'days);
             if( 21 >= days && days >= 7){
                 $(this).parent().addClass('threeWeeks');
             } else if( 7 > days && days >= 0){
                 $(this).parent().addClass('oneWeek');
             } 
         });
-        //$(this).find(".recurTrue").each(function(){
-
-       //})    
         //show alert for recurring order ending in either 3 or 1 week(s)
         if ($('.threeWeeks').length){
             $('.recur3').removeClass('hidden');
