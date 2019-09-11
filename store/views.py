@@ -774,6 +774,7 @@ def testing_view_order(request):
 
     
     days = (nextbill - today).days
+    last_monday = today - timedelta(days=today.weekday())
 
     #delete canceled orders that were created over 31 days ago
     dates = Order.objects.all()
@@ -911,6 +912,7 @@ def testing_view_order(request):
         'pagesCAN': pagesCAN,
         'page': page,
         'pages': pages,
+        'last_monday': last_monday,
         })
 
 def export_ordersCNB(request):
@@ -920,7 +922,7 @@ def export_ordersCNB(request):
     response['Content-Disposition'] = 'attachment; filename="Complete_not_billed.csv"'
     writer = csv.writer(response)
     writer.writerow(['Order_ID', 'Date_Complete', 'Product', 'Qty', 'Price', 'Requester_Email'])
-    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=False).prefetch_related('orderline_set').values_list(
+    compNotBill = orders.filter(status__icontains='Complete').exclude(date_billed__isnull=True).prefetch_related('orderline_set').values_list(
     'id', 'date_complete', 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost','requester__user_profile__email_address')
 
     for record in compNotBill:
