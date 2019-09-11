@@ -506,18 +506,19 @@ def recurring_dates(sender, instance, *args, **kwargs):
 
     if instance.is_recurring:
         if instance.date_created <= instance.date_recurring_start:
-            instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
+            instance.due_date = date.today()
+            #instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
         else:
             if instance.weeks == '1':
-                date = instance.date_created + timedelta(days=7)
-                instance.due_date = date - timedelta(days=date.weekday())
+                first_date = instance.date_created + timedelta(days=7)
+                instance.due_date = first_date - timedelta(days=first_date.weekday())
             elif instance.weeks == '2':
-                date = instance.date_created + timedelta(days=14)
-                instance.due_date = date - timedelta(days=date.weekday())
+                first_date = instance.date_created + timedelta(days=14)
+                instance.due_date = first_date - timedelta(days=first_date.weekday())
             elif instance.weeks == '3':
-                date = instance.date_created + timedelta(days=21)
-                instance.due_date = date - timedelta(days=date.weekday())            
+                first_date = instance.date_created + timedelta(days=21)
+                instance.due_date = first_date - timedelta(days=first_date.weekday())            
             elif instance.weeks == '4':
-                date = instance.date_created + timedelta(days=28)
-                instance.due_date = date - timedelta(days=date.weekday())
+                first_date = instance.date_created + timedelta(days=28)
+                instance.due_date = first_date - timedelta(days=first_date.weekday())
     
