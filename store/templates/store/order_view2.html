@@ -118,6 +118,7 @@
         console.log(lastdate);
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+            console.log(endDate);
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
                 $(this).parent().addClass('threeWeeks');
