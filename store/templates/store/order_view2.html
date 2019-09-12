@@ -6,7 +6,7 @@
 {% load static %}
 <hr/>
 
-
+<div class='hiddenDate'>{{today}}</div>
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="alert alert-danger" role='alert'>There are {{days}} days until the next billing cycle.</div>
 {% endif %}
@@ -114,7 +114,7 @@
 //highlight changed status, if recurring order is ending soon, if order has custom order within
     $(function highlight(){
         var date = moment();
-        var lastDate = date.day("Monday", 'MMMM-DD-YYYY');
+        var lastDate = $(this).find('.hiddenDate').text();
         console.log(lastDate);
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');

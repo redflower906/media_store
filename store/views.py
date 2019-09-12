@@ -678,6 +678,7 @@ def view_order(request):
         'compBill':compBill,
         'cancel': cancel,
         'days': days,
+        'today':today,
         })
 
 
