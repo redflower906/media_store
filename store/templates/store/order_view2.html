@@ -133,6 +133,8 @@
             } else if (due < lastDate){
                 $(this).addClass('overDue');
                 console.log('overDue');
+            } else if (due > lastDate){
+                console.log('dueLater');
             }
         });
         //show alert for recurring order ending in either 3 or 1 week(s)
