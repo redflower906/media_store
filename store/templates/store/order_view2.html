@@ -114,7 +114,7 @@
 //highlight changed status, if recurring order is ending soon, if order has custom order within
     $(function highlight(){
         var date = moment();
-        var lastDate = $(this).find('.hiddenDate').text();
+        var lastDate = moment(($(this).find('.hiddenDate').text()), 'MMMM-DD-YYYY');
         console.log(lastDate);
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
