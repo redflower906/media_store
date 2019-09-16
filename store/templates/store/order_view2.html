@@ -116,9 +116,12 @@
         var date = moment();
         var formattedDate = moment(($(this).find('.hiddenDate').text()), 'MMMM-DD-YYYY');
         var lastDate = formattedDate.day('Monday');
-        console.log(lastDate);
+        console.log('date: ' + date);
+        console.log('formatteddate: ' + formattedDate);
+        console.log('lastdate: ' + lastDate);
         $(this).find("[class^='date-stop']").each(function(){
             var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+            console.log('end date: ' + endDate);
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
                 $(this).parent().addClass('threeWeeks');
@@ -128,7 +131,7 @@
         });
         $(this).find('.recurTrue').each(function(){
             var due = moment(($(this).text()));
-            console.log(due);
+            console.log('due: ' + due);
             if(due == lastDate){
                 $(this).addClass('dueNow');
                 console.log('dueNow');
