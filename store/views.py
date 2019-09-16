@@ -495,7 +495,6 @@ def view_order(request):
         ('Submitted', 'date_created'),
         ('Location', 'location'),
         ('Status', 'status'),
-        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_RECUR = (
@@ -505,11 +504,9 @@ def view_order(request):
         ('Requester', 'requester__last_name'),
         ('Submitted', 'date_created'),
         ('Due Date', 'due_date'),
-        ('Start Date', 'date_recurring_start'),
         ('End Date', 'date_recurring_stop'),
         ('Location', 'location'),
         ('Status', 'status'),
-        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CNB = (
@@ -522,7 +519,6 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CB = (
@@ -535,7 +531,6 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        # ('Order Total', 'order_total')
     )
 
     ORDER_LIST_HEADERS_CAN = (
@@ -548,7 +543,6 @@ def view_order(request):
         ('Recurring', 'is_recurring'),
         ('Location', 'location'),
         ('Status', 'status'),
-        # ('Order Total', 'order_total')
     )
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)

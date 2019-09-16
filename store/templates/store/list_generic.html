@@ -47,7 +47,6 @@
                     <!-- recurring -->
                     {% elif orderforms == recur %}
                     <td class='recur{{orderform.instance.is_recurring}}'>{{orderform.instance.due_date}}</td>
-                    <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                     <td class='date-stop{{orderform.instance.id}}'>{{orderform.instance.date_recurring_stop|default:'N/A'}}</td>
                     <!-- completed not billed -->
                     {% elif orderforms == compNotBill%}
@@ -110,6 +109,7 @@
                                         <th>Submitter</th>
                                         <th>Description</th>
                                         {% if orderforms == recur %}
+                                            <th>Start Date</th>
                                             <th>Last Complete Date</th>
                                             <th>How Often</th>
                                         {% endif %}
@@ -123,7 +123,8 @@
                                     <td>{{orderform.instance.submitter.user_profile.name}}</td>
                                     <td class='inv {{orderform.instance.id}}'>{{line.inventory.inventory_text}}</td>
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
-                                    {% if orderforms == recur %} 
+                                    {% if orderforms == recur %}
+                                        <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
                                         <td>{{orderform.instance.date_created}}</td>
                                         <td>{{orderform.instance.get_weeks_display}}</td>
                                     {% endif %}
