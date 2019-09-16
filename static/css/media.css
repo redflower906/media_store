@@ -344,6 +344,11 @@ tbody {
   }
 }
 
+.dueNow {
+  background-color: lightgreen;
+
+}
+
 .loader {
   display:none;
   border: 5px solid #f3f3f3;

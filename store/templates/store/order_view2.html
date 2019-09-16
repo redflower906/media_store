@@ -134,13 +134,13 @@
             console.log('due: ' + due);
             var daysTwo = due.diff(lastDate, 'days');
             console.log(daysTwo);
-            if(due == lastDate){
+            if(daysTwo == 0){
                 $(this).addClass('dueNow');
                 console.log('dueNow');
-            } else if (due < lastDate){
+            } else if (daysTwo < 0){
                 $(this).addClass('overDue');
                 console.log('overDue');
-            } else if (due > lastDate){
+            } else if (daysTwo > 0){
                 console.log('dueLater');
             }
         });
