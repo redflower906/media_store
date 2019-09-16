@@ -130,8 +130,10 @@
             } 
         });
         $(this).find('.recurTrue').each(function(){
-            var due = moment(($(this).text()));
+            var due = moment(($(this).text()), 'MMMM-DD-YYYY');
             console.log('due: ' + due);
+            var daysTwo = due.diff(lastDate, 'days');
+            console.log(daysTwo);
             if(due == lastDate){
                 $(this).addClass('dueNow');
                 console.log('dueNow');
