@@ -478,6 +478,7 @@ def status_email(sender, instance, *args, **kwargs):
         #     )
 
         instance.date_complete = date.today()
+        instance.date_submitted = date.today()
     elif instance.status == 'Submitted' and instance.notes_order == 'Signout Remainder':
         instance.status = 'Complete'
 

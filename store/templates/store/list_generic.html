@@ -125,7 +125,7 @@
                                     <!-- do we need this now that each recurring order duplicates? ~FIX~ -->
                                     {% if orderforms == recur %}
                                         <td>{{orderform.instance.date_recurring_start|default:'N/A'}}</td>
-                                        <td>{{orderform.instance.date_created}}</td>
+                                        <td>{{orderform.instance.date_submitted|default:'New Order'}}</td>
                                         <td>{{orderform.instance.get_weeks_display}}</td>
                                     {% endif %}
                                     <td>{{line.qty}}</td>
