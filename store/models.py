@@ -449,7 +449,6 @@ def status_email(sender, instance, *args, **kwargs):
             order.pk = None
             order.status = 'Submitted'
             order.date_billed = None
-            setattr(order.date_submitted, 'class', 'copy')
             order.save()
             for ol in orderlines:
                 ol.pk = None
