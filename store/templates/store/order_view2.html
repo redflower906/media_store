@@ -124,9 +124,9 @@
             console.log('end date: ' + endDate);
             var days = endDate.diff(date, 'days');
             if( 21 >= days && days >= 7){
-                $(this).parent().addClass('threeWeeks');
+                $(this).addClass('threeWeeks');
             } else if( 7 > days && days >= 0){
-                $(this).parent().addClass('oneWeek');
+                $(this).addClass('oneWeek');
             } 
         });
         $(this).find('.recurTrue').each(function(){
