@@ -422,9 +422,7 @@
                                     </td>
                                     <td class='col number-input'>
                                         {{ form.qty.errors }}                                        
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
                                         {{ form.qty }}
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
