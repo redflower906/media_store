@@ -7,6 +7,11 @@
 <hr/>
 
 <b>THIS IS THE TEST VIEW</b>
+<div class="number-input">
+  <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+  <input class="quantity" min="0" name="quantity" value="1" type="number">
+  <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+</div>
 {% if user.is_staff is True and days <= 4 %} {% comment %} don't think this is working {% endcomment %}
 <div class="alert alert-danger" role='alert'>There are {{days}} days until the next billing cycle.</div>
 {% endif %}
