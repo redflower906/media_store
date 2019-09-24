@@ -386,7 +386,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .number-input {
   border: 2px solid #ddd;
-  display: inline-flex;
+  /* display: inline-flex; */
 }
 
 .number-input,
@@ -425,7 +425,7 @@ input[type=number]::-webkit-outer-spin-button {
 .number-input input[type=number] {
   font-family: sans-serif;
   max-width: 5rem;
-  padding: .5rem;
+  padding: 0;
   border: solid #ddd;
   border-width: 0 2px;
   font-size: 2rem;
