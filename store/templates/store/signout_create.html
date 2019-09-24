@@ -1,4 +1,4 @@
-{% extends "store/SObase.html" %}
+{% extends "store/SObase2.html" %}
 {% block content %}
 {% load formset_tags %}
 {% load store_tags %}
@@ -47,8 +47,8 @@
                             {{ order_form.requester }}
                         </td>
                         <td id='changeDept'>
-                        {{ order_form.department.errors }}
-                        {{ order_form.department }}
+                            {{ order_form.department.errors }}
+                            {{ order_form.department }}
                         </td>
                     </tr>
                 </tbody>
@@ -420,9 +420,11 @@
                                     <td class="col text-center inv_vol"> 
                                         <p> --------- </p>  
                                     </td>
-                                    <td class='col'>
-                                        {{ form.qty.errors }}
+                                    <td class='col number-input'>
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+                                        {{ form.qty.errors }}                                        
                                         {{ form.qty }}
+                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
@@ -488,7 +490,7 @@
             });    
         });
         $(".chosen-select").chosen({search_contains:true});
-        $("#id-dept-show").prop('disabled', true).trigger("chosen:updated");
+        $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
 
 
         //to allow error message to show in page rather than in console.
@@ -499,16 +501,15 @@
             }, 15000);
 
     </script>
-
     <p>&nbsp;</p>
 {% else %}    
     <div class='row'>
         <div class='col-xs-12'>
-            <h2>This account cannot sign out food via the tablets. Please do the following:
+           <h2>This account cannot sign out food via the tablets. Please do the following:
                 <ol>
                     <li> Go to mediastore.int.janelia.org</li>
-                    <li> Click "Sign Out"</li>
-                    <li> Click "Sign In"</li>
+                    <li> Click "Logout"</li>
+                    <li> Click "Login"</li>
                     <li> Sign in with the <b>mediastore</b> credentials listed on the "Is this tablet logged out?" paper located near this tablet</li>
                 </ol>
                 If you have further questions, please contact the Fly Facility (flyfacility@janelia.hhmi.org) and Scarlett Harrison (harrisons1@janelia.hhmi.org).
