@@ -1001,6 +1001,77 @@ def email_form(request, id):
     })
 
 @login_required(login_url='login')
+def qty_buttons_test(request):
+
+    order = Order()
+    user = request.user
+    u = user.id
+
+    if u == 17381:
+        loc = '1E.372'
+        uname = 1
+        q = Inventory.objects.filter(Q(id=1267) | Q(id=1273)  | Q(id=1351) | Q(id=1352) | Q(id=1270) | Q(id=1353) | Q(id=1269) | Q(id=1268) | Q(id=1367) | Q(id=1366) | Q(id=1305)
+        | Q(id=1303) | Q(id=1304) | Q(id=1272) | Q(id=1276) | Q(id=1277)).order_by('media_type')
+    elif u == 17380:
+        loc = '2E.233'
+        uname = 2
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237) | Q(id=1365)).order_by('media_type')
+    elif u == 17915:
+        loc = '3C.229'
+        uname = 3.1
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263)).order_by('media_type')
+    elif u == 17622:
+        loc = '3W ambient'
+        uname = 3.2
+        q = Inventory.objects.filter(Q(id=1269) | Q(id=1270) | Q(id=1267) | Q(id=1272) | Q(id=1273) | Q(id=1367)).order_by('media_type')
+    elif u == 17623:
+        loc = '3W.266'
+        uname = 3.3
+        q = Inventory.objects.filter(Q(id=1237) | Q(id=1365)).order_by('media_type')
+    else:
+        loc = False
+        uname = False
+        q = Inventory.objects.all()
+    
+
+    if request.method == "POST":
+
+        order_form = OrderForm(request.POST, request.FILES, prefix='order', instance=order, initial={
+            'location': loc, 'is_recurring': False, 'notes_order': 'Signout'})
+        orderlineformset = OrderLineInlineFormSet(
+            request.POST, prefix='orderlines', instance=order,)
+        for form in orderlineformset:
+            form.fields['inventory'].queryset = q
+        if order_form.is_valid() and orderlineformset.is_valid():
+            order = order_form.save(commit=False)
+            order.status = 'Complete'
+            order.save()
+            orderlineformset.save()
+            messages.success(request,
+            'Thank you for signing out food! Your order number is {0}, please email the media facility with this order number if you need to edit or cancel this order.'.format(order_form.instance.id))
+            return HttpResponseRedirect('/signout/new')
+        else:
+            messages.error(request, 'There was a problem saving your order. Please review the errors below.')
+    else:
+            order_form = OrderForm(prefix='order', instance=order,initial={
+            'location': loc, 'is_recurring': False, 'notes_order': 'Signout'})
+            orderlineformset = OrderLineInlineFormSet(
+                prefix='orderlines', instance=order,)
+            for form in orderlineformset:
+                form.fields['inventory'].queryset = q
+
+    return render(request, 'store/signout_create.html', {
+        'order_form' : order_form,
+        'formset': orderlineformset,
+        'media_types': MEDIA_CHOICES,
+        'loc': loc,
+        'uname': uname,
+        'user': user,
+        'signout_lists': __build_signout_groups(),
+        'q': q,
+    })    
+
+@login_required(login_url='login')
 def create_signout(request):
 
     order = Order()
