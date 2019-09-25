@@ -421,10 +421,10 @@
                                         <p> --------- </p>  
                                     </td>
                                     <td class='col number-input'>
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" ></button>
+                                        <button class='glyphicon glyphicon-minus minus' onclick="this.nextSibling.stepDown()" ></button>
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
-                                        <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                        <button class ='glyphicon glyphicon-plus plus' onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>

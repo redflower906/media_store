@@ -381,7 +381,6 @@ input[type="number"] {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    /*margin: 0;*/
   }
   
   .number-input {
@@ -392,33 +391,46 @@ input[type="number"] {
   
   
   .number-input button.minus {
-    display: inline-flex;
     -webkit-appearance: none;
-    background-color: lightgray;
-    border: 10 px;
+    background-color: transparent;
+    border: 1px solid darkgray;
     cursor: pointer;
+    height: 4rem;
+    border-radius: 5px;
     align-self: center;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    justify-self: center;
     margin: 0;
+    padding-inline-end: 10px;
     position: relative;  
     font-size: 25px;
   
   }
   
   .number-input button.plus {
-    display: inline-flex;
     outline:none;
     -webkit-appearance: none;
-    background-color: lightgray;
-    border: none;
+    height: 4rem;
+    border-radius: 5px;
+    background-color: transparent;
+    border: 1px solid darkgray;
     cursor: pointer;
     position: relative;  
     font-size: 25px;
     align-self: center;
+    align-items: center;
+    justify-self: center;
+    justify-content: center;
+    justify-items: center;
+    margin: 0;
+    padding-inline-start: 10px;
   }
   
   .number-input input[type=number] {
     font-family: sans-serif;
-    border-width: 0 2px;
+    border: 1px solid darkgray;
     font-size: 2rem;
     height: 4rem;
     font-weight: bold;
