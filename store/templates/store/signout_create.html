@@ -421,10 +421,10 @@
                                         <p> --------- </p>  
                                     </td>
                                     <td class='col number-input'>
-                                        <button class='glyphicon glyphicon-minus minus' onclick="incDec(this.className)" ></button>
+                                        <button class='glyphicon glyphicon-minus minus' onclick="incDec(this.className)"></button>
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
-                                        <button class ='glyphicon glyphicon-plus plus' onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+                                        <button class ='glyphicon glyphicon-plus plus' onclick="incDec(this.className)"></button>
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
@@ -503,8 +503,12 @@
         //increase decrease buttons for signout
 
         function incDec(clicked_class) {
-            if ( clicked_class == 'glyphicon glyphicon-minus minus') {
-            console.log('yes!');
+            if ( clicked_class == 'glyphicon glyphicon-minus minus'){
+                console.log('minus');
+
+            }
+            else if ( clicked_class == 'glyphicon glyphicon-plus plus'){
+                console.log('plus');
             }
         };
 
