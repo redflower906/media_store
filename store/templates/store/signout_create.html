@@ -505,12 +505,14 @@
             var sibM = $(this).next().attr('id');
             console.log('min');
             console.log(sibM);
+            document.getElementById(sibM).stepDown(1);
         });
 
         $('.plus').click(function(){
             var sibP = $(this).prev().attr('id');
             console.log('plus');
             console.log(sibP);
+            document.getElementById(sibM).stepUp(1);
         });
 
 
