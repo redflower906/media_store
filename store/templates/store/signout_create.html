@@ -4,7 +4,6 @@
 {% load store_tags %}
 {% load static %}
 <script src="{% static 'js/signout_edit.js' %}"></script>
-<script src="./src/bootstrap-input-spinner.js"></script> 
 <script type="text/javascript">
     var inventory_groups = {{ signout_lists | safe}};
 </script>
@@ -503,7 +502,7 @@
 
         //increase decrease buttons for signout
 
-        $("input[type='number']").inputSpinner()
+        $("input[type='number']").TouchSpin();
 
         {% comment %} $('.minus').click(function(){
             var numQty = $(this).next();
