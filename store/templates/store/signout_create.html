@@ -424,7 +424,7 @@
                                         <button class='glyphicon glyphicon-minus minus'></button>
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
-                                        <button class ='glyphicon glyphicon-plus plus' onclick="incDec(this.className)"></button>
+                                        <button class ='glyphicon glyphicon-plus plus'></button>
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
@@ -503,10 +503,15 @@
         //increase decrease buttons for signout
         $(document).ready(function(){
             $('.minus').click(function(){
-                var klass = $(this).attr('class');
-                console.log(klass);
-                var sib = $(this).next().val();
-                console.log(sib);
+                var sibM = $(this).next().val();
+                console.log('min');
+                console.log(sibM);
+            });
+
+            $('.plus').click(function(){
+                var sibP = $(this).prev().val();
+                console.log('plus');
+                console.log(sibP);
             });
         });
 
