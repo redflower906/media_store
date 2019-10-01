@@ -332,36 +332,6 @@ $(function autoChoose(){
         });
     }
 });
-// $(function(){
-//     $('#id_order-requester').change(function() {
-//         var optionSelected = $(this).find("option:selected");
-//         var valueSelected = optionSelected.val();
-//         var requester_name = optionSelected.text();
-//         $.ajax({
-//         url: '/ajax',
-//         data: {
-//             'id': valueSelected,
-//             'name': requester_name
-//         },
-//         dataType: 'json',
-//         success: function(data){
-//             if (data.r_id) {
-//                 $("#id_order-department").val(data['d_id']).trigger("chosen:updated");
-
-//                 if(data.p_id){
-//                     $("#id_order-project_code").val(data['up_id']).trigger("chosen:updated");
-//                 }
-//                 else{
-//                     $("#id_order-project_code").val('').trigger("chosen:updated");                    
-//                 }
-//             }
-//             else{
-//                 $("#id_order-department").val('').trigger("chosen:updated");
-//             }
-//         },
-//         });
-//     });
-// });
 
 //remove readonly attribute if orderlines-0-inventory is 'custom order'
 $(function(){
@@ -389,3 +359,11 @@ $(function(){
     });
 });
 
+//increase decrease buttons for signout
+
+function incDec() {
+    if ( $(this).hasClass('glyphicon glyphicon-minus minus')) {
+        var sib = $(this).nextSibling.value();
+        console.log(sib);
+    }
+}
