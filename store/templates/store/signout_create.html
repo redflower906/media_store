@@ -501,11 +501,13 @@
             }, 15000);
 
         //increase decrease buttons for signout
-
-        $('.glyphicon glyphicon-minus minus').click(function(){
-            var klass = $(this).attr('class');
-            console.log(klass);
+        $(document).ready(function(){
+            $('.glyphicon glyphicon-minus minus').click(function(){
+                var klass = $(this).attr('class');
+                console.log(klass);
+            });
         });
+
 
         //function incDec(clicked_class) {
             //if( clicked_class == 'glyphicon glyphicon-minus minus'){
@@ -514,7 +516,7 @@
 
             //}
             //else if( clicked_class == 'glyphicon glyphicon-plus plus'){
-                console.log('plus');
+            //    console.log('plus');
             //}
         //};
 
