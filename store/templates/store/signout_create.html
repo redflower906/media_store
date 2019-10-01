@@ -503,13 +503,13 @@
         //increase decrease buttons for signout
         $(document).ready(function(){
             $('.minus').click(function(){
-                var sibM = $(this).next().val();
+                var sibM = $(this).next().attr('id');
                 console.log('min');
                 console.log(sibM);
             });
 
             $('.plus').click(function(){
-                var sibP = $(this).prev().val();
+                var sibP = $(this).prev().attr('id');
                 console.log('plus');
                 console.log(sibP);
             });
