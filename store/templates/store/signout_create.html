@@ -501,15 +501,16 @@
             }, 15000);
 
         //increase decrease buttons for signout
-        $('.minus').click(function(){
+
+        $("input[type='number']").inputSpinner()
+        
+        {% comment %} $('.minus').click(function(){
             var numQty = $(this).next();
             var currentQty = parseInt(numQty.val());
             if (!isNaN(currentQty) && currentQty != 0) {
                 numQty.val(currentQty - 1);
             }
             console.log('min');
-            console.log(sibM);
-            document.getElementById(sibM).stepDown(1);
         });
 
         $('.plus').click(function(){
@@ -517,7 +518,7 @@
             console.log('plus');
             console.log(sibP);
             document.getElementById(sibP).stepUp(1);
-        });
+        }); {% endcomment %}
 
 
         //function incDec(clicked_class) {
