@@ -421,10 +421,10 @@
                                         <p> --------- </p>  
                                     </td>
                                     <td class='col number-input'>
-                                        <button class='glyphicon glyphicon-minus minus'></button>
+                                        {% comment %} <button class='glyphicon glyphicon-minus minus'></button> {% endcomment %}
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
-                                        <button class ='glyphicon glyphicon-plus plus'></button>
+                                        {% comment %} <button class ='glyphicon glyphicon-plus plus'></button> {% endcomment %}
                                     </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
@@ -503,7 +503,7 @@
         //increase decrease buttons for signout
 
         $("input[type='number']").inputSpinner()
-        
+
         {% comment %} $('.minus').click(function(){
             var numQty = $(this).next();
             var currentQty = parseInt(numQty.val());
