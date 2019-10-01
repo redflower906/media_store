@@ -502,7 +502,11 @@
 
         //increase decrease buttons for signout
         $('.minus').click(function(){
-            var sibM = $(this).next().attr('id');
+            var numQty = $(this).next();
+            var currentQty = parseInt(numQty.val());
+            if (!isNaN(currentQty) && currentQty != 0) {
+                numQty.val(currentQty - 1);
+            }
             console.log('min');
             console.log(sibM);
             document.getElementById(sibM).stepDown(1);
