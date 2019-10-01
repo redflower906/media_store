@@ -500,6 +500,15 @@
             $('.alert-success').hide();
             }, 15000);
 
+        //increase decrease buttons for signout
+
+        $(function incDec() {
+            if ( $(this).hasClass('glyphicon glyphicon-minus minus')) {
+                var sib = $(this).nextSibling.value();
+                console.log(sib);
+            }
+        });
+
     </script>
     <p>&nbsp;</p>
 {% else %}    
