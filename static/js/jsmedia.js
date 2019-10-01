@@ -361,9 +361,9 @@ $(function(){
 
 //increase decrease buttons for signout
 
-function incDec() {
+$(function incDec() {
     if ( $(this).hasClass('glyphicon glyphicon-minus minus')) {
         var sib = $(this).nextSibling.value();
         console.log(sib);
     }
-};
+});
