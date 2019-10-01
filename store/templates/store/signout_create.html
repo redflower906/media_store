@@ -501,18 +501,16 @@
             }, 15000);
 
         //increase decrease buttons for signout
-        $(document).ready(function(){
-            $('.minus').click(function(){
-                var sibM = $(this).next().attr('id');
-                console.log('min');
-                console.log(sibM);
-            });
+        $('.minus').click(function(){
+            var sibM = $(this).next().attr('id');
+            console.log('min');
+            console.log(sibM);
+        });
 
-            $('.plus').click(function(){
-                var sibP = $(this).prev().attr('id');
-                console.log('plus');
-                console.log(sibP);
-            });
+        $('.plus').click(function(){
+            var sibP = $(this).prev().attr('id');
+            console.log('plus');
+            console.log(sibP);
         });
 
 
