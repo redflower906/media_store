@@ -502,16 +502,21 @@
 
         //increase decrease buttons for signout
 
-        function incDec(clicked_class) {
-            if( clicked_class == 'glyphicon glyphicon-minus minus'){
-                console.log('minus');
-                console.log($(this).attr('class'));
+        $('.glyphicon glyphicon-minus minus').click(function(){
+            var klass = $(this).attr('class');
+            console.log(klass);
+        });
 
-            }
-            else if( clicked_class == 'glyphicon glyphicon-plus plus'){
+        //function incDec(clicked_class) {
+            //if( clicked_class == 'glyphicon glyphicon-minus minus'){
+            //    console.log('minus');
+            //    $('td.number-input').find('.line_qty').
+
+            //}
+            //else if( clicked_class == 'glyphicon glyphicon-plus plus'){
                 console.log('plus');
-            }
-        };
+            //}
+        //};
 
     </script>
     <p>&nbsp;</p>
