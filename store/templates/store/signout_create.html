@@ -421,7 +421,7 @@
                                         <p> --------- </p>  
                                     </td>
                                     <td class='col number-input'>
-                                        <button class='glyphicon glyphicon-minus minus' onclick="incDec()" ></button>
+                                        <button class='glyphicon glyphicon-minus minus' onclick= "incDec()" ></button>
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
                                         <button class ='glyphicon glyphicon-plus plus' onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
@@ -502,12 +502,12 @@
 
         //increase decrease buttons for signout
 
-        $(function incDec() {
+        function incDec() {
             if ( $(this).hasClass('glyphicon glyphicon-minus minus')) {
                 var sib = $(this).nextSibling.value();
                 console.log(sib);
             }
-        });
+        };
 
     </script>
     <p>&nbsp;</p>
