@@ -366,4 +366,4 @@ function incDec() {
         var sib = $(this).nextSibling.value();
         console.log(sib);
     }
-}
+};
