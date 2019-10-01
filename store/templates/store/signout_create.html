@@ -505,7 +505,8 @@
             $('.minus').click(function(){
                 var klass = $(this).attr('class');
                 console.log(klass);
-                console.log('click works');
+                var sib = $(this).next().attr('class');
+                console.log(sib);
             });
         });
 
