@@ -42,7 +42,7 @@
 
         var html = '<div class="input-group ' + config.groupClass + '">' +
             '<span class="input-group-btn prepend">' +
-            '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
+            '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-decrement glyphicon glyphicon-minus minus' + config.buttonsClass + '" type="button">' + '</button>' +
             '</span>' +
             '<input type="text" style="text-align: ' + config.textAlign + '" class="form-control"/>' 
             +
