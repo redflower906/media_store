@@ -41,13 +41,13 @@
         }
 
         var html = '<div class="input-group ' + config.groupClass + '">' +
-            '<div class="input-group-prepend">' +
+            '<span class="input-group-btn prepend">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
-            '</div>' +
+            '</span>' +
             '<input type="text" style="text-align: ' + config.textAlign + '" class="form-control"/>' +
-            '<div class="input-group-append">' +
+            '<span class="input-group-btn append">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-increment ' + config.buttonsClass + '" type="button">' + config.incrementButton + '</button>' +
-            '</div>' +
+            '</span>' +
             '</div>'
 
         var locale = config.locale || navigator.language || "en-US"
@@ -88,11 +88,11 @@
 
             if (prefix) {
                 var prefixElement = $('<span class="input-group-text">' + prefix + '</span>')
-                $inputGroup.find(".input-group-prepend").append(prefixElement)
+                $inputGroup.find(".prepend").append(prefixElement)
             }
             if (suffix) {
                 var suffixElement = $('<span class="input-group-text">' + suffix + '</span>')
-                $inputGroup.find(".input-group-append").prepend(suffixElement)
+                $inputGroup.find(".append").prepend(suffixElement)
             }
 
             $original[0].setValue = function (newValue) {
