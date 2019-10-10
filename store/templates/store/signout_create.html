@@ -426,9 +426,6 @@
                                         {{ form.qty }}
                                         {% comment %} <button class ='glyphicon glyphicon-plus plus'></button> {% endcomment %}
                                     </td>                                    
-                                    <td>
-                                        <input type='number' value='0' step='any'>
-                                    </td>
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
                                         {{ form.line_cost.errors }}
