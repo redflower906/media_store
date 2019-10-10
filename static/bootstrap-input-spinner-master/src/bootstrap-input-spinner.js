@@ -44,7 +44,8 @@
             '<span class="input-group-btn prepend">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-decrement ' + config.buttonsClass + '" type="button">' + config.decrementButton + '</button>' +
             '</span>' +
-            '<input type="text" style="text-align: ' + config.textAlign + '" class="form-control"/>' +
+            //'<input type="text" style="text-align: ' + config.textAlign + '" class="form-control"/>' 
+            +
             '<span class="input-group-btn append">' +
             '<button style="min-width: ' + config.buttonsWidth + '" class="btn btn-increment ' + config.buttonsClass + '" type="button">' + config.incrementButton + '</button>' +
             '</span>' +
