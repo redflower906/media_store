@@ -372,7 +372,7 @@ tbody {
 
 
 /* making number input arrows larger */
-#id_cost {
+input[type=number] {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
@@ -383,6 +383,7 @@ tbody {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
+    margin:0;
   }
   
   
