@@ -378,12 +378,12 @@ tbody {
     appearance: textfield;
   }
   
-  /* input[type=number]::-webkit-inner-spin-button,
-  input[type=number]::-webkit-outer-spin-button {
+  #id_cost::-webkit-inner-spin-button,
+  #id_cost::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-  } */
+  }
   
   
 
