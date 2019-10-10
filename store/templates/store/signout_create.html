@@ -420,7 +420,7 @@
                                     <td class="col text-center inv_vol"> 
                                         <p> --------- </p>  
                                     </td>
-                                    <td class='col number-input input-group'>
+                                    <td class='colinput-group col-xs-2'>
                                         {% comment %} <button class='glyphicon glyphicon-minus minus'></button> {% endcomment %}
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
@@ -502,7 +502,8 @@
             }, 15000);
 
         //increase decrease buttons for signout
-        $("input[type='number']").inputSpinner();
+        $(".line_qty").inputSpinner();
+    
         {% comment %} $('.minus').click(function(){
             var numQty = $(this).next();
             var currentQty = parseInt(numQty.val());
