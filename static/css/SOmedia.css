@@ -371,74 +371,21 @@ tbody {
 
 
 
-/* making number input arrows larger
-input[type="number"] {
+/* making number input arrows larger */
+#id_cost {
     -webkit-appearance: textfield;
     -moz-appearance: textfield;
     appearance: textfield;
   }
   
-  input[type=number]::-webkit-inner-spin-button,
+  /* input[type=number]::-webkit-inner-spin-button,
   input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-  }
-  
-  .number-input {
-  
-    display: flex;
-    justify-content: center;
-  }
-  
-  
-  .number-input button.minus {
-    -webkit-appearance: none;
-    background-color: transparent;
-    border: 1px solid darkgray;
-    cursor: pointer;
-    height: 4rem;
-    border-radius: 5px;
-    align-self: center;
-    align-items: center;
-    justify-content: center;
-    justify-items: center;
-    justify-self: center;
-    margin: 0;
-    padding-inline-end: 10px;
-    position: relative;  
-    font-size: 25px;
-  
-  }
-  
-  .number-input button.plus {
-    outline:none;
-    -webkit-appearance: none;
-    height: 4rem;
-    border-radius: 5px;
-    background-color: transparent;
-    border: 1px solid darkgray;
-    cursor: pointer;
-    position: relative;  
-    font-size: 25px;
-    align-self: center;
-    align-items: center;
-    justify-self: center;
-    justify-content: center;
-    justify-items: center;
-    margin: 0;
-    padding-inline-start: 10px;
-  }
-  
-  .number-input input[type=number] {
-    font-family: sans-serif;
-    border: 1px solid darkgray;
-    font-size: 2rem;
-    height: 4rem;
-    font-weight: bold;
-    text-align: center;
-    margin: 0;
   } */
+  
+  
 
 /* Safari */
 @-webkit-keyframes spin {
