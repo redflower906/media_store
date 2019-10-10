@@ -436,6 +436,9 @@
                                         {{ form.line_cost.errors }}
                                         {{ form.line_cost }}
                                     </td>
+                                    <td>
+                                        <input type='number' value='0' step='any'>
+                                    </td>
                                     {% endif %}
                                 </tr>                            
                                 {% endfor %}
@@ -501,7 +504,7 @@
             }, 15000);
 
         //increase decrease buttons for signout
-        $("input[type='number']").inputSpinner()
+        $("input[type='number']").inputSpinner();
         {% comment %} $('.minus').click(function(){
             var numQty = $(this).next();
             var currentQty = parseInt(numQty.val());
