@@ -421,10 +421,8 @@
                                         <p> --------- </p>  
                                     </td>
                                     <td class='colinput-group col-xs-2'>
-                                        {% comment %} <button class='glyphicon glyphicon-minus minus'></button> {% endcomment %}
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
-                                        {% comment %} <button class ='glyphicon glyphicon-plus plus'></button> {% endcomment %}
                                     </td>                                    
                                     {% if user.is_staff is True %}
                                     <td class='col text-center staff' id='id_cost'>
@@ -503,34 +501,7 @@
 
         //increase decrease buttons for signout
         $(".line_qty").inputSpinner();
-    
-        {% comment %} $('.minus').click(function(){
-            var numQty = $(this).next();
-            var currentQty = parseInt(numQty.val());
-            if (!isNaN(currentQty) && currentQty != 0) {
-                numQty.val(currentQty - 1);
-            }
-            console.log('min');
-        });
 
-        $('.plus').click(function(){
-            var sibP = $(this).prev().attr('id');
-            console.log('plus');
-            console.log(sibP);
-            document.getElementById(sibP).stepUp(1);
-        }); {% endcomment %}
-
-
-        //function incDec(clicked_class) {
-            //if( clicked_class == 'glyphicon glyphicon-minus minus'){
-            //    console.log('minus');
-            //    $('td.number-input').find('.line_qty').
-
-            //}
-            //else if( clicked_class == 'glyphicon glyphicon-plus plus'){
-            //    console.log('plus');
-            //}
-        //};
 
     </script>
     <p>&nbsp;</p>

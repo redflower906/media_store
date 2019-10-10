@@ -420,7 +420,7 @@
                                     <td class="col text-center inv_vol"> 
                                         <p> --------- </p>  
                                     </td>
-                                    <td class='col number-input'>
+                                    <td class='colinput-group col-xs-2'>
                                         {{ form.qty.errors }}                                        
                                         {{ form.qty }}
                                     </td>
@@ -497,6 +497,9 @@
         setTimeout(function(){
             $('.alert-success').hide();
             }, 15000);
+        
+        //increase decrease buttons for signout
+        $(".line_qty").inputSpinner();
 
     </script>
     <p>&nbsp;</p>
