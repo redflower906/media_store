@@ -1502,7 +1502,7 @@ def search(request):
                 writer.writerow(['order_id', 'Requester', 'Submitter', 'Cost_Center', 'Lab_Head', 'Date_Submitted', 'Date_Complete', 'Date_Billed', 'Is_Recurring', 'Due_Date', 
                 'Product', 'Qty', 'Unit_Price', 'Line_Total', 'Status', 'Special_Instructions', 'Location'])
                 e_reports = reports.values_list('id','requester__username', 'submitter__username', 'requester__user_profile__department__number', 
-                'requester__user_profile__department__department_manager', 'date_created', 'date_complete', 'date_billed', 'is_recurring', 'due_date', 
+                'requester__user_profile__department__department_manager__user_profile__last_name', 'date_created', 'date_complete', 'date_billed', 'is_recurring', 'due_date', 
                 'orderline__inventory__inventory_text', 'orderline__qty', 'orderline__inventory__cost', 'orderline__line_cost', 'status', 'notes_order','location')
 
                 for report in e_reports:
