@@ -1562,6 +1562,16 @@ def searchtest(request):
     q_object2=Q()
     nums=''
 
+    week1 = date.today() + timedelta(days=7)
+    week2 = date.today() + timedelta(days=14)
+    week3 = date.today() + timedelta(days=21)
+    week4 = date.today() + timedelta(days=28)
+
+    due1 = week1 - timedelta(days=week1.weekday())
+    due2 = week2 - timedelta(days=week2.weekday())
+    due3 = week3 - timedelta(days=week3.weekday())
+    due4 = week4 - timedelta(days=week4.weekday())
+
 
     if request.method == 'POST':
         form = OrderSearchForm2(request.POST, initial={'and_or': 'AND'})
@@ -1742,6 +1752,14 @@ def searchtest(request):
         'q_object1': q_object1,
         'q_object2': q_object2,
         'nums': nums,
+        'week1': week1,
+        'week2': week2,
+        'week3': week3,
+        'week4': week4,
+        'due1': due1,
+        'due2': due2,
+        'due3': due3,
+        'due4': due4,
     })
 
           
