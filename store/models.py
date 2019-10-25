@@ -503,7 +503,7 @@ def status_email(sender, instance, *args, **kwargs):
         else:
             if instance.weeks == '1':
                 first_date = date.today() + timedelta(days=7)
-                instance.due_date = first_date - timedelta(days=first_date.weekday())
+                instance.due_date = timedelta(days=first_date.weekday())
             elif instance.weeks == '2':
                 first_date = date.today() + timedelta(days=14)
                 instance.due_date = first_date - timedelta(days=first_date.weekday())
