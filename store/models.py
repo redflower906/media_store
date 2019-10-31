@@ -556,7 +556,7 @@ class ProjectModelChoiceField(ModelChoiceField):
     
 @receiver(post_save, sender=Order)
 def dup_email(sender, instance, *args, **kwargs):
-    if instance.is_recurring == True:
+    if instance.is_recurring == True and instance.status == 'Submitted':
         oid = instance.id
         context = Context({
             'id': oid,
@@ -565,7 +565,7 @@ def dup_email(sender, instance, *args, **kwargs):
         m_html = render_to_string('dup_post_email.html', context.flatten())
 
         send_mail(
-            'COMPLETE',
+            'CREATED',
             m_plain,
             'mediafacility@janelia.hhmi.org',
             ['harrisons1@janelia.hhmi.org'], 
