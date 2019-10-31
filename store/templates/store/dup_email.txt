@@ -1,0 +1,2 @@
+Media store order #{{id}} has been completed.
+Duplicate order #{{dID}} has been created.

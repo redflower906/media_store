@@ -443,6 +443,7 @@ def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete':        
         
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
+            oid = instance.id
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.id = None
@@ -455,7 +456,25 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.pk = None
                 ol.order = order
                 ol.save()
-            order.refresh_from_db()    
+            dID = instance.id
+            order.refresh_from_db()
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
+            context = Context({
+                'id': oid,
+                'dID': dID,
+                'domain': domain,
+            })        
+            m_plain = render_to_string('dup_email.txt', context.flatten())
+            m_html = render_to_string('dup_email.html', context.flatten())
+
+            send_mail(
+                'MediaStore Order #{0} Complete'.format(oid),
+                m_plain,
+                'mediafacility@janelia.hhmi.org',
+                ['harrisons1@janelia.hhmi.org'], 
+                fail_silently=False,
+                html_message=m_html,
+            )    
 
         # if instance.notes_order == 'Signout':
         #     print('nothing')
