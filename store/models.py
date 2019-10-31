@@ -456,19 +456,15 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.pk = None
                 ol.order = order
                 ol.save()
-            dID = instance.id
             order.refresh_from_db()
-            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~ but needed to work with OSX/iOS because otherwise apple will add weird stuff to the URL and user can't open
             context = Context({
                 'id': oid,
-                'dID': dID,
-                'domain': domain,
             })        
-            m_plain = render_to_string('dup_email.txt', context.flatten())
-            m_html = render_to_string('dup_email.html', context.flatten())
+            m_plain = render_to_string('dup_pre_email.txt', context.flatten())
+            m_html = render_to_string('dup_pre_email.html', context.flatten())
 
             send_mail(
-                'MediaStore Order #{0} Complete'.format(oid),
+                'COMPLETE',
                 m_plain,
                 'mediafacility@janelia.hhmi.org',
                 ['harrisons1@janelia.hhmi.org'], 
@@ -558,3 +554,21 @@ class ProjectModelChoiceField(ModelChoiceField):
 #                 instance.due_date = first_date - timedelta(days=first_date.weekday())
     
     
+@receiver(post_save, sender=Order)
+def dup_email(sender, instance, *args, **kwargs):
+    if instance.is_recurring == True:
+        oid = instance.id
+        context = Context({
+            'id': oid,
+        })        
+        m_plain = render_to_string('dup_post_email.txt', context.flatten())
+        m_html = render_to_string('dup_post_email.html', context.flatten())
+
+        send_mail(
+            'COMPLETE',
+            m_plain,
+            'mediafacility@janelia.hhmi.org',
+            ['harrisons1@janelia.hhmi.org'], 
+            fail_silently=False,
+            html_message=m_html,
+        )    
