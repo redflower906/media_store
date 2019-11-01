@@ -444,6 +444,7 @@ def status_email(sender, instance, *args, **kwargs):
         
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
             oid = instance.id
+            date_m = instance.date_modified
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.id = None
@@ -459,6 +460,7 @@ def status_email(sender, instance, *args, **kwargs):
             order.refresh_from_db()
             context = Context({
                 'id': oid,
+                'date': date_m
             })        
             m_plain = render_to_string('dup_pre_email.txt', context.flatten())
             m_html = render_to_string('dup_pre_email.html', context.flatten())
@@ -558,8 +560,10 @@ class ProjectModelChoiceField(ModelChoiceField):
 def dup_email(sender, instance, *args, **kwargs):
     if instance.is_recurring == True and instance.status == 'Submitted':
         oid = instance.id
+        date_m = instance.date_modified
         context = Context({
             'id': oid,
+            'date': date_m
         })        
         m_plain = render_to_string('dup_post_email.txt', context.flatten())
         m_html = render_to_string('dup_post_email.html', context.flatten())
