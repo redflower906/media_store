@@ -472,7 +472,7 @@ def status_email(sender, instance, *args, **kwargs):
                 ['harrisons1@janelia.hhmi.org'], 
                 fail_silently=False,
                 html_message=m_html,
-            )    
+            ) 
 
         # if instance.notes_order == 'Signout':
         #     print('nothing')

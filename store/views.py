@@ -877,8 +877,10 @@ def testing_view_order(request):
             order_formset.save()
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
-        if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()
+        if order_formset.has_changed():
+            CD = order_formset.changed_data
+            if order_formset.is_valid():
+                order_formset.save()
 
         order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
         if order_formset.has_changed() and order_formset.is_valid():
@@ -908,6 +910,7 @@ def testing_view_order(request):
         'page': page,
         'pages': pages,
         'last_monday': last_monday,
+        'CD': CD,
         })
 
 def export_ordersCNB(request):
