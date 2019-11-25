@@ -861,6 +861,7 @@ def testing_view_order(request):
     compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
     cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
+    CD = 0
 
     if request.method == 'POST':
         # for each order category, check to see if the form had been updated and save
