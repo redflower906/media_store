@@ -875,7 +875,8 @@ def testing_view_order(request):
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')        
         if order_formset.has_changed():
-            CD = order_formset.changed_data
+            for form in order_formset:
+                CD = order_formset.changed_data
             if order_formset.is_valid():
                 order_formset.save()
 
