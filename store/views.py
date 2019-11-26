@@ -916,7 +916,6 @@ def testing_view_order(request):
         'page': page,
         'pages': pages,
         'last_monday': last_monday,
-        'CD': CD,
         })
 
 def export_ordersCNB(request):
