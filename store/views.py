@@ -635,30 +635,25 @@ def view_order(request):
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            return HttpResponseRedirect('/order/view')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()        
-            return HttpResponseRedirect('/order/view')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')        
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            return HttpResponseRedirect('/order/view')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            return HttpResponseRedirect('/order/view')
 
         order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
-            return HttpResponseRedirect('/order/view')
+            
+        return HttpResponseRedirect('/order/view')
 
-        else:
-            messages.error(request, 'There was a problem saving your status.')
 
     return render(request,
         'store/order_view2.html',{
