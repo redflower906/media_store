@@ -257,9 +257,7 @@ def create_order(request, copy_id=None):
             #       only set on create (but this is the same as date_created...)--handle in model
             #       update on edit or create only set on create--handle in model
 
-            # order = order_form.save(commit=False)
-            # order.submitter = user
-            # order.save()
+
             order_form.save()
             orderlineformset.save()
             domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~

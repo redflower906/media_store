@@ -474,6 +474,9 @@
     </form>
     <script type="text/javascript">
 
+        //increase decrease buttons for signout
+        $(".line_qty").inputSpinner();
+
         $(function () {
             $('#order_table .order_table tr').formset({
                 prefix:'{{ formset.prefix }}',
@@ -499,8 +502,7 @@
             $('.alert-success').hide();
             }, 15000);
 
-        //increase decrease buttons for signout
-        $(".line_qty").inputSpinner();
+        
 
 
     </script>
