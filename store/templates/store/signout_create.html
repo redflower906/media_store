@@ -475,7 +475,7 @@
     <script type="text/javascript">
 
         //increase decrease buttons for signout
-        $(".line_qty").inputSpinner();
+        //$(".line_qty").inputSpinner();
 
         $(function () {
             $('#order_table .order_table tr').formset({
@@ -490,7 +490,6 @@
             $('#order_table tbody tr.dynamic-form').map(function (index, row){
                 register_row($(row));        
             });
-            $(".line_qty").inputSpinner();    
         });
         $(".chosen-select").chosen({search_contains:true});
         $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
