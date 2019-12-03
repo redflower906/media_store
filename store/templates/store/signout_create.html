@@ -489,7 +489,8 @@
             });            
             $('#order_table tbody tr.dynamic-form').map(function (index, row){
                 register_row($(row));        
-            });    
+            });
+            $(".line_qty").inputSpinner();    
         });
         $(".chosen-select").chosen({search_contains:true});
         $("#id_order-department").prop('disabled', true).trigger("chosen:updated");
