@@ -20,18 +20,6 @@ function register_row(row){
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').on('input', handle_qty_update)
 
-    // //filter inventory dropdown to selected mediatype, or leave empty if none selected
-    // selected_inventory = inventory_select.val()
-    // inventory_select.empty()
-    // inventory_select.append("<option value=''> ---------- </option>");
-    // inventory_select.attr('disabled', 1)
-    // if (selected_inventory){
-    //     media_code = find_invdetails(selected_inventory).media_code
-    //     media_select.val(media_code)
-    //     populate_inventory({ target: media_select[0]})
-    //     inventory_select.val(selected_inventory)
-    //     populate_vol_and_containers({target: inventory_select[0]})
-    // }
 
 }
 
@@ -48,20 +36,7 @@ function deregister_row(row){
 * Media type select handler. Populates the inventory dropdown
 * @param {js event} e - event object for media type select change
 */
-// function populate_inventory(e){
-//     // filter the inventory values to only the selected media types
-//     var prefix = build_prefix(e.target.name)
-//     var mediatype = $(e.target).val()
-//     $('#id_' + prefix + 'inventory').empty()
-//     $('#id_' + prefix + 'inventory').append("<option value=''> ---------- </option>");        
-//     var selected_inventory_group = inventory_groups[mediatype];
-//     console.log(selected_inventory_group);
-//     selected_inventory_group.map(function (item) {
-//         $('#id_' + prefix + 'inventory').append("<option value=" + item.id + ">" + item.desc + "</option>");
-//     })
-//     $('#id_' + prefix + 'inventory').removeAttr('disabled')
-    
-// }
+
 
 /**
 * Inventory select handler. Fills out form with inventory data
