@@ -352,17 +352,17 @@
           originalinput.val(settings.callback_after_calculation(originalinput.val()));
         });
 
-        // elements.down.on('keydown', function(ev) {
-        //   var code = ev.keyCode || ev.which;
+        elements.down.on('keydown', function(ev) {
+          var code = ev.keyCode || ev.which;
 
-        //   if (code === 32 || code === 13) {
-        //     if (spinning !== 'down') {
-        //       downOnce();
-        //       startDownSpin();
-        //     }
-        //     ev.preventDefault();
-        //   }
-        // });
+          if (code === 32 || code === 13) {
+            if (spinning !== 'down') {
+              downOnce();
+              startDownSpin();
+            }
+            ev.preventDefault();
+          }
+        });
 
         // elements.down.on('keyup.touchspin', function(ev) {
         //   var code = ev.keyCode || ev.which;
@@ -372,17 +372,17 @@
         //   }
         // });
 
-        // elements.up.on('keydown.touchspin', function(ev) {
-        //   var code = ev.keyCode || ev.which;
+        elements.up.on('keydown.touchspin', function(ev) {
+          var code = ev.keyCode || ev.which;
 
-        //   if (code === 32 || code === 13) {
-        //     if (spinning !== 'up') {
-        //       upOnce();
-        //       startUpSpin();
-        //     }
-        //     ev.preventDefault();
-        //   }
-        // });
+          if (code === 32 || code === 13) {
+            if (spinning !== 'up') {
+              upOnce();
+              startUpSpin();
+            }
+            ev.preventDefault();
+          }
+        });
 
         // elements.up.on('keyup.touchspin', function(ev) {
         //   var code = ev.keyCode || ev.which;
