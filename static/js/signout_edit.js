@@ -19,7 +19,7 @@ function register_row(row){
 
     //register a listener to changes in the qty value
     //$('#id_' + prefix + 'qty').on('input', handle_qty_update)
-    $('.bootstrap-touchspon-injected').on('click', handle_qty_update)
+    $('.bootstrap-touchspin-injected').on('click', handle_qty_update)
 
 
 }
