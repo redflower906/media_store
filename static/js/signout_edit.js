@@ -84,8 +84,8 @@ function handle_qty_update(e){
         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
         update_total()
     }
-    console.log('cq: ', cur_quantity);
-    console.log('prefix: ', prefix);
+    console.log(cur_quantity);
+    console.log(prefix);
 }
 
 /**
@@ -119,8 +119,8 @@ function calc_cost(qty, cost){
     if(qty==='' || qty===null){
         return 0
     }    
-    console.log(qty);
-    console.log((qty * parseFloat(cost)).toFixed(2), 'parsefloat, tofixed');
+    // console.log(qty);
+    // console.log((qty * parseFloat(cost)).toFixed(2), 'parsefloat, tofixed');
     return  (qty * parseFloat(cost)).toFixed(2)
     // return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
 
