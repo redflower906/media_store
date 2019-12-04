@@ -109,6 +109,8 @@ function handle_qty_update(e){
         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
         update_total()
     }
+    console.log('cq: ', cur_quantity);
+    console.log('prefix: ', prefix);
 }
 
 /**
