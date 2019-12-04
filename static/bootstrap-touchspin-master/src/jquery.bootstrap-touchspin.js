@@ -140,6 +140,7 @@
         _checkValue();
 
         var value = elements.input.val();
+        console.log('value: ', value);
 
         if (value !== '') {
           value = Number(settings.callback_before_calculation(elements.input.val()));
@@ -211,6 +212,7 @@
       function _buildHtml() {
         var initval = originalinput.val(),
           parentelement = originalinput.parent();
+        console.log('initval: ', initval);
 
         if (initval !== '') {
           initval = settings.callback_after_calculation(Number(initval).toFixed(settings.decimals));
@@ -593,6 +595,9 @@
           originalinput.val(returnval);
           originalinput.trigger('change');
         }
+        console.log('val: ', val);
+        console.log('parsedval: ', parsedval);
+        console.log('returnval: ', returnval);
       }
 
       function _getBoostedStep() {
@@ -625,6 +630,8 @@
           boostedstep = _getBoostedStep();
 
         value = value + boostedstep;
+        console.log('initvalueup: ', initvalue);
+        console.log('valueup: ', value);
 
         if ((settings.max !== null) && (value > settings.max)) {
           value = settings.max;
@@ -651,6 +658,8 @@
           boostedstep = _getBoostedStep();
 
         value = value - boostedstep;
+        console.log('initvaluedown: ', initvalue);
+        console.log('valuedown: ', value);
 
         if ((settings.min !== null) && (value < settings.min)) {
           value = settings.min;
