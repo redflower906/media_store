@@ -237,8 +237,8 @@
 
         var downhtml,
           uphtml,
-          prefixhtml = '<span class="input-group-addon input-group-prepend bootstrap-touchspin-prefix input-group-prepend bootstrap-touchspin-injected"><span class="input-group-text">' + settings.prefix + '</span></span>',
-          postfixhtml = '<span class="input-group-addon input-group-append bootstrap-touchspin-postfix input-group-append bootstrap-touchspin-injected"><span class="input-group-text">' + settings.postfix + '</span></span>';
+          prefixhtml = '<span class="input-group-addon input-group-prepend bootstrap-touchspin-prefix input-group-btn input-group-prepend bootstrap-touchspin-injected"><span class="input-group-text">' + settings.prefix + '</span></span>',
+          postfixhtml = '<span class="input-group-addon input-group-append bootstrap-touchspin-postfix input-group-btn input-group-append bootstrap-touchspin-injected"><span class="input-group-text">' + settings.postfix + '</span></span>';
 
         // if (prev.hasClass('input-group-btn') || prev.hasClass('input-group-prepend')) {
         //   downhtml = '<button class="' + settings.buttondown_class + ' bootstrap-touchspin-down bootstrap-touchspin-injected" type="button">' + settings.buttondown_txt + '</button>';
@@ -260,6 +260,7 @@
 
         $(prefixhtml).insertBefore(originalinput);
         $(postfixhtml).insertAfter(originalinput);
+        console.log('originalinput: ', originalinput);
 
         container = parentelement;
       }
@@ -316,35 +317,35 @@
       }
 
       function _bindEvents() {
-        originalinput.on('keydown.touchspin', function(ev) {
-          var code = ev.keyCode || ev.which;
+        // originalinput.on('keydown.touchspin', function(ev) {
+        //   var code = ev.keyCode || ev.which;
 
-          if (code === 38) {
-            if (spinning !== 'up') {
-              upOnce();
-              startUpSpin();
-            }
-            ev.preventDefault();
-          }
-          else if (code === 40) {
-            if (spinning !== 'down') {
-              downOnce();
-              startDownSpin();
-            }
-            ev.preventDefault();
-          }
-        });
+        //   if (code === 38) {
+        //     if (spinning !== 'up') {
+        //       upOnce();
+        //       startUpSpin();
+        //     }
+        //     ev.preventDefault();
+        //   }
+        //   else if (code === 40) {
+        //     if (spinning !== 'down') {
+        //       downOnce();
+        //       startDownSpin();
+        //     }
+        //     ev.preventDefault();
+        //   }
+        // });
 
-        originalinput.on('keyup.touchspin', function(ev) {
-          var code = ev.keyCode || ev.which;
+        // originalinput.on('keyup.touchspin', function(ev) {
+        //   var code = ev.keyCode || ev.which;
 
-          if (code === 38) {
-            stopSpin();
-          }
-          else if (code === 40) {
-            stopSpin();
-          }
-        });
+        //   if (code === 38) {
+        //     stopSpin();
+        //   }
+        //   else if (code === 40) {
+        //     stopSpin();
+        //   }
+        // });
 
         originalinput.on('blur.touchspin', function() {
           _checkValue();
