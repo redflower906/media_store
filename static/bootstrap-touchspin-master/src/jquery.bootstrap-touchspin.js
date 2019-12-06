@@ -421,19 +421,19 @@
         // });
 
         //this is what makes the buttons work. scrolling still works when this is disabled. also arrow buttons work completely (price updates)
-        // elements.up.on('mousedown.touchspin', function(ev) {
-        //   elements.up.off('touchstart.touchspin');  // android 4 workaround
+        elements.up.on('mousedown.touchspin', function(ev) {
+          elements.up.off('touchstart.touchspin');  // android 4 workaround
 
-        //   if (originalinput.is(':disabled')) {
-        //     return;
-        //   }
+          if (originalinput.is(':disabled')) {
+            return;
+          }
 
-        //   upOnce();
-        //   startUpSpin();
+          upOnce();
+          startUpSpin();
 
-        //   ev.preventDefault();
-        //   ev.stopPropagation();
-        // });
+          ev.preventDefault();
+          ev.stopPropagation();
+        });
 
         // elements.up.on('touchstart.touchspin', function(ev) {
         //   elements.up.off('mousedown.touchspin');  // android 4 workaround
@@ -506,9 +506,9 @@
       }
 
       function _bindEventsInterface() {
-        // originalinput.on('touchspin.destroy', function() {
-        //   _destroy();
-        // });
+        originalinput.on('touchspin.destroy', function() {
+          _destroy();
+        });
 
         originalinput.on('touchspin.uponce', function() {
           stopSpin();
