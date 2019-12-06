@@ -458,32 +458,32 @@
         //   stopSpin();
         // });
 
-        elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
+        //* elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
 
-          ev.stopPropagation();
-          stopSpin();
-        });
+        //   ev.stopPropagation();
+        //   stopSpin();
+        // });
 
-        elements.down.on('mousemove.touchspin touchmove.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
+        // elements.down.on('mousemove.touchspin touchmove.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
 
-          ev.stopPropagation();
-          ev.preventDefault();
-        });
+        //   ev.stopPropagation();
+        //   ev.preventDefault();
+        // });
 
-        elements.up.on('mousemove.touchspin touchmove.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
+        // elements.up.on('mousemove.touchspin touchmove.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
 
-          ev.stopPropagation();
-          ev.preventDefault();
-        });
+        //   ev.stopPropagation();
+        //   ev.preventDefault();
+        // });
 
         originalinput.on('mousewheel.touchspin DOMMouseScroll.touchspin', function(ev) {
           if (!settings.mousewheel || !originalinput.is(':focus')) {
