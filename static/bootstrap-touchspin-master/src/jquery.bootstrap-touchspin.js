@@ -421,6 +421,7 @@
         // });
 
         //this is what makes the buttons work. scrolling still works when this is disabled. also arrow buttons work completely (price updates)
+        //with only this working, clicking once on "+" will cause numbers to increase to 100.
         elements.up.on('mousedown.touchspin', function(ev) {
           elements.up.off('touchstart.touchspin');  // android 4 workaround
 
@@ -435,19 +436,19 @@
           ev.stopPropagation();
         });
 
-        // elements.up.on('touchstart.touchspin', function(ev) {
-        //   elements.up.off('mousedown.touchspin');  // android 4 workaround
+        elements.up.on('touchstart.touchspin', function(ev) {
+          elements.up.off('mousedown.touchspin');  // android 4 workaround
 
-        //   if (originalinput.is(':disabled')) {
-        //     return;
-        //   }
+          if (originalinput.is(':disabled')) {
+            return;
+          }
 
-        //   upOnce();
-        //   startUpSpin();
+          upOnce();
+          startUpSpin();
 
-        //   ev.preventDefault();
-        //   ev.stopPropagation();
-        // });
+          ev.preventDefault();
+          ev.stopPropagation();
+        });
 
         // elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
         //   if (!spinning) {
@@ -458,7 +459,7 @@
         //   stopSpin();
         // });
 
-        //* elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+        // elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
         //   if (!spinning) {
         //     return;
         //   }
