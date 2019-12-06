@@ -485,24 +485,24 @@
         //   ev.preventDefault();
         // });
 
-        originalinput.on('mousewheel.touchspin DOMMouseScroll.touchspin', function(ev) {
-          if (!settings.mousewheel || !originalinput.is(':focus')) {
-            return;
-          }
+      //   originalinput.on('mousewheel.touchspin DOMMouseScroll.touchspin', function(ev) {
+      //     if (!settings.mousewheel || !originalinput.is(':focus')) {
+      //       return;
+      //     }
 
-          var delta = ev.originalEvent.wheelDelta || -ev.originalEvent.deltaY || -ev.originalEvent.detail;
+      //     var delta = ev.originalEvent.wheelDelta || -ev.originalEvent.deltaY || -ev.originalEvent.detail;
 
-          ev.stopPropagation();
-          ev.preventDefault();
+      //     ev.stopPropagation();
+      //     ev.preventDefault();
 
-          if (delta < 0) {
-            downOnce();
-          }
-          else {
-            upOnce();
-          }
-        });
-      }
+      //     if (delta < 0) {
+      //       downOnce();
+      //     }
+      //     else {
+      //       upOnce();
+      //     }
+      //   });
+      // }
 
       function _bindEventsInterface() {
         originalinput.on('touchspin.destroy', function() {
