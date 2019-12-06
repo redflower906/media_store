@@ -449,14 +449,14 @@
         //   ev.stopPropagation();
         // });
 
-        elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
+        // elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
 
-          ev.stopPropagation();
-          stopSpin();
-        });
+        //   ev.stopPropagation();
+        //   stopSpin();
+        // });
 
         elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
           if (!spinning) {
