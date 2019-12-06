@@ -392,19 +392,18 @@
         //   }
         // });
 
-        // elements.down.on('mousedown.touchspin', function(ev) {
-        //   elements.down.off('touchstart.touchspin');  // android 4 workaround
+        elements.down.on('mousedown.touchspin', function(ev) {
+          elements.down.off('touchstart.touchspin');  // android 4 workaround
 
-        //   if (originalinput.is(':disabled')) {
-        //     return;
-        //   }
+          if (originalinput.is(':disabled')) {
+            return;
+          }
 
-        //   downOnce();
-        //   startDownSpin();
-
-        //   ev.preventDefault();
-        //   ev.stopPropagation();
-        // });
+          downOnce();
+          startDownSpin();
+          ev.preventDefault();
+          ev.stopPropagation();
+        });
 
         elements.down.on('touchstart.touchspin', function(ev) {
           elements.down.off('mousedown.touchspin');  // android 4 workaround
@@ -415,7 +414,6 @@
 
           downOnce();
           startDownSpin();
-
           ev.preventDefault();
           ev.stopPropagation();
         });
@@ -431,7 +429,6 @@
 
           upOnce();
           startUpSpin();
-
           ev.preventDefault();
           ev.stopPropagation();
         });
@@ -445,19 +442,17 @@
 
           upOnce();
           startUpSpin();
-
           ev.preventDefault();
           ev.stopPropagation();
         });
 
-        // elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-        //   if (!spinning) {
-        //     return;
-        //   }
-
-        //   ev.stopPropagation();
-        //   stopSpin();
-        // });
+        elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+          if (!spinning) {
+            return;
+          }
+          ev.stopPropagation();
+          stopSpin();
+        });
 
         // elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
         //   if (!spinning) {
