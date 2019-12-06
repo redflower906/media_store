@@ -420,19 +420,19 @@
         //   ev.stopPropagation();
         // });
 
-        elements.up.on('mousedown.touchspin', function(ev) {
-          elements.up.off('touchstart.touchspin');  // android 4 workaround
+        // elements.up.on('mousedown.touchspin', function(ev) {
+        //   elements.up.off('touchstart.touchspin');  // android 4 workaround
 
-          if (originalinput.is(':disabled')) {
-            return;
-          }
+        //   if (originalinput.is(':disabled')) {
+        //     return;
+        //   }
 
-          upOnce();
-          startUpSpin();
+        //   upOnce();
+        //   startUpSpin();
 
-          ev.preventDefault();
-          ev.stopPropagation();
-        });
+        //   ev.preventDefault();
+        //   ev.stopPropagation();
+        // });
 
         elements.up.on('touchstart.touchspin', function(ev) {
           elements.up.off('mousedown.touchspin');  // android 4 workaround
