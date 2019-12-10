@@ -644,7 +644,7 @@
         // }
 
         //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
-        elements.input.val(Number(value).toFixed(2));
+        $(this).input.val(Number(value).toFixed(2));
 
         
         if (initvalue !== value) {
