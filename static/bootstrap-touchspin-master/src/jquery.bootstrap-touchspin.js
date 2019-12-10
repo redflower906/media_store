@@ -627,15 +627,17 @@
       **/
       function upOnce(ol) {
         _checkValue();
-        console.log('ol', ol);
 
         value = parseFloat(settings.callback_before_calculation(elements.input.val()));
         if (isNaN(value)) {
           value = 0;
         }
+        console.log('value', value);
 
         var initvalue = value,
           boostedstep = _getBoostedStep();
+        
+        console.log('initval', initvalue);
 
         value = value + boostedstep;
 
@@ -645,6 +647,7 @@
         //   stopSpin();
         // }
 
+        //puts number into correct input
         ol.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
 
