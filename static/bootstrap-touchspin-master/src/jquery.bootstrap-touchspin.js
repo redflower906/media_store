@@ -644,9 +644,9 @@
         }
 
         //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
-        elements.input.val(value);
+        
         if (initvalue !== value) {
-          originalinput.change();
+          originalinput.change(elements.input.val(value));
           console.log('upchanged');
         }
       }
