@@ -640,6 +640,7 @@
         console.log('initval', initvalue);
 
         value = value + boostedstep;
+        console.log('value2', value);
 
         // if ((settings.max !== null) && (value > settings.max)) {
         //   value = settings.max;
