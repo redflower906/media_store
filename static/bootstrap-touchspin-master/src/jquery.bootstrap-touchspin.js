@@ -622,7 +622,7 @@
         }
       }
 
-      function upOnce() {
+      function upOnce(e) {
         _checkValue();
 
         value = parseFloat(settings.callback_before_calculation(elements.input.val()));
@@ -643,10 +643,9 @@
         //   stopSpin();
         // }
 
-        //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
+        elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
-        $('#id_orderlines-0-qty').val((parseFloat(value)).toFixed(2));
-        console.log($(this));
+        console.log(e.type);
 
         
         if (initvalue !== value) {
