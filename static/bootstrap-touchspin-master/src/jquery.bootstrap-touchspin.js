@@ -558,7 +558,12 @@
         console.log('originput', originalinput.val());
         console.log('ol', ol);
 
-        val = settings.callback_before_calculation(ol.val());
+        if (ol){
+          val = settings.callback_before_calculation(ol.val());
+        }
+        else {
+          val = settings.callback_before_calculation(originalinput.val());
+        }
 
         if (val === '') {
           if (settings.replacementval !== '') {
