@@ -636,8 +636,6 @@
           boostedstep = _getBoostedStep();
 
         value = value + boostedstep;
-        console.log('initvalueup: ', initvalue);
-        console.log('valueup: ', value);
 
         // if ((settings.max !== null) && (value > settings.max)) {
         //   value = settings.max;
@@ -647,12 +645,11 @@
 
         elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
-        console.log(e.type);
+        console.log(e.target.value);
 
         
         if (initvalue !== value) {
           originalinput.change();
-          console.log('upchanged');
         }
       }
 
