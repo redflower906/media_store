@@ -551,14 +551,14 @@
             return value;
         }
       }
-
+      //originalinput -> ol
       function _checkValue(ol) {
         var val, parsedval, returnval;
 
         console.log('originput', originalinput.val());
         console.log('ol', ol);
 
-        val = settings.callback_before_calculation(originalinput.val());
+        val = settings.callback_before_calculation(ol.val());
 
         if (val === '') {
           if (settings.replacementval !== '') {
@@ -600,8 +600,8 @@
         returnval = _forcestepdivisibility(returnval);
 
         if (Number(val).toString() !== returnval.toString()) {
-          originalinput.val(returnval);
-          originalinput.trigger('change');
+          ol.val(returnval);
+          ol.trigger('change');
         }
         console.log('val: ', val);
         console.log('parsedval: ', parsedval);
@@ -629,6 +629,7 @@
       * @param {js event} e - event object for qty input
       **/
       function upOnce(ol) {
+
         _checkValue(ol);
 
         value = parseFloat(settings.callback_before_calculation(ol.val()));
