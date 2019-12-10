@@ -552,8 +552,11 @@
         }
       }
 
-      function _checkValue() {
+      function _checkValue(ol) {
         var val, parsedval, returnval;
+
+        console.log('originput', originalinput.val());
+        console.log('ol', ol);
 
         val = settings.callback_before_calculation(originalinput.val());
 
@@ -626,7 +629,7 @@
       * @param {js event} e - event object for qty input
       **/
       function upOnce(ol) {
-        _checkValue();
+        _checkValue(ol);
 
         value = parseFloat(settings.callback_before_calculation(ol.val()));
         if (isNaN(value)) {
