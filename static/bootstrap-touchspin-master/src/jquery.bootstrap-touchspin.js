@@ -637,13 +637,13 @@
         console.log('initvalueup: ', initvalue);
         console.log('valueup: ', value);
 
-        if ((settings.max !== null) && (value > settings.max)) {
-          value = settings.max;
-          originalinput.trigger('touchspin.on.max');
-          stopSpin();
-        }
+        // if ((settings.max !== null) && (value > settings.max)) {
+        //   value = settings.max;
+        //   originalinput.trigger('touchspin.on.max');
+        //   stopSpin();
+        // }
 
-        //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
+        elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         
         if (initvalue !== value) {
           originalinput.change();
