@@ -628,7 +628,7 @@
       function upOnce(ol) {
         _checkValue();
 
-        value = parseFloat(settings.callback_before_calculation(elements.input.val()));
+        value = parseFloat(settings.callback_before_calculation(ol.val()));
         if (isNaN(value)) {
           value = 0;
         }
