@@ -433,19 +433,19 @@
           ev.preventDefault();
           ev.stopPropagation();
         });
+        // Does this cause "+" on subsequent orderlines to increase first?
+        // elements.up.on('touchstart.touchspin', function(ev) {
+        //   elements.up.off('mousedown.touchspin');  // android 4 workaround
 
-        elements.up.on('touchstart.touchspin', function(ev) {
-          elements.up.off('mousedown.touchspin');  // android 4 workaround
+        //   if (originalinput.is(':disabled')) {
+        //     return;
+        //   }
 
-          if (originalinput.is(':disabled')) {
-            return;
-          }
-
-          upOnce();
-          startUpSpin();
-          ev.preventDefault();
-          ev.stopPropagation();
-        });
+        //   upOnce();
+        //   startUpSpin();
+        //   ev.preventDefault();
+        //   ev.stopPropagation();
+        // });
 
         //This stops "+" from going up constantly
         elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
@@ -456,6 +456,7 @@
           stopSpin();
         });
 
+        //This stops "-" from going down constantly
         elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
           if (!spinning) {
             return;
