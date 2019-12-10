@@ -16,11 +16,13 @@ function register_row(row){
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
     row.find('.inv_vol p').attr('id', prefix + 'vol')
-
     //register a listener to changes in the qty value
-    $('#id_' + prefix + 'qty').change('input', handle_qty_update)
+    register_listener(prefix);
+}
 
-
+function register_listener(prefix){
+    $('#id_' + prefix + 'qty').change('input', handle_qty_update);
+    console.log('reg_list', $(this));
 }
 
 /**
