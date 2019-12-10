@@ -407,19 +407,18 @@
           ev.stopPropagation();
         });
 
-        elements.down.on('touchstart.touchspin', function(ev) {
-          elements.down.off('mousedown.touchspin');  // android 4 workaround
+        // elements.down.on('touchstart.touchspin', function(ev) {
+        //   elements.down.off('mousedown.touchspin');  // android 4 workaround
 
-          if (originalinput.is(':disabled')) {
-            console.log('2. - disabled!');
-            return;
-          }
+        //   if (originalinput.is(':disabled')) {
+        //     return;
+        //   }
 
-          downOnce();
-          //startDownSpin();
-          ev.preventDefault();
-          ev.stopPropagation();
-        });
+        //   downOnce();
+        //   //startDownSpin();
+        //   ev.preventDefault();
+        //   ev.stopPropagation();
+        // });
 
         //this is what makes the up button work. scrolling still works when this is disabled. also arrow buttons work completely (price updates)
         //with only this working, clicking once on "+" will cause numbers to increase to 100. 
@@ -427,11 +426,12 @@
           elements.up.off('touchstart.touchspin');  // android 4 workaround
 
           if (originalinput.is(':disabled')) {
+            console.log('1. + disabled!');
             return;
           }
 
           upOnce();
-          startUpSpin();
+          // startUpSpin();
           ev.preventDefault();
           ev.stopPropagation();
         });
@@ -449,16 +449,16 @@
         //   ev.stopPropagation();
         // });
 
-        //This stops "+" from going up constantly
-        elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
-          ev.stopPropagation();
-          stopSpin();
-        });
+        //This stops "+" from going up constantly if startupspin() is enabled
+        // elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
+        //   ev.stopPropagation();
+        //   stopSpin();
+        // });
 
-        //This stops "-" from going down constantly
+        //This stops "-" from going down constantly if startupspin() is enabled
         // elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
         //   if (!spinning) {
         //     return;
@@ -647,6 +647,7 @@
 
         if (initvalue !== value) {
           originalinput.trigger('change');
+          console.log('upchanged');
         }
       }
 
@@ -675,9 +676,11 @@
 
         if (initvalue !== value) {
           originalinput.trigger('change');
+          console.log('downchanged');
         }
       }
 
+      //should I comment out?
       function startDownSpin() {
         stopSpin();
 
@@ -694,7 +697,7 @@
           }, settings.stepinterval);
         }, settings.stepintervaldelay);
       }
-
+      //should I comment out?
       function startUpSpin() {
         stopSpin();
 
