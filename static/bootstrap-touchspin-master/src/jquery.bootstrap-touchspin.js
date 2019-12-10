@@ -414,13 +414,13 @@
           }
 
           downOnce();
-          startDownSpin();
+          //startDownSpin();
           ev.preventDefault();
           ev.stopPropagation();
         });
 
         //this is what makes the up button work. scrolling still works when this is disabled. also arrow buttons work completely (price updates)
-        //with only this working, clicking once on "+" will cause numbers to increase to 100. "-" button doesn't work
+        //with only this working, clicking once on "+" will cause numbers to increase to 100. 
         elements.up.on('mousedown.touchspin', function(ev) {
           elements.up.off('touchstart.touchspin');  // android 4 workaround
 
@@ -433,7 +433,7 @@
           ev.preventDefault();
           ev.stopPropagation();
         });
-        // Does this cause "+" on subsequent orderlines to increase first?
+        // Does this cause "+" on subsequent orderlines to increase first? -No
         // elements.up.on('touchstart.touchspin', function(ev) {
         //   elements.up.off('mousedown.touchspin');  // android 4 workaround
 
@@ -457,14 +457,14 @@
         });
 
         //This stops "-" from going down constantly
-        elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-          if (!spinning) {
-            return;
-          }
+        // elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+        //   if (!spinning) {
+        //     return;
+        //   }
 
-          ev.stopPropagation();
-          stopSpin();
-        });
+        //   ev.stopPropagation();
+        //   stopSpin();
+        // });
 
         // elements.down.on('mousemove.touchspin touchmove.touchspin', function(ev) {
         //   if (!spinning) {
