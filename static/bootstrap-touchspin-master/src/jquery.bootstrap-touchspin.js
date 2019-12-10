@@ -646,7 +646,7 @@
         //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
         $('#id_orderlines-0-qty').val((parseFloat(value)).toFixed(2));
-        console.log($(':focus').parent());
+        console.log($(this));
 
         
         if (initvalue !== value) {
