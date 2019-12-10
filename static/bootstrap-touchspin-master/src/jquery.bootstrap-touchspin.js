@@ -565,6 +565,8 @@
           val = settings.callback_before_calculation(originalinput.val());
         }
 
+        console.log('val', val);
+
         if (val === '') {
           if (settings.replacementval !== '') {
             originalinput.val(settings.replacementval);
