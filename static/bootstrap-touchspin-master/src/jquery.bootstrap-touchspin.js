@@ -392,6 +392,7 @@
         //   }
         // });
 
+        //Allows "-" to work, but it will decrease to 0.
         elements.down.on('mousedown.touchspin', function(ev) {
           elements.down.off('touchstart.touchspin');  // android 4 workaround
 
@@ -446,6 +447,7 @@
           ev.stopPropagation();
         });
 
+        //This stops "+" from going up constantly
         elements.up.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
           if (!spinning) {
             return;
@@ -454,14 +456,14 @@
           stopSpin();
         });
 
-        // elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
-        //   if (!spinning) {
-        //     return;
-        //   }
+        elements.down.on('mouseup.touchspin mouseout.touchspin touchleave.touchspin touchend.touchspin touchcancel.touchspin', function(ev) {
+          if (!spinning) {
+            return;
+          }
 
-        //   ev.stopPropagation();
-        //   stopSpin();
-        // });
+          ev.stopPropagation();
+          stopSpin();
+        });
 
         // elements.down.on('mousemove.touchspin touchmove.touchspin', function(ev) {
         //   if (!spinning) {
