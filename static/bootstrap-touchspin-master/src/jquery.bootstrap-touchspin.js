@@ -429,8 +429,9 @@
             console.log('1. + disabled!');
             return;
           }
+          console.log($(this));
 
-          upOnce('input');
+          upOnce();
           // startUpSpin();
           ev.preventDefault();
           ev.stopPropagation();
@@ -624,7 +625,7 @@
       /**
       * @param {js event} e - event object for qty input
       **/
-      function upOnce(e) {
+      function upOnce() {
         _checkValue();
 
         value = parseFloat(settings.callback_before_calculation(elements.input.val()));
@@ -645,7 +646,6 @@
 
         elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
-        console.log(e.target.value);
 
         
         if (initvalue !== value) {
