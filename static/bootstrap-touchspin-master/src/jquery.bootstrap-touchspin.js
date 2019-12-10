@@ -646,7 +646,7 @@
         //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
         
         if (initvalue !== value) {
-          originalinput.change(elements.input.val(value));
+          originalinput.change();
           console.log('upchanged');
         }
       }
