@@ -646,7 +646,7 @@
         //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(2)));
         //elements.input.val(Number(value).toFixed(2));
         var test = elements.input.val();
-        console.log(test);
+        console.log($(this).find(':input'));
 
         
         if (initvalue !== value) {
