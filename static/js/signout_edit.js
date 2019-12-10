@@ -22,7 +22,7 @@ function register_row(row){
 
 function register_listener(prefix){
     $('#id_' + prefix + 'qty').change('input', handle_qty_update);
-    console.log('reg_list', $(this));
+    console.log('prefix', prefix);
 }
 
 /**
