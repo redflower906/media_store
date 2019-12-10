@@ -397,11 +397,12 @@
           elements.down.off('touchstart.touchspin');  // android 4 workaround
 
           if (originalinput.is(':disabled')) {
+            console.log('1. - disabled!');
             return;
           }
 
           downOnce();
-          startDownSpin();
+          //startDownSpin();
           ev.preventDefault();
           ev.stopPropagation();
         });
@@ -410,6 +411,7 @@
           elements.down.off('mousedown.touchspin');  // android 4 workaround
 
           if (originalinput.is(':disabled')) {
+            console.log('2. - disabled!');
             return;
           }
 
