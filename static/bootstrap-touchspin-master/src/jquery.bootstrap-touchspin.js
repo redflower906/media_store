@@ -429,7 +429,7 @@
             console.log('1. + disabled!');
             return;
           }
-          console.log($(this).parent());
+          console.log($(this).parent().prev());
 
           upOnce();
           // startUpSpin();
