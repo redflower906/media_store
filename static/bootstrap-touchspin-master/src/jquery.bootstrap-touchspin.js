@@ -429,9 +429,9 @@
             console.log('1. + disabled!');
             return;
           }
-          console.log($(this).parent().prev());
+          var ol = $(this).parent().prev()
 
-          upOnce();
+          upOnce(ol);
           // startUpSpin();
           ev.preventDefault();
           ev.stopPropagation();
@@ -625,8 +625,9 @@
       /**
       * @param {js event} e - event object for qty input
       **/
-      function upOnce() {
+      function upOnce(ol) {
         _checkValue();
+        console.log('ol', ol);
 
         value = parseFloat(settings.callback_before_calculation(elements.input.val()));
         if (isNaN(value)) {
