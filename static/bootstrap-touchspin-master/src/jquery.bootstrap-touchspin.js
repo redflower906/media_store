@@ -430,7 +430,7 @@
             return;
           }
 
-          upOnce();
+          upOnce('input');
           // startUpSpin();
           ev.preventDefault();
           ev.stopPropagation();
