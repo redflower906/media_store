@@ -643,8 +643,8 @@
           stopSpin();
         }
 
-        elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
-
+        //elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
+        elements.input.val(value);
         if (initvalue !== value) {
           originalinput.change();
           console.log('upchanged');
