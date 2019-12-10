@@ -621,7 +621,9 @@
           return Math.max(settings.step, boosted);
         }
       }
-
+      /**
+      * @param {js event} e - event object for qty input
+      **/
       function upOnce(e) {
         _checkValue();
 
