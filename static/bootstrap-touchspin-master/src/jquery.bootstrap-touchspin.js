@@ -677,16 +677,17 @@
 
         value = value - boostedstep;
 
-        if ((settings.min !== null) && (value < settings.min)) {
-          value = settings.min;
-          originalinput.trigger('touchspin.on.min');
-          stopSpin();
-        }
+        // if ((settings.min !== null) && (value < settings.min)) {
+        //   value = settings.min;
+        //   originalinput.trigger('touchspin.on.min');
+        //   stopSpin();
+        // }
 
-        elements.input.val(settings.callback_after_calculation(Number(value).toFixed(settings.decimals)));
+        //puts number into correct input
+        ol.val(settings.callback_after_calculation(Number(value).toFixed(2)));
 
         if (initvalue !== value) {
-          originalinput.trigger('change');
+          originalinput.change();
         }
       }
 
