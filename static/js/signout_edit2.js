@@ -24,7 +24,7 @@ function register_row(row){
 function register_listener(prefix){
     $('.spin').click(function(){
         console.log('click');
-        console.log($(this).closest('.line_qty'));    
+        console.log($(this).closest('input'));    
         $('#id_' + prefix + 'qty').change('input', handle_qty_update);
     });
 }
