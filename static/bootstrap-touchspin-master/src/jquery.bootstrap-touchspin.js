@@ -401,7 +401,6 @@
             return;
           }
           var ol = $(this).parent().next()
-          console.log('ol', ol);
 
           downOnce(ol);
           //startDownSpin();
@@ -669,17 +668,14 @@
         _checkValue(ol);
 
         value = parseFloat(settings.callback_before_calculation(ol.val()));
-        console.log('value1', value);
         if (isNaN(value)) {
           value = 0;
         }
 
         var initvalue = value,
           boostedstep = _getBoostedStep();
-        console.log('initvalue', initvalue);
 
         value = value - boostedstep;
-        console.log('value2', value);
 
         // if ((settings.min !== null) && (value < settings.min)) {
         //   value = settings.min;
