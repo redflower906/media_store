@@ -18,7 +18,7 @@ function register_row(row){
     row.find('.inv_vol p').attr('id', prefix + 'vol')
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').change('input', handle_qty_update)
-    console.log('prefix', prefix);
+    console.log('prefix', prefix)
 
 
 /**
