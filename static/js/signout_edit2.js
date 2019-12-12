@@ -20,7 +20,7 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('#id_orderlines-0-inventory').click(function(){
+$('#id_orderlines-0-inventory').on('click', function(){
     console.log('click');
 });
 
