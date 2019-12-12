@@ -19,6 +19,7 @@ function register_row(row){
     //register a listener to changes in the qty value
     $('#id_' + prefix + 'qty').change('input', handle_qty_update)
     console.log('prefix', prefix)
+}
 
 
 /**
