@@ -20,11 +20,11 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('#id_orderlines-0-inventory').on('click', function(){
-    console.log('click');
-});
 
 function register_listener(prefix){
+    $('.spin').click(function(){
+        console.log('click');
+    });
     $('#id_' + prefix + 'qty').change('input', handle_qty_update);
     console.log('prefix', prefix);
 }
