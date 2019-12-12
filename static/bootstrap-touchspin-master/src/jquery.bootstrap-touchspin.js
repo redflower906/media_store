@@ -400,7 +400,7 @@
             console.log('1. - disabled!');
             return;
           }
-          var ol = $(this).parent().prev()
+          var ol = $(this).parent().next()
           console.log('ol', ol);
 
           downOnce(ol);
