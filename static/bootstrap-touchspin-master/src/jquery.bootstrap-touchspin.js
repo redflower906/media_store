@@ -667,7 +667,7 @@
       function downOnce(ol) {
         _checkValue(ol);
 
-        value = parseFloat(settings.callback_before_calculation(elements.input.val()));
+        value = parseFloat(settings.callback_before_calculation(ol.val()));
         if (isNaN(value)) {
           value = 0;
         }
@@ -687,7 +687,7 @@
         ol.val(settings.callback_after_calculation(Number(value).toFixed(2)));
 
         if (initvalue !== value) {
-          originalinput.change();
+          originalinput.trigger('change');
         }
       }
 
