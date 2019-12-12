@@ -611,9 +611,6 @@
           ol.val(returnval);
           ol.trigger('change');
         }
-        console.log('val: ', val);
-        console.log('parsedval: ', parsedval);
-        console.log('returnval: ', returnval);
       }
 
       function _getBoostedStep() {
@@ -644,15 +641,12 @@
         if (isNaN(value)) {
           value = 0;
         }
-        console.log('value', value);
 
         var initvalue = value,
           boostedstep = _getBoostedStep();
         
-        console.log('initval', initvalue);
 
         value = value + boostedstep;
-        console.log('value2', value);
 
         // if ((settings.max !== null) && (value > settings.max)) {
         //   value = settings.max;
@@ -670,8 +664,8 @@
         }
       }
 
-      function downOnce() {
-        _checkValue();
+      function downOnce(ol) {
+        _checkValue(ol);
 
         value = parseFloat(settings.callback_before_calculation(elements.input.val()));
         if (isNaN(value)) {
@@ -682,8 +676,6 @@
           boostedstep = _getBoostedStep();
 
         value = value - boostedstep;
-        console.log('initvaluedown: ', initvalue);
-        console.log('valuedown: ', value);
 
         if ((settings.min !== null) && (value < settings.min)) {
           value = settings.min;
@@ -695,7 +687,6 @@
 
         if (initvalue !== value) {
           originalinput.trigger('change');
-          console.log('downchanged');
         }
       }
 
