@@ -20,12 +20,8 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('.bootstrap-touchspin-up').click(function(){
-    console.log('up click');
-});
-
-$('.bootstrap-touchspin-down').click(function(){
-    console.log('down click');
+$('.btn.spin').click(function(){
+    console.log('click');
 });
 
 function register_listener(prefix){
