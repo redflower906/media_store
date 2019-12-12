@@ -23,8 +23,9 @@ function register_row(row){
 
 function register_listener(prefix){
     $('.spin').click(function(){
-        console.log('click');    
-        $('#id_' + prefix + 'qty').trigger(handle_qty_update);
+        console.log('click');
+        console.log(prefix);    
+        $('#id_' + prefix + 'qty').trigger('handle_qty_update', ["input"]);
     });
 }
 
