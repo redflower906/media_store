@@ -400,8 +400,9 @@
             console.log('1. - disabled!');
             return;
           }
+          var ol = $(this).parent().prev()
 
-          downOnce();
+          downOnce(ol);
           //startDownSpin();
           ev.preventDefault();
           ev.stopPropagation();
