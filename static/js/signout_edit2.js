@@ -17,14 +17,14 @@ function register_row(row){
     row.find('.inv_container p').attr('id', prefix + 'container')
     row.find('.inv_vol p').attr('id', prefix + 'vol')
     //register a listener to changes in the qty value
-    register_listener(prefix);
+    //register_listener(prefix);
 }
 
 
-function register_listener(prefix){
+function register_listener(){
     $('.spin').click(function(){
         console.log('click');
-        $(this).parent().find('.line_qty').css('border', '3px solid red');    
+        console.log($(this).parent());    
         $('#id_' + prefix + 'qty').change('input', handle_qty_update);
     });
 }
