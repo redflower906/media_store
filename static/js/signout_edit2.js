@@ -5,7 +5,6 @@
 * @param {object} row - jquery-wrapped row element
 */
 function register_row(row){
-    console.log(row);
     var prefix = build_prefix(row.find('input')[0].name)
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
@@ -22,7 +21,8 @@ function register_row(row){
 }
 
 
-function register_listener(){
+function register_listener(row){
+    console.log(row);
     $('.spin').click(function(){
         console.log('click');
         console.log($(this).parent());    
