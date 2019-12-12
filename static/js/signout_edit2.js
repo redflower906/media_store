@@ -17,9 +17,21 @@ function register_row(row){
     row.find('.inv_container p').attr('id', prefix + 'container')
     row.find('.inv_vol p').attr('id', prefix + 'vol')
     //register a listener to changes in the qty value
-    $('#id_' + prefix + 'qty').change('input', handle_qty_update)
-    console.log('prefix', prefix);
+    register_listener(prefix);
+}
 
+$('.bootstrap-touchspin-up').click(function(){
+    console.log('up click');
+});
+
+$('.bootstrap-touchspin-down').click(function(){
+    console.log('down click');
+});
+
+function register_listener(prefix){
+    $('#id_' + prefix + 'qty').change('input', handle_qty_update);
+    console.log('prefix', prefix);
+}
 
 /**
 * Run cleanup tasks when a row is removed
