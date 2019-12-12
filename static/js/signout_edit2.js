@@ -20,7 +20,7 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('.bootstrap-touchspin-up').click(function(){
+$('#id_orderlines-0-inventory').click(function(){
     console.log('click');
 });
 
