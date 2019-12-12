@@ -20,7 +20,7 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('.spin').click(function(){
+$('.bootstrap-touchspin-up').click(function(){
     console.log('click');
 });
 
