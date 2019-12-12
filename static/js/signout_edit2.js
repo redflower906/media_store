@@ -20,7 +20,7 @@ function register_row(row){
     register_listener(prefix);
 }
 
-$('.btn.spin').click(function(){
+$('.spin').click(function(){
     console.log('click');
 });
 
