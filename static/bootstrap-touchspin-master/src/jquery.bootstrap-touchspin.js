@@ -140,7 +140,6 @@
         _checkValue();
 
         var value = elements.input.val();
-        console.log('value: ', value);
 
         if (value !== '') {
           value = Number(settings.callback_before_calculation(elements.input.val()));
@@ -212,7 +211,6 @@
       function _buildHtml() {
         var initval = originalinput.val(),
           parentelement = originalinput.parent();
-        console.log('initval: ', initval);
 
         if (initval !== '') {
           initval = settings.callback_after_calculation(Number(initval).toFixed(settings.decimals));
@@ -260,7 +258,6 @@
 
         $(prefixhtml).insertBefore(originalinput);
         $(postfixhtml).insertAfter(originalinput);
-        console.log('originalinput: ', originalinput);
 
         container = parentelement;
       }
@@ -556,8 +553,6 @@
       function _checkValue(ol) {
         var val, parsedval, returnval;
 
-        console.log('originput', originalinput.val());
-        console.log('ol', ol);
 
         if (ol){
           val = settings.callback_before_calculation(ol.val());
