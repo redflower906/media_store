@@ -24,7 +24,7 @@ function register_row(row){
 function register_listener(prefix){
     $('.spin').click(function(){
         console.log('click');
-        console.log($(this).parent().find('.line_qty'));    
+        $(this).parent().find('.line_qty').css('border', '3px solid red');    
         $('#id_' + prefix + 'qty').change('input', handle_qty_update);
     });
 }
