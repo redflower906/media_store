@@ -508,7 +508,7 @@
         $('.spin').click(function(){
             console.log('click');
             console.log($(this).parent().siblings('.line_qty').val());
-            var qtyVal = $(this).parent().siblings('.line_qty').val()
+            var qtyVal = $(this).parent().siblings('.line_qty')
             handle_qty_update(qtyVal);
         });
 

@@ -21,14 +21,14 @@ function register_row(row){
 }
 
 
-function register_listener(row){
-    console.log(row);
-    $('.spin').click(function(){
-        console.log('click');
-        console.log($(this).parent());    
-        $('#id_' + prefix + 'qty').change('input', handle_qty_update);
-    });
-}
+// function register_listener(row){
+//     console.log(row);
+//     $('.spin').click(function(){
+//         console.log('click');
+//         console.log($(this).parent());    
+//         $('#id_' + prefix + 'qty').change('input', handle_qty_update);
+//     });
+// }
 
 /**
 * Run cleanup tasks when a row is removed
