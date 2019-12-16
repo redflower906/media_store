@@ -507,7 +507,7 @@
 
         $('.spin').click(function(){
             console.log('click');
-            console.log($(this).parent().siblings('.line_qty'));    
+            console.log($(this).parent().siblings('.line_qty').val());    
             $(this).parent().siblings('.line_qty').change('input', handle_qty_update);
         });
 
