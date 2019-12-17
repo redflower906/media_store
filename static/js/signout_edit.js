@@ -121,6 +121,11 @@ function build_prefix(id) {
     return id_parts[0] + '-' + id_parts[1] + '-'
 }
 
+function build_prefix_buttons(invItem) {
+    id_parts = invItem.attr('id').split('-')
+    return id_parts[0] + '-' + id_parts[1] + '-'
+}
+
 /**
  * Utility to calculate line costs OR MAYBE THIS IS WHAT NEEDS TO CHANGE TO MANUALLY OVERRIDE LINE COSTS ~FIX~
  * @param {string} qty - qty field value
