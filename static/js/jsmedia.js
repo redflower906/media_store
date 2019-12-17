@@ -181,7 +181,7 @@ $(function(){
 //Automatically choose department and project code based on requester or submitter
 $(function autoChoose(){
     var url = String(window.location.href);
-    if (url == 'http://mediastore.int.janelia.org/signout/new'){
+    if ((url == 'http://mediastore.int.janelia.org/signout/new') || (url == 'http://mediastore.int.janelia.org/signout/qtytest')){
         //if loc = 3C.229
         $('#id_order-requester').change(function() {
             var optionSelected = $(this).find("option:selected");
