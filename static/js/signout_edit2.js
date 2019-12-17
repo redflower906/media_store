@@ -85,7 +85,7 @@ function handle_qty_update(invItem, qtyVal){
     //var prefix = build_prefix(e.target.name)
     //var cur_quantity=e.target.value
     //var inventory_id = ($('#id_' + prefix + 'inventory').val())
-    var prefix = build_prefix(invItem);
+    var prefix = build_prefix_buttons(invItem);
     var cur_quantity = qtyVal;
     var inventory_id = invItem.val();    
     console.log(cur_quantity);
@@ -119,6 +119,11 @@ function find_invdetails(inv_id) {
  */
 function build_prefix(id) {
     id_parts = id.split('-')
+    return id_parts[0] + '-' + id_parts[1] + '-'
+}
+
+function build_prefix_buttons(invItem) {
+    id_parts = invItem.attr('id').split('-')
     return id_parts[0] + '-' + id_parts[1] + '-'
 }
 
