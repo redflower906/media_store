@@ -6,6 +6,7 @@
 */
 function register_row(row){
     var prefix = build_prefix(row.find('input')[0].name)
+    console.log(row.find('input')[0].name)
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
     //register listeners to changes in the dropdowns
@@ -16,19 +17,8 @@ function register_row(row){
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
     row.find('.inv_vol p').attr('id', prefix + 'vol')
-    //register a listener to changes in the qty value
-    //register_listener(prefix);
+
 }
-
-
-// function register_listener(row){
-//     console.log(row);
-//     $('.spin').click(function(){
-//         console.log('click');
-//         console.log($(this).parent());    
-//         $('#id_' + prefix + 'qty').change('input', handle_qty_update);
-//     });
-// }
 
 /**
 * Run cleanup tasks when a row is removed
