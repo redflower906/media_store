@@ -81,18 +81,21 @@ function populate_vol_and_containers(e){
 * qty change handler. Updates line total
 * @param {js event} e - event object for qty input
 */
-function handle_qty_update(e){
-    var prefix = build_prefix(e.target.name)
-    var cur_quantity=e.target.value
-    var inventory_id = ($('#id_' + prefix + 'inventory').val())
+function handle_qty_update(invItem, qtyVal){
+    //var prefix = build_prefix(e.target.name)
+    //var cur_quantity=e.target.value
+    //var inventory_id = ($('#id_' + prefix + 'inventory').val())
+    var cur_quantity = qtyVal;
+    var inventory_id = invItem.val();    
+    console.log(cur_quantity);
+    console.log(inventory_id);
     // only update costs/totals if the user has selected an item
     if(inventory_id){
         var item = find_invdetails(inventory_id)
         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
         update_total()
     }
-    console.log(cur_quantity);
-    console.log(prefix);
+
 }
 
 /**
