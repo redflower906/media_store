@@ -508,9 +508,10 @@
         });
         $('.line_qty').click(function(){
             var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
-            var qtyVal = $(this).parent().siblings('.line_qty').val();
+            var qtyVal = $(this).val();
             console.log(invItem);
             console.log(qtyVal);
+            handle_qty_update(invItem, qtyVal);
         });
 
 
