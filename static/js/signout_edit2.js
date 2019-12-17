@@ -7,7 +7,7 @@
 function register_row(row){
     var prefix = build_prefix(row.find('input')[0].name)
     console.log(row.find('.line_qty'))
-    $(row).find('.line_qty').addClass('yes')
+    $(row).find('.line_qty').addClass('input-lg')
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
     //register listeners to changes in the dropdowns

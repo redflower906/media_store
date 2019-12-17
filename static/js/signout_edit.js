@@ -4,7 +4,8 @@
 * Called by django formset after a new row is added
 * @param {object} row - jquery-wrapped row element
 */
-function register_row(row){
+function register_row(row){    
+    $(row).find('.line_qty').addClass('input-lg')
     var prefix = build_prefix(row.find('input')[0].name)
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
