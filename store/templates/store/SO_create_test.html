@@ -506,6 +506,9 @@
             var qtyVal = $(this).parent().siblings('.line_qty').val()
             handle_qty_update(invItem, qtyVal);
         });
+        $('.line_qty').click(function(){
+            console.log($(this));
+        });
 
 
     </script>
