@@ -87,7 +87,8 @@ function handle_qty_update(invItem, qtyVal){
     //var inventory_id = ($('#id_' + prefix + 'inventory').val())
     var prefix = build_prefix_buttons(invItem);
     var cur_quantity = qtyVal;
-    var inventory_id = invItem.val();    
+    var inventory_id = invItem.val();
+    console.log(inventory_id);    
     console.log(cur_quantity);
     console.log(prefix);
     // only update costs/totals if the user has selected an item
