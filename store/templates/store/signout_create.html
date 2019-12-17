@@ -507,7 +507,6 @@
         //increase decrease buttons for signout
         $(".line_qty").TouchSpin();
         $('.spin').click(function(){
-            console.log('click');
             var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
             var qtyVal = $(this).parent().siblings('.line_qty').val()
             handle_qty_update(invItem, qtyVal);
