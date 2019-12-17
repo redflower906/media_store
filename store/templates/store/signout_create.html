@@ -507,9 +507,9 @@
 
         $('.spin').click(function(){
             console.log('click');
-            console.log($(this).parent().parent().siblings('.inv'));
+            console.log($(this).parents('.colinput-group'));
             var qtyVal = $(this).parent().siblings('.line_qty').val()
-            handle_qty_update(qtyVal);
+            //handle_qty_update(qtyVal);
         });
 
         
