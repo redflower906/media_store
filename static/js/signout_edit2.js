@@ -95,8 +95,9 @@ function handle_qty_update(invItem, qtyVal){
         console.log(inventory_id);
         var item = find_invdetails(inventory_id)
         console.log(item.cost);
-        $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
-        update_total()
+        console.log($('#id_' + prefix + 'line_cost'));
+        $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost));
+        update_total();
     }
 
 }
