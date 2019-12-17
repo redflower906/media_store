@@ -499,7 +499,15 @@
             }, 15000);
         
         //increase decrease buttons for signout
-        {% comment %} $(".line_qty").inputSpinner(); {% endcomment %}
+        $(".line_qty").TouchSpin();
+        //change the qty value when clicking the "+" or "-"
+        $('.spin').click(function(){
+            console.log('click');
+            var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
+            var qtyVal = $(this).parent().siblings('.line_qty').val()
+            handle_qty_update(invItem, qtyVal);
+        });
+
 
     </script>
     <p>&nbsp;</p>

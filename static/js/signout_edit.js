@@ -16,9 +16,9 @@ function register_row(row){
     //since django-inline-formset won't handle the rownum properly
     row.find('.inv_container p').attr('id', prefix + 'container')
     row.find('.inv_vol p').attr('id', prefix + 'vol')
-    //register a listener to changes in the qty value
-    $('#id_' + prefix + 'qty').change('input', handle_qty_update)
-    console.log('prefix', prefix)
+    // //register a listener to changes in the qty value without touchspin
+    // $('#id_' + prefix + 'qty').change('input', handle_qty_update)
+    // console.log('prefix', prefix)
 }
 
 
@@ -73,18 +73,30 @@ function populate_vol_and_containers(e){
 * qty change handler. Updates line total
 * @param {js event} e - event object for qty input
 */
-function handle_qty_update(e){
-    var prefix = build_prefix(e.target.name)
-    var cur_quantity=e.target.value
-    var inventory_id = ($('#id_' + prefix + 'inventory').val())
+// old version without touchspin
+// function handle_qty_update(e){
+//     var prefix = build_prefix(e.target.name)
+//     var cur_quantity=e.target.value
+//     var inventory_id = ($('#id_' + prefix + 'inventory').val())
+//     // only update costs/totals if the user has selected an item
+//     if(inventory_id){
+//         var item = find_invdetails(inventory_id)
+//         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
+//         update_total()
+//     }
+// }
+
+function handle_qty_update(invItem, qtyVal){
+    var prefix = build_prefix_buttons(invItem);
+    var cur_quantity = qtyVal;
+    var inventory_id = invItem.val();
     // only update costs/totals if the user has selected an item
     if(inventory_id){
         var item = find_invdetails(inventory_id)
-        $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
-        update_total()
+        $('#' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost));
+        update_total();
     }
-    console.log(cur_quantity);
-    console.log(prefix);
+
 }
 
 /**
@@ -118,10 +130,7 @@ function calc_cost(qty, cost){
     if(qty==='' || qty===null){
         return 0
     }    
-    // console.log(qty);
-    // console.log((qty * parseFloat(cost)).toFixed(2), 'parsefloat, tofixed');
     return  (qty * parseFloat(cost)).toFixed(2)
-    // return  (parseInt(qty) * parseFloat(cost)).toFixed(2)
 
 }
 
