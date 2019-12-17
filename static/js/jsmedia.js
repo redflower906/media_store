@@ -124,7 +124,7 @@ $(function(){
         var getVal = $('#id_order-location option:selected').val();
         var small = getVal.substr(0,2);
         $(this).removeClass();
-        $(this).addClass(small)
+        $(this).addClass(small).addClass('form-control');
         var image_modal = document.getElementById("img_map");
         var image_div = document.getElementById('img');
         console.log(image_div)
