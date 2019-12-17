@@ -89,11 +89,12 @@ function handle_qty_update(invItem, qtyVal){
     var cur_quantity = qtyVal;
     var inventory_id = invItem.val();    
     console.log(cur_quantity);
-    console.log(inventory_id);
     console.log(prefix);
     // only update costs/totals if the user has selected an item
     if(inventory_id){
+        console.log(inventory_id);
         var item = find_invdetails(inventory_id)
+        console.log(item);
         $('#id_' + prefix + 'line_cost').val(calc_cost(cur_quantity, item.cost))
         update_total()
     }
