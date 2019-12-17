@@ -410,7 +410,7 @@
                                     {{ hidden_field.errors }} 
                                     {{ hidden_field }}
                                     {% endfor %}
-                                    <td class='col text-center inv'>
+                                    <td class='col text-center inv_item'>
                                         {{ form.inventory.errors }}
                                         {{ form.inventory }}
                                     </td>
@@ -507,7 +507,7 @@
 
         $('.spin').click(function(){
             console.log('click');
-            console.log($(this).parents('.colinput-group'));
+            console.log($(this).parents('.colinput-group').siblings('.inv_item').children());
             var qtyVal = $(this).parent().siblings('.line_qty').val()
             //handle_qty_update(qtyVal);
         });
