@@ -503,11 +503,14 @@
         //change the qty value when clicking the "+" or "-"
         $('.spin').click(function(){
             var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
-            var qtyVal = $(this).parent().siblings('.line_qty').val()
+            var qtyVal = $(this).parent().siblings('.line_qty').val();
             handle_qty_update(invItem, qtyVal);
         });
         $('.line_qty').click(function(){
-            console.log($(this));
+            var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
+            var qtyVal = $(this).parent().siblings('.line_qty').val();
+            console.log(invItem);
+            console.log(qtyVal);
         });
 
 
