@@ -506,12 +506,21 @@
 
         //increase decrease buttons for signout
         $(".line_qty").TouchSpin();
-        $('.spin').click(function(){
+
+        //change the qty value when clicking the "+" or "-"
+        {% comment %} $('.spin').click(function(){
             var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
             var qtyVal = $(this).parent().siblings('.line_qty').val()
             handle_qty_update(invItem, qtyVal);
+        }); {% endcomment %}
+        //allow typing in decimals for qty
+        $('.line_qty').change(function(){
+            var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
+            var qtyVal = $(this).val();
+            console.log(invItem);
+            console.log(qtyVal);
+            handle_qty_update(invItem, qtyVal);
         });
-
         
 
 

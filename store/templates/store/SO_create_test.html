@@ -506,6 +506,7 @@
             var qtyVal = $(this).parent().siblings('.line_qty').val();
             handle_qty_update(invItem, qtyVal);
         });
+        //allow typing in decimals for qty
         $('.line_qty').change(function(){
             var invItem = $(this).parents('.colinput-group').siblings('.inv_item').children();
             var qtyVal = $(this).val();
