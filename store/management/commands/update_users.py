@@ -87,18 +87,19 @@ def user_debug(user_profile):
     debug_str = '\tDebug info: \n'
     debug_str += '\t User active: {0}, User_profile active:{1}'.format(user_profile.user.is_active, user_profile.is_active)
     if(user_profile.is_visitor):
+        message('user is visitor')
         #try to print out project status, start_date, end_date, and department
-        try:
-            visitor = VisitingScientist.objects.using('vstar').get(
-                (Q(last_name=user.last_name) & Q(first_name=user.first_name)) | Q(contact_email= user.email)
-            )
-            projects = visitor.projects.filter(Q(active=True) | (Q(date_end__gte=THIRTY_DAYS_AGO) & ~Q(status='AWAITINGREVIEW'))).order_by('date_end').reverse()
-            #Q: print out all projects in this list?
-            proj = projects[0]
-            debug_str += "\tVSTAR project data: active: {0}, status: {1}, project date range: ({2}, {3}), department: {4}\n".format(
-                proj.active, proj.status, proj.date_start, proj.date_end, proj.department_code)
-        except:
-            debug_str += "Unable to find visitor information in vstar\n"
+        # try:
+        #     visitor = VisitingScientist.objects.using('vstar').get(
+        #         (Q(last_name=user.last_name) & Q(first_name=user.first_name)) | Q(contact_email= user.email)
+        #     )
+        #     projects = visitor.projects.filter(Q(active=True) | (Q(date_end__gte=THIRTY_DAYS_AGO) & ~Q(status='AWAITINGREVIEW'))).order_by('date_end').reverse()
+        #     #Q: print out all projects in this list?
+        #     proj = projects[0]
+        #     debug_str += "\tVSTAR project data: active: {0}, status: {1}, project date range: ({2}, {3}), department: {4}\n".format(
+        #         proj.active, proj.status, proj.date_start, proj.date_end, proj.department_code)
+        # except:
+        #     debug_str += "Unable to find visitor information in vstar\n"
 
     if(user_profile.employee_id):
         try:
@@ -656,12 +657,13 @@ class Command(BaseCommand):
                 add_employee(emp)
 
         if not emp_id:
-            visiting_scientists = VisitingScientist.objects.using('vstar').filter(
-                Q(projects__active=True) | (Q(projects__date_end__gte=THIRTY_DAYS_AGO) & ~Q(projects__status='AWAITINGREVIEW'))).distinct()
+            # visiting_scientists = VisitingScientist.objects.using('vstar').filter(
+            #     Q(projects__active=True) | (Q(projects__date_end__gte=THIRTY_DAYS_AGO) & ~Q(projects__status='AWAITINGREVIEW'))).distinct()
 
 
-            for emp in visiting_scientists:
-                add_visitor(emp, in_workday)
+            # for emp in visiting_scientists:
+            #     add_visitor(emp, in_workday)
+            message('no emp_id')
 
         subject,from_email,to = 'update_users successful!', 'root@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
         m_plain = render_to_string('cron_successful.txt')

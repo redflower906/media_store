@@ -160,6 +160,7 @@ function recurringAlert(){
 
 //Change all orders tagged as complete to billed
 function changeAllBill(){
+    //html button is a submit button!
     $('td.Complete').children().val('Billed');
     if ($('.pages')){
         window.alert('Please hit the Change to Billed button again once the page reloads')
