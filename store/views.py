@@ -1089,7 +1089,7 @@ def create_signout(request):
     elif u == 17380:
         loc = '2E.233'
         uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1237) | Q(id=1365)).order_by('media_type')
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1374) | Q(id=1237)| Q(id=1365)).order_by('media_type') 
     elif u == 17915:
         loc = '3C.229'
         uname = 3.1
@@ -1101,7 +1101,7 @@ def create_signout(request):
     elif u == 17623:
         loc = '3W.266'
         uname = 3.3
-        q = Inventory.objects.filter(Q(id=1237) | Q(id=1365)).order_by('media_type')
+        q = Inventory.objects.filter(Q(id=1374) | Q(id=1237) | Q(id=1365)).order_by('media_type')
     else:
         loc = False
         uname = False
