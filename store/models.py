@@ -446,17 +446,19 @@ def status_email(sender, instance, *args, **kwargs):
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.special_instructions = instance.id
-            order.id = None
-            order.pk = None
-            order.status = 'Submitted'
-            order.date_billed = None        
-            order.date_submitted = date.today()
-            order.save()
-            for ol in orderlines:
-                ol.pk = None
-                ol.order = order
-                ol.save()
-            order.refresh_from_db()
+            if Order.objects.filter(special_instructions=instance.id).exists()==False:
+                order.id = None
+                order.pk = None
+                order.status = 'Submitted'
+                order.date_billed = None        
+                order.date_submitted = date.today()
+                order.save()
+                for ol in orderlines:
+                    ol.pk = None
+                    ol.order = order
+                    ol.save()
+                order.refresh_from_db()
+            else: messages.error('Please refresh Order View page and try again')
 
         # if instance.notes_order == 'Signout':
         #     print('nothing')
