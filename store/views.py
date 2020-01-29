@@ -643,7 +643,7 @@ def view_order(request):
                 status = objs[0].status
             context = Context({
                 'id': oid,
-                'date': datetime.datetime.now(),
+                'date': datetime.now(),
                 'user': request.session['mod_user'],
                 'status': status
             })        
