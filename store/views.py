@@ -636,7 +636,28 @@ def view_order(request):
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
-            order_formset.save()     
+            request.session['mod_user'] = request.user
+            order_formset.save()
+            for objs in order_formset.changed_objects:
+                oid = objs[0].id
+                status = objs[0].status
+            context = Context({
+                'id': oid,
+                'date': 'date_m',
+                'user': request.session['mod_user'],
+                'status': status
+            })        
+            m_plain = render_to_string('dup_post_email.txt', context.flatten())
+            m_html = render_to_string('dup_post_email.html', context.flatten())
+
+            send_mail(
+                'Recurring order saved',
+                m_plain,
+                'mediafacility@janelia.hhmi.org',
+                ['harrisons1@janelia.hhmi.org'], 
+                fail_silently=False,
+                html_message=m_html,
+            )     
 
         order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')        
         if order_formset.has_changed() and order_formset.is_valid():
