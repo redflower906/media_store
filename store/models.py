@@ -232,12 +232,12 @@ class Order(models.Model):
 
     BOOL_CHOICES = ((True, 'Yes'), (False, 'No'))
     #had to make null to migrate CHANGE LATER
-    notes_order = models.CharField(max_length=500, blank=True, null=True) #is this the same as special_instructions? ~FIX~
+    notes_order = models.CharField(max_length=500, blank=True, null=True) 
     submitter = models.ForeignKey(User, related_name='submitter', null=True)   #submitting order
     requester = models.ForeignKey(User, related_name='requester', null=True)  #only use when billing other person
     project_code = models.ForeignKey(UserProfile, related_name='pcode', null=True, blank=True)
     department = models.ForeignKey(Department, blank=False, null=False)
-    special_instructions = models.TextField(blank=True)
+    special_instructions = models.TextField(blank=True) #recording request.user
     date_created = models.DateField(auto_now_add=True)
     date_modified = models.DateField(auto_now=True, blank=True, null=True)
     date_submitted = models.DateField(blank=True, null=True) #is this the same as date_created? ~FIX~
