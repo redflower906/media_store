@@ -443,11 +443,9 @@ def status_email(sender, instance, *args, **kwargs):
     if instance.status == 'Complete':        
         
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
-            oid = instance.id
-            date_m = instance.date_modified
-            status = instance.status
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
+            order.special_instructions = instance.id
             order.id = None
             order.pk = None
             order.status = 'Submitted'
@@ -459,22 +457,6 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.order = order
                 ol.save()
             order.refresh_from_db()
-            # context = Context({
-            #     'id': oid,
-            #     'date': date_m,
-            #     'status': status
-            # })        
-            # m_plain = render_to_string('dup_pre_email.txt', context.flatten())
-            # m_html = render_to_string('dup_pre_email.html', context.flatten())
-
-            # send_mail(
-            #     'COMPLETE',
-            #     m_plain,
-            #     'mediafacility@janelia.hhmi.org',
-            #     ['harrisons1@janelia.hhmi.org'], 
-            #     fail_silently=False,
-            #     html_message=m_html,
-            # ) 
 
         # if instance.notes_order == 'Signout':
         #     print('nothing')
@@ -538,65 +520,4 @@ class ProjectModelChoiceField(ModelChoiceField):
     def label_from_instance(self, obj):
          return obj.hhmi_project_id + ' ' + obj.name()
 
-# @receiver(post_save, sender=Order)
-# def recurring_dates(sender, instance, *args, **kwargs):
-#     if instance.is_recurring:
-#         if instance.date_created <= instance.date_recurring_start:
-#             instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())
-#         else:
-#             if instance.weeks == '1':
-#                 first_date = instance.date_created + timedelta(days=7)
-#                 instance.due_date = first_date - timedelta(days=first_date.weekday())
-#             elif instance.weeks == '2':
-#                 first_date = instance.date_created + timedelta(days=14)
-#                 instance.due_date = first_date - timedelta(days=first_date.weekday())
-#             elif instance.weeks == '3':
-#                 first_date = instance.date_created + timedelta(days=21)
-#                 instance.due_date = first_date - timedelta(days=first_date.weekday())            
-#             elif instance.weeks == '4':
-#                 first_date = instance.date_created + timedelta(days=28)
-#                 instance.due_date = first_date - timedelta(days=first_date.weekday())
-    
-    
-# @receiver(post_save, sender=Order)
-# def dup_email(sender, instance, *args, **kwargs):
-#     if instance.is_recurring == True:
-#         user = 'in progress'
-#         oid = instance.id
-#         date_m = instance.date_modified
-#         status = instance.status
-#         context = Context({
-#             'id': oid,
-#             'date': date_m,
-#             'user': user,
-#             'status': status
-#         })        
-#         m_plain = render_to_string('dup_post_email.txt', context.flatten())
-#         m_html = render_to_string('dup_post_email.html', context.flatten())
 
-#         send_mail(
-#             'Recurring order saved',
-#             m_plain,
-#             'mediafacility@janelia.hhmi.org',
-#             ['harrisons1@janelia.hhmi.org'], 
-#             fail_silently=False,
-#             html_message=m_html,
-#         )    
-#     # if instance.is_recurring == True and instance.status == 'Submitted':
-#     #     oid = instance.id
-#     #     date_m = instance.date_modified
-#     #     context = Context({
-#     #         'id': oid,
-#     #         'date': date_m
-#     #     })        
-#     #     m_plain = render_to_string('dup_post_email.txt', context.flatten())
-#     #     m_html = render_to_string('dup_post_email.html', context.flatten())
-
-#     #     send_mail(
-#     #         'CREATED',
-#     #         m_plain,
-#     #         'mediafacility@janelia.hhmi.org',
-#     #         ['harrisons1@janelia.hhmi.org'], 
-#     #         fail_silently=False,
-#     #         html_message=m_html,
-#     #     )    
