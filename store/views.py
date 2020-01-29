@@ -638,7 +638,7 @@ def view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
             context = Context({
-            'id': order_formset.id,
+            'id': order_formset.auto_id,
             'date': 'date_m',
             'user': 'user',
             'status': 'status'
