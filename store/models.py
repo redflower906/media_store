@@ -445,6 +445,7 @@ def status_email(sender, instance, *args, **kwargs):
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
             oid = instance.id
             date_m = instance.date_modified
+            status = instance.status
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
             order.id = None
@@ -458,21 +459,22 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.order = order
                 ol.save()
             order.refresh_from_db()
-            context = Context({
-                'id': oid,
-                'date': date_m
-            })        
-            m_plain = render_to_string('dup_pre_email.txt', context.flatten())
-            m_html = render_to_string('dup_pre_email.html', context.flatten())
+            # context = Context({
+            #     'id': oid,
+            #     'date': date_m,
+            #     'status': status
+            # })        
+            # m_plain = render_to_string('dup_pre_email.txt', context.flatten())
+            # m_html = render_to_string('dup_pre_email.html', context.flatten())
 
-            send_mail(
-                'COMPLETE',
-                m_plain,
-                'mediafacility@janelia.hhmi.org',
-                ['harrisons1@janelia.hhmi.org'], 
-                fail_silently=False,
-                html_message=m_html,
-            ) 
+            # send_mail(
+            #     'COMPLETE',
+            #     m_plain,
+            #     'mediafacility@janelia.hhmi.org',
+            #     ['harrisons1@janelia.hhmi.org'], 
+            #     fail_silently=False,
+            #     html_message=m_html,
+            # ) 
 
         # if instance.notes_order == 'Signout':
         #     print('nothing')
@@ -558,21 +560,43 @@ class ProjectModelChoiceField(ModelChoiceField):
     
 @receiver(post_save, sender=Order)
 def dup_email(sender, instance, *args, **kwargs):
-    if instance.is_recurring == True and instance.status == 'Submitted':
+    if instance.is_recurring == True:
+        user = instance.user
         oid = instance.id
         date_m = instance.date_modified
+        status = instance.status
         context = Context({
             'id': oid,
-            'date': date_m
+            'date': date_m,
+            'user': user,
+            'status': status
         })        
         m_plain = render_to_string('dup_post_email.txt', context.flatten())
         m_html = render_to_string('dup_post_email.html', context.flatten())
 
         send_mail(
-            'CREATED',
+            'Recurring order saved',
             m_plain,
             'mediafacility@janelia.hhmi.org',
             ['harrisons1@janelia.hhmi.org'], 
             fail_silently=False,
             html_message=m_html,
         )    
+    # if instance.is_recurring == True and instance.status == 'Submitted':
+    #     oid = instance.id
+    #     date_m = instance.date_modified
+    #     context = Context({
+    #         'id': oid,
+    #         'date': date_m
+    #     })        
+    #     m_plain = render_to_string('dup_post_email.txt', context.flatten())
+    #     m_html = render_to_string('dup_post_email.html', context.flatten())
+
+    #     send_mail(
+    #         'CREATED',
+    #         m_plain,
+    #         'mediafacility@janelia.hhmi.org',
+    #         ['harrisons1@janelia.hhmi.org'], 
+    #         fail_silently=False,
+    #         html_message=m_html,
+    #     )    
