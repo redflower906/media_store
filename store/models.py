@@ -561,7 +561,7 @@ class ProjectModelChoiceField(ModelChoiceField):
 @receiver(post_save, sender=Order)
 def dup_email(sender, instance, *args, **kwargs):
     if instance.is_recurring == True:
-        user = instance.user
+        user = 'in progress'
         oid = instance.id
         date_m = instance.date_modified
         status = instance.status
