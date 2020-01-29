@@ -636,7 +636,7 @@ def view_order(request):
 
         order_formset = OrderStatusFormSet(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
-            request.session['mod_user'] = request.user
+            request.session['mod_user'] = user.id
             order_formset.save()
             for objs in order_formset.changed_objects:
                 oid = objs[0].id
