@@ -651,7 +651,7 @@ def view_order(request):
                 m_html = render_to_string('dup_post_email.html', context.flatten())
 
                 send_mail(
-                    'Recurring order saved',
+                    'Recurring order saved (Submitted or In Progress)',
                     m_plain,
                     'mediafacility@janelia.hhmi.org',
                     ['harrisons1@janelia.hhmi.org'], 
@@ -676,7 +676,7 @@ def view_order(request):
                 m_html = render_to_string('dup_post_email.html', context.flatten())
 
                 send_mail(
-                    'Recurring order saved',
+                    'Recurring order saved (compNotBill)',
                     m_plain,
                     'mediafacility@janelia.hhmi.org',
                     ['harrisons1@janelia.hhmi.org'], 
