@@ -445,9 +445,12 @@ def status_email(sender, instance, *args, **kwargs):
         if instance.is_recurring == True and date.today() < instance.date_recurring_stop:
             order = Order.objects.get(pk=instance.id)
             orderlines = OrderLine.objects.filter(order=instance.id)
-            order.special_instructions = instance.id
+            order.special_instructions = instance.id # = duplicated
             instance.date_complete = date.today()
             # if Order.objects.filter(special_instructions=instance.id).exists()==False:
+            # if special_instructions is duplicated:
+                #somehow stop save? maybe order_formset.save(commit=false) and then finish in view?
+            #else:
             order.id = None
             order.pk = None
             order.status = 'Submitted'
@@ -459,6 +462,7 @@ def status_email(sender, instance, *args, **kwargs):
                 ol.order = order
                 ol.save()
             order.refresh_from_db()
+            
 
 
         # if instance.notes_order == 'Signout':
