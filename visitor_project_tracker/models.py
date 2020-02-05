@@ -33,7 +33,7 @@ class User(models.Model):
     email = models.CharField("Email Address", max_length=255, blank=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    id = models.IntegerField(primary_key=true)
+    id = models.IntegerField(primary_key=True)
 
 
 class TeamProject(models.Model):
