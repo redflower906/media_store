@@ -2,11 +2,9 @@
 
 """
 TODO:
-
 Future:
 tie into FileMaker somehow? export for wiki?
 reports
-
 """
 
 import datetime
@@ -19,7 +17,7 @@ from django.db import models
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.core.files.base import ContentFile
-from django.utils.encoding import smart_text, force_text
+from django.utils.encoding import smart_unicode, force_unicode
 #We use templates to generate shipping forms for requests
 from django.template.loader import get_template
 from django.template import Context, RequestContext
@@ -33,12 +31,14 @@ class User(models.Model):
     class Meta:
         db_table = 'auth_user'
     email = models.CharField("Email Address", max_length=255, blank=True)
-    id = models.IntegerField(primary_key=True)
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    id = models.IntegerField()
 
 
 class TeamProject(models.Model):
     class Meta:
-        #ordering = ('name',)
+        ordering = ('name',)
         db_table = 'tracker_teamproject'
         managed = False
     code = models.CharField("Project Code", max_length=20, blank=True)
@@ -49,18 +49,22 @@ class TeamProject(models.Model):
 class OtherHost(models.Model):
     """Used for adding hosts that are not at Janelia"""
     class Meta:
-        #ordering = ('name',)
+        ordering = ('name',)
         db_table = 'tracker_otherhost'
         managed = False
 
 class VisitorProgramTitle(models.Model):
     class Meta:
-        #ordering = ('name',)
+        ordering = ('name',)
         managed = False
 
 class VisitingScientist(models.Model):
     """Stores all scientist information.  FYI: More than 1 scientist can be on a project
     and 1 scientist can have multiple projects. """
+    class Meta:
+        db_table = 'tracker_visitingscientist'
+        managed = False
+        ordering = ['last_name','first_name']
     last_name = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100, blank=True)
     title = models.CharField(max_length=50, blank=True,
@@ -81,12 +85,6 @@ class VisitingScientist(models.Model):
     appointment_end_date = models.DateField(blank=True, null=True)
     contact_email = models.EmailField(blank=True,)
     contact_phone = models.CharField(max_length=50, blank=True,)
-    institute = models.CharField("Institution", max_length=500, blank=True)
-    address_1 = models.CharField(max_length=35, blank=True)
-    address_2 = models.CharField(max_length=35, blank=True, 
-        help_text="Suite Number, Mail Stop, Department")
-    city_state_zip = models.CharField(max_length=255, blank=True)
-    country = models.CharField(max_length=150, blank=True)
     gender = models.CharField(max_length=20, choices=(('MALE','Male'),('FEMALE','Female')), blank=True)
     emergency_contact_name = models.CharField(max_length=500, blank=True)
     emergency_contact_relation = models.CharField(max_length=50, blank=True)
@@ -94,10 +92,6 @@ class VisitingScientist(models.Model):
     emergency_contact_phone = models.CharField(max_length=100, blank=True)
     CV = models.FileField(blank=True, upload_to='uploads')
     notes = models.TextField(blank=True)
-    class Meta:
-        db_table = 'tracker_visitingscientist'
-        managed = False
-        ordering = ['last_name','first_name']
 
     def hhmi_designation(self):
         if self.visitor_program_title and self.visitor_program_title.name.upper().startswith('HHMI/JRC'):
@@ -115,20 +109,17 @@ class VisitingScientist(models.Model):
 
     def short_name(self):
         ret_str = self.first_name + ' ' + self.last_name
-        ret_str = latin1_to_ascii(ret_str)
-        return force_text(ret_str)
+        return force_unicode(ret_str)
 
     def __unicode__(self):
-        str_inst = ' (%s)' % self.institute if self.institute else ''
-        ret_str = self.first_name + ' ' + self.last_name + str_inst
+        ret_str = self.first_name + ' ' + self.last_name
         #Django admin has a bug where it breaks when it tries to log a change 
         #and there's a non ascii character in the content.  As a workaround 
         #we replace any non-ascii characters with the closest ascii char we
         #can find and then convert it back to unicode.
         #If you upgrade Django you can try running without this. The umlaut is
         #a good test case
-        ret_str = latin1_to_ascii(ret_str)
-        return force_text(ret_str)
+        return force_unicode(ret_str)
 
     def str_w_cv(self):
         """Conditionally hyperlink name is CV is available"""
@@ -146,6 +137,10 @@ class Project(models.Model):
     def default_deadline():
         return datetime.date.today() + datetime.timedelta(days=7)
 
+    class Meta:
+        db_table = 'tracker_project'
+        managed = False
+        ordering = ['code','id',]
 
     #Admin
     code = models.CharField("Project Code", max_length=20, blank=True) #ideally this would be unique unless blank, but can't do it in django?
@@ -165,7 +160,7 @@ class Project(models.Model):
     status = models.CharField(max_length=20, default='AWAITINGREVIEW',
         choices=(
             ('AWAITINGREVIEW','Awaiting Review'),
-            ('PENDING','Pending'),
+            ('PENDING', 'Pending'),
             ('STARTED','Started'),
             ('COMPLETED','Completed'),
             ('REJECTED','Rejected'),
@@ -233,16 +228,10 @@ class Project(models.Model):
     work_done_at_vistitors_institution = models.TextField("Description of work done at the visitor's institution(s)", blank=True, help_text="for renewals")
     scope = models.TextField(blank=True, help_text="for renewals")
 
-    class Meta:
-        db_table = 'tracker_project'
-        managed = False
-        ordering = ['code','id',]
-
     def __unicode__(self):
         str_code = '(%s) - ' % self.code if self.code else ''
         ret_str = str_code + self.proposed_title
-        ret_str = latin1_to_ascii(ret_str)
-        return force_text(ret_str)
+        return force_unicode(ret_str)
 
     def export_in_word_url(self):
         if self.id:
