@@ -109,77 +109,156 @@
     </div>
 </div>
 </form>
-<script type="text/javascript">
+{% if user.is_staff is True %}
+    <script type="text/javascript">
 
-//highlight changed status, if recurring order is ending soon, if order has custom order within
-    $(function highlight(){
-        var date = moment();
-        var formattedDate = moment(($(this).find('.hiddenDate').text()), 'MMMM-DD-YYYY');
-        var lastDate = formattedDate.day('Monday');
-        console.log('date: ' + date);
-        console.log('formatteddate: ' + formattedDate);
-        console.log('lastdate: ' + lastDate);
-        $(this).find("[class^='date-stop']").each(function(){
-            var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
-            console.log('end date: ' + endDate);
-            var days = endDate.diff(date, 'days');
-            if( 21 >= days && days >= 7){
-                $(this).addClass('threeWeeks');
-            } else if( 7 > days && days >= 0){
-                $(this).addClass('oneWeek');
-            } 
-        });
-        $(this).find('.recurTrue').each(function(){
-            var due = moment(($(this).text()), 'MMMM-DD-YYYY');
-            console.log('due: ' + due);
-            var daysTwo = due.diff(lastDate, 'days');
-            console.log(daysTwo);
-            if(daysTwo == 0){
-                $(this).addClass('dueNow');
-                console.log('dueNow');
-            } else if (daysTwo < 0){
-                $(this).addClass('overDue');
-                console.log('overDue');
-            } else if (daysTwo > 0){
-                console.log('dueLater');
-            }
-        });
-        //show alert for recurring order ending in either 3 or 1 week(s)
-        if ($('.threeWeeks').length){
-            $('.recur3').removeClass('hidden');
-        } else {
-            $('.recur3').addClass('hidden');
-        }
-        if ($('.oneWeek').length){
-            $('.recur1').removeClass('hidden');
-        } else {
-            $('.recur1').addClass('hidden');
-        }
-
-        $(this).find("[class^='inv']").each(function(){
-            var orderInv = $(this).text();
-            var lineCost = $(this).siblings('.linetotal').text();
-            if(orderInv == 'Custom Order' && lineCost == '$1.00'){
-                $(this).css({'color':'red', 'font-weight':'bold'});
-                $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
-                $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'});
-            }
-        });
-    });
-
-    $(function(){
-        $('select').on('change', function(e){
-            $(e.target).removeClass();
-            $(e.target).addClass(e.target.value + ' form-control');
-            if($(this).closest('.koala').hasClass(e.target.value)){
-                if($(this).closest('.koala').hasClass('sdd')){
-                    $(this).closest('.koala').removeClass('sdd');
+    //highlight changed status, if recurring order is ending soon, if order has custom order within
+        $(function highlight(){
+            var date = moment();
+            var formattedDate = moment(($(this).find('.hiddenDate').text()), 'MMMM-DD-YYYY');
+            var lastDate = formattedDate.day('Monday');
+            console.log('date: ' + date);
+            console.log('formatteddate: ' + formattedDate);
+            console.log('lastdate: ' + lastDate);
+            $(this).find("[class^='date-stop']").each(function(){
+                var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+                console.log('end date: ' + endDate);
+                var days = endDate.diff(date, 'days');
+                if( 21 >= days && days >= 7){
+                    $(this).addClass('threeWeeks');
+                } else if( 7 > days && days >= 0){
+                    $(this).addClass('oneWeek');
+                } 
+            });
+            $(this).find('.recurTrue').each(function(){
+                var due = moment(($(this).text()), 'MMMM-DD-YYYY');
+                console.log('due: ' + due);
+                var daysTwo = due.diff(lastDate, 'days');
+                console.log(daysTwo);
+                if(daysTwo == 0){
+                    $(this).addClass('dueNow');
+                    console.log('dueNow');
+                } else if (daysTwo < 0){
+                    $(this).addClass('overDue');
+                    console.log('overDue');
+                } else if (daysTwo > 0){
+                    console.log('dueLater');
                 }
-            }else{
-                $(this).closest('.koala').addClass('sdd');
+            });
+            //show alert for recurring order ending in either 3 or 1 week(s)
+            if ($('.threeWeeks').length){
+                $('.recur3').removeClass('hidden');
+            } else {
+                $('.recur3').addClass('hidden');
             }
+            if ($('.oneWeek').length){
+                $('.recur1').removeClass('hidden');
+            } else {
+                $('.recur1').addClass('hidden');
+            }
+
+            $(this).find("[class^='inv']").each(function(){
+                var orderInv = $(this).text();
+                var lineCost = $(this).siblings('.linetotal').text();
+                if(orderInv == 'Custom Order' && lineCost == '$1.00'){
+                    $(this).css({'color':'red', 'font-weight':'bold'});
+                    $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
+                    $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'});
+                }
+            });
         });
-    });    
-</script>
+
+        $(function(){
+            $('select').on('change', function(e){
+                $(e.target).removeClass();
+                $(e.target).addClass(e.target.value + ' form-control');
+                if($(this).closest('.koala').hasClass(e.target.value)){
+                    if($(this).closest('.koala').hasClass('sdd')){
+                        $(this).closest('.koala').removeClass('sdd');
+                    }
+                }else{
+                    $(this).closest('.koala').addClass('sdd');
+                }
+            });
+        }); 
+
+        setTimeout(function(){
+            alert('Page needs to be refreshed. Click OK to refresh the page.');
+            window.location.reload(true);
+            }, 15000);   
+    </script>
+{% else %}
+    <script type="text/javascript">
+
+    //highlight changed status, if recurring order is ending soon, if order has custom order within
+        $(function highlight(){
+            var date = moment();
+            var formattedDate = moment(($(this).find('.hiddenDate').text()), 'MMMM-DD-YYYY');
+            var lastDate = formattedDate.day('Monday');
+            console.log('date: ' + date);
+            console.log('formatteddate: ' + formattedDate);
+            console.log('lastdate: ' + lastDate);
+            $(this).find("[class^='date-stop']").each(function(){
+                var endDate = moment(($(this).text()), 'MMMM-DD-YYYY');
+                console.log('end date: ' + endDate);
+                var days = endDate.diff(date, 'days');
+                if( 21 >= days && days >= 7){
+                    $(this).addClass('threeWeeks');
+                } else if( 7 > days && days >= 0){
+                    $(this).addClass('oneWeek');
+                } 
+            });
+            $(this).find('.recurTrue').each(function(){
+                var due = moment(($(this).text()), 'MMMM-DD-YYYY');
+                console.log('due: ' + due);
+                var daysTwo = due.diff(lastDate, 'days');
+                console.log(daysTwo);
+                if(daysTwo == 0){
+                    $(this).addClass('dueNow');
+                    console.log('dueNow');
+                } else if (daysTwo < 0){
+                    $(this).addClass('overDue');
+                    console.log('overDue');
+                } else if (daysTwo > 0){
+                    console.log('dueLater');
+                }
+            });
+            //show alert for recurring order ending in either 3 or 1 week(s)
+            if ($('.threeWeeks').length){
+                $('.recur3').removeClass('hidden');
+            } else {
+                $('.recur3').addClass('hidden');
+            }
+            if ($('.oneWeek').length){
+                $('.recur1').removeClass('hidden');
+            } else {
+                $('.recur1').addClass('hidden');
+            }
+
+            $(this).find("[class^='inv']").each(function(){
+                var orderInv = $(this).text();
+                var lineCost = $(this).siblings('.linetotal').text();
+                if(orderInv == 'Custom Order' && lineCost == '$1.00'){
+                    $(this).css({'color':'red', 'font-weight':'bold'});
+                    $(this).siblings('.linetotal').css({'color':'red', 'font-weight':'bold'});
+                    $(this).parents('.collapse').prev().children('.ordertotal').css({'color':'red', 'font-weight':'bold'});
+                }
+            });
+        });
+
+        $(function(){
+            $('select').on('change', function(e){
+                $(e.target).removeClass();
+                $(e.target).addClass(e.target.value + ' form-control');
+                if($(this).closest('.koala').hasClass(e.target.value)){
+                    if($(this).closest('.koala').hasClass('sdd')){
+                        $(this).closest('.koala').removeClass('sdd');
+                    }
+                }else{
+                    $(this).closest('.koala').addClass('sdd');
+                }
+            });
+        });    
+    </script>
 
 {% endblock %}
