@@ -89,17 +89,17 @@ def user_debug(user_profile):
     if(user_profile.is_visitor):
         message('user is visitor')
         #try to print out project status, start_date, end_date, and department
-        # try:
-        #     visitor = VisitingScientist.objects.using('vstar').get(
-        #         (Q(last_name=user.last_name) & Q(first_name=user.first_name)) | Q(contact_email= user.email)
-        #     )
-        #     projects = visitor.projects.filter(Q(active=True) | (Q(date_end__gte=THIRTY_DAYS_AGO) & ~Q(status='AWAITINGREVIEW'))).order_by('date_end').reverse()
-        #     #Q: print out all projects in this list?
-        #     proj = projects[0]
-        #     debug_str += "\tVSTAR project data: active: {0}, status: {1}, project date range: ({2}, {3}), department: {4}\n".format(
-        #         proj.active, proj.status, proj.date_start, proj.date_end, proj.department_code)
-        # except:
-        #     debug_str += "Unable to find visitor information in vstar\n"
+        try:
+            visitor = VisitingScientist.objects.using('vstar').get(
+                (Q(last_name=user.last_name) & Q(first_name=user.first_name)) | Q(contact_email= user.email)
+            )
+            projects = visitor.projects.filter(Q(active=True) | (Q(date_end__gte=THIRTY_DAYS_AGO) & ~Q(status='AWAITINGREVIEW'))).order_by('date_end').reverse()
+            #Q: print out all projects in this list?
+            proj = projects[0]
+            debug_str += "\tVSTAR project data: active: {0}, status: {1}, project date range: ({2}, {3}), department: {4}\n".format(
+                proj.active, proj.status, proj.date_start, proj.date_end, proj.department_code)
+        except:
+            debug_str += "Unable to find visitor information in vstar\n"
 
     if(user_profile.employee_id):
         try:
@@ -573,23 +573,6 @@ def add_visitor(emp, in_workday):
 
     return
 
-# def cleanup_missing_user_profiles():
-#     # get all the user objects.
-#     users = User.objects.all().prefetch_related('user_profile')
-#     # loop over them and figure out which ones don't have a matching profile
-#     for user in users:
-#         if len(user.user_profile.all()) < 1:
-#             wo_count = WorkOrder.objects.filter(Q(submitter=user) | Q(main_requestor=user)).count()
-
-#             if wo_count < 1:
-#                 # delete that user if they don't have associated workorders
-#                 message("Removed user: {0} with no profile.\n".format(user.username), 'warning')
-#                 user.delete()
-#             else:
-#                 message("Can't remove {0} with no profile, because they are associated with {1} workorders.\n".format(user.username, wo_count), 'error')
-
-#     return
-
 def deactivate_users_missing_from_workday(all_employees, in_workday):
     message('deactivate_users_missing_from_workday', 'error')
     # get all the User Profiles
@@ -657,12 +640,12 @@ class Command(BaseCommand):
                 add_employee(emp)
 
         if not emp_id:
-            # visiting_scientists = VisitingScientist.objects.using('vstar').filter(
-            #     Q(projects__active=True) | (Q(projects__date_end__gte=THIRTY_DAYS_AGO) & ~Q(projects__status='AWAITINGREVIEW'))).distinct()
+            visiting_scientists = VisitingScientist.objects.using('vstar').filter(
+                Q(projects__active=True) | (Q(projects__date_end__gte=THIRTY_DAYS_AGO) & ~Q(projects__status='AWAITINGREVIEW'))).distinct()
 
 
-            # for emp in visiting_scientists:
-            #     add_visitor(emp, in_workday)
+            for emp in visiting_scientists:
+                add_visitor(emp, in_workday)
             message('no emp_id')
 
         subject,from_email,to = 'update_users successful!', 'root@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
