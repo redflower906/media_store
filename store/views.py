@@ -997,6 +997,7 @@ def testing_view_order(request):
         'pages': pages,
         'last_monday': last_monday,
         'form': form,
+        'reports':reports,
 
         })
 
