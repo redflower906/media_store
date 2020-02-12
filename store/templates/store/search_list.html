@@ -21,7 +21,7 @@
                     <th></th>
             </thead>
             <tr>
-            <tbody class="searchable">
+            <tbody class="searchable search_list">
                 {% for report in reports %}
                 <tr class="order_{{report.id}} koala {{report.status}}">
                     <td class="toggle_notes" >
@@ -125,7 +125,7 @@
                 {% endfor %}
             </tbody>
         {% else %}
-            <div><p>No search results</p></div>        
+            <div class='NoSearch'><p>No search results</p></div>        
         {% endif %}    
     </table>   
     {% if record_num %}
