@@ -914,6 +914,17 @@ def testing_view_order(request):
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
     cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
 
+    reports = ''
+    date_type = ''
+    record_num = ''
+    keys = ''            
+    q_object = Q()
+
+    if user.is_staff is False:
+        report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
+    else:
+        report = Order.objects.all()
+
     if request.method == 'POST' and 'stauts' in request.POST:
         # for each order category, check to see if the form had been updated and save, then redirect to order view to prevent form resubmission.
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
@@ -942,16 +953,7 @@ def testing_view_order(request):
 
     if request.method == 'POST' and 'date' in request.POST:
 
-        reports = ''
-        date_type = ''
-        record_num = ''
-        keys = ''            
-        q_object = Q()
 
-        if user.is_staff is False:
-            report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
-        else:
-            report = Order.objects.all()
         form = OrderSearchForm(request.POST)
         if form.is_valid():
             datefrom = form.cleaned_data.get('search_date_from')
