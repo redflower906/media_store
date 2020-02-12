@@ -971,7 +971,7 @@ def testing_view_order(request):
         else:
             messages.error(request, "This form is invalid")
     else:
-        form = OrderSearchForm()
+        form = OrderSearchForm(initial={'date_type': 'Order Billed'})
 
     return render(request,
         'store/test_order_view.html',{
