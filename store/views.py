@@ -951,7 +951,7 @@ def testing_view_order(request):
     
 
 
-    elif request.method == 'POST' and 'date' in request.POST:
+    if request.method == 'POST' and 'date' in request.POST:
 
         form = OrderSearchForm(request.POST)
         if form.is_valid():
@@ -968,8 +968,8 @@ def testing_view_order(request):
 
             else:
                messages.error(request, "You didn't submit any dates to search")
-        else:
-            messages.error(request, "This form is invalid")
+        # else:
+        #     messages.error(request, "This form is invalid")
     else:
         form = OrderSearchForm()
 
