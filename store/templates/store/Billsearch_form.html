@@ -3,6 +3,7 @@
 
 <form id='search_form' method="POST" action="" class="post-form form-horizontal" enctype="multipart/form-data">
     {% csrf_token %}
+    {{ search_form.errors }}
     {{ search_form.non_field_errors }}
     {% for hidden_field in search_form.hidden_fields %}
         {{ hidden_field.errors }}
