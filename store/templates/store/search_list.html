@@ -46,7 +46,7 @@
                     <td>{{report.date_created}}</td>
                     {% elif headers == headersCo %}
                     <td>{{report.date_complete}}</td>
-                    {% elif headers == headersB %}
+                    {% elif headers == headersB or headers == headers4 %}
                     <td>{{report.date_billed}}</td>
                     {% endif %}
                     {% if report.is_recurring %}
