@@ -202,7 +202,8 @@
     //if .search_list, make that tab active
     $(function(){
         if($('tbody.search_list').length){
-            console.log('search!');
+            $('#incomplete').removeClass('active');
+            $('#complete_billed').addClass('active in');
         } else {
             console.log('no search!')
         }
