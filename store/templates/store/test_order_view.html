@@ -20,13 +20,13 @@
 <div class="alert alert-danger hidden recur1" role='alert'>You have one or more orders that will end in 1 week. If you want to extend the end date, please edit the order(s).</div>
 
 <ul class="nav nav-tabs">
-    <li class="nav-item active" id='incomplete'>
+    <li class="nav-item active" id='nav-incomplete'>
         <a class="nav-link" data-toggle="tab" href="#incomplete">Incomplete</a>
     </li>
     <li class="nav-item">
         <a class="nav-link" data-toggle="tab" href="#complete_not_billed">Complete not Billed</a>
     </li>
-    <li class="nav-item" id='complete_billed'>
+    <li class="nav-item" id='nav-complete_billed'>
         <a class="nav-link" data-toggle="tab" href="#complete_billed">Complete and Billed</a>
     </li>
     <li class="nav-item">
@@ -203,7 +203,9 @@
     $(function(){
         if($('tbody.search_list').length){
             $('#incomplete').removeClass('active');
+            $('#nav-incomplete').removeClass('active');
             $('#complete_billed').addClass('active in');
+            $('#nav-complete_billed').addClass('active');
         } else {
             console.log('no search!')
         }
