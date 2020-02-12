@@ -828,6 +828,8 @@ def testing_view_order(request):
         if x.status == 'Canceled' and days_to_delete > 31:
             x.delete()
 
+
+
     incomp_queryset = orders.filter(is_recurring=False).exclude(status__icontains='Complete').exclude(status__icontains='Billed').exclude(status__icontains='Auto').exclude(
     status__icontains='Canceled').exclude(date_billed__isnull=False).prefetch_related('orderline_set').order_by(sort_headers1.get_order_by())
     #exclude date_recurring_stop takes the end date for recurring orders, checks if it is before today. If so, it is excluded from the view.
@@ -911,7 +913,7 @@ def testing_view_order(request):
     compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
     cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'stauts' in request.POST:
         # for each order category, check to see if the form had been updated and save, then redirect to order view to prevent form resubmission.
         order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
@@ -934,6 +936,40 @@ def testing_view_order(request):
             order_formset.save()
             
         return HttpResponseRedirect('/order/view')
+    
+
+
+    if request.method == 'POST' and 'date' in request.POST:
+
+        reports = ''
+        date_type = ''
+        record_num = ''
+        keys = ''            
+        q_object = Q()
+
+        if user.is_staff is False:
+            report = Order.objects.filter(Q(submitter=user)|Q(requester=user))
+        else:
+            report = Order.objects.all()
+        form = OrderSearchForm(request.POST)
+        if form.is_valid():
+            datefrom = form.cleaned_data.get('search_date_from')
+            dateto = form.cleaned_data.get('search_date_to')
+            keyword = form.cleaned_data.get('search_keyword')
+            date_type = form.cleaned_data.get('date_type')
+            and_or = form.cleaned_data.get('and_or')
+
+            if datefrom:
+                datefrom = datetime.strptime(datefrom, '%m/%d/%Y').strftime('%Y-%m-%d')
+                dateto = datetime.strptime(dateto, '%m/%d/%Y').strftime('%Y-%m-%d')
+                reports = report.filter(date_billed__range=[datefrom, dateto])
+
+            else:
+               messages.error(request, "You didn't submit any dates to search")
+        else:
+            messages.error(request, "This form is invalid")
+    else:
+        form = OrderSearchForm()
 
     return render(request,
         'store/test_order_view.html',{
@@ -959,6 +995,7 @@ def testing_view_order(request):
         'page': page,
         'pages': pages,
         'last_monday': last_monday,
+
         })
 
 def export_ordersCNB(request):
