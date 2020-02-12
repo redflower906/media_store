@@ -63,7 +63,6 @@
         </div>
         {% if user.is_staff is True %}
         <a href="{% url 'export_ordersIP' %}" name='data' class="btn btn-info">Export In Progress</a>
-        <button type="submit" class="btn btn-primary pull-right">Submit</button>
         {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_not_billed">
