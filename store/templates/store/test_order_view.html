@@ -111,6 +111,8 @@
                 {% include "store/test_list_gen.html" with orderforms=cancel label='CAN' specPages=pagesCAN headers=headers5 %}
             </div>
         </div>
+    </div>
+    <div>    
         {% if user.is_staff is True %}
         <button type="submit" name='status' class="btn btn-primary pull-right">Submit</button>
         {% endif %}
