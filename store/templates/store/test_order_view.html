@@ -80,7 +80,6 @@
         {% if user.is_staff is True %}
         <a href="{% url 'export_ordersCNB' %}" name='data' class="btn btn-info">Export Billing Data</a>
         <button type='submit' class="btn btn-warning" onclick="changeAllBill()">Change to billed</button>
-        <button type="submit" class="btn btn-primary pull-right">Submit</button>
         {% endif %}
     </div>
     <div role="tabpanel" class="tab-pane fade" id="complete_billed">
@@ -100,7 +99,7 @@
             </div>
         </div>
     </div>
-    
+
     <div role="tabpanel" class="tab-pane fade" id="can">
         <div class="row">
             <div class="col-xs-12">
