@@ -791,6 +791,7 @@ def testing_view_order(request):
         ('Status', 'status'),
         # ('Order Total', 'order_total')
     )
+
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
