@@ -951,8 +951,7 @@ def testing_view_order(request):
     
 
 
-    if request.method == 'POST' and 'date' in request.POST:
-
+    elif request.method == 'POST' and 'date' in request.POST:
 
         form = OrderSearchForm(request.POST)
         if form.is_valid():
