@@ -792,11 +792,24 @@ def testing_view_order(request):
         # ('Order Total', 'order_total')
     )
 
+    ORDER_LIST_HEADERSB = (
+        ('Order ID', 'id'),
+        ('Department to Bill', 'department__department_name'),
+        ('Cost Center', 'department__number'),
+        ('Requester', 'requester__last_name'),
+        ('Date Billed', 'date_billed'),
+        ('Recurring', 'is_recurring'),
+        ('Location', 'location'),
+        ('Status', 'status'),
+        ('Order Total', 'order_total')
+    )
+
     sort_headers1 = SortHeaders(request, ORDER_LIST_HEADERS_INCOMP)
     sort_headers2 = SortHeaders(request, ORDER_LIST_HEADERS_RECUR)
     sort_headers3 = SortHeaders(request, ORDER_LIST_HEADERS_CNB)
     sort_headers4 = SortHeaders(request, ORDER_LIST_HEADERS_CB)
     sort_headers5 = SortHeaders(request, ORDER_LIST_HEADERS_CAN)
+    sort_headersB = SortHeaders(request, ORDER_LIST_HEADERSB)
 
 
     user = request.user
@@ -980,6 +993,7 @@ def testing_view_order(request):
         'headers3': list(sort_headers3.headers()),
         'headers4': list(sort_headers4.headers()),
         'headers5': list(sort_headers5.headers()),
+        'headersB': list(sort_headersB.headers()),
         'user': user,
         'orders': orders,
         'pages': pages,
