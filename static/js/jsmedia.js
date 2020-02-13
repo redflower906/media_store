@@ -56,6 +56,9 @@ $(function() {
     $( "#id_order-date_recurring_stop" ).datepicker({
         maxDate: "+3m",
     });
+    $('#id_order-due_date').datepicker({
+        minDate: new Date(),
+    })
     $('#id_search_date_from').datepicker();
     $('#id_search_date_to').datepicker();
 });
