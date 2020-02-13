@@ -133,31 +133,29 @@
                 <div class='col-xs-1'>
                     <p><b>From:</b></p>
                 </div>
-                <div class='col-xs-3'>
+                <div class='col-xs-2'>
                     {{ order_form.date_recurring_start }}
                 </div>
                 <div class='col-xs-1'>
                     <p><b>To:</b></p>
                 </div>
-                <div class='col-xs-3'>
+                <div class='col-xs-2'>
                     {{ order_form.date_recurring_stop }}
                 </div>
                 <div class='col-xs-1'>
                     <p><b>How often:</b></p>
                 </div>
-                <div class='col-xs-3'>
+                <div class='col-xs-2'>
                     {{ order_form.weeks.errors }}
                     {{ order_form.weeks }}
                 </div>
                 {% comment %} change due date {% endcomment %}
                 {% if user.is_staff is True %}
-                <div class='col-xs-3' id='datepicker'>
-                    <div class='col-xs-1'>
-                        <p><b>Change Due Date:</b></p>
-                    </div>
-                    <div class='col-xs-3'>
-                        {{ order_form.due_date }}
-                    </div>
+                <div class='col-xs-1'>
+                    <p><b>Change Due Date:</b></p>
+                </div>
+                <div class='col-xs-2'>
+                    {{ order_form.due_date }}
                 </div>
                 {% endif %}
             </div>
