@@ -106,7 +106,7 @@ class OrderForm(forms.ModelForm):
     project_code = ProjectModelChoiceField(queryset=UserProfile.objects.filter(hhmi_project_id__icontains='JVS'), widget=forms.Select(attrs={'class': 'chosen-select'}), required=False)
     class Meta:
         model = Order
-        fields = ('submitter', 'department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'doc', 'notes_order','project_code')
+        fields = ('submitter', 'department', 'requester', 'is_recurring', 'location', 'date_recurring_start', 'date_recurring_stop', 'weeks', 'due_date', 'doc', 'notes_order','project_code')
         labels = {
             'notes_order': 'Special Instructions'
         }
