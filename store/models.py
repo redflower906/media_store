@@ -504,7 +504,8 @@ def status_email(sender, instance, *args, **kwargs):
 
     #elif instance.status == 'Canceled':
         #DO WE NEED TO SEND AN EMAIL FOR CANCELED? PROBLEM? WOULD THESE EMAILS BE SENT BEFORE? ~FIX~
-
+    
+    #move this to view, maybe have to save(commit=False) to get start_date?
     if instance.is_recurring:
         if date.today() <= instance.date_recurring_start:
             instance.due_date = instance.date_recurring_start - timedelta(days=instance.date_recurring_start.weekday())

@@ -122,6 +122,8 @@ class OrderForm(forms.ModelForm):
         'weeks': forms.Select(choices=Order.WEEK_CHOICES, attrs={'required': False, 'class': 'form-control'}),
         'notes_order': forms.Textarea(attrs={'class': 'line-notes form-control'}), 
         'doc': forms.FileInput(attrs={'required': False}),
+        # to manually change due_date
+        'due_date': forms.DateInput(attrs={'required': False, 'class': 'datepicker form-control'}), 
         }
 
     def __init__(self, *args, **kwargs):
