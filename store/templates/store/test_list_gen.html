@@ -11,6 +11,9 @@
                 <tr id="table_header">
                     <th></th>
                     {% table_header headers %}
+                    {% if user.is_staff is True %}
+                    <th></th>
+                    {% endif %}
                     <th>Order Total</th>
                     <th></th>
                     <th></th>
