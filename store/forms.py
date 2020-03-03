@@ -242,6 +242,16 @@ widgets={
 extra=0,
 )
 
+OrderStatusFormSetTest = modelformset_factory(
+Order, 
+fields=('status', 'is_changed'),
+widgets={
+    'status': forms.Select(choices=Order.STATUS_CHOICES, attrs={'class': 'form-control'}),
+    'is_changed': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
+    },
+extra=0,
+)
+
 
 class Bottles_VialsForm(forms.ModelForm):
     

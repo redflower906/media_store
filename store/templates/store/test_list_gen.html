@@ -81,6 +81,10 @@
                             {{orderform.status.errors}}
                             {{orderform.status}}
                         </td>
+                        <td class ='is_changed {{orderform.instance.is_changed}}'>
+                            {{orderform.is_changed.errors}}
+                            {{orderform.is_changed}}
+                        </td>
                     {% else %}
                     {% comment %} customer: can't change status {% endcomment %}
                     <td class='{{orderform.instance.status}}'>{{orderform.instance.status}}</td>

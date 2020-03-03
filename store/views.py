@@ -937,23 +937,23 @@ def testing_view_order(request):
 
     if request.method == 'POST' and 'status' in request.POST:
         # for each order category, check to see if the form had been updated and save, then redirect to order view to prevent form resubmission.
-        order_formset = OrderStatusFormSet(request.POST, prefix='incomp')
+        order_formset = OrderStatusFormSetTest(request.POST, prefix='incomp')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='recur')
+        order_formset = OrderStatusFormSetTest(request.POST, prefix='recur')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()        
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compNotBill')        
+        order_formset = OrderStatusFormSetTest(request.POST, prefix='compNotBill')        
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='compBill')
+        order_formset = OrderStatusFormSetTest(request.POST, prefix='compBill')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
 
-        order_formset = OrderStatusFormSet(request.POST, prefix='cancel')
+        order_formset = OrderStatusFormSetTest(request.POST, prefix='cancel')
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
             
