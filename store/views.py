@@ -1875,4 +1875,3 @@ def ajax(request):
     data = simplejson.dumps(data)
     dataOne = simplejson.loads(data)
     return JsonResponse(dataOne)
-

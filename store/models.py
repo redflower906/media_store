@@ -245,7 +245,6 @@ class Order(models.Model):
     date_billed = models.DateField(blank=True, null=True)
     is_recurring = models.BooleanField(default=False)
     #had to set a default to migrate
-    #make below an if statement if boolean is true and if boolean is false
     date_recurring_start = models.DateField(default=datetime.now, blank=True, null=True)
     date_recurring_stop = models.DateField(blank=True, null=True)
     location = models.CharField(max_length=30, blank=False, null=False, choices=LOCATION_CHOICES)
@@ -256,6 +255,7 @@ class Order(models.Model):
     weeks = models.CharField(max_length=30, blank=True, null=True, choices=WEEK_CHOICES)
     due_date = models.DateField(blank=True, null=True) #Might have to change datefield to charfield?
     objects = OrderManager()
+    is_changed = models.BooleanField(default=False)
             
 
     def already_billed(self):

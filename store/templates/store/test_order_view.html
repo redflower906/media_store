@@ -37,7 +37,7 @@
     </li>
 </ul>
 
-<form method="post" action="" id="orderstatusform">
+<form method="post" action="" id="orderstatusform" onsubmit='checkIfChanged()'>
 {% csrf_token %}
 <div class="tab-content">
     <div role="tabpanel" class="tab-pane fade-in active" id="incomplete">
@@ -158,7 +158,7 @@
     $(function(){
         $('select').on('change', function(e){
             $(e.target).removeClass();
-            $(e.target).addClass(e.target.value + ' form-control');
+            $(e.target).addClass(e.target.value + ' form-control changed');
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
                     $(this).closest('.koala').removeClass('sdd');
@@ -168,7 +168,6 @@
             }
         });
     }); 
-
     // temp pagination fix
     $(function(){
         var curr =  $('.pagination').attr('id');
