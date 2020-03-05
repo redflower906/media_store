@@ -957,7 +957,7 @@ def testing_view_order(request):
         if order_formset.has_changed() and order_formset.is_valid():
             order_formset.save()
             
-        return HttpResponseRedirect('/order/view')
+        return HttpResponseRedirect('/order/test_view')
     
 
 
