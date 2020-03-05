@@ -159,12 +159,13 @@
         $('select').on('change', function(e){
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value + ' form-control changed');
-            $(this).parent().next().children().prop('checked', true);
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
                     $(this).closest('.koala').removeClass('sdd');
                 }
-            }else{
+            }else{   
+                console.log($(this));             
+                //$(this).parent().next().children().prop('checked', true);
                 $(this).closest('.koala').addClass('sdd');
             }
         });
