@@ -160,7 +160,7 @@
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value + ' form-control changed');
             $(this).closest('input').removeClass();
-            console.log($(this));
+            console.log($(this).parent().next().children('.is_changed'));
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
                     $(this).closest('.koala').removeClass('sdd');
