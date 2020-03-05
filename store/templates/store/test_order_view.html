@@ -89,14 +89,15 @@
         </div>
         <div class="row">
             <div class="col-xs-12">
-                {% include "store/Billsearch_form.html" %}
+            {% include "store/test_list_gen.html" with orderforms=compBill label='CB' specPages=pagesCB headers=headers4 %}
+                {% comment %} {% include "store/Billsearch_form.html" %} {% endcomment %}
             </div>
         </div>
-        <div class="row">
+        {% comment %} <div class="row">
             <div class="col-xs-12 workorder_list">
                 {% include "store/search_list.html" with headers=headersB %}
             </div>
-        </div>
+        </div> {% endcomment %}
     </div>
 
     <div role="tabpanel" class="tab-pane fade" id="can">
