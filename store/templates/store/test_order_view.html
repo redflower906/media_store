@@ -159,7 +159,7 @@
         $('select').on('change', function(e){
             $(e.target).removeClass();
             $(e.target).addClass(e.target.value + ' form-control changed');
-            $(this).parent().next().children('is_changed').addClass('yay');
+            $(this).parent().next().children('.is_changed').addClass('yay');
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
                     $(this).closest('.koala').removeClass('sdd');
