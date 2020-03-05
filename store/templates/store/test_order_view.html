@@ -164,8 +164,7 @@
                     $(this).closest('.koala').removeClass('sdd');
                 }
             }else{   
-                console.log($(this));             
-                //$(this).parent().next().children().prop('checked', true);
+                $(this).parent().next().children().prop('checked', true);
                 $(this).closest('.koala').addClass('sdd');
             }
         });
