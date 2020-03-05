@@ -161,6 +161,7 @@
             $(e.target).addClass(e.target.value + ' form-control changed');
             if($(this).closest('.koala').hasClass(e.target.value)){
                 if($(this).closest('.koala').hasClass('sdd')){
+                    $(this).parent().next().children().prop('checked', false);
                     $(this).closest('.koala').removeClass('sdd');
                 }
             }else{   
