@@ -243,7 +243,7 @@ extra=0,
 )
 
 OrderStatusFormSetTest = modelformset_factory(
-Order, 
+Order, formset=BaseOrderStatusFormSetTest,
 fields=('status', 'is_changed',),
 widgets={
     'status': forms.Select(choices=Order.STATUS_CHOICES, attrs={'class': 'form-control'}),
@@ -251,6 +251,13 @@ widgets={
     },
 extra=0,
 )
+
+class BaseOrderStatusFormSetTest(BaseFormSet):
+    def has_changed(self):
+        hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
+        return bool(self.is_changed and hasChanged)
+        
+
 
 
 class Bottles_VialsForm(forms.ModelForm):
