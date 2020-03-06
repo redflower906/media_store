@@ -918,11 +918,11 @@ def testing_view_order(request):
     pageCB_query = compBill_queryset.filter(id__in=[pageCB.id for pageCB in pagesCB])
     pageCAN_query = cancel_queryset.filter(id__in=[pageCAN.id for pageCAN in pagesCAN])
     
-    incomp = OrderStatusFormSetTest(queryset=pageI_query, prefix='incomp')
-    recur = OrderStatusFormSetTest(queryset=pageR_query, prefix='recur')
-    compNotBill = OrderStatusFormSetTest(queryset=pageCNB_query, prefix='compNotBill')
-    compBill = OrderStatusFormSetTest(queryset=pageCB_query, prefix='compBill')
-    cancel = OrderStatusFormSetTest(queryset=pageCAN_query, prefix='cancel')
+    incomp = OrderStatusFormSet(queryset=pageI_query, prefix='incomp')
+    recur = OrderStatusFormSet(queryset=pageR_query, prefix='recur')
+    compNotBill = OrderStatusFormSet(queryset=pageCNB_query, prefix='compNotBill')
+    compBill = OrderStatusFormSet(queryset=pageCB_query, prefix='compBill')
+    cancel = OrderStatusFormSet(queryset=pageCAN_query, prefix='cancel')
 
     reports = ''
     date_type = ''
