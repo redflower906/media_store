@@ -234,7 +234,7 @@ class AnnouncementsForm(forms.ModelForm):
 class BaseOrderStatusFormSetTest(BaseModelFormSet):
      def has_changed(self):
          hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
-         return bool(self.fields['is_changed'] and hasChanged)
+         return bool(self.data['is_changed'] and hasChanged)
 
 OrderStatusFormSet = modelformset_factory(
 Order, 
