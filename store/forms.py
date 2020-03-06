@@ -231,7 +231,10 @@ class AnnouncementsForm(forms.ModelForm):
             'show': forms.CheckboxInput(attrs={'class': 'checkbox-inline'})
         }
         
-
+class BaseOrderStatusFormSetTest(BaseFormSet):
+    def has_changed(self):
+        hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
+        return bool(self.is_changed and hasChanged)
 
 OrderStatusFormSet = modelformset_factory(
 Order, 
@@ -252,10 +255,7 @@ widgets={
 extra=0,
 )
 
-class BaseOrderStatusFormSetTest(BaseFormSet):
-    def has_changed(self):
-        hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
-        return bool(self.is_changed and hasChanged)
+
         
 
 
