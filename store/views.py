@@ -941,7 +941,7 @@ def testing_view_order(request):
         if order_formset.is_valid():
             for form in order_formset:
                 is_changed = form.cleaned_data['is_changed']
-            if is_changed and order_formset.has_changed() is True:
+            if is_changed is True:
                 order_formset.save()
 
         order_formset = OrderStatusFormSetTest(request.POST, prefix='recur')
