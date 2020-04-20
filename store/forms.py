@@ -237,7 +237,7 @@ class BaseOrderStatusFormSetTest(BaseModelFormSet):
          for form in self.forms:
             cleaned_data = super(BaseOrderStatusFormSetTest, self).clean()
             isChanged = cleaned_data.get('is_changed')
-         if isChanged == hasChanged:
+         if (isChanged == hasChanged):
             return True
         else:
             return False
