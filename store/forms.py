@@ -236,7 +236,10 @@ class BaseOrderStatusFormSetTest(BaseModelFormSet):
          hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
          for form in self:
             isChanged = form.cleaned_data.get('is_changed')
-         return bool(self.cleaned_data['is_changed'] and hasChanged)
+         if isChanged = hasChanged:
+            return True
+        else:
+            return False
 
 OrderStatusFormSet = modelformset_factory(
 Order, 
