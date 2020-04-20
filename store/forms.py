@@ -234,8 +234,9 @@ class AnnouncementsForm(forms.ModelForm):
 class BaseOrderStatusFormSetTest(BaseModelFormSet):
      def has_changed(self):
          hasChanged = super(BaseOrderStatusFormSetTest, self).has_changed()
+         cleaned_data = super(BaseOrderStatusFormSetTest, self).clean()
          for form in self.forms:
-            isChanged = form.cleaned_data.get('is_changed')
+            isChanged = cleaned_data.get('is_changed')
          if isChanged = hasChanged:
             return True
         else:
