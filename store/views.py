@@ -260,29 +260,28 @@ def create_order(request, copy_id=None):
 
             order_form.save()
             orderlineformset.save()
-            ### FIX EMAIL ISSUES
-            # domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            # subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
-            # context = Context({
-            #     'id': order_form.instance.id,
-            #     'location': order_form.instance.location,
-            #     'c_or_e': 'created',            
-            #     'upload': order_form.instance.doc,
-            #     'domain': domain,
-            # })
-            # m_plain = render_to_string('create_email.txt', context.flatten())
-            # m_html = render_to_string('create_email.html', context.flatten())
-            # email =EmailMultiAlternatives(
-            #    subject,
-            #    m_plain,
-            #    from_email,
-            #    [to],
-            #    cc=[
-            #     order_form.instance.submitter.user_profile.email_address, 
-            #    'mediafacility@janelia.hhmi.org'],
-            # )
-            # email.attach_alternative(m_html, "text/html")
-            # email.send()
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+            subject,from_email,to = 'MediaStore Order #{0} Submitted'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            context = Context({
+                'id': order_form.instance.id,
+                'location': order_form.instance.location,
+                'c_or_e': 'created',            
+                'upload': order_form.instance.doc,
+                'domain': domain,
+            })
+            m_plain = render_to_string('create_email.txt', context.flatten())
+            m_html = render_to_string('create_email.html', context.flatten())
+            email =EmailMultiAlternatives(
+               subject,
+               m_plain,
+               from_email,
+               [to],
+               cc=[
+                order_form.instance.submitter.user_profile.email_address, 
+               'mediafacility@janelia.hhmi.org'],
+            )
+            email.attach_alternative(m_html, "text/html")
+            email.send()
             messages.success(request,
             'Order {0} was successfully created.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')
@@ -418,26 +417,25 @@ def edit_order(request, id):
         if order_form.is_valid() and orderlineformset.is_valid():
             order = order_form.save()
             orderlineformset.save()
-            ###FIX EMAIL ISSUES
-            # domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
-            # subject,from_email,to = 'ALERT - MediaStore Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
-            # context = Context({
-            #     'id': order_form.instance.id,
-            #     'location': order_form.instance.location,
-            #     'c_or_e': 'edited',
-            #     'domain': domain,
-            # })
-            # m_plain = render_to_string('create_email.txt', context.flatten())
-            # m_html = render_to_string('create_email.html', context.flatten())
-            # email =EmailMultiAlternatives(
-            #    subject,
-            #    m_plain,
-            #    from_email,
-            #    [to],
-            #    cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
-            # )
-            # email.attach_alternative(m_html, "text/html")
-            # email.send()
+            domain = 'http://mediastore.int.janelia.org' #NOT BEST SOLUTION ~FIX~
+            subject,from_email,to = 'ALERT - MediaStore Order #{0} Edited'.format(order_form.instance.id), 'mediafacility@janelia.hhmi.org', order_form.instance.requester.user_profile.email_address
+            context = Context({
+                'id': order_form.instance.id,
+                'location': order_form.instance.location,
+                'c_or_e': 'edited',
+                'domain': domain,
+            })
+            m_plain = render_to_string('create_email.txt', context.flatten())
+            m_html = render_to_string('create_email.html', context.flatten())
+            email =EmailMultiAlternatives(
+               subject,
+               m_plain,
+               from_email,
+               [to],
+               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+            )
+            email.attach_alternative(m_html, "text/html")
+            email.send()
             messages.success(request,
                 'Order #{0} was successfully updated.'.format(order_form.instance.id))
             return HttpResponseRedirect('/order/view')
