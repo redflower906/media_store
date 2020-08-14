@@ -145,3 +145,5 @@ To use python in windows:
     alias python='winpty python.exe'
 
 502 bad gateway error due to gunicorn timing out. Increased timeout and graceful timeout in /opt/svenv/lib/python3.5/site-packages/gunicorn/config.py
+
+to access other networks while VPN, cd z:

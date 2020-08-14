@@ -53,7 +53,7 @@ ALLOWED_HOSTS = ['mediastore', 'mediastore.int.janelia.org', 'localhost', '127.0
 EMAIL_FILE_PATH =  os.path.join(BASE_DIR, 'emails')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_SERVER = 'harrisons1@janelia.hhmi.org'
-EMAIL_HOST = '10.42.5.23'
+EMAIL_HOST = 'mail.hhmi.org'
 port = 465
 
 # Static files (CSS, JavaScript, Images)
