@@ -87,7 +87,7 @@ def user_debug(user_profile):
     debug_str = '\tDebug info: \n'
     debug_str += '\t User active: {0}, User_profile active:{1}'.format(user_profile.user.is_active, user_profile.is_active)
     if(user_profile.is_visitor):
-        message('user is visitor')
+        message('user is visitor', 'info')
         #try to print out project status, start_date, end_date, and department
         try:
             visitor = VisitingScientist.objects.using('vstar').get(
@@ -646,7 +646,7 @@ class Command(BaseCommand):
 
             for emp in visiting_scientists:
                 add_visitor(emp, in_workday)
-            message('no emp_id')
+            message('no emp_id', 'warning')
 
         subject,from_email,to = 'update_users successful!', 'root@janelia.hhmi.org', 'harrisons1@janelia.hhmi.org'
         m_plain = render_to_string('cron_successful.txt')
