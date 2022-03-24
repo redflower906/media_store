@@ -4,7 +4,7 @@ chardet==3.0.3
 diff-match-patch==20121119
 Django==1.11.2
 django-auth-ldap==1.2.13
-django-debug-toolbar==1.8
+django-debug-toolbar==1.11.1
 django-formset-js==0.5.0
 django-import-export==0.6.1
 django-jquery-js==3.1.1
