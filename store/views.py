@@ -278,7 +278,7 @@ def create_order(request, copy_id=None):
                [to],
                cc=[
                 order_form.instance.submitter.user_profile.email_address, 
-               'mediafacility@janelia.hhmi.org'],
+               'rebhornb@janelia.hhmi.org', 'dethomasiso@janelia.hhmi.org', 'nazh10@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -432,7 +432,7 @@ def edit_order(request, id):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[order_form.instance.submitter.user_profile.email_address, 'rebhornb@janelia.hhmi.org', 'dethomasiso@janelia.hhmi.org', 'nazh10@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -1069,7 +1069,7 @@ def email_form(request, id):
         Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) 
         sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) 
+        Email_form = Email_Form(initial={'To': 'rebhornb@janelia.hhmi.org', 'nazh10@janelia.hhmi.org' 'From': order_info.submitter.user_profile.email_address}) 
         sender = order_info.requester.get_full_name()
     if request.method == "POST":
         Email = Email_Form(request.POST)
