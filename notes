@@ -155,6 +155,25 @@ to start virtual env: go to opt > "source venvMS/bin/activate"
 
 python manage.py update_users -v3 : must be within mediastore directory and in venvMS, to check if update users is working correctly
 
+<<<<<<< HEAD
 using pyenv to manage different python versions. Had to manually install certain packages from requirements.txt because of version/dependency issues. 
 
 to get to documents via git bash: cd /c/Users/coffmans/Documents
+=======
+*10/17/23* Trying to upgrade python3.1 to python3.5 (version from old vm). Don't have permission to pip freeze requirements.txt, waiting on Tom.
+
+using pyenv to manage different python versions. Had to manually install certain packages from requirements.txt because of version/dependency issues. 
+
+TO MIGRATE TO NEW SERVER:
+    have IT copy all directories/files to new server
+    make sure you have a home directory on new server as well
+    install pyenv to create old python environment
+    install old version of python needed
+    check if pip is installed - if not, install
+    create virtual environment
+    pip -r install requirements.txt w/in VM
+    may have to tweak package versions to work (or emove package version from requirements.txt)
+    install gunicorn and nginx and check
+        sudo systemctl start gunicorn.service, sudo systemctl start nginx, sudo systemctl status gunicorn.service, sudo systemctl status nginx
+    run python manage.py runserver in VM to make sure it works
+>>>>>>> refs/remotes/origin/master
