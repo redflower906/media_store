@@ -10,7 +10,7 @@ function register_row(row){
     var media_select = $('#' + prefix + 'mediatype')
     var inventory_select = $('#id_' + prefix + 'inventory')
     //register listeners to changes in the dropdowns
-    // media_select.change(populate_inventory)
+    //media_select.change(populate_inventory)
     inventory_select.change(populate_vol_and_containers)
 
     //add django formset-style ids to container and vol p tags,
@@ -101,7 +101,7 @@ function handle_qty_update(invItem, qtyVal){
 }
 
 /**
- * Find inventory details in the inventory_groups map, given an inventory id
+ * Find inventory details in the signout_groups map, given an inventory id
  * @param {string} id - the database id of the inventory object
  */
 function find_invdetails(inv_id) {

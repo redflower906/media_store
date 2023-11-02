@@ -219,7 +219,7 @@ def __build_inventory_groups():
 
 
 def __build_signout_groups():
-    """ build inventory lists grouped by mediatype.
+    """ build signout lists grouped by mediatype.
 
         This data is used on the front-end to build mediatype and inventory dropdowns
     """
@@ -278,7 +278,7 @@ def create_order(request, copy_id=None):
                [to],
                cc=[
                 order_form.instance.submitter.user_profile.email_address, 
-               'mediafacility@janelia.hhmi.org'],
+               'rebhornb@janelia.hhmi.org', 'dethomasiso@janelia.hhmi.org', 'nazh10@janelia.hhmi.org', 'cavallaroa@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -432,7 +432,7 @@ def edit_order(request, id):
                m_plain,
                from_email,
                [to],
-               cc=[order_form.instance.submitter.user_profile.email_address, 'mediafacility@janelia.hhmi.org'],
+               cc=[order_form.instance.submitter.user_profile.email_address, 'rebhornb@janelia.hhmi.org', 'dethomasiso@janelia.hhmi.org', 'nazh10@janelia.hhmi.org', 'cavallaroa@janelia.hhmi.org'],
             )
             email.attach_alternative(m_html, "text/html")
             email.send()
@@ -1069,7 +1069,7 @@ def email_form(request, id):
         Email_form = Email_Form(initial={'To': order_info.submitter.user_profile.email_address, 'From': 'mediafacility@janelia.hhmi.org'}) 
         sender = 'The Media Facility'
     else:
-        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) 
+        Email_form = Email_Form(initial={'To': 'mediafacility@janelia.hhmi.org', 'From': order_info.submitter.user_profile.email_address}) #changed brian and hina to media group email
         sender = order_info.requester.get_full_name()
     if request.method == "POST":
         Email = Email_Form(request.POST)
@@ -1186,11 +1186,11 @@ def create_signout(request):
         loc = '1E.372'
         uname = 1
         q = Inventory.objects.filter(Q(id=1267) | Q(id=1273)  | Q(id=1351) | Q(id=1352) | Q(id=1270) | Q(id=1353) | Q(id=1269) | Q(id=1268) | Q(id=1367) | Q(id=1366) | Q(id=1305)
-        | Q(id=1303) | Q(id=1304) | Q(id=1272) | Q(id=1276) | Q(id=1277)).order_by('media_type')
+        | Q(id=1303) | Q(id=1304) | Q(id=1272)).order_by('media_type')
     elif u == 17380:
         loc = '2E.233'
         uname = 2
-        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1374) | Q(id=1237)| Q(id=1365)).order_by('media_type') 
+        q = Inventory.objects.filter(Q(id=1245) | Q(id=1263) | Q(id=1374) | Q(id=1365)).order_by('media_type') 
     elif u == 17915:
         loc = '3C.229'
         uname = 3.1
@@ -1202,7 +1202,7 @@ def create_signout(request):
     elif u == 17623:
         loc = '3W.266'
         uname = 3.3
-        q = Inventory.objects.filter(Q(id=1374) | Q(id=1237) | Q(id=1365)).order_by('media_type')
+        q = Inventory.objects.filter(Q(id=1374) | Q(id=1365)).order_by('media_type')
     else:
         loc = False
         uname = False
