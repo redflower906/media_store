@@ -99,7 +99,7 @@ BEFORE GOING LIVE, DO A FIND FOR "FIX" IN CODE
 
 NOTES FOR GUNICORN AND NGINX
 if nothing is running:
-    sudo systemctl start gunicorn.service
+    sudo systemctl start gunicorn.servicehasourcs
     sudo systemctl start nginx
 
 check if it's running by doing:
@@ -134,8 +134,8 @@ website/admin
 
 delete a few known people from database, then run cronjob at 12 am, tomorrow see if anyone was updated 7/18
 
-0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py recur_order_ending_soon
-0 1 * * * /opt/svenv/bin/python /opt/media_v1/manage.py update_users
+0 1 * * * /opt/venvMS/bin/python /opt/media_v1/manage.py recur_order_ending_soon
+0 1 * * * /opt/venvMS/bin/python /opt/media_v1/manage.py update_users
 sudo service cron reload
 
 Regular Django pagination won't work because the views aren't separate pages, they're tabs within the same page. So clicking next affects all tabs. So it will 
@@ -144,6 +144,17 @@ default to the smallest list. if the smallest list has 3 pages, 1-2 or 1-3 shoul
 To use python in windows:
     alias python='winpty python.exe'
 
-502 bad gateway error due to gunicorn timing out. Increased timeout and graceful timeout in /opt/svenv/lib/python3.5/site-packages/gunicorn/config.py
+502 bad gateway error due to gunicorn timing out. Increased timeout and graceful timeout in /opt/venvMS/lib/python3.5/site-packages/gunicorn/config.py
 
 to access other networks while VPN, cd z:
+
+ssh harrisons1@vm650 - OLD
+ssh harrisons1@vm7210 - NEW
+
+to start virtual env: go to opt > "source venvMS/bin/activate"
+
+python manage.py update_users -v3 : must be within mediastore directory and in venvMS, to check if update users is working correctly
+
+using pyenv to manage different python versions. Had to manually install certain packages from requirements.txt because of version/dependency issues. 
+
+to get to documents via git bash: cd /c/Users/coffmans/Documents

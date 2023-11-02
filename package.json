@@ -4,7 +4,8 @@
   "description": "media_v1 npm package.json",
   "main": "flightplan.js",
   "dependencies": {
-    "flightplan": "^0.6.17"
+    "flightplan": "^0.6.17",
+    "tinymce": "^6.7.1"
   },
   "devDependencies": {
     "flightplan": "^0.6.17"

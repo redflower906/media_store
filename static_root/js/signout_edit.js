@@ -112,13 +112,13 @@ function handle_qty_update(e){
 }
 
 /**
- * Find inventory details in the inventory_groups map, given an inventory id
+ * Find inventory details in the signout_groups map, given an inventory id
  * @param {string} id - the database id of the inventory object
  */
 function find_invdetails(inv_id) {
     return $.grep(
         //flatten the groups into one list
-        $.map(inventory_groups, function (vals) { return vals }),
+        $.map(signout_groups, function (vals) { return vals }),
         //then find the item
         function (item) { return item.id == inv_id }
     )[0]
