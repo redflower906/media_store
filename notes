@@ -171,3 +171,5 @@ TO MIGRATE TO NEW SERVER:
     install gunicorn and nginx and check
         sudo systemctl start gunicorn.service, sudo systemctl start nginx, sudo systemctl status gunicorn.service, sudo systemctl status nginx
     run python manage.py runserver in VM to make sure it works
+
+After migrating, update_users and recurring_orders commands didn't run. It seems as though there's an issue with certificate authentication between ldap and the new server? I'm not entirely sure, will update when I figure it out.

@@ -52,7 +52,8 @@ def get_all_users():
      'objectClass', 'uidNumber', 'description', 'jpegPhoto', 'roomNumber', 'gidNumber', 
      'gecos', 'sn', 'homeDirectory', 'mail', 'givenName', 'displayName', 'employeeNumber']                                 
      """
-     ld_conn = ldap.initialize('ldap://ldap-vip1.int.janelia.org')
+     #ld_conn = ldap.initialize('ldap://ldap-vip1.int.janelia.org')
+     ld_conn = ldap.initialize('ldap://dcpool.hhmi.org')
      ld_conn.simple_bind_s()  
      basedn = "ou=people,dc=hhmi,dc=org"                                                                                   
      ldap_filter = "(|(uid=*))"

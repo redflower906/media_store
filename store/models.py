@@ -64,11 +64,11 @@ class UserProfile(models.Model):
     is_visitor = models.BooleanField(default=False)
     is_privileged = models.BooleanField(default=False)
 
-# this is used to prevent updates from workday overriding the values that have
-# been altered in ResourceMatrix. We need to do this for people who are in the
-# wrong department for billing. eg: Pat Rivlin is in "093417 Fly Brain Imaging EM"
-# but she should be billed to "093093 Electron Microscopy". This could be dangerous
-# and we should probably limit which fields are ignored to department.
+    # this is used to prevent updates from workday overriding the values that have
+    # been altered in ResourceMatrix. We need to do this for people who are in the
+    # wrong department for billing. eg: Pat Rivlin is in "093417 Fly Brain Imaging EM"
+    # but she should be billed to "093093 Electron Microscopy". This could be dangerous
+    # and we should probably limit which fields are ignored to department.
     skip_updates = models.BooleanField(default=False)
     offboard_date = models.DateField(blank=True, null=True)
 
@@ -93,7 +93,7 @@ class UserProfile(models.Model):
         return (self.user.is_superuser or
             (self.is_manager and self.department.number == '093098'))
 
-#assign barcode info to employee name
+    #assign barcode info to employee name
     def data_text_search(self):
         if self.employee_id:
             if 'J' in self.employee_id:

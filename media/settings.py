@@ -14,7 +14,6 @@ import os
 import ldap
 import django_auth_ldap.config
 from .databasesettings import DATABASES
-from .local_settings import DEBUG, SECRET_KEY
 from django_auth_ldap.config import LDAPSearch, GroupOfNamesType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -24,6 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: don't run with debug turned on in production!
+
+DEBUG=True
+SECRET_KEY='7f89dsf790dsa87f09das7f89d7a0f77f7ds89a0f7a4fd57saFDSA%#$@Fd'
 
 if DEBUG:
     INTERNAL_IPS = ('127.0.0.1', 'localhost',)
@@ -46,7 +48,6 @@ if DEBUG:
     DEBUG_TOOLBAR_CONFIG = {
         'INTERCEPT_REDIRECTS': False,
     }
-
 
 ALLOWED_HOSTS = ['mediastore', 'mediastore.int.janelia.org', 'localhost', '127.0.0.1']
 
@@ -202,12 +203,19 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #from Jody
+# AUTH_LDAP_SERVER_URI = "ldap://ldap-vip1.int.janelia.org" #from Jody
+# AUTH_LDAP_SERVER_URI = "ldap://dcpool.hhmi.org" #from Jody
+# AUTH_LDAP_BIND_DN = ""
+# AUTH_LDAP_BIND_PASSWORD = ""
 
-AUTH_LDAP_BIND_DN = ""
-AUTH_LDAP_BIND_PASSWORD = ""
+AUTH_LDAP_SERVER_URI="ldap://dcpool.hhmi.org"
+AUTH_LDAP_BIND_DN="srv.applicationroles"
+AUTH_LDAP_BIND_PASSWORD="qd@E7@wWlGq@sYaHNvy3@jOqr@EM"
+
+
+
 AUTH_LDAP_USER_SEARCH = LDAPSearch("ou=people,dc=hhmi,dc=org",
-    ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
+    ldap.SCOPE_SUBTREE, "(name=%(user)s)"
 )
 
 class CustomGroupOfNamesType(GroupOfNamesType):
@@ -249,7 +257,7 @@ AUTH_LDAP_GROUP_TYPE = CustomGroupOfNamesType("ou=ApplicationRoles,dc=hhmi,dc=or
 
 # Populate the Django user from the LDAP directory.
 AUTH_LDAP_USER_ATTR_MAP = {
-    "username": "uid",
+    "username": "name",
     "first_name": "givenName",
     "last_name": "sn",
     "email": "mail"
@@ -275,43 +283,34 @@ AUTH_LDAP_MIRROR_GROUPS = False #Pulls in LDAP groups, overwrites custom groups 
 AUTH_LDAP_CACHE_GROUPS = False #!! set to True for production
 AUTH_LDAP_GROUP_CACHE_TIMEOUT = 3600
 
-'''
-#THIS IS FROM RESOURCE MATRIX, IDK IF WE NEED IT? ~FIX~
-#customize app log
+
+
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'formatters': {
         'default':{
-            'format':'%(levelname)s %(asctime)s %(module)s: %(message)s'
+            'format':'[%(asctime)s] %(levelname)s %(module)s (%(lineno)s): %(message)s'
         }
     },
     'handlers':{
         'default':{
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'default'
-        }
+        },
     },
     'loggers': {
         'default': {
             'handlers': ['default'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG')
         },
     },
 }
 
 try:
-    from local_settings import *
+    from .local_settings import *
 except ImportError:
+    print('failed to import local_settings')
     pass
-
-IMPORT_EXPORT_USE_TRANSACTIONS = True
-
-try:
-    from local_settings import *
-except ImportError:
-    pass
-'''
-
-

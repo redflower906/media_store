@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from store.models import Department, Inventory, Order, Vendor
+from store.models import Department, Inventory, Order, Vendor, UserProfile
 
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ('department_name', 'number', 'account_code', 'is_shared_resource', 'active')
@@ -33,10 +33,10 @@ class VendorAdmin(admin.ModelAdmin):
     list_display = ['email_address', 'company', 'contact', 'notes_ven', 'active']
     search_fields = ['email_address', 'company', 'contact', 'notes_ven', 'active']
 
-class UserProfile(admin.ModelAdmin):
+class UserProfileAdmin(admin.ModelAdmin):
     list_display = ('user', 'first_name', 'last_name', 'employee_id', 'department', 'is_active')
     list_filter = ('is_active', 'is_janelia')
-    search_fields = ['user_username', 'first_name', 'last_name', 'department_number', 'employee_id']
+    search_fields = ['first_name', 'last_name', 'employee_id']
 
 
 
@@ -44,3 +44,4 @@ admin.site.register(Department, DepartmentAdmin)
 admin.site.register(Inventory, InventoryAdmin)
 admin.site.register(Order)#, OrderAdmin)
 admin.site.register(Vendor, VendorAdmin)
+admin.site.register(UserProfile, UserProfileAdmin)
